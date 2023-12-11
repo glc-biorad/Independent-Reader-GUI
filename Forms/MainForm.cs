@@ -1,4 +1,5 @@
-using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Utilities;
 using System.ComponentModel;
 
 namespace Independent_Reader_GUI
@@ -14,6 +15,11 @@ namespace Independent_Reader_GUI
             AddHomeCameraDefaultData();
             AddHomeLEDsDefaultData();
             AddHomeTECsDefaultData();
+            AddRunExperimentDefaultData();
+            AddRunImagingSetupDefaultData();
+
+            // Add formatting to the data grid views
+            this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
         }
 
         /// <summary>
@@ -319,6 +325,56 @@ namespace Independent_Reader_GUI
             homeTECsDataGridView.Rows.Add(homeTECsMaxCurrent.PropertyName, homeTECsMaxCurrent.ValueTECA, homeTECsMaxCurrent.ValueTECB, homeTECsMaxCurrent.ValueTECC, homeTECsMaxCurrent.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsVoltage.PropertyName, homeTECsVoltage.ValueTECA, homeTECsVoltage.ValueTECB, homeTECsVoltage.ValueTECC, homeTECsVoltage.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsMaxVoltage.PropertyName, homeTECsMaxVoltage.ValueTECA, homeTECsMaxVoltage.ValueTECB, homeTECsMaxVoltage.ValueTECC, homeTECsMaxVoltage.ValueTECD);
+        }
+
+        /// <summary>
+        /// Add default data to the Run Experiment Data Grid View upon loading the Form
+        /// </summary>
+        private void AddRunExperimentDefaultData()
+        {
+            ExperimentData runExperimentData = new ExperimentData();
+            runExperimentDataGridView.Rows.Add("Experiment Name", runExperimentData.Name);
+            runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
+            runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
+            runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
+            runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
+            runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
+            runExperimentDataGridView.Rows.Add("Partition Type", runExperimentData.PartitionType);
+            runExperimentDataGridView.Rows.Add("Cartridge", runExperimentData.Cartridge);
+            runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", runExperimentData.CartridgeLength);
+            runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", runExperimentData.CartridgeWidth);
+            runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", runExperimentData.CartridgeHeight);
+            runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
+            runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
+            runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
+            runExperimentDataGridView.Rows.Add("Elastomer", runExperimentData.Elastomer);
+            runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
+            runExperimentDataGridView.Rows.Add("Bergquist", runExperimentData.Bergquist);
+            runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", runExperimentData.BergquistThickness);
+            runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
+            runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
+        }
+
+        private void AddRunImagingSetupDefaultData()
+        {
+            ImagingSetupData runImagingSetupData = new ImagingSetupData();
+            runImagingSetupDataGridView.Rows.Add("Image Before", runImagingSetupData.ImageBefore);
+        }
+
+        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Only add tool tips to the property column of the data grid view
+            if (e.ColumnIndex == 0)
+            {
+                // Obtain the cell value to determine which tool tip to add to this cell
+                var cellValue = runExperimentDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (cellValue != null )
+                {
+                    DataGridViewToolTipFormatter ToolTipFormatter = new DataGridViewToolTipFormatter();
+                    string toolTipText = ToolTipFormatter.GetCellValueToolTipText(cellValue.ToString());
+                    runExperimentDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = toolTipText;
+                }
+            }
         }
     }
 }
