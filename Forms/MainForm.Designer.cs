@@ -60,6 +60,7 @@
             this.homeMotorsHomeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.homeMotorsLabel = new System.Windows.Forms.Label();
             this.runTabPage = new System.Windows.Forms.TabPage();
+            this.runClearFormButton = new System.Windows.Forms.Button();
             this.runRemoveAssayButton = new System.Windows.Forms.Button();
             this.runAddAssayButton = new System.Windows.Forms.Button();
             this.runAssayMetaDataGridView = new System.Windows.Forms.DataGridView();
@@ -82,6 +83,17 @@
             this.runImagingSetupLabel = new System.Windows.Forms.Label();
             this.tunExperimentDataLabel = new System.Windows.Forms.Label();
             this.controlTabPage = new System.Windows.Forms.TabPage();
+            this.controlTECsLabel = new System.Windows.Forms.Label();
+            this.controlHomeButton = new System.Windows.Forms.Button();
+            this.controlMoveButton = new System.Windows.Forms.Button();
+            this.controlMotorsComboBox = new System.Windows.Forms.ComboBox();
+            this.controlMotorsDataGridView = new System.Windows.Forms.DataGridView();
+            this.controlMotorsMotorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlMotorsIOColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlMotorsPositionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlMotorsSpeedColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlMotorsHomeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlMotorsLabel = new System.Windows.Forms.Label();
             this.thermocyclingTabPage = new System.Windows.Forms.TabPage();
             this.imagingTabPage = new System.Windows.Forms.TabPage();
             this.settingsTabPage = new System.Windows.Forms.TabPage();
@@ -93,6 +105,25 @@
             this.userLabel = new System.Windows.Forms.Label();
             this.logoutButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
+            this.controlTECsDataGridView = new System.Windows.Forms.DataGridView();
+            this.controlTECsPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlTECsTECAColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlTECsTECBColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlTECsTECCColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlTECsTECDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlTECASetTempButton = new System.Windows.Forms.Button();
+            this.controlTECBSetTempButton = new System.Windows.Forms.Button();
+            this.controlTECCSetTempButton = new System.Windows.Forms.Button();
+            this.controlTECDSetTempButton = new System.Windows.Forms.Button();
+            this.controlLEDsLabel = new System.Windows.Forms.Label();
+            this.controlLEDsDataGridView = new System.Windows.Forms.DataGridView();
+            this.controlLEDsPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsCy5Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsFAMColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsHEXColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsAttoColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsAlexaColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.controlLEDsCy5p5Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl.SuspendLayout();
             this.homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.homeTECsDataGridView)).BeginInit();
@@ -104,6 +135,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.runSampleMetaDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.runImagingSetupDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.runExperimentDataGridView)).BeginInit();
+            this.controlTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.controlMotorsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlTECsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlLEDsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -150,6 +185,7 @@
             this.homeTECsTECBColumn,
             this.homeTECsTECCColumn,
             this.homeTECsTECDColumn});
+            this.homeTECsDataGridView.Enabled = false;
             this.homeTECsDataGridView.Location = new System.Drawing.Point(550, 24);
             this.homeTECsDataGridView.Name = "homeTECsDataGridView";
             this.homeTECsDataGridView.ReadOnly = true;
@@ -212,12 +248,13 @@
             this.homeLEDsAttoColumn,
             this.homeLEDsAlexaColumn,
             this.homeLEDsCy55Column});
+            this.homeLEDsDataGridView.Enabled = false;
             this.homeLEDsDataGridView.Location = new System.Drawing.Point(8, 429);
             this.homeLEDsDataGridView.Name = "homeLEDsDataGridView";
             this.homeLEDsDataGridView.ReadOnly = true;
             this.homeLEDsDataGridView.RowHeadersVisible = false;
             this.homeLEDsDataGridView.RowTemplate.Height = 25;
-            this.homeLEDsDataGridView.Size = new System.Drawing.Size(344, 149);
+            this.homeLEDsDataGridView.Size = new System.Drawing.Size(513, 149);
             this.homeLEDsDataGridView.TabIndex = 5;
             // 
             // homeLEDsPropertiesColumn
@@ -225,48 +262,49 @@
             this.homeLEDsPropertiesColumn.HeaderText = "";
             this.homeLEDsPropertiesColumn.Name = "homeLEDsPropertiesColumn";
             this.homeLEDsPropertiesColumn.ReadOnly = true;
+            this.homeLEDsPropertiesColumn.Width = 90;
             // 
             // homeLEDsCy5Column
             // 
             this.homeLEDsCy5Column.HeaderText = "Cy5";
             this.homeLEDsCy5Column.Name = "homeLEDsCy5Column";
             this.homeLEDsCy5Column.ReadOnly = true;
-            this.homeLEDsCy5Column.Width = 40;
+            this.homeLEDsCy5Column.Width = 70;
             // 
             // homeLEDsFAMColumn
             // 
             this.homeLEDsFAMColumn.HeaderText = "FAM";
             this.homeLEDsFAMColumn.Name = "homeLEDsFAMColumn";
             this.homeLEDsFAMColumn.ReadOnly = true;
-            this.homeLEDsFAMColumn.Width = 40;
+            this.homeLEDsFAMColumn.Width = 70;
             // 
             // homeLEDsHEXColumn
             // 
             this.homeLEDsHEXColumn.HeaderText = "HEX";
             this.homeLEDsHEXColumn.Name = "homeLEDsHEXColumn";
             this.homeLEDsHEXColumn.ReadOnly = true;
-            this.homeLEDsHEXColumn.Width = 40;
+            this.homeLEDsHEXColumn.Width = 70;
             // 
             // homeLEDsAttoColumn
             // 
             this.homeLEDsAttoColumn.HeaderText = "Atto";
             this.homeLEDsAttoColumn.Name = "homeLEDsAttoColumn";
             this.homeLEDsAttoColumn.ReadOnly = true;
-            this.homeLEDsAttoColumn.Width = 40;
+            this.homeLEDsAttoColumn.Width = 70;
             // 
             // homeLEDsAlexaColumn
             // 
             this.homeLEDsAlexaColumn.HeaderText = "Alexa";
             this.homeLEDsAlexaColumn.Name = "homeLEDsAlexaColumn";
             this.homeLEDsAlexaColumn.ReadOnly = true;
-            this.homeLEDsAlexaColumn.Width = 40;
+            this.homeLEDsAlexaColumn.Width = 70;
             // 
             // homeLEDsCy55Column
             // 
             this.homeLEDsCy55Column.HeaderText = "Cy5.5";
             this.homeLEDsCy55Column.Name = "homeLEDsCy55Column";
             this.homeLEDsCy55Column.ReadOnly = true;
-            this.homeLEDsCy55Column.Width = 40;
+            this.homeLEDsCy55Column.Width = 70;
             // 
             // homeLEDsLabel
             // 
@@ -287,6 +325,7 @@
             this.homeCameraStateColumn,
             this.homeCameraExposureColumn,
             this.homeCameraTempColumn});
+            this.homeCameraDataGridView.Enabled = false;
             this.homeCameraDataGridView.Location = new System.Drawing.Point(8, 335);
             this.homeCameraDataGridView.Name = "homeCameraDataGridView";
             this.homeCameraDataGridView.ReadOnly = true;
@@ -338,6 +377,7 @@
             this.homeMotorsStepsColumn,
             this.homeMotorsSpeedColumn,
             this.homeMotorsHomeColumn});
+            this.homeMotorsDataGridView.Enabled = false;
             this.homeMotorsDataGridView.Location = new System.Drawing.Point(8, 24);
             this.homeMotorsDataGridView.Name = "homeMotorsDataGridView";
             this.homeMotorsDataGridView.ReadOnly = true;
@@ -355,6 +395,7 @@
             this.homeMotorsMotorColumn.HeaderText = "Motor";
             this.homeMotorsMotorColumn.Name = "homeMotorsMotorColumn";
             this.homeMotorsMotorColumn.ReadOnly = true;
+            this.homeMotorsMotorColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.homeMotorsMotorColumn.Width = 80;
             // 
             // homeMotorsIOColumn
@@ -362,6 +403,7 @@
             this.homeMotorsIOColumn.HeaderText = "IO";
             this.homeMotorsIOColumn.Name = "homeMotorsIOColumn";
             this.homeMotorsIOColumn.ReadOnly = true;
+            this.homeMotorsIOColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.homeMotorsIOColumn.ToolTipText = "Action status of motor";
             this.homeMotorsIOColumn.Width = 70;
             // 
@@ -370,25 +412,29 @@
             this.homeMotorsStateColumn.HeaderText = "State";
             this.homeMotorsStateColumn.Name = "homeMotorsStateColumn";
             this.homeMotorsStateColumn.ReadOnly = true;
+            this.homeMotorsStateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // homeMotorsStepsColumn
             // 
-            this.homeMotorsStepsColumn.HeaderText = "Steps (us)";
+            this.homeMotorsStepsColumn.HeaderText = "Position (μS)";
             this.homeMotorsStepsColumn.Name = "homeMotorsStepsColumn";
             this.homeMotorsStepsColumn.ReadOnly = true;
+            this.homeMotorsStepsColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.homeMotorsStepsColumn.Width = 90;
             // 
             // homeMotorsSpeedColumn
             // 
-            this.homeMotorsSpeedColumn.HeaderText = "Speed (us/s)";
+            this.homeMotorsSpeedColumn.HeaderText = "Speed (μS/s)";
             this.homeMotorsSpeedColumn.Name = "homeMotorsSpeedColumn";
             this.homeMotorsSpeedColumn.ReadOnly = true;
+            this.homeMotorsSpeedColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // homeMotorsHomeColumn
             // 
             this.homeMotorsHomeColumn.HeaderText = "Home";
             this.homeMotorsHomeColumn.Name = "homeMotorsHomeColumn";
             this.homeMotorsHomeColumn.ReadOnly = true;
+            this.homeMotorsHomeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.homeMotorsHomeColumn.ToolTipText = "Home status of motor";
             this.homeMotorsHomeColumn.Width = 70;
             // 
@@ -404,6 +450,7 @@
             // 
             // runTabPage
             // 
+            this.runTabPage.Controls.Add(this.runClearFormButton);
             this.runTabPage.Controls.Add(this.runRemoveAssayButton);
             this.runTabPage.Controls.Add(this.runAddAssayButton);
             this.runTabPage.Controls.Add(this.runAssayMetaDataGridView);
@@ -424,6 +471,18 @@
             this.runTabPage.TabIndex = 1;
             this.runTabPage.Text = "Run";
             this.runTabPage.UseVisualStyleBackColor = true;
+            // 
+            // runClearFormButton
+            // 
+            this.runClearFormButton.BackColor = System.Drawing.Color.IndianRed;
+            this.runClearFormButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.runClearFormButton.ForeColor = System.Drawing.Color.White;
+            this.runClearFormButton.Location = new System.Drawing.Point(999, 542);
+            this.runClearFormButton.Name = "runClearFormButton";
+            this.runClearFormButton.Size = new System.Drawing.Size(109, 36);
+            this.runClearFormButton.TabIndex = 13;
+            this.runClearFormButton.Text = "Clear Form";
+            this.runClearFormButton.UseVisualStyleBackColor = false;
             // 
             // runRemoveAssayButton
             // 
@@ -486,6 +545,7 @@
             this.runRemoveSampleButton.TabIndex = 9;
             this.runRemoveSampleButton.Text = "Remove Sample";
             this.runRemoveSampleButton.UseVisualStyleBackColor = false;
+            this.runRemoveSampleButton.Click += new System.EventHandler(this.runRemoveSampleButton_Click);
             // 
             // runAddSampleButton
             // 
@@ -498,11 +558,13 @@
             this.runAddSampleButton.TabIndex = 8;
             this.runAddSampleButton.Text = "Add Sample";
             this.runAddSampleButton.UseVisualStyleBackColor = false;
+            this.runAddSampleButton.Click += new System.EventHandler(this.runAddSampleButton_Click);
             // 
             // runSampleMetaDataGridView
             // 
             this.runSampleMetaDataGridView.AllowUserToAddRows = false;
-            this.runSampleMetaDataGridView.AllowUserToDeleteRows = false;
+            this.runSampleMetaDataGridView.AllowUserToResizeColumns = false;
+            this.runSampleMetaDataGridView.AllowUserToResizeRows = false;
             this.runSampleMetaDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.runSampleMetaDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.runSampleMetaDataIDColumn,
@@ -545,13 +607,13 @@
             this.runImagingSetupPropertyColumn.HeaderText = "Property";
             this.runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
             this.runImagingSetupPropertyColumn.ReadOnly = true;
-            this.runImagingSetupPropertyColumn.Width = 180;
+            this.runImagingSetupPropertyColumn.Width = 170;
             // 
             // runImagingSetupValueColumn
             // 
             this.runImagingSetupValueColumn.HeaderText = "Value";
             this.runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
-            this.runImagingSetupValueColumn.Width = 195;
+            this.runImagingSetupValueColumn.Width = 185;
             // 
             // runExperimentDataGridView
             // 
@@ -586,7 +648,7 @@
             this.runRunButton.BackColor = System.Drawing.SystemColors.Highlight;
             this.runRunButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.runRunButton.ForeColor = System.Drawing.Color.White;
-            this.runRunButton.Location = new System.Drawing.Point(999, 542);
+            this.runRunButton.Location = new System.Drawing.Point(999, 500);
             this.runRunButton.Name = "runRunButton";
             this.runRunButton.Size = new System.Drawing.Size(109, 36);
             this.runRunButton.TabIndex = 4;
@@ -635,12 +697,143 @@
             // 
             // controlTabPage
             // 
+            this.controlTabPage.Controls.Add(this.controlLEDsDataGridView);
+            this.controlTabPage.Controls.Add(this.controlLEDsLabel);
+            this.controlTabPage.Controls.Add(this.controlTECDSetTempButton);
+            this.controlTabPage.Controls.Add(this.controlTECCSetTempButton);
+            this.controlTabPage.Controls.Add(this.controlTECBSetTempButton);
+            this.controlTabPage.Controls.Add(this.controlTECASetTempButton);
+            this.controlTabPage.Controls.Add(this.controlTECsDataGridView);
+            this.controlTabPage.Controls.Add(this.controlTECsLabel);
+            this.controlTabPage.Controls.Add(this.controlHomeButton);
+            this.controlTabPage.Controls.Add(this.controlMoveButton);
+            this.controlTabPage.Controls.Add(this.controlMotorsComboBox);
+            this.controlTabPage.Controls.Add(this.controlMotorsDataGridView);
+            this.controlTabPage.Controls.Add(this.controlMotorsLabel);
             this.controlTabPage.Location = new System.Drawing.Point(4, 24);
             this.controlTabPage.Name = "controlTabPage";
             this.controlTabPage.Size = new System.Drawing.Size(1116, 584);
             this.controlTabPage.TabIndex = 2;
             this.controlTabPage.Text = "Control";
             this.controlTabPage.UseVisualStyleBackColor = true;
+            // 
+            // controlTECsLabel
+            // 
+            this.controlTECsLabel.AutoSize = true;
+            this.controlTECsLabel.BackColor = System.Drawing.Color.Transparent;
+            this.controlTECsLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlTECsLabel.Location = new System.Drawing.Point(447, 5);
+            this.controlTECsLabel.Name = "controlTECsLabel";
+            this.controlTECsLabel.Size = new System.Drawing.Size(48, 18);
+            this.controlTECsLabel.TabIndex = 5;
+            this.controlTECsLabel.Text = "TECs";
+            // 
+            // controlHomeButton
+            // 
+            this.controlHomeButton.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.controlHomeButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlHomeButton.ForeColor = System.Drawing.Color.White;
+            this.controlHomeButton.Location = new System.Drawing.Point(322, 326);
+            this.controlHomeButton.Name = "controlHomeButton";
+            this.controlHomeButton.Size = new System.Drawing.Size(109, 36);
+            this.controlHomeButton.TabIndex = 4;
+            this.controlHomeButton.Text = "Home";
+            this.controlHomeButton.UseVisualStyleBackColor = false;
+            // 
+            // controlMoveButton
+            // 
+            this.controlMoveButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.controlMoveButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlMoveButton.ForeColor = System.Drawing.Color.White;
+            this.controlMoveButton.Location = new System.Drawing.Point(207, 326);
+            this.controlMoveButton.Name = "controlMoveButton";
+            this.controlMoveButton.Size = new System.Drawing.Size(109, 36);
+            this.controlMoveButton.TabIndex = 3;
+            this.controlMoveButton.Text = "Move";
+            this.controlMoveButton.UseVisualStyleBackColor = false;
+            // 
+            // controlMotorsComboBox
+            // 
+            this.controlMotorsComboBox.DisplayMember = "x";
+            this.controlMotorsComboBox.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlMotorsComboBox.FormattingEnabled = true;
+            this.controlMotorsComboBox.ItemHeight = 15;
+            this.controlMotorsComboBox.Items.AddRange(new object[] {
+            "x",
+            "y",
+            "z",
+            "Filter Wheel",
+            "Clamp A",
+            "Clamp B",
+            "Clamp C",
+            "Clamp D",
+            "Tray AB",
+            "Tray CD"});
+            this.controlMotorsComboBox.Location = new System.Drawing.Point(69, 334);
+            this.controlMotorsComboBox.Name = "controlMotorsComboBox";
+            this.controlMotorsComboBox.Size = new System.Drawing.Size(132, 23);
+            this.controlMotorsComboBox.TabIndex = 2;
+            this.controlMotorsComboBox.ValueMember = "x";
+            // 
+            // controlMotorsDataGridView
+            // 
+            this.controlMotorsDataGridView.AllowUserToAddRows = false;
+            this.controlMotorsDataGridView.AllowUserToDeleteRows = false;
+            this.controlMotorsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.controlMotorsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.controlMotorsMotorColumn,
+            this.controlMotorsIOColumn,
+            this.controlMotorsPositionColumn,
+            this.controlMotorsSpeedColumn,
+            this.controlMotorsHomeColumn});
+            this.controlMotorsDataGridView.Location = new System.Drawing.Point(8, 26);
+            this.controlMotorsDataGridView.Name = "controlMotorsDataGridView";
+            this.controlMotorsDataGridView.RowHeadersVisible = false;
+            this.controlMotorsDataGridView.RowTemplate.Height = 25;
+            this.controlMotorsDataGridView.Size = new System.Drawing.Size(423, 294);
+            this.controlMotorsDataGridView.TabIndex = 1;
+            // 
+            // controlMotorsMotorColumn
+            // 
+            this.controlMotorsMotorColumn.HeaderText = "Motor";
+            this.controlMotorsMotorColumn.Name = "controlMotorsMotorColumn";
+            this.controlMotorsMotorColumn.ReadOnly = true;
+            this.controlMotorsMotorColumn.Width = 80;
+            // 
+            // controlMotorsIOColumn
+            // 
+            this.controlMotorsIOColumn.HeaderText = "IO";
+            this.controlMotorsIOColumn.Name = "controlMotorsIOColumn";
+            this.controlMotorsIOColumn.ReadOnly = true;
+            this.controlMotorsIOColumn.Width = 70;
+            // 
+            // controlMotorsPositionColumn
+            // 
+            this.controlMotorsPositionColumn.HeaderText = "Position (μS)";
+            this.controlMotorsPositionColumn.Name = "controlMotorsPositionColumn";
+            this.controlMotorsPositionColumn.ReadOnly = true;
+            // 
+            // controlMotorsSpeedColumn
+            // 
+            this.controlMotorsSpeedColumn.HeaderText = "Speed (μS/s)";
+            this.controlMotorsSpeedColumn.Name = "controlMotorsSpeedColumn";
+            // 
+            // controlMotorsHomeColumn
+            // 
+            this.controlMotorsHomeColumn.HeaderText = "Home";
+            this.controlMotorsHomeColumn.Name = "controlMotorsHomeColumn";
+            this.controlMotorsHomeColumn.ReadOnly = true;
+            this.controlMotorsHomeColumn.Width = 70;
+            // 
+            // controlMotorsLabel
+            // 
+            this.controlMotorsLabel.AutoSize = true;
+            this.controlMotorsLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlMotorsLabel.Location = new System.Drawing.Point(8, 5);
+            this.controlMotorsLabel.Name = "controlMotorsLabel";
+            this.controlMotorsLabel.Size = new System.Drawing.Size(56, 18);
+            this.controlMotorsLabel.TabIndex = 0;
+            this.controlMotorsLabel.Text = "Motors";
             // 
             // thermocyclingTabPage
             // 
@@ -758,6 +951,176 @@
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = false;
             // 
+            // controlTECsDataGridView
+            // 
+            this.controlTECsDataGridView.AllowUserToAddRows = false;
+            this.controlTECsDataGridView.AllowUserToDeleteRows = false;
+            this.controlTECsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.controlTECsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.controlTECsPropertyColumn,
+            this.controlTECsTECAColumn,
+            this.controlTECsTECBColumn,
+            this.controlTECsTECCColumn,
+            this.controlTECsTECDColumn});
+            this.controlTECsDataGridView.Location = new System.Drawing.Point(447, 26);
+            this.controlTECsDataGridView.Name = "controlTECsDataGridView";
+            this.controlTECsDataGridView.RowHeadersVisible = false;
+            this.controlTECsDataGridView.RowTemplate.Height = 25;
+            this.controlTECsDataGridView.Size = new System.Drawing.Size(661, 515);
+            this.controlTECsDataGridView.TabIndex = 6;
+            // 
+            // controlTECsPropertyColumn
+            // 
+            this.controlTECsPropertyColumn.HeaderText = "";
+            this.controlTECsPropertyColumn.Name = "controlTECsPropertyColumn";
+            this.controlTECsPropertyColumn.ReadOnly = true;
+            this.controlTECsPropertyColumn.Width = 178;
+            // 
+            // controlTECsTECAColumn
+            // 
+            this.controlTECsTECAColumn.HeaderText = "TEC A";
+            this.controlTECsTECAColumn.Name = "controlTECsTECAColumn";
+            this.controlTECsTECAColumn.Width = 120;
+            // 
+            // controlTECsTECBColumn
+            // 
+            this.controlTECsTECBColumn.HeaderText = "TEC B";
+            this.controlTECsTECBColumn.Name = "controlTECsTECBColumn";
+            this.controlTECsTECBColumn.Width = 120;
+            // 
+            // controlTECsTECCColumn
+            // 
+            this.controlTECsTECCColumn.HeaderText = "TEC C";
+            this.controlTECsTECCColumn.Name = "controlTECsTECCColumn";
+            this.controlTECsTECCColumn.Width = 120;
+            // 
+            // controlTECsTECDColumn
+            // 
+            this.controlTECsTECDColumn.HeaderText = "TEC D";
+            this.controlTECsTECDColumn.Name = "controlTECsTECDColumn";
+            this.controlTECsTECDColumn.Width = 120;
+            // 
+            // controlTECASetTempButton
+            // 
+            this.controlTECASetTempButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.controlTECASetTempButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlTECASetTempButton.ForeColor = System.Drawing.Color.White;
+            this.controlTECASetTempButton.Location = new System.Drawing.Point(652, 545);
+            this.controlTECASetTempButton.Name = "controlTECASetTempButton";
+            this.controlTECASetTempButton.Size = new System.Drawing.Size(109, 36);
+            this.controlTECASetTempButton.TabIndex = 7;
+            this.controlTECASetTempButton.Text = "Set Temp";
+            this.controlTECASetTempButton.UseVisualStyleBackColor = false;
+            // 
+            // controlTECBSetTempButton
+            // 
+            this.controlTECBSetTempButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.controlTECBSetTempButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlTECBSetTempButton.ForeColor = System.Drawing.Color.White;
+            this.controlTECBSetTempButton.Location = new System.Drawing.Point(767, 545);
+            this.controlTECBSetTempButton.Name = "controlTECBSetTempButton";
+            this.controlTECBSetTempButton.Size = new System.Drawing.Size(109, 36);
+            this.controlTECBSetTempButton.TabIndex = 8;
+            this.controlTECBSetTempButton.Text = "Set Temp";
+            this.controlTECBSetTempButton.UseVisualStyleBackColor = false;
+            // 
+            // controlTECCSetTempButton
+            // 
+            this.controlTECCSetTempButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.controlTECCSetTempButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlTECCSetTempButton.ForeColor = System.Drawing.Color.White;
+            this.controlTECCSetTempButton.Location = new System.Drawing.Point(881, 545);
+            this.controlTECCSetTempButton.Name = "controlTECCSetTempButton";
+            this.controlTECCSetTempButton.Size = new System.Drawing.Size(109, 36);
+            this.controlTECCSetTempButton.TabIndex = 9;
+            this.controlTECCSetTempButton.Text = "Set Temp";
+            this.controlTECCSetTempButton.UseVisualStyleBackColor = false;
+            // 
+            // controlTECDSetTempButton
+            // 
+            this.controlTECDSetTempButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.controlTECDSetTempButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlTECDSetTempButton.ForeColor = System.Drawing.Color.White;
+            this.controlTECDSetTempButton.Location = new System.Drawing.Point(996, 545);
+            this.controlTECDSetTempButton.Name = "controlTECDSetTempButton";
+            this.controlTECDSetTempButton.Size = new System.Drawing.Size(109, 36);
+            this.controlTECDSetTempButton.TabIndex = 10;
+            this.controlTECDSetTempButton.Text = "Set Temp";
+            this.controlTECDSetTempButton.UseVisualStyleBackColor = false;
+            // 
+            // controlLEDsLabel
+            // 
+            this.controlLEDsLabel.AutoSize = true;
+            this.controlLEDsLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.controlLEDsLabel.Location = new System.Drawing.Point(8, 375);
+            this.controlLEDsLabel.Name = "controlLEDsLabel";
+            this.controlLEDsLabel.Size = new System.Drawing.Size(48, 18);
+            this.controlLEDsLabel.TabIndex = 11;
+            this.controlLEDsLabel.Text = "LEDs";
+            // 
+            // controlLEDsDataGridView
+            // 
+            this.controlLEDsDataGridView.AllowUserToAddRows = false;
+            this.controlLEDsDataGridView.AllowUserToDeleteRows = false;
+            this.controlLEDsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.controlLEDsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.controlLEDsPropertyColumn,
+            this.controlLEDsCy5Column,
+            this.controlLEDsFAMColumn,
+            this.controlLEDsHEXColumn,
+            this.controlLEDsAttoColumn,
+            this.controlLEDsAlexaColumn,
+            this.controlLEDsCy5p5Column});
+            this.controlLEDsDataGridView.Location = new System.Drawing.Point(8, 396);
+            this.controlLEDsDataGridView.Name = "controlLEDsDataGridView";
+            this.controlLEDsDataGridView.RowHeadersVisible = false;
+            this.controlLEDsDataGridView.RowTemplate.Height = 25;
+            this.controlLEDsDataGridView.Size = new System.Drawing.Size(423, 171);
+            this.controlLEDsDataGridView.TabIndex = 12;
+            // 
+            // controlLEDsPropertyColumn
+            // 
+            this.controlLEDsPropertyColumn.HeaderText = "";
+            this.controlLEDsPropertyColumn.Name = "controlLEDsPropertyColumn";
+            this.controlLEDsPropertyColumn.ReadOnly = true;
+            this.controlLEDsPropertyColumn.Width = 120;
+            // 
+            // controlLEDsCy5Column
+            // 
+            this.controlLEDsCy5Column.HeaderText = "Cy5";
+            this.controlLEDsCy5Column.Name = "controlLEDsCy5Column";
+            this.controlLEDsCy5Column.Width = 50;
+            // 
+            // controlLEDsFAMColumn
+            // 
+            this.controlLEDsFAMColumn.HeaderText = "FAM";
+            this.controlLEDsFAMColumn.Name = "controlLEDsFAMColumn";
+            this.controlLEDsFAMColumn.Width = 50;
+            // 
+            // controlLEDsHEXColumn
+            // 
+            this.controlLEDsHEXColumn.HeaderText = "HEX";
+            this.controlLEDsHEXColumn.Name = "controlLEDsHEXColumn";
+            this.controlLEDsHEXColumn.Width = 50;
+            // 
+            // controlLEDsAttoColumn
+            // 
+            this.controlLEDsAttoColumn.HeaderText = "Atto";
+            this.controlLEDsAttoColumn.Name = "controlLEDsAttoColumn";
+            this.controlLEDsAttoColumn.Width = 50;
+            // 
+            // controlLEDsAlexaColumn
+            // 
+            this.controlLEDsAlexaColumn.HeaderText = "Alexa";
+            this.controlLEDsAlexaColumn.Name = "controlLEDsAlexaColumn";
+            this.controlLEDsAlexaColumn.Width = 50;
+            // 
+            // controlLEDsCy5p5Column
+            // 
+            this.controlLEDsCy5p5Column.HeaderText = "Cy5.5";
+            this.controlLEDsCy5p5Column.Name = "controlLEDsCy5p5Column";
+            this.controlLEDsCy5p5Column.Width = 50;
+            // 
             // independentReaderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -787,6 +1150,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.runSampleMetaDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.runImagingSetupDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.runExperimentDataGridView)).EndInit();
+            this.controlTabPage.ResumeLayout(false);
+            this.controlTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.controlMotorsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlTECsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.controlLEDsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -803,24 +1171,11 @@
         private TabPage settingsTabPage;
         private TabPage metrologyTabPage;
         private DataGridView homeMotorsDataGridView;
-        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
-        private DataGridViewTextBoxColumn homeMotorsIOColumn;
-        private DataGridViewTextBoxColumn homeMotorsStateColumn;
-        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
-        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
-        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
         private Label homeMotorsLabel;
         private DataGridView homeCameraDataGridView;
         private Label homeCameraLabel;
         private DataGridView homeLEDsDataGridView;
         private Label homeLEDsLabel;
-        private DataGridViewTextBoxColumn homeLEDsPropertiesColumn;
-        private DataGridViewTextBoxColumn homeLEDsCy5Column;
-        private DataGridViewTextBoxColumn homeLEDsFAMColumn;
-        private DataGridViewTextBoxColumn homeLEDsHEXColumn;
-        private DataGridViewTextBoxColumn homeLEDsAttoColumn;
-        private DataGridViewTextBoxColumn homeLEDsAlexaColumn;
-        private DataGridViewTextBoxColumn homeLEDsCy55Column;
         private DataGridView homeTECsDataGridView;
         private Label homeTECsLabel;
         private DataGridViewTextBoxColumn homeTECsProprtyColumn;
@@ -857,7 +1212,51 @@
         private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
         private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
         private DataGridViewTextBoxColumn runExperimentDataValueColumn;
+        private Button runClearFormButton;
         private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
         private DataGridViewTextBoxColumn runImagingSetupValueColumn;
+        private DataGridViewTextBoxColumn homeLEDsPropertiesColumn;
+        private DataGridViewTextBoxColumn homeLEDsCy5Column;
+        private DataGridViewTextBoxColumn homeLEDsFAMColumn;
+        private DataGridViewTextBoxColumn homeLEDsHEXColumn;
+        private DataGridViewTextBoxColumn homeLEDsAttoColumn;
+        private DataGridViewTextBoxColumn homeLEDsAlexaColumn;
+        private DataGridViewTextBoxColumn homeLEDsCy55Column;
+        private Button controlMoveButton;
+        private ComboBox controlMotorsComboBox;
+        private DataGridView controlMotorsDataGridView;
+        private DataGridViewTextBoxColumn controlMotorsMotorColumn;
+        private DataGridViewTextBoxColumn controlMotorsIOColumn;
+        private DataGridViewTextBoxColumn controlMotorsPositionColumn;
+        private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn controlMotorsHomeColumn;
+        private Label controlMotorsLabel;
+        private Label controlTECsLabel;
+        private Button controlHomeButton;
+        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
+        private DataGridViewTextBoxColumn homeMotorsIOColumn;
+        private DataGridViewTextBoxColumn homeMotorsStateColumn;
+        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
+        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
+        private DataGridView controlLEDsDataGridView;
+        private DataGridViewTextBoxColumn controlLEDsPropertyColumn;
+        private DataGridViewTextBoxColumn controlLEDsCy5Column;
+        private DataGridViewTextBoxColumn controlLEDsFAMColumn;
+        private DataGridViewTextBoxColumn controlLEDsHEXColumn;
+        private DataGridViewTextBoxColumn controlLEDsAttoColumn;
+        private DataGridViewTextBoxColumn controlLEDsAlexaColumn;
+        private DataGridViewTextBoxColumn controlLEDsCy5p5Column;
+        private Label controlLEDsLabel;
+        private Button controlTECDSetTempButton;
+        private Button controlTECCSetTempButton;
+        private Button controlTECBSetTempButton;
+        private Button controlTECASetTempButton;
+        private DataGridView controlTECsDataGridView;
+        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
+        private DataGridViewTextBoxColumn controlTECsTECAColumn;
+        private DataGridViewTextBoxColumn controlTECsTECBColumn;
+        private DataGridViewTextBoxColumn controlTECsTECCColumn;
+        private DataGridViewTextBoxColumn controlTECsTECDColumn;
     }
 }

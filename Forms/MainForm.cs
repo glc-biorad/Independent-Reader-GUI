@@ -19,7 +19,15 @@ namespace Independent_Reader_GUI
             AddRunImagingSetupDefaultData();
 
             // Add formatting to the data grid views
-            this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.dataGridView_CellFormatting);
+            this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
+            this.homeMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.homeTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.homeCameraDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.homeLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.dataGridView_SetupComboBoxes();
+
+            // Subscribe to the load event of this form to set defaults on form loading
+            this.Load += new EventHandler(this.Form_Load);
         }
 
         /// <summary>
@@ -30,38 +38,38 @@ namespace Independent_Reader_GUI
             MotorData homeMotorsX = new MotorData 
             {
                 Name = "x",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "0",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "300000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsY = new MotorData 
             {
                 Name = "y",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "0",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "400000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsZ = new MotorData
             {
                 Name = "z",
-                IO = "Moving",
-                State = "Connected",
+                IO = "?",
+                State = "Not Connected",
                 Steps = "?",
                 Speed = "300000",
-                Home = "Not Homed"
+                Home = "?"
             };
             MotorData homeMotorsFilterWheel = new MotorData
             {
                 Name = "Filter Wheel",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "21000",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "100000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsClampA = new MotorData
             {
@@ -75,47 +83,47 @@ namespace Independent_Reader_GUI
             MotorData homeMotorsClampB = new MotorData
             {
                 Name = "Clamp B",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "0",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "80000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsClampC = new MotorData
             {
                 Name = "Clamp C",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "350000",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "80000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsClampD = new MotorData
             {
                 Name = "Clamp D",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "450000",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "80000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsTrayAB = new MotorData
             {
                 Name = "Tray AB",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "0",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "200000",
-                Home = "Homed"
+                Home = "?"
             };
             MotorData homeMotorsTrayCD = new MotorData
             {
                 Name = "Tray CD",
-                IO = "Idle",
-                State = "Connected",
-                Steps = "790000",
+                IO = "?",
+                State = "Not Connected",
+                Steps = "?",
                 Speed = "200000",
-                Home = "Homed"
+                Home = "?"
             };
             homeMotorsDataGridView.Rows.Add(homeMotorsX.Name, homeMotorsX.IO, homeMotorsX.State, homeMotorsX.Steps, homeMotorsX.Speed, homeMotorsX.Home);           
             homeMotorsDataGridView.Rows.Add(homeMotorsY.Name, homeMotorsY.IO, homeMotorsY.State, homeMotorsY.Steps, homeMotorsY.Speed, homeMotorsY.Home);           
@@ -136,7 +144,7 @@ namespace Independent_Reader_GUI
         {
             CameraData homeCamera = new CameraData
             {
-                State = "Connected",
+                State = "Not Connected",
                 Exposure = "600000",
                 Temp = "3400"
             };
@@ -151,46 +159,46 @@ namespace Independent_Reader_GUI
             LEDsData homeLEDsState = new LEDsData
             {
                 PropertyName = "State",
-                ValueCy5 = "C",
-                ValueFAM = "C",
-                ValueHEX = "C",
-                ValueAtto = "C",
-                ValueAlexa = "C",
+                ValueCy5 = "N",
+                ValueFAM = "N",
+                ValueHEX = "N",
+                ValueAtto = "N",
+                ValueAlexa = "N",
                 ValueCy5p5 = "N",
             };
             LEDsData homeLEDsIO = new LEDsData
             {
                 PropertyName = "IO",
                 ValueCy5 = "Off",
-                ValueFAM = "On",
+                ValueFAM = "Off",
                 ValueHEX = "Off",
                 ValueAtto = "Off",
                 ValueAlexa = "Off",
                 ValueCy5p5 = "Off",
             };
-            LEDsData homeLEDsID = new LEDsData
+            LEDsData homeLEDsExposure = new LEDsData
             {
-                PropertyName = "ID",
-                ValueCy5 = "3",
-                ValueFAM = "1",
-                ValueHEX = "5",
-                ValueAtto = "2",
-                ValueAlexa = "4",
-                ValueCy5p5 = "6",
+                PropertyName = "Exposure (ms)",
+                ValueCy5 = "300000",
+                ValueFAM = "600000",
+                ValueHEX = "500000",
+                ValueAtto = "200000",
+                ValueAlexa = "400000",
+                ValueCy5p5 = "600000",
             };
             LEDsData homeLEDsIntensity = new LEDsData
             {
                 PropertyName = "Intensity (%)",
-                ValueCy5 = "20",
-                ValueFAM = "20",
-                ValueHEX = "20",
-                ValueAtto = "20",
-                ValueAlexa = "20",
-                ValueCy5p5 = "20",
+                ValueCy5 = "0",
+                ValueFAM = "0",
+                ValueHEX = "0",
+                ValueAtto = "0",
+                ValueAlexa = "0",
+                ValueCy5p5 = "0",
             };
             homeLEDsDataGridView.Rows.Add(homeLEDsState.PropertyName, homeLEDsState.ValueCy5, homeLEDsState.ValueFAM, homeLEDsState.ValueHEX, homeLEDsState.ValueAtto, homeLEDsState.ValueAlexa, homeLEDsState.ValueCy5p5);
             homeLEDsDataGridView.Rows.Add(homeLEDsIO.PropertyName, homeLEDsIO.ValueCy5, homeLEDsIO.ValueFAM, homeLEDsIO.ValueHEX, homeLEDsIO.ValueAtto, homeLEDsIO.ValueAlexa, homeLEDsIO.ValueCy5p5);
-            homeLEDsDataGridView.Rows.Add(homeLEDsID.PropertyName, homeLEDsID.ValueCy5, homeLEDsID.ValueFAM, homeLEDsID.ValueHEX, homeLEDsID.ValueAtto, homeLEDsID.ValueAlexa, homeLEDsID.ValueCy5p5);
+            homeLEDsDataGridView.Rows.Add(homeLEDsExposure.PropertyName, homeLEDsExposure.ValueCy5, homeLEDsExposure.ValueFAM, homeLEDsExposure.ValueHEX, homeLEDsExposure.ValueAtto, homeLEDsExposure.ValueAlexa, homeLEDsExposure.ValueCy5p5);
             homeLEDsDataGridView.Rows.Add(homeLEDsIntensity.PropertyName, homeLEDsIntensity.ValueCy5, homeLEDsIntensity.ValueFAM, homeLEDsIntensity.ValueHEX, homeLEDsIntensity.ValueAtto, homeLEDsIntensity.ValueAlexa, homeLEDsIntensity.ValueCy5p5);
         }
 
@@ -202,50 +210,50 @@ namespace Independent_Reader_GUI
             TECsData homeTECsState = new TECsData
             {
                 PropertyName = "State",
-                ValueTECA = "Connected",
-                ValueTECB = "Connected",
-                ValueTECC = "Connected",
-                ValueTECD = "Connected",
+                ValueTECA = "Not Connected",
+                ValueTECB = "Not Connected",
+                ValueTECC = "Not Connected",
+                ValueTECD = "Not Connected",
             };
             TECsData homeTECsIO = new TECsData
             {
                 PropertyName = "IO",
-                ValueTECA = "Ramping Up",
-                ValueTECB = "Disabled",
-                ValueTECC = "Ramping Down",
-                ValueTECD = "Holding",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsActualTemp = new TECsData
             {
                 PropertyName = "Actual Temp (C)",
-                ValueTECA = "37.8",
-                ValueTECB = "24.2",
-                ValueTECC = "63.5",
-                ValueTECD = "28.7",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsTargetTemp = new TECsData
             {
                 PropertyName = "Target Temp (C)",
-                ValueTECA = "94.0",
-                ValueTECB = "30.0",
-                ValueTECC = "45.0",
-                ValueTECD = "30.0",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsTempEnabled = new TECsData
             {
                 PropertyName = "Temp Enabled",
-                ValueTECA = "On",
-                ValueTECB = "Off",
-                ValueTECC = "On",
-                ValueTECD = "On",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsSinkTemp = new TECsData
             {
                 PropertyName = "Sink Temp (C)",
-                ValueTECA = "42.1",
-                ValueTECB = "24.9",
-                ValueTECC = "88.3",
-                ValueTECD = "32.9",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsSinkTempMax = new TECsData
             {
@@ -258,10 +266,10 @@ namespace Independent_Reader_GUI
             TECsData homeTECsFanRPM = new TECsData
             {
                 PropertyName = "Fan RPM",
-                ValueTECA = "0",
-                ValueTECB = "0",
-                ValueTECC = "12000",
-                ValueTECD = "0",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsFanOnTemp = new TECsData
             {
@@ -282,10 +290,10 @@ namespace Independent_Reader_GUI
             TECsData homeTECsCurrent = new TECsData
             {
                 PropertyName = "Current (A)",
-                ValueTECA = "0.1",
-                ValueTECB = "0.1",
-                ValueTECC = "0.1",
-                ValueTECD = "0.1",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsMaxCurrent = new TECsData
             {
@@ -298,10 +306,10 @@ namespace Independent_Reader_GUI
             TECsData homeTECsVoltage = new TECsData
             {
                 PropertyName = "Voltage (V)",
-                ValueTECA = "24.0",
-                ValueTECB = "24.0",
-                ValueTECC = "24.0",
-                ValueTECD = "24.0",
+                ValueTECA = "?",
+                ValueTECB = "?",
+                ValueTECC = "?",
+                ValueTECD = "?",
             };
             TECsData homeTECsMaxVoltage = new TECsData
             {
@@ -355,13 +363,42 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
         }
 
+        /// <summary>
+        /// Add default data to the Run Imaging Setup Data Grid View upon loading the Form
+        /// </summary>
         private void AddRunImagingSetupDefaultData()
         {
             ImagingSetupData runImagingSetupData = new ImagingSetupData();
             runImagingSetupDataGridView.Rows.Add("Image Before", runImagingSetupData.ImageBefore);
+            runImagingSetupDataGridView.Rows.Add("Image During (FOV)", runImagingSetupData.ImageDuringFOV);
+            runImagingSetupDataGridView.Rows.Add("Image During Frequency (FOV)", runImagingSetupData.ImageDuringFrequencyFOV);
+            runImagingSetupDataGridView.Rows.Add("Image During (Assay)", runImagingSetupData.ImageDuringAssay);
+            runImagingSetupDataGridView.Rows.Add("Image During Frequency (Assay)", runImagingSetupData.ImageDuringFrequencyAssay);
+            runImagingSetupDataGridView.Rows.Add("Image During (Sample)", runImagingSetupData.ImageDuringFOV);
+            runImagingSetupDataGridView.Rows.Add("Image During Frequency (Sample)", runImagingSetupData.ImageDuringFrequencySample);
+            runImagingSetupDataGridView.Rows.Add("Image After", runImagingSetupData.ImageAfter);
+            runImagingSetupDataGridView.Rows.Add("S3 Bucket Path", runImagingSetupData.S3BucketPath);
+            runImagingSetupDataGridView.Rows.Add("Local Path", runImagingSetupData.LocalPath);
+            runImagingSetupDataGridView.Rows.Add("Image in Cy5", runImagingSetupData.ImageInCy5);
+            runImagingSetupDataGridView.Rows.Add("Image in FAM", runImagingSetupData.ImageInFAM);
+            runImagingSetupDataGridView.Rows.Add("Image in HEX", runImagingSetupData.ImageInHEX);
+            runImagingSetupDataGridView.Rows.Add("Image in Atto", runImagingSetupData.ImageInAtto);
+            runImagingSetupDataGridView.Rows.Add("Image in Alexa", runImagingSetupData.ImageInAlexa);
+            runImagingSetupDataGridView.Rows.Add("Image in Cy5.5", runImagingSetupData.ImageInCy5p5);
+            runImagingSetupDataGridView.Rows.Add("Cy5 Exposure (ms)", runImagingSetupData.ExposureCy5);
+            runImagingSetupDataGridView.Rows.Add("FAM Exposure (ms)", runImagingSetupData.ExposureFAM);
+            runImagingSetupDataGridView.Rows.Add("HEX Exposure (ms)", runImagingSetupData.ExposureHEX);
+            runImagingSetupDataGridView.Rows.Add("Atto Exposure (ms)", runImagingSetupData.ExposureAtto);
+            runImagingSetupDataGridView.Rows.Add("Alexa Exposure (ms)", runImagingSetupData.ExposureAlexa);
+            runImagingSetupDataGridView.Rows.Add("Cy5.5 Exposure (ms)", runImagingSetupData.ExposureCy5p5);
         }
 
-        private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        /// <summary>
+        /// Cell Formatting for the Data Grid Views upon loading the Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             // Only add tool tips to the property column of the data grid view
             if (e.ColumnIndex == 0)
@@ -370,11 +407,144 @@ namespace Independent_Reader_GUI
                 var cellValue = runExperimentDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (cellValue != null )
                 {
+                    // Add Tool Tip Tex where necessary
                     DataGridViewToolTipFormatter ToolTipFormatter = new DataGridViewToolTipFormatter();
                     string toolTipText = ToolTipFormatter.GetCellValueToolTipText(cellValue.ToString());
                     runExperimentDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].ToolTipText = toolTipText;
                 }
             }
+        }
+
+        /// <summary>
+        /// Cell Formatting for all Data Grid Views on the Home Tab upon loading of the main Form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void homeDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var cellValue = e.Value as string;
+            if (cellValue.Equals("Connected"))
+            {
+                // Change Connected cells to MediumSeaGreen
+                e.CellStyle.BackColor = Color.MediumSeaGreen;
+                e.CellStyle.ForeColor = Color.White;
+            }
+            else if (cellValue.Equals("C"))
+            {
+                // Change C cells to MediumSeaGreen
+                e.CellStyle.BackColor = Color.MediumSeaGreen;
+                e.CellStyle.ForeColor = Color.White;
+            }
+            else if (cellValue.Contains("Not"))
+            {
+                // Change Not cells to IndianRed
+                e.CellStyle.BackColor = Color.IndianRed;
+                e.CellStyle.ForeColor = Color.White;
+            }
+            else if (cellValue.Equals("N"))
+            {
+                // Change N cells to IndianRed
+                e.CellStyle.BackColor = Color.IndianRed;
+                e.CellStyle.ForeColor = Color.White;
+            }
+            else if (cellValue.Equals("?"))
+            {
+                // Change ? cells to Gold
+                e.CellStyle.BackColor = Color.Gold;
+                e.CellStyle.ForeColor = Color.Black;
+            }
+            else
+            {
+                e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
+                e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
+            }
+        }
+
+        /// <summary>
+        /// Setup of the Combo Boxes for all Data Grid Views in the Form upon loading
+        /// </summary>
+        private void dataGridView_SetupComboBoxes()
+        {
+            // Iterate through the Data Grid Views to setup combo boxes
+            foreach (DataGridViewRow row in runExperimentDataGridView.Rows)
+            {
+                if (!row.IsNewRow) // check to skip the new row template
+                {
+                    var cellValue = row.Cells[0].Value; // Obtain the cell value in the first column
+                    if (cellValue != null)
+                    {
+                        DataGridViewComboBoxFormatter ComboBoxFormater = new DataGridViewComboBoxFormatter();
+                        var comboBoxCell = ComboBoxFormater.GetCellValueComboBox(cellValue.ToString());
+                        if (comboBoxCell != null)
+                        {
+                            row.Cells[1] = comboBoxCell;
+                        }
+                    }
+                }
+            }
+            foreach (DataGridViewRow row in runImagingSetupDataGridView.Rows)
+            {
+                if (!row.IsNewRow) // check to skip the new row template
+                {
+                    var cellValue = row.Cells[0].Value; // Obtain the cell value in the first column
+                    if (cellValue != null)
+                    {
+                        DataGridViewComboBoxFormatter ComboBoxFormater = new DataGridViewComboBoxFormatter();
+                        var comboBoxCell = ComboBoxFormater.GetCellValueComboBox(cellValue.ToString());
+                        if (comboBoxCell != null)
+                        {
+                            row.Cells[1] = comboBoxCell;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Form_Load(object sender, EventArgs e)
+        {
+            // Change the default cell selection for data grid views on form loading
+            homeMotorsDataGridView.ClearSelection();
+            homeTECsDataGridView.ClearSelection();
+            homeCameraDataGridView.ClearSelection();
+            homeLEDsDataGridView.ClearSelection();
+            runExperimentDataGridView.CurrentCell = runExperimentDataGridView.Rows[0].Cells[1];
+            runImagingSetupDataGridView.CurrentCell = runImagingSetupDataGridView.Rows[0].Cells[1];
+        }
+
+        /// <summary>
+        /// Click event for the Run tab Add Sample button. Will only add a new sample if all other data
+        /// is filled in the Sample Meta data grid view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runAddSampleButton_Click(object sender, EventArgs e)
+        {
+            // Add a new row only if the other rows are filled out otherwise provide a warning to the user.
+            foreach (DataGridViewRow row in runSampleMetaDataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Value == string.Empty)
+                    {
+                        // Warning message 
+                        MessageBox.Show("Sample Meta Data Form is missing data, complete form before adding more samples.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+            object[] newRow = new object[] {string.Empty,string.Empty};
+            runSampleMetaDataGridView.Rows.Add(newRow);
+        }
+
+        /// <summary>
+        /// Click event for the Run tab Remove Sample button. Will delete all selected cell rows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runRemoveSampleButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewContentDeleter ContentDeleter = new DataGridViewContentDeleter();
+            ContentDeleter.DeleteSelectedRows(runSampleMetaDataGridView);
         }
     }
 }
