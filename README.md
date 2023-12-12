@@ -7,7 +7,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - C#
 - .NET Framework 6.0
 - Window Forms
-- OxyPlot for Charting
+- OxyPlot.WindowsForms 2.1.2 for Charting
 
 ## Getting Started
 ### Prerequists
