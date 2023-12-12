@@ -1,5 +1,8 @@
 ﻿using Independent_Reader_GUI.Models;
 using Independent_Reader_GUI.Utilities;
+using OxyPlot;
+using OxyPlot.Annotations;
+using OxyPlot.Series;
 using System.ComponentModel;
 
 namespace Independent_Reader_GUI
@@ -17,6 +20,12 @@ namespace Independent_Reader_GUI
             AddHomeTECsDefaultData();
             AddRunExperimentDefaultData();
             AddRunImagingSetupDefaultData();
+            AddControlMotorsDefaultData();
+            AddControlLEDsDefaultData();
+            AddControlTECsDefaultData();
+
+            // Add default plots
+            AddThermocyclingDefaultPlot();
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
@@ -40,7 +49,7 @@ namespace Independent_Reader_GUI
                 Name = "x",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "300000",
                 Home = "?"
             };
@@ -49,7 +58,7 @@ namespace Independent_Reader_GUI
                 Name = "y",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "400000",
                 Home = "?"
             };
@@ -58,7 +67,7 @@ namespace Independent_Reader_GUI
                 Name = "z",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "300000",
                 Home = "?"
             };
@@ -67,7 +76,7 @@ namespace Independent_Reader_GUI
                 Name = "Filter Wheel",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "100000",
                 Home = "?"
             };
@@ -76,7 +85,7 @@ namespace Independent_Reader_GUI
                 Name = "Clamp A",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "80000",
                 Home = "?"
             };
@@ -85,7 +94,7 @@ namespace Independent_Reader_GUI
                 Name = "Clamp B",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "80000",
                 Home = "?"
             };
@@ -94,7 +103,7 @@ namespace Independent_Reader_GUI
                 Name = "Clamp C",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "80000",
                 Home = "?"
             };
@@ -103,7 +112,7 @@ namespace Independent_Reader_GUI
                 Name = "Clamp D",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "80000",
                 Home = "?"
             };
@@ -112,7 +121,7 @@ namespace Independent_Reader_GUI
                 Name = "Tray AB",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "200000",
                 Home = "?"
             };
@@ -121,20 +130,20 @@ namespace Independent_Reader_GUI
                 Name = "Tray CD",
                 IO = "?",
                 State = "Not Connected",
-                Steps = "?",
+                Position = "?",
                 Speed = "200000",
                 Home = "?"
             };
-            homeMotorsDataGridView.Rows.Add(homeMotorsX.Name, homeMotorsX.IO, homeMotorsX.State, homeMotorsX.Steps, homeMotorsX.Speed, homeMotorsX.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsY.Name, homeMotorsY.IO, homeMotorsY.State, homeMotorsY.Steps, homeMotorsY.Speed, homeMotorsY.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsZ.Name, homeMotorsZ.IO, homeMotorsZ.State, homeMotorsZ.Steps, homeMotorsZ.Speed, homeMotorsZ.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsFilterWheel.Name, homeMotorsFilterWheel.IO, homeMotorsFilterWheel.State, homeMotorsFilterWheel.Steps, homeMotorsFilterWheel.Speed, homeMotorsFilterWheel.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampA.Name, homeMotorsClampA.IO, homeMotorsClampA.State, homeMotorsClampA.Steps, homeMotorsClampA.Speed, homeMotorsClampA.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampB.Name, homeMotorsClampB.IO, homeMotorsClampB.State, homeMotorsClampB.Steps, homeMotorsClampB.Speed, homeMotorsClampB.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampC.Name, homeMotorsClampC.IO, homeMotorsClampC.State, homeMotorsClampC.Steps, homeMotorsClampC.Speed, homeMotorsClampC.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampD.Name, homeMotorsClampD.IO, homeMotorsClampD.State, homeMotorsClampD.Steps, homeMotorsClampD.Speed, homeMotorsClampD.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsTrayAB.Name, homeMotorsTrayAB.IO, homeMotorsTrayAB.State, homeMotorsTrayAB.Steps, homeMotorsTrayAB.Speed, homeMotorsTrayAB.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsTrayCD.Name, homeMotorsTrayCD.IO, homeMotorsTrayCD.State, homeMotorsTrayCD.Steps, homeMotorsTrayCD.Speed, homeMotorsTrayCD.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsX.Name, homeMotorsX.IO, homeMotorsX.State, homeMotorsX.Position, homeMotorsX.Speed, homeMotorsX.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsY.Name, homeMotorsY.IO, homeMotorsY.State, homeMotorsY.Position, homeMotorsY.Speed, homeMotorsY.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsZ.Name, homeMotorsZ.IO, homeMotorsZ.State, homeMotorsZ.Position, homeMotorsZ.Speed, homeMotorsZ.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsFilterWheel.Name, homeMotorsFilterWheel.IO, homeMotorsFilterWheel.State, homeMotorsFilterWheel.Position, homeMotorsFilterWheel.Speed, homeMotorsFilterWheel.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampA.Name, homeMotorsClampA.IO, homeMotorsClampA.State, homeMotorsClampA.Position, homeMotorsClampA.Speed, homeMotorsClampA.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampB.Name, homeMotorsClampB.IO, homeMotorsClampB.State, homeMotorsClampB.Position, homeMotorsClampB.Speed, homeMotorsClampB.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampC.Name, homeMotorsClampC.IO, homeMotorsClampC.State, homeMotorsClampC.Position, homeMotorsClampC.Speed, homeMotorsClampC.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampD.Name, homeMotorsClampD.IO, homeMotorsClampD.State, homeMotorsClampD.Position, homeMotorsClampD.Speed, homeMotorsClampD.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsTrayAB.Name, homeMotorsTrayAB.IO, homeMotorsTrayAB.State, homeMotorsTrayAB.Position, homeMotorsTrayAB.Speed, homeMotorsTrayAB.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsTrayCD.Name, homeMotorsTrayCD.IO, homeMotorsTrayCD.State, homeMotorsTrayCD.Position, homeMotorsTrayCD.Speed, homeMotorsTrayCD.Home);           
         }
 
         /// <summary>
@@ -225,7 +234,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsActualTemp = new TECsData
             {
-                PropertyName = "Actual Temp (C)",
+                PropertyName = "Actual Temp (\u00B0C)",
                 ValueTECA = "?",
                 ValueTECB = "?",
                 ValueTECC = "?",
@@ -233,7 +242,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsTargetTemp = new TECsData
             {
-                PropertyName = "Target Temp (C)",
+                PropertyName = "Target Temp (\u00B0C)",
                 ValueTECA = "?",
                 ValueTECB = "?",
                 ValueTECC = "?",
@@ -249,7 +258,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsSinkTemp = new TECsData
             {
-                PropertyName = "Sink Temp (C)",
+                PropertyName = "Sink Temp (\u00B0C)",
                 ValueTECA = "?",
                 ValueTECB = "?",
                 ValueTECC = "?",
@@ -257,7 +266,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsSinkTempMax = new TECsData
             {
-                PropertyName = "Sink Temp Max (C)",
+                PropertyName = "Sink Temp Max (\u00B0C)",
                 ValueTECA = "101.0",
                 ValueTECB = "101.0",
                 ValueTECC = "101.0",
@@ -273,7 +282,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsFanOnTemp = new TECsData
             {
-                PropertyName = "Fan on Temp (C)",
+                PropertyName = "Fan on Temp (\u00B0C)",
                 ValueTECA = "30.0",
                 ValueTECB = "30.0",
                 ValueTECC = "30.0",
@@ -281,7 +290,7 @@ namespace Independent_Reader_GUI
             };
             TECsData homeTECsFanOffTemp = new TECsData
             {
-                PropertyName = "Fan off Temp (C)",
+                PropertyName = "Fan off Temp (\u00B0C)",
                 ValueTECA = "30.0",
                 ValueTECB = "30.0",
                 ValueTECC = "30.0",
@@ -394,6 +403,79 @@ namespace Independent_Reader_GUI
         }
 
         /// <summary>
+        /// Add default data to the Control Motors Data Grid View upon loading the Form
+        /// </summary>
+        private void AddControlMotorsDefaultData()
+        {
+            MotorData controlMotorData = new MotorData();
+            controlMotorsDataGridView.Rows.Add("x", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("y", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("z", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+        }
+
+        /// <summary>
+        /// Add default data to the Control LEDs Data Grid View upon loading the Form
+        /// </summary>
+        private void AddControlLEDsDefaultData()
+        {
+            LEDsData controlLEDsData = new LEDsData();
+            controlLEDsDataGridView.Rows.Add("State", "N", "N", "N", "N", "N", "N");
+            controlLEDsDataGridView.Rows.Add("IO", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
+            controlLEDsDataGridView.Rows.Add("Intensity (%)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
+            controlLEDsDataGridView.Rows.Add("Exposure (ms)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
+        }
+
+        private void AddControlTECsDefaultData()
+        {
+            TECsData controlTECsData = new TECsData();
+            controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
+            controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Actual Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Target Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Temp Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Sink Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Sink Temp Max (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Fan RPM", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Fan off Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Max Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Max Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+        }
+
+        /// <summary>
+        ///  Add default plot to the Thermocycling Plot View upon loading the Form
+        /// </summary>
+        private void AddThermocyclingDefaultPlot()
+        {
+            var model = new PlotModel { Title = "Thermocycling Protocol" };
+            var series = new LineSeries();
+            // TODO: Replace this default plot with data pulled from a protocol json file
+            #region 
+            // Plot the protocol
+            series.Points.Add(new DataPoint(0, 20));
+            series.Points.Add(new DataPoint(10, 20));
+            series.Points.Add(new DataPoint(10, 20));
+            series.Points.Add(new DataPoint(20, 20));
+            model.Series.Add(series);
+            var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 20), Text = "20\u00B0C" };
+            var stepAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 15), Text = "Step 1" };
+            model.Annotations.Add(tempAnnotation);
+            model.Annotations.Add(stepAnnotation);
+            #endregion
+            // Assign the model to the plot view
+            thermocyclingPlotView.Model = model;
+        }
+
+        /// <summary>
         /// Cell Formatting for the Data Grid Views upon loading the Form
         /// </summary>
         /// <param name="sender"></param>
@@ -435,23 +517,23 @@ namespace Independent_Reader_GUI
                 e.CellStyle.BackColor = Color.MediumSeaGreen;
                 e.CellStyle.ForeColor = Color.White;
             }
-            else if (cellValue.Contains("Not"))
+            else if (cellValue.Equals("Not Connected"))
             {
-                // Change Not cells to IndianRed
-                e.CellStyle.BackColor = Color.IndianRed;
+                // Change Not cells to Red
+                e.CellStyle.BackColor = Color.Red;
                 e.CellStyle.ForeColor = Color.White;
             }
             else if (cellValue.Equals("N"))
             {
-                // Change N cells to IndianRed
-                e.CellStyle.BackColor = Color.IndianRed;
+                // Change N cells to Red
+                e.CellStyle.BackColor = Color.Red;
                 e.CellStyle.ForeColor = Color.White;
             }
-            else if (cellValue.Equals("?"))
+            else if (cellValue.Equals("Not Homed"))
             {
-                // Change ? cells to Gold
+                // Change N cells to Gold
                 e.CellStyle.BackColor = Color.Gold;
-                e.CellStyle.ForeColor = Color.Black;
+                e.CellStyle.ForeColor = Color.White;
             }
             else
             {
@@ -545,6 +627,90 @@ namespace Independent_Reader_GUI
         {
             DataGridViewContentDeleter ContentDeleter = new DataGridViewContentDeleter();
             ContentDeleter.DeleteSelectedRows(runSampleMetaDataGridView);
+        }
+
+        /// <summary>
+        /// Click event for the Control Tab Move motor button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlMoveButton_Click(object sender, EventArgs e)
+        {
+            // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
+            #region To be replaced with a new Utility class for checking if a motor is connected
+            int columnIndex = -1;
+            string motorState = string.Empty;
+            DataGridViewColumnSearcher ColumnSearcher = new DataGridViewColumnSearcher();
+            // Get the motor to be moved
+            string motorName = controlMotorsComboBox.Text;
+            // Get the state of the motor
+            if (motorName != string.Empty)
+            {                
+                foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
+                {
+                    if (row.Cells[0].Value.ToString() == motorName)
+                    {
+                        columnIndex = ColumnSearcher.GetColumnIndexFromHeaderText("State", controlMotorsDataGridView);
+                        motorState = row.Cells[columnIndex].Value.ToString();
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+            // Move if possible else warn the user
+            if (motorState == "Not Connected")
+            {
+                MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            #endregion
+            else
+            {
+                MessageBox.Show("Code not written yet to move motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Click event for the Control Tab Home motor button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlHomeButton_Click(object sender, EventArgs e)
+        {
+            // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
+            #region To be replaced with a new Utility class for checking if a motor is connected
+            int columnIndex = -1;
+            string motorState = string.Empty;
+            DataGridViewColumnSearcher ColumnSearcher = new DataGridViewColumnSearcher();
+            // Get the motor to be homed
+            string motorName = controlMotorsComboBox.Text;
+            // Get the state of the motor
+            if (motorName != string.Empty)
+            {
+                foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
+                {
+                    if (row.Cells[0].Value.ToString() == motorName)
+                    {
+                        columnIndex = ColumnSearcher.GetColumnIndexFromHeaderText("State", controlMotorsDataGridView);
+                        motorState = row.Cells[columnIndex].Value.ToString();
+                    }
+                }
+            }
+            else
+            {
+                return;
+            }
+            // Home if possible else warn the user
+            if (motorState == "Not Connected")
+            {
+                MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            #endregion
+            else
+            {
+                MessageBox.Show("Code not written yet to home motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
