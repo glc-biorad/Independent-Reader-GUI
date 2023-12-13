@@ -1,4 +1,5 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Forms;
+using Independent_Reader_GUI.Models;
 using Independent_Reader_GUI.Services;
 using Independent_Reader_GUI.Utilities;
 using OxyPlot;
@@ -11,7 +12,7 @@ namespace Independent_Reader_GUI
     public partial class independentReaderForm : Form
     {
         // Private attributes
-        private ThermocyclingProtocolPlotManager PlotManager = new ThermocyclingProtocolPlotManager();
+        private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
 
         /// <summary>
         /// Initialization of the Form
@@ -48,7 +49,7 @@ namespace Independent_Reader_GUI
             this.dataGridView_SetupComboBoxes();
 
             // Wire up mouse down events
-            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
+            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);         
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -507,7 +508,7 @@ namespace Independent_Reader_GUI
             #endregion
             // Assign the model to the plot view
             //thermocyclingPlotView.Model = model;   
-            thermocyclingPlotView.Model = PlotManager.GetPlotModel();
+            thermocyclingPlotView.Model = plotManager.GetPlotModel();
         }
 
         /// <summary>
@@ -748,11 +749,22 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event for the Thermocycling Add Step button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void thermocyclingAddStepButton_Click(object sender, EventArgs e)
         {
-            // FIXME: This code needs to be modified to allow the user to set the temperature 
-            // and the step type
-            PlotManager.AddStep(30, ThermocyclingProtocolStepType.Hold);
+            // Open a Thermocycling Add Step Form window
+            ThermocyclingProtocolAddStepForm addStepForm = new ThermocyclingProtocolAddStepForm();
+            if (addStepForm.ShowDialog() == DialogResult.OK)
+            {
+                double stepTemperature = addStepForm.StepTemperature;
+                string stepTypeName = addStepForm.StepTypeName;
+                double stepTime = addStepForm.StepTime;
+                plotManager.AddStep(stepTemperature, stepTime, stepTypeName);
+            }
         }
 
         /// <summary>
@@ -773,7 +785,7 @@ namespace Independent_Reader_GUI
 
             // Invoke the plot manager's mouse down handler
             // FIXME: Clicking on the Plot View causes the GUI to crash, this needs to be resolved
-            PlotManager.HandleMouseDown(sender, oxyArgs);
+            plotManager.HandleMouseDown(sender, oxyArgs);
         }
     }
 }

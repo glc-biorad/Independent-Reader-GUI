@@ -19,6 +19,7 @@ namespace Independent_Reader_GUI.Services
         private int x = 0; // where a new step will be added along the x-axis
         private int dx = 10; // increment between steps on the x-axis
         private int stepCount = 0;
+        private double yBufferTimeAnnotation = 10.0;
 
         /// <summary>
         /// Initialization of the Thermocycling Protocol Plot Manager Object
@@ -53,6 +54,45 @@ namespace Independent_Reader_GUI.Services
         }
 
         /// <summary>
+        /// Calculate the min and max y values including a buffer to take into account annotations
+        /// </summary>
+        /// <param name="annotationBuffer">Buffer to take into account the text annotations</param>
+        /// <returns></returns>
+        private Tuple<double, double> CalculateMaxMinYValueIncludingAnnotations(double annotationBuffer = 15.0)
+        {
+            double maxYValue = 0.0;
+            double minYValue = 500.0;
+            // Calculate the Max and Min Y Value based on the current highest temperature in the protocol
+            foreach (var point in series.Points)
+            {
+                if (point.Y > maxYValue)
+                {
+                    maxYValue = point.Y;
+                }
+                if (point.Y < minYValue)
+                {
+                    minYValue = point.Y;
+                }
+            }
+            Tuple<double, double> yValueMaxMin = new Tuple<double, double>(maxYValue+annotationBuffer, minYValue-annotationBuffer);
+            return yValueMaxMin;
+        }
+
+        /// <summary>
+        /// Set the Y axis min and max limits
+        /// </summary>
+        private void SetYAxisLimits()
+        {
+            var yAxis = plotModel.Axes.FirstOrDefault(a => a.Position == AxisPosition.Left);
+            if (yAxis != null)
+            {
+                Tuple<double, double> maxMinYValue = CalculateMaxMinYValueIncludingAnnotations();
+                yAxis.Minimum = maxMinYValue.Item2;
+                yAxis.Maximum = maxMinYValue.Item1;
+            }
+        }
+
+        /// <summary>
         /// Get the plot model necessary for the OxyPlot Plot View widget.
         /// </summary>
         /// <returns></returns>
@@ -66,7 +106,7 @@ namespace Independent_Reader_GUI.Services
         /// </summary>
         /// <param name="stepTemperature">Temperature to be set at this step</param>
         /// <param name="stepTypeName">Name of the step type</param>
-        public void AddStep(double stepTemperature, string stepTypeName)
+        public void AddStep(double stepTemperature, double stepTime, string stepTypeName)
         {
             // Setup the section
             var section = Tuple.Create(x, x + dx);
@@ -77,8 +117,10 @@ namespace Independent_Reader_GUI.Services
             // Add annotations for plotting
             var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature), Text = stepTemperature.ToString() + "\u00B0C" };
             var stepAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature), Text = stepTemperature.ToString() + "\u00B0C" };
+            var timeAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature-yBufferTimeAnnotation), Text = stepTime.ToString() + " s"};
             plotModel.Annotations.Add(tempAnnotation);
             plotModel.Annotations.Add(stepAnnotation);
+            plotModel.Annotations.Add(timeAnnotation);
             var sectionStartLine = new LineAnnotation { X = section.Item1, Type = LineAnnotationType.Vertical, Color = OxyColors.Blue };
             var sectionEndLine = new LineAnnotation { X = section.Item2, Type = LineAnnotationType.Vertical, Color = OxyColors.Blue };
             plotModel.Annotations.Add(sectionStartLine);
@@ -86,6 +128,8 @@ namespace Independent_Reader_GUI.Services
             // Increase the step count and x
             stepCount++;
             x = x + dx;
+            // Change the max and min Y value for the y-axis if necessary
+            SetYAxisLimits();
             // Update the plot
             UpdatePlot();
         }
