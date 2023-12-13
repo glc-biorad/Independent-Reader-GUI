@@ -134,7 +134,7 @@
             this.thermocyclingLoadProtocolButton = new System.Windows.Forms.Button();
             this.thermocyclingRemoveStepButton = new System.Windows.Forms.Button();
             this.thermocyclingEditStepButton = new System.Windows.Forms.Button();
-            this.thermocyclingNewProtocolButton = new System.Windows.Forms.Button();
+            this.thermocyclingSaveProtocolButton = new System.Windows.Forms.Button();
             this.thermocyclingAddStepButton = new System.Windows.Forms.Button();
             this.thermocyclingPlotView = new OxyPlot.WindowsForms.PlotView();
             this.imagingTabPage = new System.Windows.Forms.TabPage();
@@ -1054,7 +1054,7 @@
             this.thermocyclingTabPage.Controls.Add(this.thermocyclingLoadProtocolButton);
             this.thermocyclingTabPage.Controls.Add(this.thermocyclingRemoveStepButton);
             this.thermocyclingTabPage.Controls.Add(this.thermocyclingEditStepButton);
-            this.thermocyclingTabPage.Controls.Add(this.thermocyclingNewProtocolButton);
+            this.thermocyclingTabPage.Controls.Add(this.thermocyclingSaveProtocolButton);
             this.thermocyclingTabPage.Controls.Add(this.thermocyclingAddStepButton);
             this.thermocyclingTabPage.Controls.Add(this.thermocyclingPlotView);
             this.thermocyclingTabPage.Location = new System.Drawing.Point(4, 24);
@@ -1069,7 +1069,7 @@
             this.thermocyclingAddGoToButton.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.thermocyclingAddGoToButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.thermocyclingAddGoToButton.ForeColor = System.Drawing.Color.White;
-            this.thermocyclingAddGoToButton.Location = new System.Drawing.Point(8, 537);
+            this.thermocyclingAddGoToButton.Location = new System.Drawing.Point(8, 495);
             this.thermocyclingAddGoToButton.Name = "thermocyclingAddGoToButton";
             this.thermocyclingAddGoToButton.Size = new System.Drawing.Size(129, 36);
             this.thermocyclingAddGoToButton.TabIndex = 16;
@@ -1261,24 +1261,24 @@
             this.thermocyclingEditStepButton.BackColor = System.Drawing.SystemColors.Highlight;
             this.thermocyclingEditStepButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.thermocyclingEditStepButton.ForeColor = System.Drawing.Color.White;
-            this.thermocyclingEditStepButton.Location = new System.Drawing.Point(8, 495);
+            this.thermocyclingEditStepButton.Location = new System.Drawing.Point(8, 537);
             this.thermocyclingEditStepButton.Name = "thermocyclingEditStepButton";
             this.thermocyclingEditStepButton.Size = new System.Drawing.Size(129, 36);
             this.thermocyclingEditStepButton.TabIndex = 3;
             this.thermocyclingEditStepButton.Text = "Edit Step";
             this.thermocyclingEditStepButton.UseVisualStyleBackColor = false;
             // 
-            // thermocyclingNewProtocolButton
+            // thermocyclingSaveProtocolButton
             // 
-            this.thermocyclingNewProtocolButton.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.thermocyclingNewProtocolButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.thermocyclingNewProtocolButton.ForeColor = System.Drawing.Color.White;
-            this.thermocyclingNewProtocolButton.Location = new System.Drawing.Point(143, 453);
-            this.thermocyclingNewProtocolButton.Name = "thermocyclingNewProtocolButton";
-            this.thermocyclingNewProtocolButton.Size = new System.Drawing.Size(129, 36);
-            this.thermocyclingNewProtocolButton.TabIndex = 2;
-            this.thermocyclingNewProtocolButton.Text = "New Protocol";
-            this.thermocyclingNewProtocolButton.UseVisualStyleBackColor = false;
+            this.thermocyclingSaveProtocolButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.thermocyclingSaveProtocolButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.thermocyclingSaveProtocolButton.ForeColor = System.Drawing.Color.White;
+            this.thermocyclingSaveProtocolButton.Location = new System.Drawing.Point(143, 453);
+            this.thermocyclingSaveProtocolButton.Name = "thermocyclingSaveProtocolButton";
+            this.thermocyclingSaveProtocolButton.Size = new System.Drawing.Size(129, 36);
+            this.thermocyclingSaveProtocolButton.TabIndex = 2;
+            this.thermocyclingSaveProtocolButton.Text = "Save Protocol";
+            this.thermocyclingSaveProtocolButton.UseVisualStyleBackColor = false;
             // 
             // thermocyclingAddStepButton
             // 
@@ -1558,7 +1558,7 @@
         private Button thermocyclingLoadProtocolButton;
         private Button thermocyclingRemoveStepButton;
         private Button thermocyclingEditStepButton;
-        private Button thermocyclingNewProtocolButton;
+        private Button thermocyclingSaveProtocolButton;
         private Button thermocyclingAddStepButton;
         private DataGridView thermocyclingProtocolStatusesDataGridView;
         private Label thermocyclingProtocolStatusesLabel;
