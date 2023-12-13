@@ -1267,6 +1267,7 @@
             this.thermocyclingEditStepButton.TabIndex = 3;
             this.thermocyclingEditStepButton.Text = "Edit Step";
             this.thermocyclingEditStepButton.UseVisualStyleBackColor = false;
+            this.thermocyclingEditStepButton.Click += new System.EventHandler(this.thermocyclingEditStepButton_Click);
             // 
             // thermocyclingSaveProtocolButton
             // 
