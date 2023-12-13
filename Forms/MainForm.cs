@@ -787,5 +787,17 @@ namespace Independent_Reader_GUI
             // FIXME: Clicking on the Plot View causes the GUI to crash, this needs to be resolved
             plotManager.HandleMouseDown(sender, oxyArgs);
         }
+
+        private void thermocyclingEditStepButton_Click(object sender, EventArgs e)
+        {
+            // Open a Thermocycling Edit Step Form window
+            ThermocyclingProtocolEditStepForm editStepForm = new ThermocyclingProtocolEditStepForm(plotManager);
+            if (editStepForm.ShowDialog() == DialogResult.OK)
+            {
+                int stepNumber = editStepForm.StepNumber;
+                double stepTemperature = editStepForm.StepTemperature;
+                double stepTime = editStepForm.StepTime;
+            }
+        }
     }
 }

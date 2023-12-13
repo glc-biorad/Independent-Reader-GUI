@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using Independent_Reader_GUI.Models;
+using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -15,6 +16,7 @@ namespace Independent_Reader_GUI.Services
         private PlotModel plotModel;
         private LineSeries series;
         private List<Tuple<int, int>> sections;
+        private List<ThermocyclingProtocolStep> steps = new List<ThermocyclingProtocolStep>();
         private Tuple<int, int> selectedSection = null;
         private int x = 0; // where a new step will be added along the x-axis
         private int dx = 10; // increment between steps on the x-axis
@@ -108,6 +110,9 @@ namespace Independent_Reader_GUI.Services
         /// <param name="stepTypeName">Name of the step type</param>
         public void AddStep(double stepTemperature, double stepTime, string stepTypeName)
         {
+            // Add this step to the list
+            ThermocyclingProtocolStep step = new ThermocyclingProtocolStep(stepTemperature, stepTime, stepTypeName);
+            steps.Add(step);
             // Setup the section
             var section = Tuple.Create(x, x + dx);
             sections.Add(section);
@@ -132,6 +137,21 @@ namespace Independent_Reader_GUI.Services
             SetYAxisLimits();
             // Update the plot
             UpdatePlot();
+        }
+
+        public int StepCount
+        {
+            get { return stepCount; }
+        }
+
+        public List<ThermocyclingProtocolStep> Steps
+        {
+            get { return steps; }
+        }
+
+        public ThermocyclingProtocolStep GetStep(int stepNumber)
+        {
+            return steps[stepNumber-1];
         }
 
         /// <summary>
