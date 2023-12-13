@@ -1,4 +1,5 @@
 ﻿using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Services;
 using Independent_Reader_GUI.Utilities;
 using OxyPlot;
 using OxyPlot.Annotations;
@@ -9,9 +10,15 @@ namespace Independent_Reader_GUI
 {
     public partial class independentReaderForm : Form
     {
+        // Private attributes
+        private ThermocyclingProtocolPlotManager PlotManager = new ThermocyclingProtocolPlotManager();
+
+        /// <summary>
+        /// Initialization of the Form
+        /// </summary>
         public independentReaderForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             // Add default data
             AddHomeMotorsDefaultData();
@@ -23,6 +30,7 @@ namespace Independent_Reader_GUI
             AddControlMotorsDefaultData();
             AddControlLEDsDefaultData();
             AddControlTECsDefaultData();
+            AddThermocyclingProtocolStatusesDefaultData();
 
             // Add default plots
             AddThermocyclingDefaultPlot();
@@ -33,7 +41,14 @@ namespace Independent_Reader_GUI
             this.homeTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.homeCameraDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.homeLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.controlMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.controlTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.controlLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.thermocyclingProtocolStatusesDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.dataGridView_SetupComboBoxes();
+
+            // Wire up mouse down events
+            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -432,6 +447,9 @@ namespace Independent_Reader_GUI
             controlLEDsDataGridView.Rows.Add("Exposure (ms)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
         }
 
+        /// <summary>
+        /// Add default data to the Control TECs Data Grid View upon loading the Form
+        /// </summary>
         private void AddControlTECsDefaultData()
         {
             TECsData controlTECsData = new TECsData();
@@ -452,27 +470,44 @@ namespace Independent_Reader_GUI
         }
 
         /// <summary>
+        /// Add default data to the Thermocycling Tab's Protocol Statuses Data Grid View upon loading of the Form
+        /// </summary>
+        private void AddThermocyclingProtocolStatusesDefaultData()
+        {
+            TECsData thermocyclingProtocolStatusesData = new TECsData();
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Status", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Protocol Running", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Protocol", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Step", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Temp (\u00B0C)", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Target Temp (\u00B0C)", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Sink Temp (\u00B0C)", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("Fan RPM", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
+        }
+
+        /// <summary>
         ///  Add default plot to the Thermocycling Plot View upon loading the Form
         /// </summary>
         private void AddThermocyclingDefaultPlot()
         {
-            var model = new PlotModel { Title = "Thermocycling Protocol" };
-            var series = new LineSeries();
+            //var model = new PlotModel { Title = "Thermocycling Protocol" };
+            //var series = new LineSeries();
             // TODO: Replace this default plot with data pulled from a protocol json file
             #region 
             // Plot the protocol
-            series.Points.Add(new DataPoint(0, 20));
-            series.Points.Add(new DataPoint(10, 20));
-            series.Points.Add(new DataPoint(10, 20));
-            series.Points.Add(new DataPoint(20, 20));
-            model.Series.Add(series);
-            var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 20), Text = "20\u00B0C" };
-            var stepAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 15), Text = "Step 1" };
-            model.Annotations.Add(tempAnnotation);
-            model.Annotations.Add(stepAnnotation);
+            //series.Points.Add(new DataPoint(0, 20));
+            //series.Points.Add(new DataPoint(10, 20));
+            //series.Points.Add(new DataPoint(10, 20));
+            //series.Points.Add(new DataPoint(20, 20));
+            //model.Series.Add(series);
+            //var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 20), Text = "20\u00B0C" };
+            //var stepAnnotation = new TextAnnotation { TextPosition = new DataPoint(5, 15), Text = "Step 1" };
+            //model.Annotations.Add(tempAnnotation);
+            //model.Annotations.Add(stepAnnotation);
             #endregion
             // Assign the model to the plot view
-            thermocyclingPlotView.Model = model;
+            //thermocyclingPlotView.Model = model;   
+            thermocyclingPlotView.Model = PlotManager.GetPlotModel();
         }
 
         /// <summary>
@@ -711,6 +746,34 @@ namespace Independent_Reader_GUI
             {
                 MessageBox.Show("Code not written yet to home motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void thermocyclingAddStepButton_Click(object sender, EventArgs e)
+        {
+            // FIXME: This code needs to be modified to allow the user to set the temperature 
+            // and the step type
+            PlotManager.AddStep(30, ThermocyclingProtocolStepType.Hold);
+        }
+
+        /// <summary>
+        /// Mouse Down event handler for clicking on the Thermocycling Plot View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void thermocyclingPlotView_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Convert Windows Forms mouse event args to OxyPlot ScreenPoint
+            var screenPoint = new ScreenPoint(e.X, e.Y);
+            // Create an OxyPlot mouse event args
+            var oxyArgs = new OxyMouseDownEventArgs
+            {
+                Position = screenPoint,
+                ChangedButton = OxyMouseButton.Left // assumes a left mouse click
+            };
+
+            // Invoke the plot manager's mouse down handler
+            // FIXME: Clicking on the Plot View causes the GUI to crash, this needs to be resolved
+            PlotManager.HandleMouseDown(sender, oxyArgs);
         }
     }
 }
