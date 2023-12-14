@@ -99,8 +99,8 @@ namespace Independent_Reader_GUI.Forms
             CancelButton = cancelButton;
 
             // Wire up the text change events for text boxes
-            //stepTemperatureTextBox.TextChanged += (s, e) => StepTemperature_TextChanged(s, e);
-            //stepTimeTextBox.TextChanged += (s, e) => StepTime_TextChanged(s, e);
+            stepTemperatureTextBox.TextChanged += (s, e) => StepTemperature_TextChanged(s, e);
+            stepTimeTextBox.TextChanged += (s, e) => StepTime_TextChanged(s, e);
 
             // Wire up selection change comitted events for combo boxes
             stepNumberComboBox.SelectionChangeCommitted += (s, e) => stepNumberComboBox_SelectionChangeCommitted(s, e);
@@ -123,6 +123,7 @@ namespace Independent_Reader_GUI.Forms
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            // Ensure temp and time are valid
             if (!int.TryParse(stepTemperatureTextBox.Text, out _))
             {
                 MessageBox.Show("Please enter a valid step temperature (\u00B0C)", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -134,7 +135,36 @@ namespace Independent_Reader_GUI.Forms
                 return;
             }
             DialogResult = DialogResult.OK;
+            plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedIndex.ToString()), double.Parse(stepTemperatureTextBox.Text), double.Parse(stepTimeTextBox.Text));
             Close();
+        }
+
+        private void StepTemperature_TextChanged(object sender, EventArgs e)
+        {
+            if (!double.TryParse(stepTemperatureTextBox.Text, out _))
+            {
+                stepTemperatureTextBox.ForeColor = Color.Red;
+                return;
+            }
+            else
+            {
+                stepTemperatureTextBox.ForeColor = Color.Black;
+                return;
+            }
+        }
+
+        private void StepTime_TextChanged(object sender, EventArgs e)
+        {
+            if (!double.TryParse(stepTimeTextBox.Text, out _))
+            {
+                stepTimeTextBox.ForeColor = Color.Red;
+                return;
+            }
+            else
+            {
+                stepTimeTextBox.ForeColor = Color.Black;
+                return;
+            }
         }
 
         private void stepNumberComboBox_SelectionChangeCommitted(object sender, EventArgs e)
