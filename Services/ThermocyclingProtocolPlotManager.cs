@@ -22,6 +22,7 @@ namespace Independent_Reader_GUI.Services
         private int dx = 10; // increment between steps on the x-axis
         private int stepCount = 0;
         private double yBufferTimeAnnotation = 10.0;
+        private int nAnnotationsPerStep = 5;
 
         /// <summary>
         /// Initialization of the Thermocycling Protocol Plot Manager Object
@@ -135,6 +136,75 @@ namespace Independent_Reader_GUI.Services
             x = x + dx;
             // Change the max and min Y value for the y-axis if necessary
             SetYAxisLimits();
+            // Update the plot
+            UpdatePlot();
+        }
+
+        private Tuple<Annotation, Annotation, Annotation, Annotation, Annotation> GetStepAnnotations(int stepIndex)
+        {
+            int annotationIndex = -1;
+            for (int i = 0; i < plotModel.Annotations.Count; i = i + nAnnotationsPerStep)
+            {
+                if (i == stepIndex - 1)
+                {
+                    annotationIndex = i;
+                    break;
+                }
+            }
+            var tempAnnotation = plotModel.Annotations[annotationIndex];
+            var stepAnnotation = plotModel.Annotations[annotationIndex + 1];
+            var timeAnnotation = plotModel.Annotations[annotationIndex + 2];
+            var sectionStartLine = plotModel.Annotations[annotationIndex + 3];
+            var sectionEndLine = plotModel.Annotations[annotationIndex + 4];
+            var annotations = Tuple.Create(tempAnnotation, stepAnnotation, timeAnnotation, sectionStartLine, sectionEndLine);
+            return annotations;
+        }
+
+        public int GetStepAnnotationsStartIndex(int stepIndex)
+        {
+            int annotationIndex = -1;
+            for (int i = 0; i < plotModel.Annotations.Count; i = i + nAnnotationsPerStep)
+            {
+                if (i == stepIndex - 1)
+                {
+                    annotationIndex = i;
+                    break;
+                }
+            }
+            return annotationIndex;
+        }
+
+        public int GetSeriesStartIndex(int stepIndex)
+        {
+            int seriesIndex = -1;
+            for (int i = 0; i < series.Points.Count; i = i + 2)
+            {
+                if (i == stepIndex - 1)
+                {
+                    seriesIndex = i;
+                    break;
+                }
+            }
+            return seriesIndex;
+        }
+
+        public void EditStep(int stepIndex, double stepTemperature, double stepTime)
+        {
+            // TODO: This method edits the wrong step (minus 1 for step index) and does not change the text annotations or time
+            // Modify the steps list 
+            ThermocyclingProtocolStep step = steps[stepIndex-1];
+            string stepTypeName = step.TypeName;
+            ThermocyclingProtocolStep modifiedStep = new ThermocyclingProtocolStep(stepTemperature, stepTime, stepTypeName);
+            steps[stepIndex-1] = modifiedStep;
+            // Modifiy the plot (tempAnnotation, timeAnnotation, and series)
+            int stepAnnotationsStartIndex = GetStepAnnotationsStartIndex(stepIndex);
+            plotModel.Annotations[stepAnnotationsStartIndex] = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature), Text = stepTemperature.ToString() + "\u00B0C" };            
+            plotModel.Annotations[stepAnnotationsStartIndex] = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature - yBufferTimeAnnotation), Text = stepTime.ToString() + " s" };
+            int seriesStartIndex = GetSeriesStartIndex(stepIndex);
+            var xStart = series.Points[seriesStartIndex].X;
+            var xEnd = series.Points[seriesStartIndex + 1].X;
+            series.Points[seriesStartIndex] = new DataPoint(xStart, stepTemperature);
+            series.Points[seriesStartIndex + 1] = new DataPoint(xEnd, stepTemperature);
             // Update the plot
             UpdatePlot();
         }
