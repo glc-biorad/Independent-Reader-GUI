@@ -11,7 +11,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 
 ## Getting Started
 ### Prerequists
-- Visual Studio 2019
+- Visual Studio 2022
 - .NET Framework 6.0
 ### Installation
 1. Clone the repo
