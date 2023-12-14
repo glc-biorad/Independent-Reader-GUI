@@ -14,5 +14,6 @@ namespace Independent_Reader_GUI.Models
         public const string Set = "Set"; // sets the temperature
         public const string RampUp = "Ramp Up"; // increase in temperature
         public const string RampDown = "Ramp Down"; // decrease in temperature
+        public const string Unknown = "Unknown";
     }
 }

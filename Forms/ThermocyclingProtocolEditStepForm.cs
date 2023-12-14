@@ -135,7 +135,7 @@ namespace Independent_Reader_GUI.Forms
                 return;
             }
             DialogResult = DialogResult.OK;
-            plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedIndex.ToString()), double.Parse(stepTemperatureTextBox.Text), double.Parse(stepTimeTextBox.Text));
+            plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedItem.ToString()) - 1, double.Parse(stepTemperatureTextBox.Text), double.Parse(stepTimeTextBox.Text));
             Close();
         }
 
