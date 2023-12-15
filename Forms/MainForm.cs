@@ -12,14 +12,16 @@ namespace Independent_Reader_GUI
     public partial class independentReaderForm : Form
     {
         // Private attributes
+        private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
+        private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
 
         /// <summary>
         /// Initialization of the Form
         /// </summary>
         public independentReaderForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             // Add default data
             AddHomeMotorsDefaultData();
@@ -49,7 +51,7 @@ namespace Independent_Reader_GUI
             this.dataGridView_SetupComboBoxes();
 
             // Wire up mouse down events
-            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);         
+            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -60,7 +62,7 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeMotorsDefaultData()
         {
-            MotorData homeMotorsX = new MotorData 
+            MotorData homeMotorsX = new MotorData
             {
                 Name = "x",
                 IO = "?",
@@ -69,7 +71,7 @@ namespace Independent_Reader_GUI
                 Speed = "300000",
                 Home = "?"
             };
-            MotorData homeMotorsY = new MotorData 
+            MotorData homeMotorsY = new MotorData
             {
                 Name = "y",
                 IO = "?",
@@ -150,16 +152,16 @@ namespace Independent_Reader_GUI
                 Speed = "200000",
                 Home = "?"
             };
-            homeMotorsDataGridView.Rows.Add(homeMotorsX.Name, homeMotorsX.IO, homeMotorsX.State, homeMotorsX.Position, homeMotorsX.Speed, homeMotorsX.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsY.Name, homeMotorsY.IO, homeMotorsY.State, homeMotorsY.Position, homeMotorsY.Speed, homeMotorsY.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsZ.Name, homeMotorsZ.IO, homeMotorsZ.State, homeMotorsZ.Position, homeMotorsZ.Speed, homeMotorsZ.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsFilterWheel.Name, homeMotorsFilterWheel.IO, homeMotorsFilterWheel.State, homeMotorsFilterWheel.Position, homeMotorsFilterWheel.Speed, homeMotorsFilterWheel.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampA.Name, homeMotorsClampA.IO, homeMotorsClampA.State, homeMotorsClampA.Position, homeMotorsClampA.Speed, homeMotorsClampA.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampB.Name, homeMotorsClampB.IO, homeMotorsClampB.State, homeMotorsClampB.Position, homeMotorsClampB.Speed, homeMotorsClampB.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampC.Name, homeMotorsClampC.IO, homeMotorsClampC.State, homeMotorsClampC.Position, homeMotorsClampC.Speed, homeMotorsClampC.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsClampD.Name, homeMotorsClampD.IO, homeMotorsClampD.State, homeMotorsClampD.Position, homeMotorsClampD.Speed, homeMotorsClampD.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsTrayAB.Name, homeMotorsTrayAB.IO, homeMotorsTrayAB.State, homeMotorsTrayAB.Position, homeMotorsTrayAB.Speed, homeMotorsTrayAB.Home);           
-            homeMotorsDataGridView.Rows.Add(homeMotorsTrayCD.Name, homeMotorsTrayCD.IO, homeMotorsTrayCD.State, homeMotorsTrayCD.Position, homeMotorsTrayCD.Speed, homeMotorsTrayCD.Home);           
+            homeMotorsDataGridView.Rows.Add(homeMotorsX.Name, homeMotorsX.IO, homeMotorsX.State, homeMotorsX.Position, homeMotorsX.Speed, homeMotorsX.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsY.Name, homeMotorsY.IO, homeMotorsY.State, homeMotorsY.Position, homeMotorsY.Speed, homeMotorsY.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsZ.Name, homeMotorsZ.IO, homeMotorsZ.State, homeMotorsZ.Position, homeMotorsZ.Speed, homeMotorsZ.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsFilterWheel.Name, homeMotorsFilterWheel.IO, homeMotorsFilterWheel.State, homeMotorsFilterWheel.Position, homeMotorsFilterWheel.Speed, homeMotorsFilterWheel.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampA.Name, homeMotorsClampA.IO, homeMotorsClampA.State, homeMotorsClampA.Position, homeMotorsClampA.Speed, homeMotorsClampA.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampB.Name, homeMotorsClampB.IO, homeMotorsClampB.State, homeMotorsClampB.Position, homeMotorsClampB.Speed, homeMotorsClampB.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampC.Name, homeMotorsClampC.IO, homeMotorsClampC.State, homeMotorsClampC.Position, homeMotorsClampC.Speed, homeMotorsClampC.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsClampD.Name, homeMotorsClampD.IO, homeMotorsClampD.State, homeMotorsClampD.Position, homeMotorsClampD.Speed, homeMotorsClampD.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsTrayAB.Name, homeMotorsTrayAB.IO, homeMotorsTrayAB.State, homeMotorsTrayAB.Position, homeMotorsTrayAB.Speed, homeMotorsTrayAB.Home);
+            homeMotorsDataGridView.Rows.Add(homeMotorsTrayCD.Name, homeMotorsTrayCD.IO, homeMotorsTrayCD.State, homeMotorsTrayCD.Position, homeMotorsTrayCD.Speed, homeMotorsTrayCD.Home);
         }
 
         /// <summary>
@@ -523,7 +525,7 @@ namespace Independent_Reader_GUI
             {
                 // Obtain the cell value to determine which tool tip to add to this cell
                 var cellValue = runExperimentDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (cellValue != null )
+                if (cellValue != null)
                 {
                     // Add Tool Tip Tex where necessary
                     DataGridViewToolTipFormatter ToolTipFormatter = new DataGridViewToolTipFormatter();
@@ -650,7 +652,7 @@ namespace Independent_Reader_GUI
                     }
                 }
             }
-            object[] newRow = new object[] {string.Empty,string.Empty};
+            object[] newRow = new object[] { string.Empty, string.Empty };
             runSampleMetaDataGridView.Rows.Add(newRow);
         }
 
@@ -681,7 +683,7 @@ namespace Independent_Reader_GUI
             string motorName = controlMotorsComboBox.Text;
             // Get the state of the motor
             if (motorName != string.Empty)
-            {                
+            {
                 foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
                 {
                     if (row.Cells[0].Value.ToString() == motorName)
@@ -763,7 +765,15 @@ namespace Independent_Reader_GUI
                 double stepTemperature = addStepForm.StepTemperature;
                 string stepTypeName = addStepForm.StepTypeName;
                 double stepTime = addStepForm.StepTime;
-                plotManager.AddStep(stepTemperature, stepTime, stepTypeName);
+                int index = protocol.Count;
+                ThermocyclingProtocolStep step = new ThermocyclingProtocolStep();
+                step.Temperature = stepTemperature;
+                step.TypeName = stepTypeName;
+                step.Time = stepTime;
+                step.Index = index;
+                //plotManager.AddStepOld(stepTemperature, stepTime, stepTypeName);
+                protocol.AddStep(step);
+                plotManager.AddStep(step);
             }
         }
 
@@ -797,6 +807,32 @@ namespace Independent_Reader_GUI
                 int stepNumber = editStepForm.StepNumber;
                 double stepTemperature = editStepForm.StepTemperature;
                 double stepTime = editStepForm.StepTime;
+            }
+        }
+
+        private void thermocyclingLoadProtocolButton_Click(object sender, EventArgs e)
+        {
+            FileSearcher fileSearcher = new FileSearcher();
+            // FIXME: take the initial directory default value from a config file 
+            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: "C:\\Users\\gabel\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols");
+            if (filePath != null)
+            {
+                // FIXME: ClearPlot dos not behave as expected
+                //plotManager.ClearPlot();
+                protocol = protocolManager.LoadProtocol(filePath);
+                plotManager.PlotProtocol(protocol);
+            }
+        }
+
+        private void thermocyclingSaveProtocolButton_Click(object sender, EventArgs e)
+        {
+            FileSearcher fileSearcher = new FileSearcher();
+            // Determine where to save this protocol
+            // FIXME: take the initial directory default value from a config file 
+            var filePath = fileSearcher.GetSaveFilePath(initialDirectory: "C:\\Users\\gabel\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols");
+            if (filePath != null)
+            {
+                protocolManager.SaveProtocol(protocol, filePath, userLabel.Text, DateTime.Now.ToString("MM/dd/yyyy"));
             }
         }
     }

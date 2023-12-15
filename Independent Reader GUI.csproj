@@ -13,7 +13,6 @@
     <Folder Include="Controls\" />
     <Folder Include="Libraries\" />
     <Folder Include="Tests\" />
-    <Folder Include="Resources\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 

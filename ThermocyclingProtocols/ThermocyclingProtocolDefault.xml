@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Protocol>
+	<Version>1.0</Version>
+	<Name>Default Protocol</Name>
+	<Author>glc-biorad</Author>
+	<Date>12/14/2023</Date>
+	<Step>
+		<Index>0</Index>
+		<TypeName>Set</TypeName>
+		<Temperature>101</Temperature>
+		<Time>960</Time>
+		<TimeUnits>seconds</TimeUnits>
+		<TemperatureUnits>Celsius</TemperatureUnits>
+	</Step>
+	<Step>
+		<Index>1</Index>
+		<TypeName>Set</TypeName>
+		<Temperature>57</Temperature>
+		<Time>120</Time>
+		<TimeUnits>seconds</TimeUnits>
+		<TemperatureUnits>Celsius</TemperatureUnits>
+	</Step>
+	<Step>
+		<Index>2</Index>
+		<TypeName>Set</TypeName>
+		<Temperature>104</Temperature>
+		<Time>60</Time>
+		<TimeUnits>seconds</TimeUnits>
+		<TemperatureUnits>Celsius</TemperatureUnits>
+	</Step>
+	<Step>
+		<Index>3</Index>
+		<TypeName>GoTo</TypeName>
+		<StepNumber>1</StepNumber>
+		<CycleCount>50</CycleCount>
+	</Step>
+	<Step>
+		<Index>4</Index>
+		<TypeName>Hold</TypeName>
+		<Temperature>30</Temperature>
+		<TemperatureUnits>Celsius</TemperatureUnits>
+	</Step>
+</Protocol>

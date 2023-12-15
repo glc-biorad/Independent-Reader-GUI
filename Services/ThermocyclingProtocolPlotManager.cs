@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -22,6 +23,7 @@ namespace Independent_Reader_GUI.Services
         private int dx = 10; // increment between steps on the x-axis
         private int stepCount = 0;
         private double yBufferTimeAnnotation = 10.0;
+        private double yBufferStepAnnotation = 10.0;
         private int nAnnotationsPerStep = 5;
         private int nSeriesPointsPerStep = 2;
 
@@ -105,30 +107,74 @@ namespace Independent_Reader_GUI.Services
             return plotModel;
         }
 
-        /// <summary>
-        /// Add a step to the Thermocycling Protocol Plot View
-        /// </summary>
-        /// <param name="stepTemperature">Temperature to be set at this step</param>
-        /// <param name="stepTypeName">Name of the step type</param>
-        public void AddStep(double stepTemperature, double stepTime, string stepTypeName)
+        public void ClearPlot()
         {
-            // Add this step to the list
-            //ThermocyclingProtocolStep step = new ThermocyclingProtocolStep(stepTemperature, stepTime, stepTypeName);
-            ThermocyclingProtocolSetStep step = new ThermocyclingProtocolSetStep(stepTemperature, stepTime);
+            // Clear out the series, annotations, and axes
+            plotModel.Series.Clear();
+            plotModel.Annotations.Clear();
+            plotModel.Axes.Clear();
+            plotModel.ResetAllAxes();
+            UpdatePlot();
+        }
+
+        /// <summary>
+        /// Add a protocol step to the plot
+        /// </summary>
+        /// <param name="step">ThermocyclingProtocolStep instance to be added to the plot</param>
+        public void AddStep(ThermocyclingProtocolStep step)
+        {
+            // Add the step to the protocol steps
             steps.Add(step);
             // Setup the section
             var section = Tuple.Create(x, x + dx);
             sections.Add(section);
-            // Setup data for plotting
-            series.Points.Add(new DataPoint(section.Item1, stepTemperature));
-            series.Points.Add(new DataPoint(section.Item2, stepTemperature));
-            // Add annotations for plotting
-            var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature), Text = stepTemperature.ToString() + "\u00B0C" };
-            var stepAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature), Text = stepTemperature.ToString() + "\u00B0C" };
-            var timeAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, stepTemperature-yBufferTimeAnnotation), Text = stepTime.ToString() + " s"};
-            plotModel.Annotations.Add(tempAnnotation);
-            plotModel.Annotations.Add(stepAnnotation);
-            plotModel.Annotations.Add(timeAnnotation);
+            if (step.TypeName.Equals(ThermocyclingProtocolStepType.Set) || step.TypeName.Equals(ThermocyclingProtocolStepType.Hold))
+            {
+                // Setup data for plotting
+                series.Points.Add(new DataPoint(section.Item1, step.Temperature));
+                series.Points.Add(new DataPoint(section.Item2, step.Temperature));
+                // Add annotations for plotting
+                var tempAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, step.Temperature), Text = step.Temperature.ToString() + "\u00B0" + step.TemperatureUnits[0].ToString() };
+                var stepAnnotation = new TextAnnotation {
+                    TextPosition = new DataPoint(x + dx / 2, step.Temperature + yBufferStepAnnotation),
+                    Text = "Step: " + (step.Index + 1).ToString(),
+                    TextColor = OxyColors.IndianRed,
+                    FontWeight = FontWeights.Bold,
+                    StrokeThickness = 0 // remove the border around the annotation
+                };
+                plotModel.Annotations.Add(tempAnnotation);
+                plotModel.Annotations.Add(stepAnnotation);
+                if (step.TypeName.Equals(ThermocyclingProtocolStepType.Set))
+                {
+                    var timeAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, step.Temperature - yBufferTimeAnnotation), Text = step.Time.ToString() + " " + step.TimeUnits[0].ToString() };
+                    plotModel.Annotations.Add(timeAnnotation);
+                }
+                else
+                {
+                    var timeAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, step.Temperature - yBufferTimeAnnotation), Text = "\u221E" };
+                    plotModel.Annotations.Add(timeAnnotation);
+                }                
+            }
+            else if (step.TypeName.Equals(ThermocyclingProtocolStepType.GoTo))
+            {
+                // Setup data for plotting
+                series.Points.Add(new DataPoint(section.Item1, 0));
+                series.Points.Add(new DataPoint(section.Item2, 0));
+                // Add annotations for plotting
+                var stepNumberAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, 0), Text = "GoTo Step " + step.StepNumber.ToString() };
+                var stepAnnotation = new TextAnnotation
+                {
+                    TextPosition = new DataPoint(x + dx / 2, 0 + yBufferStepAnnotation),
+                    Text = "Step: " + (step.Index + 1).ToString(),
+                    TextColor = OxyColors.IndianRed,
+                    FontWeight = FontWeights.Bold,
+                    StrokeThickness = 0
+                };
+                plotModel.Annotations.Add(stepNumberAnnotation);
+                plotModel.Annotations.Add(stepAnnotation);
+                var cycleCountAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, 0 - yBufferTimeAnnotation), Text = "Cycles: " + step.CycleCount.ToString() };
+                plotModel.Annotations.Add(cycleCountAnnotation);
+            }
             var sectionStartLine = new LineAnnotation { X = section.Item1, Type = LineAnnotationType.Vertical, Color = OxyColors.Blue };
             var sectionEndLine = new LineAnnotation { X = section.Item2, Type = LineAnnotationType.Vertical, Color = OxyColors.Blue };
             plotModel.Annotations.Add(sectionStartLine);
@@ -139,6 +185,18 @@ namespace Independent_Reader_GUI.Services
             // Change the max and min Y value for the y-axis if necessary
             SetYAxisLimits();
             // Update the plot
+            UpdatePlot();
+        }
+
+        public void PlotProtocol(ThermocyclingProtocol protocol)
+        {
+            if (protocol != null)
+            {
+                foreach (ThermocyclingProtocolStep step in protocol.Steps)
+                {
+                    this.AddStep(step);
+                }
+            }
             UpdatePlot();
         }
 
@@ -180,7 +238,6 @@ namespace Independent_Reader_GUI.Services
             // Modify the steps list 
             ThermocyclingProtocolStep step = steps[stepIndex];
             string stepTypeName = step.TypeName;
-            MessageBox.Show("Step Time in PlotManager L# 183: " + stepTime.ToString());
             ThermocyclingProtocolSetStep modifiedStep = new ThermocyclingProtocolSetStep(stepTemperature, stepTime);
             steps[stepIndex] = modifiedStep;
             // Modifiy the plot (tempAnnotation, timeAnnotation, and series)
