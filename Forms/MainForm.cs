@@ -12,6 +12,7 @@ namespace Independent_Reader_GUI
     public partial class independentReaderForm : Form
     {
         // Private attributes
+        private string defaultProtocolDirectory = "C:\\Users\\u112958\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols";
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
@@ -814,7 +815,7 @@ namespace Independent_Reader_GUI
         {
             FileSearcher fileSearcher = new FileSearcher();
             // FIXME: take the initial directory default value from a config file 
-            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: "C:\\Users\\gabel\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols");
+            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: defaultProtocolDirectory);
             if (filePath != null)
             {
                 // FIXME: ClearPlot dos not behave as expected
@@ -829,7 +830,7 @@ namespace Independent_Reader_GUI
             FileSearcher fileSearcher = new FileSearcher();
             // Determine where to save this protocol
             // FIXME: take the initial directory default value from a config file 
-            var filePath = fileSearcher.GetSaveFilePath(initialDirectory: "C:\\Users\\gabel\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols");
+            var filePath = fileSearcher.GetSaveFilePath(initialDirectory: defaultProtocolDirectory);
             if (filePath != null)
             {
                 protocolManager.SaveProtocol(protocol, filePath, userLabel.Text, DateTime.Now.ToString("MM/dd/yyyy"));
