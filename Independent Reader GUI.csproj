@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Libraries\" />
+    <Folder Include="NewFolder\" />
     <Folder Include="Tests\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
