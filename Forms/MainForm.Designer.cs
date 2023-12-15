@@ -147,6 +147,8 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
+            imagingPictureBox = new PictureBox();
+            imagingStreamButton = new Button();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -164,6 +166,8 @@
             ((System.ComponentModel.ISupportInitialize)controlMotorsDataGridView).BeginInit();
             thermocyclingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).BeginInit();
+            imagingTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imagingPictureBox).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -1249,6 +1253,8 @@
             // 
             // imagingTabPage
             // 
+            imagingTabPage.Controls.Add(imagingStreamButton);
+            imagingTabPage.Controls.Add(imagingPictureBox);
             imagingTabPage.Location = new Point(4, 24);
             imagingTabPage.Name = "imagingTabPage";
             imagingTabPage.Size = new Size(1116, 584);
@@ -1354,6 +1360,27 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
+            // imagingPictureBox
+            // 
+            imagingPictureBox.Location = new Point(3, 3);
+            imagingPictureBox.Name = "imagingPictureBox";
+            imagingPictureBox.Size = new Size(671, 426);
+            imagingPictureBox.TabIndex = 0;
+            imagingPictureBox.TabStop = false;
+            // 
+            // imagingStreamButton
+            // 
+            imagingStreamButton.BackColor = SystemColors.Highlight;
+            imagingStreamButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingStreamButton.ForeColor = Color.White;
+            imagingStreamButton.Location = new Point(8, 435);
+            imagingStreamButton.Name = "imagingStreamButton";
+            imagingStreamButton.Size = new Size(109, 36);
+            imagingStreamButton.TabIndex = 1;
+            imagingStreamButton.Text = "Stream";
+            imagingStreamButton.UseVisualStyleBackColor = false;
+            imagingStreamButton.Click += imagingStreamButton_Click;
+            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1391,6 +1418,8 @@
             thermocyclingTabPage.ResumeLayout(false);
             thermocyclingTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).EndInit();
+            imagingTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)imagingPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1516,5 +1545,7 @@
         private Button thermocyclingTECBRunButton;
         private Button thermocyclingTECARunButton;
         private Button thermocyclingAddGoToButton;
+        private PictureBox imagingPictureBox;
+        private Button imagingStreamButton;
     }
 }

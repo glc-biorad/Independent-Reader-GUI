@@ -836,5 +836,12 @@ namespace Independent_Reader_GUI
                 protocolManager.SaveProtocol(protocol, filePath, userLabel.Text, DateTime.Now.ToString("MM/dd/yyyy"));
             }
         }
+
+        private void imagingStreamButton_Click(object sender, EventArgs e)
+        {
+            FLIRCameraService cameraService = new FLIRCameraService();
+            cameraService.Connect();
+            cameraService.Disconnect();
+        }
     }
 }
