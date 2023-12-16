@@ -72,8 +72,6 @@
             runSampleMetaDataIDColumn = new DataGridViewTextBoxColumn();
             runSampleMetaDataNameColumn = new DataGridViewTextBoxColumn();
             runImagingSetupDataGridView = new DataGridView();
-            runImagingSetupPropertyColumn = new DataGridViewTextBoxColumn();
-            runImagingSetupValueColumn = new DataGridViewTextBoxColumn();
             runExperimentDataGridView = new DataGridView();
             runExperimentDataPropertyColumn = new DataGridViewTextBoxColumn();
             runExperimentDataValueColumn = new DataGridViewTextBoxColumn();
@@ -138,6 +136,14 @@
             thermocyclingAddStepButton = new Button();
             thermocyclingPlotView = new OxyPlot.WindowsForms.PlotView();
             imagingTabPage = new TabPage();
+            imagingLEDsDataGridView = new DataGridView();
+            imagingLEDsPropertyColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsCy5Column = new DataGridViewTextBoxColumn();
+            imagingLEDsFAMColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsHEXColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsAttoColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsAlexaColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsCy5p5Column = new DataGridViewTextBoxColumn();
             imagingLEDsLabel = new Label();
             imagingMetaDataButton = new Button();
             imagingMetaDataLabel = new Label();
@@ -166,14 +172,8 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            imagingLEDsDataGridView = new DataGridView();
-            imagingLEDsPropertyColumn = new DataGridViewTextBoxColumn();
-            imagingLEDsCy5Column = new DataGridViewTextBoxColumn();
-            imagingLEDsFAMColumn = new DataGridViewTextBoxColumn();
-            imagingLEDsHEXColumn = new DataGridViewTextBoxColumn();
-            imagingLEDsAttoColumn = new DataGridViewTextBoxColumn();
-            imagingLEDsAlexaColumn = new DataGridViewTextBoxColumn();
-            imagingLEDsCy5p5Column = new DataGridViewTextBoxColumn();
+            runImagingSetupPropertyColumn = new DataGridViewTextBoxColumn();
+            runImagingSetupValueColumn = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -192,9 +192,9 @@
             thermocyclingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).BeginInit();
             imagingTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -630,19 +630,6 @@
             runImagingSetupDataGridView.RowTemplate.Height = 25;
             runImagingSetupDataGridView.Size = new Size(379, 554);
             runImagingSetupDataGridView.TabIndex = 6;
-            // 
-            // runImagingSetupPropertyColumn
-            // 
-            runImagingSetupPropertyColumn.HeaderText = "Property";
-            runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
-            runImagingSetupPropertyColumn.ReadOnly = true;
-            runImagingSetupPropertyColumn.Width = 170;
-            // 
-            // runImagingSetupValueColumn
-            // 
-            runImagingSetupValueColumn.HeaderText = "Value";
-            runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
-            runImagingSetupValueColumn.Width = 185;
             // 
             // runExperimentDataGridView
             // 
@@ -1306,6 +1293,62 @@
             imagingTabPage.Text = "Imaging";
             imagingTabPage.UseVisualStyleBackColor = true;
             // 
+            // imagingLEDsDataGridView
+            // 
+            imagingLEDsDataGridView.AllowUserToAddRows = false;
+            imagingLEDsDataGridView.AllowUserToDeleteRows = false;
+            imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
+            imagingLEDsDataGridView.Location = new Point(264, 419);
+            imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
+            imagingLEDsDataGridView.RowHeadersVisible = false;
+            imagingLEDsDataGridView.RowTemplate.Height = 25;
+            imagingLEDsDataGridView.Size = new Size(844, 150);
+            imagingLEDsDataGridView.TabIndex = 17;
+            // 
+            // imagingLEDsPropertyColumn
+            // 
+            imagingLEDsPropertyColumn.HeaderText = "";
+            imagingLEDsPropertyColumn.Name = "imagingLEDsPropertyColumn";
+            imagingLEDsPropertyColumn.ReadOnly = true;
+            imagingLEDsPropertyColumn.Width = 180;
+            // 
+            // imagingLEDsCy5Column
+            // 
+            imagingLEDsCy5Column.HeaderText = "Cy5";
+            imagingLEDsCy5Column.Name = "imagingLEDsCy5Column";
+            imagingLEDsCy5Column.Width = 110;
+            // 
+            // imagingLEDsFAMColumn
+            // 
+            imagingLEDsFAMColumn.HeaderText = "FAM";
+            imagingLEDsFAMColumn.Name = "imagingLEDsFAMColumn";
+            imagingLEDsFAMColumn.Width = 110;
+            // 
+            // imagingLEDsHEXColumn
+            // 
+            imagingLEDsHEXColumn.HeaderText = "HEX";
+            imagingLEDsHEXColumn.Name = "imagingLEDsHEXColumn";
+            imagingLEDsHEXColumn.Width = 110;
+            // 
+            // imagingLEDsAttoColumn
+            // 
+            imagingLEDsAttoColumn.HeaderText = "Atto";
+            imagingLEDsAttoColumn.Name = "imagingLEDsAttoColumn";
+            imagingLEDsAttoColumn.Width = 110;
+            // 
+            // imagingLEDsAlexaColumn
+            // 
+            imagingLEDsAlexaColumn.HeaderText = "Alexa";
+            imagingLEDsAlexaColumn.Name = "imagingLEDsAlexaColumn";
+            imagingLEDsAlexaColumn.Width = 110;
+            // 
+            // imagingLEDsCy5p5Column
+            // 
+            imagingLEDsCy5p5Column.HeaderText = "Cy5.5";
+            imagingLEDsCy5p5Column.Name = "imagingLEDsCy5p5Column";
+            imagingLEDsCy5p5Column.Width = 110;
+            // 
             // imagingLEDsLabel
             // 
             imagingLEDsLabel.AutoSize = true;
@@ -1587,61 +1630,18 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // imagingLEDsDataGridView
+            // runImagingSetupPropertyColumn
             // 
-            imagingLEDsDataGridView.AllowUserToAddRows = false;
-            imagingLEDsDataGridView.AllowUserToDeleteRows = false;
-            imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
-            imagingLEDsDataGridView.Location = new Point(264, 419);
-            imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
-            imagingLEDsDataGridView.RowHeadersVisible = false;
-            imagingLEDsDataGridView.RowTemplate.Height = 25;
-            imagingLEDsDataGridView.Size = new Size(844, 150);
-            imagingLEDsDataGridView.TabIndex = 17;
+            runImagingSetupPropertyColumn.HeaderText = "Property";
+            runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
+            runImagingSetupPropertyColumn.ReadOnly = true;
+            runImagingSetupPropertyColumn.Width = 210;
             // 
-            // imagingLEDsPropertyColumn
+            // runImagingSetupValueColumn
             // 
-            imagingLEDsPropertyColumn.HeaderText = "";
-            imagingLEDsPropertyColumn.Name = "imagingLEDsPropertyColumn";
-            imagingLEDsPropertyColumn.ReadOnly = true;
-            imagingLEDsPropertyColumn.Width = 180;
-            // 
-            // imagingLEDsCy5Column
-            // 
-            imagingLEDsCy5Column.HeaderText = "Cy5";
-            imagingLEDsCy5Column.Name = "imagingLEDsCy5Column";
-            imagingLEDsCy5Column.Width = 110;
-            // 
-            // imagingLEDsFAMColumn
-            // 
-            imagingLEDsFAMColumn.HeaderText = "FAM";
-            imagingLEDsFAMColumn.Name = "imagingLEDsFAMColumn";
-            imagingLEDsFAMColumn.Width = 110;
-            // 
-            // imagingLEDsHEXColumn
-            // 
-            imagingLEDsHEXColumn.HeaderText = "HEX";
-            imagingLEDsHEXColumn.Name = "imagingLEDsHEXColumn";
-            imagingLEDsHEXColumn.Width = 110;
-            // 
-            // imagingLEDsAttoColumn
-            // 
-            imagingLEDsAttoColumn.HeaderText = "Atto";
-            imagingLEDsAttoColumn.Name = "imagingLEDsAttoColumn";
-            imagingLEDsAttoColumn.Width = 110;
-            // 
-            // imagingLEDsAlexaColumn
-            // 
-            imagingLEDsAlexaColumn.HeaderText = "Alexa";
-            imagingLEDsAlexaColumn.Name = "imagingLEDsAlexaColumn";
-            imagingLEDsAlexaColumn.Width = 110;
-            // 
-            // imagingLEDsCy5p5Column
-            // 
-            imagingLEDsCy5p5Column.HeaderText = "Cy5.5";
-            imagingLEDsCy5p5Column.Name = "imagingLEDsCy5p5Column";
-            imagingLEDsCy5p5Column.Width = 110;
+            runImagingSetupValueColumn.HeaderText = "Value";
+            runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
+            runImagingSetupValueColumn.Width = 145;
             // 
             // independentReaderForm
             // 
@@ -1682,9 +1682,9 @@
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).EndInit();
             imagingTabPage.ResumeLayout(false);
             imagingTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1737,8 +1737,6 @@
         private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
         private DataGridViewTextBoxColumn runExperimentDataValueColumn;
         private Button runClearFormButton;
-        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
-        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
         private DataGridViewTextBoxColumn homeLEDsPropertiesColumn;
         private DataGridViewTextBoxColumn homeLEDsCy5Column;
         private DataGridViewTextBoxColumn homeLEDsFAMColumn;
@@ -1837,5 +1835,7 @@
         private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
         private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
         private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
+        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
+        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
     }
 }

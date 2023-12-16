@@ -19,6 +19,9 @@ namespace Independent_Reader_GUI.Resources
             ReadInCartridgeData();
         }
 
+        /// <summary>
+        /// Read in the Cartridge data from the XML file
+        /// </summary>
         private void ReadInCartridgeData()
         {
             // Load in the protocol file
@@ -53,6 +56,29 @@ namespace Independent_Reader_GUI.Resources
             }
             comboBoxCell.Value = comboBoxCell.Items[0];
             return comboBoxCell;
+        }
+
+        public Cartridge GetCartridgeFromName(string cartridgeName)
+        {
+            Cartridge cartridge = new Cartridge();
+            foreach (var option in options)
+            {
+                if (option.Name.Equals(cartridgeName))
+                {
+                    cartridge.Name = option.Name;
+                    cartridge.Width = option.Width;
+                    cartridge.WidthUnits = option.WidthUnits;
+                    cartridge.HeightUnits = option.HeightUnits;
+                    cartridge.LengthUnits = option.LengthUnits;
+                    cartridge.Length = option.Length;
+                    cartridge.Height = option.Height;
+                    cartridge.NumberofSampleChambers = option.NumberofSampleChambers;
+                    cartridge.NumberofAssayChambers = option.NumberofAssayChambers;
+                    cartridge.PartitionType = option.PartitionType;
+                    break;
+                }
+            }
+            return cartridge;
         }
     }
 }

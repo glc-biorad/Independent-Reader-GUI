@@ -13,7 +13,7 @@ namespace Independent_Reader_GUI.Models
         public DateTime StartDateTime { get; set; } = DateTime.Now;
         public DateTime EndDateTime { get; set; } = DateTime.Now;
         public string Heater { get; set; } = string.Empty;
-        public string PartitionType { get; set; } = string.Empty;
+        public DataGridViewComboBoxCell PartitionTypeComboBoxCell = new DataGridViewComboBoxCell();
         public DataGridViewComboBoxCell CartridgeComboBoxCell = new DataGridViewComboBoxCell();
         public double CartridgeLength { get; set; } = 0.0;
         public double CartridgeWidth { get; set; } = 0.0;
@@ -35,6 +35,8 @@ namespace Independent_Reader_GUI.Models
             BergquistComboBoxCell = bergquistOptions.GetOptionNamesComboBoxCell();
             CartridgeOptions cartridgeOptions = new CartridgeOptions();
             CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell(config.DefaultPartitionType);
+            PartitionTypeOptions partitionTypeOptions = new PartitionTypeOptions();
+            PartitionTypeComboBoxCell = partitionTypeOptions.GetOptionNamesComboBoxCell();
         }
     }
 }
