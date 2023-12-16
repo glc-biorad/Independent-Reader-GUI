@@ -22,16 +22,6 @@ namespace Independent_Reader_GUI.Utilities
                 });
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
-            else if (cellValue == "Partition Type")
-            {
-                comboBoxCell.Items.AddRange(new object[]
-                {
-                    "Microwells",
-                    "Standard Droplets",
-                    "Pico Droplets"
-                });
-                comboBoxCell.Value = comboBoxCell.Items[0];
-            }
             else if (cellValue == "Elastomer")
             {
                 comboBoxCell.Items.AddRange(new object[]

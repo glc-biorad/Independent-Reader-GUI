@@ -1,5 +1,6 @@
 ﻿using Independent_Reader_GUI.Forms;
 using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Resources;
 using Independent_Reader_GUI.Services;
 using Independent_Reader_GUI.Utilities;
 using OxyPlot;
@@ -16,6 +17,7 @@ namespace Independent_Reader_GUI
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
+        private CartridgeOptions cartridgeOptions = new CartridgeOptions();
 
         /// <summary>
         /// Initialization of the Form
@@ -52,6 +54,9 @@ namespace Independent_Reader_GUI
             this.controlLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.thermocyclingProtocolStatusesDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.dataGridView_SetupComboBoxes();
+
+            // Subscribe to value changed events
+            this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
 
             // Wire up mouse down events
             thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
@@ -377,7 +382,8 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
             runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
             runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
-            runExperimentDataGridView.Rows.Add("Partition Type", runExperimentData.PartitionType);
+            runExperimentDataGridView.Rows.Add("Partition Type");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.PartitionTypeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", runExperimentData.CartridgeLength);
@@ -652,6 +658,39 @@ namespace Independent_Reader_GUI
                             row.Cells[1] = comboBoxCell;
                         }
                     }
+                }
+            }
+        }
+
+        private void runExperimentDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 1)
+            {
+                var propertySelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[0].Value;
+                // Handle PartitionType changes
+                if (propertySelected.Equals("Partition Type"))
+                {
+                    var valueSelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[1].Value;
+                    // Get the possible cartridge options.
+                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1] = cartridgeOptions.GetOptionNamesComboBoxCell(valueSelected.ToString());
+                    var cartridgeSelected = runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1].Value;
+                    Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeSelected.ToString());
+                    // Convert to millimeters if necessary
+                    // Update the TextBox texts
+                    runExperimentDataGridView.Rows[e.RowIndex + 2].Cells[1].Value = cartridge.Length.ToString();
+                    runExperimentDataGridView.Rows[e.RowIndex + 3].Cells[1].Value = cartridge.Width.ToString();
+                    runExperimentDataGridView.Rows[e.RowIndex + 4].Cells[1].Value = cartridge.Height.ToString();
+                }
+                // Handle Cartridge Changes
+                else if (propertySelected.Equals("Cartridge"))
+                {
+                    var valueSelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[1].Value;
+                    Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(valueSelected.ToString());
+                    // Convert to millimeters if necessary
+                    // Update the TextBox texts
+                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1].Value = cartridge.Length.ToString();
+                    runExperimentDataGridView.Rows[e.RowIndex + 2].Cells[1].Value = cartridge.Width.ToString();
+                    runExperimentDataGridView.Rows[e.RowIndex + 3].Cells[1].Value = cartridge.Height.ToString();
                 }
             }
         }
