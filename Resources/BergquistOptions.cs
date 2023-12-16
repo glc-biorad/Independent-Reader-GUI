@@ -12,7 +12,7 @@ namespace Independent_Reader_GUI.Resources
     {
         // FIXME: Replace this with a variable taken from a config file
         private string bergquistDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Bergquist\\BergquistData.xml";
-        private List<Bergquist> list = new List<Bergquist>();
+        private List<Bergquist> options = new List<Bergquist>();
 
         public BergquistOptions()
         {
@@ -31,18 +31,19 @@ namespace Independent_Reader_GUI.Resources
                 bergquist.ThermalCoefficient = double.Parse(bergquistNode.Element("ThermalCoefficient").Value.ToString());
                 bergquist.ShoreHardness = int.Parse(bergquistNode.Element("ShoreHardness").Value.ToString());
                 bergquist.Thickness = double.Parse(bergquistNode.Element("Thickness").Value.ToString());
-                list.Add(bergquist);
+                options.Add(bergquist);
             }
         }
 
-        public List<string> ListNames()
+        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
         {
-            List<string> names = new List<string>();
-            foreach (var item in list)
+            DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
+            foreach (var option in options)
             {
-                names.Add(item.Name);
+                comboBoxCell.Items.Add(option.Name);
             }
-            return names;
+            comboBoxCell.Value = comboBoxCell.Items[0];
+            return comboBoxCell;
         }
     }
 }

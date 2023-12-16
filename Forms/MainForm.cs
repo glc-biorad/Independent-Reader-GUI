@@ -387,7 +387,8 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
             runExperimentDataGridView.Rows.Add("Elastomer", runExperimentData.Elastomer);
             runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
-            runExperimentDataGridView.Rows.Add("Bergquist", runExperimentData.Bergquist);
+            runExperimentDataGridView.Rows.Add("Bergquist");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.Bergquist;
             runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", runExperimentData.BergquistThickness);
             runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
