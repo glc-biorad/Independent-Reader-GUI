@@ -35,6 +35,8 @@ namespace Independent_Reader_GUI
             AddControlLEDsDefaultData();
             AddControlTECsDefaultData();
             AddThermocyclingProtocolStatusesDefaultData();
+            AddImagingScanParametersDefaultData();
+            AddImagingLEDsDefaultData();
 
             // Add default plots
             AddThermocyclingDefaultPlot();
@@ -385,7 +387,8 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
             runExperimentDataGridView.Rows.Add("Elastomer", runExperimentData.Elastomer);
             runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
-            runExperimentDataGridView.Rows.Add("Bergquist", runExperimentData.Bergquist);
+            runExperimentDataGridView.Rows.Add("Bergquist");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.Bergquist;
             runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", runExperimentData.BergquistThickness);
             runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
@@ -512,6 +515,37 @@ namespace Independent_Reader_GUI
             // Assign the model to the plot view
             //thermocyclingPlotView.Model = model;   
             thermocyclingPlotView.Model = plotManager.GetPlotModel();
+        }
+
+        private void AddImagingScanParametersDefaultData()
+        {
+            ScanParameterData scanParameterData = new ScanParameterData();
+            imagingScanParametersDataGridView.Rows.Add("Heater");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
+            imagingScanParametersDataGridView.Rows.Add("Partition Type");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.PartitionType;
+            imagingScanParametersDataGridView.Rows.Add("Cartridge");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Cartridge;
+            imagingScanParametersDataGridView.Rows.Add("x0", scanParameterData.X0);
+            imagingScanParametersDataGridView.Rows.Add("y0", scanParameterData.Y0);
+            imagingScanParametersDataGridView.Rows.Add("z0", scanParameterData.Z0);
+            imagingScanParametersDataGridView.Rows.Add("FOV dx", scanParameterData.FOVdX);
+            imagingScanParametersDataGridView.Rows.Add("dy", scanParameterData.dY);
+            imagingScanParametersDataGridView.Rows.Add("Rotational Offset", scanParameterData.RotationalOffset);
+        }
+
+        private void AddImagingLEDsDefaultData()
+        {
+            LEDsData ledsData = new LEDsData();
+            imagingLEDsDataGridView.Rows.Add("IO");
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.IOCy5ComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.IOFAMComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.IOHEXComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.IOAttoComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.IOAlexaComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.IOCy5p5ComboBoxCell;
+            imagingLEDsDataGridView.Rows.Add("Intensity (%)", null, null, null, null, null, null);
+            imagingLEDsDataGridView.Rows.Add("Exposure (ms)", null, null, null, null, null, null);
         }
 
         /// <summary>
@@ -835,6 +869,14 @@ namespace Independent_Reader_GUI
             {
                 protocolManager.SaveProtocol(protocol, filePath, userLabel.Text, DateTime.Now.ToString("MM/dd/yyyy"));
             }
+        }
+
+        private void imagingStreamButton_Click(object sender, EventArgs e)
+        {
+            // FIXME: Currently 
+            FLIRCameraService cameraService = new FLIRCameraService();
+            cameraService.Connect();
+            cameraService.Disconnect();
         }
     }
 }

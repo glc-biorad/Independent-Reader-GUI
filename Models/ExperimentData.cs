@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,15 @@ namespace Independent_Reader_GUI.Models
         public double GlassOffset { get; set; } = 12.3;
         public string Elastomer { get; set; } = string.Empty;
         public double ElastomerThickness { get; set; } = 0.0;
-        public string Bergquist { get; set; } = string.Empty;
+        public DataGridViewComboBoxCell Bergquist = new DataGridViewComboBoxCell();
         public double BergquistThickness { get; set; } = 0.0;
         public double SurfaceArea { get; set; } = 0.0;
         public double Pressure { get; set; } = 0.0;
+
+        public ExperimentData()
+        {
+            BergquistOptions bergquistOptions = new BergquistOptions();
+            this.Bergquist = bergquistOptions.GetOptionNamesComboBoxCell();
+        }
     }
 }

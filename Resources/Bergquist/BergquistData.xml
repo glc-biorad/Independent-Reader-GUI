@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Bergquists>
+	<Bergquist>
+		<Name>SoftFlex (E038)</Name>
+		<ThermalCoefficient>3.8</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>71</ShoreHardness>
+		<Thickness>2</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+	</Bergquist>
+	<Bergquist>
+		<Name>SoftFlex (C022)</Name>
+		<ThermalCoefficient>2.2</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>34</ShoreHardness>
+		<Thickness>2</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+	</Bergquist>
+	<Bergquist>
+		<Name>COH-1019LVC</Name>
+		<ThermalCoefficient>1.9</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>32</ShoreHardness>
+		<Thickness>2</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+	</Bergquist>
+</Bergquists>

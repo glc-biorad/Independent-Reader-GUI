@@ -55,16 +55,16 @@ namespace Independent_Reader_GUI.Utilities
                 });
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
-            else if (cellValue == "Bergquist")
-            {
-                comboBoxCell.Items.AddRange(new object[]
-                {
-                    "SoftFlex (E038)",
-                    "SoftFlex (C022)",
-                    "COH-1019LVC"
-                });
-                comboBoxCell.Value = comboBoxCell.Items[0];
-            }
+            //else if (cellValue == "Bergquist")
+            //{
+            //    comboBoxCell.Items.AddRange(new object[]
+            //    {
+            //        "SoftFlex (E038)",
+            //        "SoftFlex (C022)",
+            //        "COH-1019LVC"
+            //    });
+            //    comboBoxCell.Value = comboBoxCell.Items[0];
+            //}
             else if (cellValue == "Image Before")
             {
                 comboBoxCell.Items.AddRange(new object[]

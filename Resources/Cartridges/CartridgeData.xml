@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Cartridges>
+	<Cartridge>
+		<Name>M2M</Name>
+		<PartitionType>Microwells</PartitionType>
+		<NumberofSampleChambers>8</NumberofSampleChambers>
+		<NumberofAssayChambers>3</NumberofAssayChambers>
+		<Length>8.1</Length>
+		<LengthUnits>mm</LengthUnits>
+		<Width>6.0</Width>
+		<WidthUnits>mm</WidthUnits>
+		<Height>2.2</Height>
+		<HeightUnits>mm</HeightUnits>
+	</Cartridge>
+	<Cartridge>
+		<Name>Parallel</Name>
+		<PartitionType>Droplets</PartitionType>
+		<NumberofSampleChambers>8</NumberofSampleChambers>
+		<NumberofAssayChambers>2</NumberofAssayChambers>
+		<Length>8.1</Length>
+		<LengthUnits>mm</LengthUnits>
+		<Width>6.0</Width>
+		<WidthUnits>mm</WidthUnits>
+		<Height>2.2</Height>
+		<HeightUnits>mm</HeightUnits>
+	</Cartridge>
+	<Cartridge>
+		<Name>Vantiva</Name>
+		<PartitionType>Droplets</PartitionType>
+		<NumberofSampleChambers>8</NumberofSampleChambers>
+		<NumberofAssayChambers>1</NumberofAssayChambers>
+		<Length>4.1</Length>
+		<LengthUnits>mm</LengthUnits>
+		<Width>6.0</Width>
+		<WidthUnits>mm</WidthUnits>
+		<Height>0.9</Height>
+		<HeightUnits>mm</HeightUnits>
+	</Cartridge>
+</Cartridges>
