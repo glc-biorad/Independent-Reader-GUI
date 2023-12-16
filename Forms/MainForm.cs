@@ -35,6 +35,8 @@ namespace Independent_Reader_GUI
             AddControlLEDsDefaultData();
             AddControlTECsDefaultData();
             AddThermocyclingProtocolStatusesDefaultData();
+            AddImagingScanParametersDefaultData();
+            AddImagingLEDsDefaultData();
 
             // Add default plots
             AddThermocyclingDefaultPlot();
@@ -514,6 +516,37 @@ namespace Independent_Reader_GUI
             thermocyclingPlotView.Model = plotManager.GetPlotModel();
         }
 
+        private void AddImagingScanParametersDefaultData()
+        {
+            ScanParameterData scanParameterData = new ScanParameterData();
+            imagingScanParametersDataGridView.Rows.Add("Heater");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
+            imagingScanParametersDataGridView.Rows.Add("Partition Type");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.PartitionType;
+            imagingScanParametersDataGridView.Rows.Add("Cartridge");
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Cartridge;
+            imagingScanParametersDataGridView.Rows.Add("x0", scanParameterData.X0);
+            imagingScanParametersDataGridView.Rows.Add("y0", scanParameterData.Y0);
+            imagingScanParametersDataGridView.Rows.Add("z0", scanParameterData.Z0);
+            imagingScanParametersDataGridView.Rows.Add("FOV dx", scanParameterData.FOVdX);
+            imagingScanParametersDataGridView.Rows.Add("dy", scanParameterData.dY);
+            imagingScanParametersDataGridView.Rows.Add("Rotational Offset", scanParameterData.RotationalOffset);
+        }
+
+        private void AddImagingLEDsDefaultData()
+        {
+            LEDsData ledsData = new LEDsData();
+            imagingLEDsDataGridView.Rows.Add("IO");
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.IOCy5ComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.IOFAMComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.IOHEXComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.IOAttoComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.IOAlexaComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.IOCy5p5ComboBoxCell;
+            imagingLEDsDataGridView.Rows.Add("Intensity (%)", null, null, null, null, null, null);
+            imagingLEDsDataGridView.Rows.Add("Exposure (ms)", null, null, null, null, null, null);
+        }
+
         /// <summary>
         /// Cell Formatting for the Data Grid Views upon loading the Form
         /// </summary>
@@ -839,6 +872,7 @@ namespace Independent_Reader_GUI
 
         private void imagingStreamButton_Click(object sender, EventArgs e)
         {
+            // FIXME: Currently 
             FLIRCameraService cameraService = new FLIRCameraService();
             cameraService.Connect();
             cameraService.Disconnect();

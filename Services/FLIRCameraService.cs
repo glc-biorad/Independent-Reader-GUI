@@ -1,12 +1,10 @@
-﻿using SpinnakerNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpinnakerNET;
 using SpinnakerNET.GenApi;
-using Spinnaker;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -18,8 +16,11 @@ namespace Independent_Reader_GUI.Services
 
         public FLIRCameraService()
         {
+            MessageBox.Show("1");
             managedSystem = new ManagedSystem();
-            cameraList = managedSystem.GetCameras(); 
+            MessageBox.Show("2");
+            cameraList = managedSystem.GetCameras();
+            MessageBox.Show("3");
             // Ensure a camera is found 
             if (cameraList.Count == 0)
             {

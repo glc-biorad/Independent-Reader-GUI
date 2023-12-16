@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Independent Reader GUI": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PATH": "%PATH%;C:\\Program Files\\FLIR Systems\\Spinnaker\\bin64\\vs2022"
+      }
+    }
+  }
+}

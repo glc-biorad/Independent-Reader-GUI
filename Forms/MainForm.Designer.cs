@@ -138,6 +138,25 @@
             thermocyclingAddStepButton = new Button();
             thermocyclingPlotView = new OxyPlot.WindowsForms.PlotView();
             imagingTabPage = new TabPage();
+            imagingLEDsLabel = new Label();
+            imagingMetaDataButton = new Button();
+            imagingMetaDataLabel = new Label();
+            imagingKillButon = new Button();
+            imagingScanButton = new Button();
+            imagingScanParametersDataGridView = new DataGridView();
+            imagingScanParametersPropertyColumn = new DataGridViewTextBoxColumn();
+            imagingScanParametersValueColumn = new DataGridViewTextBoxColumn();
+            imagingScanParametersLabel = new Label();
+            imagingDzTextBox = new TextBox();
+            imagingDyTextBox = new TextBox();
+            imagingDxTextBox = new TextBox();
+            imagingDzLabel = new Label();
+            imagingDyLabel = new Label();
+            imagingDxLabel = new Label();
+            imagingCaptureImageButton = new Button();
+            imagingCameraViewLabel = new Label();
+            imagingStreamButton = new Button();
+            imagingPictureBox = new PictureBox();
             settingsTabPage = new TabPage();
             metrologyTabPage = new TabPage();
             softwareVersionLabel = new Label();
@@ -147,8 +166,14 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            imagingPictureBox = new PictureBox();
-            imagingStreamButton = new Button();
+            imagingLEDsDataGridView = new DataGridView();
+            imagingLEDsPropertyColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsCy5Column = new DataGridViewTextBoxColumn();
+            imagingLEDsFAMColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsHEXColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsAttoColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsAlexaColumn = new DataGridViewTextBoxColumn();
+            imagingLEDsCy5p5Column = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -167,7 +192,9 @@
             thermocyclingTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).BeginInit();
             imagingTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -1253,14 +1280,214 @@
             // 
             // imagingTabPage
             // 
+            imagingTabPage.Controls.Add(imagingLEDsDataGridView);
+            imagingTabPage.Controls.Add(imagingLEDsLabel);
+            imagingTabPage.Controls.Add(imagingMetaDataButton);
+            imagingTabPage.Controls.Add(imagingMetaDataLabel);
+            imagingTabPage.Controls.Add(imagingKillButon);
+            imagingTabPage.Controls.Add(imagingScanButton);
+            imagingTabPage.Controls.Add(imagingScanParametersDataGridView);
+            imagingTabPage.Controls.Add(imagingScanParametersLabel);
+            imagingTabPage.Controls.Add(imagingDzTextBox);
+            imagingTabPage.Controls.Add(imagingDyTextBox);
+            imagingTabPage.Controls.Add(imagingDxTextBox);
+            imagingTabPage.Controls.Add(imagingDzLabel);
+            imagingTabPage.Controls.Add(imagingDyLabel);
+            imagingTabPage.Controls.Add(imagingDxLabel);
+            imagingTabPage.Controls.Add(imagingCaptureImageButton);
+            imagingTabPage.Controls.Add(imagingCameraViewLabel);
             imagingTabPage.Controls.Add(imagingStreamButton);
             imagingTabPage.Controls.Add(imagingPictureBox);
+            imagingTabPage.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             imagingTabPage.Location = new Point(4, 24);
             imagingTabPage.Name = "imagingTabPage";
             imagingTabPage.Size = new Size(1116, 584);
             imagingTabPage.TabIndex = 4;
             imagingTabPage.Text = "Imaging";
             imagingTabPage.UseVisualStyleBackColor = true;
+            // 
+            // imagingLEDsLabel
+            // 
+            imagingLEDsLabel.AutoSize = true;
+            imagingLEDsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingLEDsLabel.Location = new Point(264, 398);
+            imagingLEDsLabel.Name = "imagingLEDsLabel";
+            imagingLEDsLabel.Size = new Size(48, 18);
+            imagingLEDsLabel.TabIndex = 16;
+            imagingLEDsLabel.Text = "LEDs";
+            // 
+            // imagingMetaDataButton
+            // 
+            imagingMetaDataButton.BackColor = SystemColors.Highlight;
+            imagingMetaDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingMetaDataButton.ForeColor = Color.White;
+            imagingMetaDataButton.Location = new Point(692, 318);
+            imagingMetaDataButton.Name = "imagingMetaDataButton";
+            imagingMetaDataButton.Size = new Size(109, 36);
+            imagingMetaDataButton.TabIndex = 15;
+            imagingMetaDataButton.Text = "Form";
+            imagingMetaDataButton.UseVisualStyleBackColor = false;
+            // 
+            // imagingMetaDataLabel
+            // 
+            imagingMetaDataLabel.AutoSize = true;
+            imagingMetaDataLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingMetaDataLabel.Location = new Point(692, 297);
+            imagingMetaDataLabel.Name = "imagingMetaDataLabel";
+            imagingMetaDataLabel.Size = new Size(81, 18);
+            imagingMetaDataLabel.TabIndex = 14;
+            imagingMetaDataLabel.Text = "Meta Data";
+            // 
+            // imagingKillButon
+            // 
+            imagingKillButon.BackColor = Color.IndianRed;
+            imagingKillButon.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingKillButon.ForeColor = Color.White;
+            imagingKillButon.Location = new Point(1000, 339);
+            imagingKillButon.Name = "imagingKillButon";
+            imagingKillButon.Size = new Size(109, 36);
+            imagingKillButon.TabIndex = 13;
+            imagingKillButon.Text = "Kill";
+            imagingKillButon.UseVisualStyleBackColor = false;
+            // 
+            // imagingScanButton
+            // 
+            imagingScanButton.BackColor = SystemColors.Highlight;
+            imagingScanButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingScanButton.ForeColor = Color.White;
+            imagingScanButton.Location = new Point(1000, 297);
+            imagingScanButton.Name = "imagingScanButton";
+            imagingScanButton.Size = new Size(109, 36);
+            imagingScanButton.TabIndex = 12;
+            imagingScanButton.Text = "Scan";
+            imagingScanButton.UseVisualStyleBackColor = false;
+            // 
+            // imagingScanParametersDataGridView
+            // 
+            imagingScanParametersDataGridView.AllowUserToAddRows = false;
+            imagingScanParametersDataGridView.AllowUserToDeleteRows = false;
+            imagingScanParametersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            imagingScanParametersDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingScanParametersPropertyColumn, imagingScanParametersValueColumn });
+            imagingScanParametersDataGridView.Location = new Point(692, 28);
+            imagingScanParametersDataGridView.Name = "imagingScanParametersDataGridView";
+            imagingScanParametersDataGridView.RowHeadersVisible = false;
+            imagingScanParametersDataGridView.RowTemplate.Height = 25;
+            imagingScanParametersDataGridView.Size = new Size(417, 263);
+            imagingScanParametersDataGridView.TabIndex = 11;
+            // 
+            // imagingScanParametersPropertyColumn
+            // 
+            imagingScanParametersPropertyColumn.HeaderText = "";
+            imagingScanParametersPropertyColumn.Name = "imagingScanParametersPropertyColumn";
+            imagingScanParametersPropertyColumn.ReadOnly = true;
+            imagingScanParametersPropertyColumn.Width = 190;
+            // 
+            // imagingScanParametersValueColumn
+            // 
+            imagingScanParametersValueColumn.HeaderText = "Value";
+            imagingScanParametersValueColumn.Name = "imagingScanParametersValueColumn";
+            imagingScanParametersValueColumn.Width = 200;
+            // 
+            // imagingScanParametersLabel
+            // 
+            imagingScanParametersLabel.AutoSize = true;
+            imagingScanParametersLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingScanParametersLabel.Location = new Point(693, 7);
+            imagingScanParametersLabel.Name = "imagingScanParametersLabel";
+            imagingScanParametersLabel.Size = new Size(130, 18);
+            imagingScanParametersLabel.TabIndex = 10;
+            imagingScanParametersLabel.Text = "Scan Parameters";
+            // 
+            // imagingDzTextBox
+            // 
+            imagingDzTextBox.Location = new Point(92, 515);
+            imagingDzTextBox.Name = "imagingDzTextBox";
+            imagingDzTextBox.Size = new Size(135, 26);
+            imagingDzTextBox.TabIndex = 9;
+            // 
+            // imagingDyTextBox
+            // 
+            imagingDyTextBox.Location = new Point(92, 479);
+            imagingDyTextBox.Name = "imagingDyTextBox";
+            imagingDyTextBox.Size = new Size(135, 26);
+            imagingDyTextBox.TabIndex = 8;
+            // 
+            // imagingDxTextBox
+            // 
+            imagingDxTextBox.Location = new Point(92, 446);
+            imagingDxTextBox.Name = "imagingDxTextBox";
+            imagingDxTextBox.Size = new Size(135, 26);
+            imagingDxTextBox.TabIndex = 7;
+            // 
+            // imagingDzLabel
+            // 
+            imagingDzLabel.AutoSize = true;
+            imagingDzLabel.Location = new Point(62, 518);
+            imagingDzLabel.Name = "imagingDzLabel";
+            imagingDzLabel.Size = new Size(24, 18);
+            imagingDzLabel.TabIndex = 6;
+            imagingDzLabel.Text = "dz";
+            // 
+            // imagingDyLabel
+            // 
+            imagingDyLabel.AutoSize = true;
+            imagingDyLabel.Location = new Point(62, 482);
+            imagingDyLabel.Name = "imagingDyLabel";
+            imagingDyLabel.Size = new Size(24, 18);
+            imagingDyLabel.TabIndex = 5;
+            imagingDyLabel.Text = "dy";
+            // 
+            // imagingDxLabel
+            // 
+            imagingDxLabel.AutoSize = true;
+            imagingDxLabel.Location = new Point(62, 449);
+            imagingDxLabel.Name = "imagingDxLabel";
+            imagingDxLabel.Size = new Size(24, 18);
+            imagingDxLabel.TabIndex = 4;
+            imagingDxLabel.Text = "dx";
+            // 
+            // imagingCaptureImageButton
+            // 
+            imagingCaptureImageButton.BackColor = SystemColors.Highlight;
+            imagingCaptureImageButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingCaptureImageButton.ForeColor = Color.White;
+            imagingCaptureImageButton.Location = new Point(123, 398);
+            imagingCaptureImageButton.Name = "imagingCaptureImageButton";
+            imagingCaptureImageButton.Size = new Size(125, 36);
+            imagingCaptureImageButton.TabIndex = 3;
+            imagingCaptureImageButton.Text = "Capture Image";
+            imagingCaptureImageButton.UseVisualStyleBackColor = false;
+            // 
+            // imagingCameraViewLabel
+            // 
+            imagingCameraViewLabel.AutoSize = true;
+            imagingCameraViewLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingCameraViewLabel.Location = new Point(8, 7);
+            imagingCameraViewLabel.Name = "imagingCameraViewLabel";
+            imagingCameraViewLabel.Size = new Size(104, 18);
+            imagingCameraViewLabel.TabIndex = 2;
+            imagingCameraViewLabel.Text = "Camera View";
+            // 
+            // imagingStreamButton
+            // 
+            imagingStreamButton.BackColor = SystemColors.Highlight;
+            imagingStreamButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingStreamButton.ForeColor = Color.White;
+            imagingStreamButton.Location = new Point(8, 398);
+            imagingStreamButton.Name = "imagingStreamButton";
+            imagingStreamButton.Size = new Size(109, 36);
+            imagingStreamButton.TabIndex = 1;
+            imagingStreamButton.Text = "Stream";
+            imagingStreamButton.UseVisualStyleBackColor = false;
+            imagingStreamButton.Click += imagingStreamButton_Click;
+            // 
+            // imagingPictureBox
+            // 
+            imagingPictureBox.Location = new Point(8, 28);
+            imagingPictureBox.Name = "imagingPictureBox";
+            imagingPictureBox.Size = new Size(671, 365);
+            imagingPictureBox.TabIndex = 0;
+            imagingPictureBox.TabStop = false;
             // 
             // settingsTabPage
             // 
@@ -1360,26 +1587,61 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // imagingPictureBox
+            // imagingLEDsDataGridView
             // 
-            imagingPictureBox.Location = new Point(3, 3);
-            imagingPictureBox.Name = "imagingPictureBox";
-            imagingPictureBox.Size = new Size(671, 426);
-            imagingPictureBox.TabIndex = 0;
-            imagingPictureBox.TabStop = false;
+            imagingLEDsDataGridView.AllowUserToAddRows = false;
+            imagingLEDsDataGridView.AllowUserToDeleteRows = false;
+            imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
+            imagingLEDsDataGridView.Location = new Point(264, 419);
+            imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
+            imagingLEDsDataGridView.RowHeadersVisible = false;
+            imagingLEDsDataGridView.RowTemplate.Height = 25;
+            imagingLEDsDataGridView.Size = new Size(844, 150);
+            imagingLEDsDataGridView.TabIndex = 17;
             // 
-            // imagingStreamButton
+            // imagingLEDsPropertyColumn
             // 
-            imagingStreamButton.BackColor = SystemColors.Highlight;
-            imagingStreamButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingStreamButton.ForeColor = Color.White;
-            imagingStreamButton.Location = new Point(8, 435);
-            imagingStreamButton.Name = "imagingStreamButton";
-            imagingStreamButton.Size = new Size(109, 36);
-            imagingStreamButton.TabIndex = 1;
-            imagingStreamButton.Text = "Stream";
-            imagingStreamButton.UseVisualStyleBackColor = false;
-            imagingStreamButton.Click += imagingStreamButton_Click;
+            imagingLEDsPropertyColumn.HeaderText = "";
+            imagingLEDsPropertyColumn.Name = "imagingLEDsPropertyColumn";
+            imagingLEDsPropertyColumn.ReadOnly = true;
+            imagingLEDsPropertyColumn.Width = 180;
+            // 
+            // imagingLEDsCy5Column
+            // 
+            imagingLEDsCy5Column.HeaderText = "Cy5";
+            imagingLEDsCy5Column.Name = "imagingLEDsCy5Column";
+            imagingLEDsCy5Column.Width = 110;
+            // 
+            // imagingLEDsFAMColumn
+            // 
+            imagingLEDsFAMColumn.HeaderText = "FAM";
+            imagingLEDsFAMColumn.Name = "imagingLEDsFAMColumn";
+            imagingLEDsFAMColumn.Width = 110;
+            // 
+            // imagingLEDsHEXColumn
+            // 
+            imagingLEDsHEXColumn.HeaderText = "HEX";
+            imagingLEDsHEXColumn.Name = "imagingLEDsHEXColumn";
+            imagingLEDsHEXColumn.Width = 110;
+            // 
+            // imagingLEDsAttoColumn
+            // 
+            imagingLEDsAttoColumn.HeaderText = "Atto";
+            imagingLEDsAttoColumn.Name = "imagingLEDsAttoColumn";
+            imagingLEDsAttoColumn.Width = 110;
+            // 
+            // imagingLEDsAlexaColumn
+            // 
+            imagingLEDsAlexaColumn.HeaderText = "Alexa";
+            imagingLEDsAlexaColumn.Name = "imagingLEDsAlexaColumn";
+            imagingLEDsAlexaColumn.Width = 110;
+            // 
+            // imagingLEDsCy5p5Column
+            // 
+            imagingLEDsCy5p5Column.HeaderText = "Cy5.5";
+            imagingLEDsCy5p5Column.Name = "imagingLEDsCy5p5Column";
+            imagingLEDsCy5p5Column.Width = 110;
             // 
             // independentReaderForm
             // 
@@ -1419,7 +1681,10 @@
             thermocyclingTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)thermocyclingProtocolStatusesDataGridView).EndInit();
             imagingTabPage.ResumeLayout(false);
+            imagingTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1547,5 +1812,30 @@
         private Button thermocyclingAddGoToButton;
         private PictureBox imagingPictureBox;
         private Button imagingStreamButton;
+        private Button imagingCaptureImageButton;
+        private Label imagingCameraViewLabel;
+        private Label imagingDxLabel;
+        private Label imagingDzLabel;
+        private Label imagingDyLabel;
+        private DataGridView imagingScanParametersDataGridView;
+        private Label imagingScanParametersLabel;
+        private TextBox imagingDzTextBox;
+        private TextBox imagingDyTextBox;
+        private TextBox imagingDxTextBox;
+        private DataGridViewTextBoxColumn imagingScanParametersPropertyColumn;
+        private DataGridViewTextBoxColumn imagingScanParametersValueColumn;
+        private Button imagingKillButon;
+        private Button imagingScanButton;
+        private Button imagingMetaDataButton;
+        private Label imagingMetaDataLabel;
+        private Label imagingLEDsLabel;
+        private DataGridView imagingLEDsDataGridView;
+        private DataGridViewTextBoxColumn imagingLEDsPropertyColumn;
+        private DataGridViewTextBoxColumn imagingLEDsCy5Column;
+        private DataGridViewTextBoxColumn imagingLEDsFAMColumn;
+        private DataGridViewTextBoxColumn imagingLEDsHEXColumn;
+        private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
+        private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
+        private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
     }
 }
