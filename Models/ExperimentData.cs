@@ -14,7 +14,7 @@ namespace Independent_Reader_GUI.Models
         public DateTime EndDateTime { get; set; } = DateTime.Now;
         public string Heater { get; set; } = string.Empty;
         public string PartitionType { get; set; } = string.Empty;
-        public string Cartridge { get; set; } = string.Empty;
+        public DataGridViewComboBoxCell CartridgeComboBoxCell = new DataGridViewComboBoxCell();
         public double CartridgeLength { get; set; } = 0.0;
         public double CartridgeWidth { get; set; } = 0.0;
         public double CartridgeHeight { get; set; } = 0.0;
@@ -23,15 +23,18 @@ namespace Independent_Reader_GUI.Models
         public double GlassOffset { get; set; } = 12.3;
         public string Elastomer { get; set; } = string.Empty;
         public double ElastomerThickness { get; set; } = 0.0;
-        public DataGridViewComboBoxCell Bergquist = new DataGridViewComboBoxCell();
+        public DataGridViewComboBoxCell BergquistComboBoxCell = new DataGridViewComboBoxCell();
         public double BergquistThickness { get; set; } = 0.0;
         public double SurfaceArea { get; set; } = 0.0;
         public double Pressure { get; set; } = 0.0;
 
         public ExperimentData()
         {
+            Configuration config = new Configuration();
             BergquistOptions bergquistOptions = new BergquistOptions();
-            this.Bergquist = bergquistOptions.GetOptionNamesComboBoxCell();
+            BergquistComboBoxCell = bergquistOptions.GetOptionNamesComboBoxCell();
+            CartridgeOptions cartridgeOptions = new CartridgeOptions();
+            CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell(config.DefaultPartitionType);
         }
     }
 }

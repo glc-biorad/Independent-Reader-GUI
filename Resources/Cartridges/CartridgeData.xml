@@ -36,4 +36,28 @@
 		<Height>0.9</Height>
 		<HeightUnits>mm</HeightUnits>
 	</Cartridge>
+	<Cartridge>
+		<Name>TC10</Name>
+		<PartitionType>Droplets</PartitionType>
+		<NumberofSampleChambers>2</NumberofSampleChambers>
+		<NumberofAssayChambers>1</NumberofAssayChambers>
+		<Length>4.1</Length>
+		<LengthUnits>mm</LengthUnits>
+		<Width>6.5</Width>
+		<WidthUnits>mm</WidthUnits>
+		<Height>0.9</Height>
+		<HeightUnits>mm</HeightUnits>
+	</Cartridge>
+	<Cartridge>
+		<Name>TC20</Name>
+		<PartitionType>Droplets</PartitionType>
+		<NumberofSampleChambers>2</NumberofSampleChambers>
+		<NumberofAssayChambers>1</NumberofAssayChambers>
+		<Length>4.1</Length>
+		<LengthUnits>mm</LengthUnits>
+		<Width>6.4</Width>
+		<WidthUnits>mm</WidthUnits>
+		<Height>0.9</Height>
+		<HeightUnits>mm</HeightUnits>
+	</Cartridge>
 </Cartridges>

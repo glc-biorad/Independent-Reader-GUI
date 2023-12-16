@@ -11,11 +11,14 @@ namespace Independent_Reader_GUI.Resources
     internal class BergquistOptions
     {
         // FIXME: Replace this with a variable taken from a config file
-        private string bergquistDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Bergquist\\BergquistData.xml";
+        //private string bergquistDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Bergquist\\BergquistData.xml";
+        private Configuration config = new Configuration();
+        private string bergquistDataPath = string.Empty;
         private List<Bergquist> options = new List<Bergquist>();
 
         public BergquistOptions()
         {
+            bergquistDataPath = config.BergquistDataPath;
             ReadInBergquistData();
         }
 

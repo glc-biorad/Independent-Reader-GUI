@@ -378,7 +378,8 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
             runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
             runExperimentDataGridView.Rows.Add("Partition Type", runExperimentData.PartitionType);
-            runExperimentDataGridView.Rows.Add("Cartridge", runExperimentData.Cartridge);
+            runExperimentDataGridView.Rows.Add("Cartridge");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", runExperimentData.CartridgeLength);
             runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", runExperimentData.CartridgeWidth);
             runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", runExperimentData.CartridgeHeight);
@@ -388,7 +389,7 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Elastomer", runExperimentData.Elastomer);
             runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
             runExperimentDataGridView.Rows.Add("Bergquist");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.Bergquist;
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
             runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", runExperimentData.BergquistThickness);
             runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);

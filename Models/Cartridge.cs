@@ -9,15 +9,15 @@ namespace Independent_Reader_GUI.Models
 {
     internal class Cartridge
     {
-        private string Name = string.Empty;
-        private string PartitionType = string.Empty;
-        private int NumberofSampleChambers = int.MinValue;
-        private int NumberofAssayChambers = int.MinValue;
-        private double Length = double.MinValue;
-        private string LengthUnits = SpatialUnits.Millimeter;
-        private double Width = double.MinValue;
-        private string WidthUnits = SpatialUnits.Millimeter;
-        private double Height = double.MinValue;
-        private string HeightUnits = SpatialUnits.Millimeter;
+        public string Name = string.Empty;
+        public string PartitionType = string.Empty;
+        public int NumberofSampleChambers = int.MinValue;
+        public int NumberofAssayChambers = int.MinValue;
+        public double Length = double.MinValue;
+        public string LengthUnits = SpatialUnits.Millimeter;
+        public double Width = double.MinValue;
+        public string WidthUnits = SpatialUnits.Millimeter;
+        public double Height = double.MinValue;
+        public string HeightUnits = SpatialUnits.Millimeter;
     }
 }

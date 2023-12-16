@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+	<Instrument>
+		<Name>Independent Reader</Name>
+		<ID>1</ID>
+		<Cy5LEDID>1</Cy5LEDID>
+		<FAMLEDID>2</FAMLEDID>
+		<HEXLEDID>3</HEXLEDID>
+		<AttoLEDID>4</AttoLEDID>
+		<AlexaLEDID>5</AlexaLEDID>
+		<Cy5.5LEDID>6</Cy5.5LEDID>
+		<Cy5FilterWheelPosition></Cy5FilterWheelPosition>
+		<FAMFilterWheelPosition></FAMFilterWheelPosition>
+		<HEXFilterWheelPosition></HEXFilterWheelPosition>
+		<AttoFilterWheelPosition></AttoFilterWheelPosition>
+		<AlexaFilterWheelPosition></AlexaFilterWheelPosition>
+		<Cy5.5FilterWheelPosition></Cy5.5FilterWheelPosition>
+	</Instrument>
+	<DataPaths>
+		<ThermocyclingProtocols>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocols>
+		<Bergquists>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</Bergquists>
+		<Elastomers></Elastomers>
+		<Cartridges>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</Cartridges>
+	</DataPaths>
+	<glc-biorad>
+		<Defaults>
+			<PartitionType>Microwells</PartitionType>
+			<Cartridge>M2M</Cartridge>
+			<Heater>A</Heater>
+			<Bergquist></Bergquist>
+			<Elastomer></Elastomer>
+			<ImageBefore>Yes</ImageBefore>
+			<ImageDuringFOV>No</ImageDuringFOV>
+			<ImageDuringFrequencyFOV>1 minute</ImageDuringFrequencyFOV>
+			<ImageDuringSample>No</ImageDuringSample>
+			<ImageDuringFrequencySample>2 minutes</ImageDuringFrequencySample>
+			<ImageDuringAssay>No</ImageDuringAssay>
+			<ImageDuringFrequencyAssay>2 minutes</ImageDuringFrequencyAssay>
+			<ImageAfter>Yes</ImageAfter>
+			<ImageInCy5>No</ImageInCy5>
+			<ImageInFAM>Yes</ImageInFAM>
+			<ImageInHEX>No</ImageInHEX>
+			<ImageInAtto>No</ImageInAtto>
+			<ImageInAlexa>No</ImageInAlexa>
+			<ImageInCy5.5>No</ImageInCy5.5>
+			<LocalPath></LocalPath>
+			<S3BucketPath></S3BucketPath>
+			<Cy5Exposure>300000</Cy5Exposure>
+			<FAMExposure>600000</FAMExposure>
+			<HEXExposure>400000</HEXExposure>
+			<AttoExposure>200000</AttoExposure>
+			<AlexaExposure>900000</AlexaExposure>
+			<Cy5.5Exposure>300000</Cy5.5Exposure>
+			<Cy5Intensity>20</Cy5Intensity>
+			<FAMIntensity>20</FAMIntensity>
+			<HEXIntensity>20</HEXIntensity>
+			<AttoIntensity>20</AttoIntensity>
+			<AlexaIntensity>20</AlexaIntensity>
+			<Cy5.5Intensity>20</Cy5.5Intensity>
+			<ImagerDx>1000</ImagerDx>
+			<ImagerDy>1000</ImagerDy>
+			<ImagedDz>1000</ImagedDz>
+			<ThermocyclingProtocol>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+		</Defaults>
+	</glc-biorad>
+	<acd-biorad>
+		<Defaults>
+			<PartitionType>Microwells</PartitionType>
+			<Cartridge>M2M</Cartridge>
+			<Heater>A</Heater>
+			<Bergquist></Bergquist>
+			<Elastomer></Elastomer>
+			<ImageBefore>Yes</ImageBefore>
+			<ImageDuringFOV>No</ImageDuringFOV>
+			<ImageDuringFrequencyFOV>1 minute</ImageDuringFrequencyFOV>
+			<ImageDuringSample>No</ImageDuringSample>
+			<ImageDuringFrequencySample>2 minutes</ImageDuringFrequencySample>
+			<ImageDuringAssay>No</ImageDuringAssay>
+			<ImageDuringFrequencyAssay>2 minutes</ImageDuringFrequencyAssay>
+			<ImageAfter>Yes</ImageAfter>
+			<ImageInCy5>No</ImageInCy5>
+			<ImageInFAM>Yes</ImageInFAM>
+			<ImageInHEX>No</ImageInHEX>
+			<ImageInAtto>No</ImageInAtto>
+			<ImageInAlexa>No</ImageInAlexa>
+			<ImageInCy5.5>No</ImageInCy5.5>
+			<LocalPath></LocalPath>
+			<S3BucketPath></S3BucketPath>
+			<Cy5Exposure>300000</Cy5Exposure>
+			<FAMExposure>600000</FAMExposure>
+			<HEXExposure>400000</HEXExposure>
+			<AttoExposure>200000</AttoExposure>
+			<AlexaExposure>900000</AlexaExposure>
+			<Cy5.5Exposure>300000</Cy5.5Exposure>
+			<Cy5Intensity>20</Cy5Intensity>
+			<FAMIntensity>20</FAMIntensity>
+			<HEXIntensity>20</HEXIntensity>
+			<AttoIntensity>20</AttoIntensity>
+			<AlexaIntensity>20</AlexaIntensity>
+			<Cy5.5Intensity>20</Cy5.5Intensity>
+			<ImagerDx>1000</ImagerDx>
+			<ImagerDy>1000</ImagerDy>
+			<ImagedDz>1000</ImagedDz>
+			<ThermocyclingProtocol>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+		</Defaults>
+	</acd-biorad>
+	<InstrumentName>Independent Reader</InstrumentName>
+	<InstrumentID>1</InstrumentID>
+	<ThermocyclingProtocolsDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
+	<BergquistDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
+	<CartridgeDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
+	<DefaultPartitionType>Microwells</DefaultPartitionType>
+	<DefaultCartridge>M2M</DefaultCartridge>
+</Configuration>

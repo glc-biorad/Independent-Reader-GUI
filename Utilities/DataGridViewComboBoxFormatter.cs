@@ -32,19 +32,6 @@ namespace Independent_Reader_GUI.Utilities
                 });
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
-            else if (cellValue == "Cartridge")
-            {
-                comboBoxCell.Items.AddRange(new object[]
-                {
-                    "M2M",
-                    "Parallel",
-                    "Vantiva V1",
-                    "BEAMR",
-                    "TC10",
-                    "TC20"
-                });
-                comboBoxCell.Value = comboBoxCell.Items[0];
-            }
             else if (cellValue == "Elastomer")
             {
                 comboBoxCell.Items.AddRange(new object[]
@@ -55,16 +42,6 @@ namespace Independent_Reader_GUI.Utilities
                 });
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
-            //else if (cellValue == "Bergquist")
-            //{
-            //    comboBoxCell.Items.AddRange(new object[]
-            //    {
-            //        "SoftFlex (E038)",
-            //        "SoftFlex (C022)",
-            //        "COH-1019LVC"
-            //    });
-            //    comboBoxCell.Value = comboBoxCell.Items[0];
-            //}
             else if (cellValue == "Image Before")
             {
                 comboBoxCell.Items.AddRange(new object[]
