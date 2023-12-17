@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x86</Platforms>
+    <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +23,8 @@
 
   <ItemGroup>
     <Reference Include="SpinnakerNETd_v140">
-      <HintPath>bin\Debug\net6.0-windows\SpinnakerNETd_v140.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\FLIR Systems\Spinnaker\bin64\vs2022\SpinnakerNETd_v140.dll</HintPath>
       <Private>True</Private>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
 

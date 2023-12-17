@@ -72,6 +72,8 @@
             runSampleMetaDataIDColumn = new DataGridViewTextBoxColumn();
             runSampleMetaDataNameColumn = new DataGridViewTextBoxColumn();
             runImagingSetupDataGridView = new DataGridView();
+            runImagingSetupPropertyColumn = new DataGridViewTextBoxColumn();
+            runImagingSetupValueColumn = new DataGridViewTextBoxColumn();
             runExperimentDataGridView = new DataGridView();
             runExperimentDataPropertyColumn = new DataGridViewTextBoxColumn();
             runExperimentDataValueColumn = new DataGridViewTextBoxColumn();
@@ -172,8 +174,10 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            runImagingSetupPropertyColumn = new DataGridViewTextBoxColumn();
-            runImagingSetupValueColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsLabel = new Label();
+            settingsMotorsDataGridView = new DataGridView();
+            settingsMotorsMotorColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsDefaultSpeedColumn = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -195,6 +199,8 @@
             ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).BeginInit();
+            settingsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -630,6 +636,19 @@
             runImagingSetupDataGridView.RowTemplate.Height = 25;
             runImagingSetupDataGridView.Size = new Size(379, 554);
             runImagingSetupDataGridView.TabIndex = 6;
+            // 
+            // runImagingSetupPropertyColumn
+            // 
+            runImagingSetupPropertyColumn.HeaderText = "Property";
+            runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
+            runImagingSetupPropertyColumn.ReadOnly = true;
+            runImagingSetupPropertyColumn.Width = 210;
+            // 
+            // runImagingSetupValueColumn
+            // 
+            runImagingSetupValueColumn.HeaderText = "Value";
+            runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
+            runImagingSetupValueColumn.Width = 145;
             // 
             // runExperimentDataGridView
             // 
@@ -1443,21 +1462,21 @@
             // 
             // imagingDzTextBox
             // 
-            imagingDzTextBox.Location = new Point(92, 515);
+            imagingDzTextBox.Location = new Point(92, 529);
             imagingDzTextBox.Name = "imagingDzTextBox";
             imagingDzTextBox.Size = new Size(135, 26);
             imagingDzTextBox.TabIndex = 9;
             // 
             // imagingDyTextBox
             // 
-            imagingDyTextBox.Location = new Point(92, 479);
+            imagingDyTextBox.Location = new Point(92, 493);
             imagingDyTextBox.Name = "imagingDyTextBox";
             imagingDyTextBox.Size = new Size(135, 26);
             imagingDyTextBox.TabIndex = 8;
             // 
             // imagingDxTextBox
             // 
-            imagingDxTextBox.Location = new Point(92, 446);
+            imagingDxTextBox.Location = new Point(92, 460);
             imagingDxTextBox.Name = "imagingDxTextBox";
             imagingDxTextBox.Size = new Size(135, 26);
             imagingDxTextBox.TabIndex = 7;
@@ -1465,7 +1484,7 @@
             // imagingDzLabel
             // 
             imagingDzLabel.AutoSize = true;
-            imagingDzLabel.Location = new Point(62, 518);
+            imagingDzLabel.Location = new Point(62, 532);
             imagingDzLabel.Name = "imagingDzLabel";
             imagingDzLabel.Size = new Size(24, 18);
             imagingDzLabel.TabIndex = 6;
@@ -1474,7 +1493,7 @@
             // imagingDyLabel
             // 
             imagingDyLabel.AutoSize = true;
-            imagingDyLabel.Location = new Point(62, 482);
+            imagingDyLabel.Location = new Point(62, 496);
             imagingDyLabel.Name = "imagingDyLabel";
             imagingDyLabel.Size = new Size(24, 18);
             imagingDyLabel.TabIndex = 5;
@@ -1483,7 +1502,7 @@
             // imagingDxLabel
             // 
             imagingDxLabel.AutoSize = true;
-            imagingDxLabel.Location = new Point(62, 449);
+            imagingDxLabel.Location = new Point(62, 463);
             imagingDxLabel.Name = "imagingDxLabel";
             imagingDxLabel.Size = new Size(24, 18);
             imagingDxLabel.TabIndex = 4;
@@ -1534,6 +1553,8 @@
             // 
             // settingsTabPage
             // 
+            settingsTabPage.Controls.Add(settingsMotorsDataGridView);
+            settingsTabPage.Controls.Add(settingsMotorsLabel);
             settingsTabPage.Location = new Point(4, 24);
             settingsTabPage.Name = "settingsTabPage";
             settingsTabPage.Size = new Size(1116, 584);
@@ -1630,18 +1651,40 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // runImagingSetupPropertyColumn
+            // settingsMotorsLabel
             // 
-            runImagingSetupPropertyColumn.HeaderText = "Property";
-            runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
-            runImagingSetupPropertyColumn.ReadOnly = true;
-            runImagingSetupPropertyColumn.Width = 210;
+            settingsMotorsLabel.AutoSize = true;
+            settingsMotorsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            settingsMotorsLabel.Location = new Point(8, 9);
+            settingsMotorsLabel.Name = "settingsMotorsLabel";
+            settingsMotorsLabel.Size = new Size(56, 18);
+            settingsMotorsLabel.TabIndex = 0;
+            settingsMotorsLabel.Text = "Motors";
             // 
-            // runImagingSetupValueColumn
+            // settingsMotorsDataGridView
             // 
-            runImagingSetupValueColumn.HeaderText = "Value";
-            runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
-            runImagingSetupValueColumn.Width = 145;
+            settingsMotorsDataGridView.AllowUserToAddRows = false;
+            settingsMotorsDataGridView.AllowUserToDeleteRows = false;
+            settingsMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            settingsMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { settingsMotorsMotorColumn, settingsMotorsDefaultSpeedColumn });
+            settingsMotorsDataGridView.Location = new Point(8, 30);
+            settingsMotorsDataGridView.Name = "settingsMotorsDataGridView";
+            settingsMotorsDataGridView.RowHeadersVisible = false;
+            settingsMotorsDataGridView.RowTemplate.Height = 25;
+            settingsMotorsDataGridView.Size = new Size(471, 321);
+            settingsMotorsDataGridView.TabIndex = 1;
+            // 
+            // settingsMotorsMotorColumn
+            // 
+            settingsMotorsMotorColumn.HeaderText = "Motor";
+            settingsMotorsMotorColumn.Name = "settingsMotorsMotorColumn";
+            settingsMotorsMotorColumn.ReadOnly = true;
+            // 
+            // settingsMotorsDefaultSpeedColumn
+            // 
+            settingsMotorsDefaultSpeedColumn.HeaderText = "Default Speed (µS/s)";
+            settingsMotorsDefaultSpeedColumn.Name = "settingsMotorsDefaultSpeedColumn";
+            settingsMotorsDefaultSpeedColumn.Width = 140;
             // 
             // independentReaderForm
             // 
@@ -1685,6 +1728,9 @@
             ((System.ComponentModel.ISupportInitialize)imagingLEDsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).EndInit();
+            settingsTabPage.ResumeLayout(false);
+            settingsTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1837,5 +1883,9 @@
         private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
         private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
         private DataGridViewTextBoxColumn runImagingSetupValueColumn;
+        private Label settingsMotorsLabel;
+        private DataGridView settingsMotorsDataGridView;
+        private DataGridViewTextBoxColumn settingsMotorsMotorColumn;
+        private DataGridViewTextBoxColumn settingsMotorsDefaultSpeedColumn;
     }
 }

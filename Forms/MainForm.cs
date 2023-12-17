@@ -7,6 +7,7 @@ using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Series;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace Independent_Reader_GUI
 {
@@ -18,6 +19,7 @@ namespace Independent_Reader_GUI
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
         private CartridgeOptions cartridgeOptions = new CartridgeOptions();
+        private FLIRCameraService cameraService = new FLIRCameraService();
 
         /// <summary>
         /// Initialization of the Form
@@ -25,6 +27,9 @@ namespace Independent_Reader_GUI
         public independentReaderForm()
         {
             InitializeComponent();
+
+            // Connect to the FLIR Camera
+            cameraService.Connect();
 
             // Add default data
             AddHomeMotorsDefaultData();
@@ -63,6 +68,9 @@ namespace Independent_Reader_GUI
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
+
+            // Subscribe to the form closing event handler
+            this.FormClosing += new FormClosingEventHandler(IndependentReaderGUI_FormClosing);
         }
 
         /// <summary>
@@ -873,6 +881,11 @@ namespace Independent_Reader_GUI
             plotManager.HandleMouseDown(sender, oxyArgs);
         }
 
+        /// <summary>
+        /// Click event handler for clicking the Thermocycling Edit Step button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void thermocyclingEditStepButton_Click(object sender, EventArgs e)
         {
             // Open a Thermocycling Edit Step Form window
@@ -913,9 +926,10 @@ namespace Independent_Reader_GUI
 
         private void imagingStreamButton_Click(object sender, EventArgs e)
         {
-            // FIXME: Currently 
-            FLIRCameraService cameraService = new FLIRCameraService();
-            cameraService.Connect();
+        }
+
+        private void IndependentReaderGUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
             cameraService.Disconnect();
         }
     }
