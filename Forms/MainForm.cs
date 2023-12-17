@@ -926,11 +926,24 @@ namespace Independent_Reader_GUI
 
         private void imagingStreamButton_Click(object sender, EventArgs e)
         {
+            if (cameraService.Streaming)
+            {
+                cameraService.StopStream();
+            }
+            else
+            {
+                cameraService.StartStream();
+            }
         }
 
         private void IndependentReaderGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             cameraService.Disconnect();
+        }
+
+        private void imagingCaptureImageButton_Click(object sender, EventArgs e)
+        {
+            cameraService.CaptureImage();
         }
     }
 }

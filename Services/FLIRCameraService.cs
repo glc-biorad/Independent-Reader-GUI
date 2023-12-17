@@ -11,6 +11,7 @@ namespace Independent_Reader_GUI.Services
     internal class FLIRCameraService
     {
         private bool connected;
+        private bool streaming;
         private ManagedSystem? managedSystem = null;
         private ManagedCameraList cameraList = new ManagedCameraList();
         private IManagedCamera? camera = null;
@@ -43,6 +44,10 @@ namespace Independent_Reader_GUI.Services
         { 
             get { return connected; } 
         }
+        public bool Streaming
+        { 
+            get { return streaming; }
+        }
 
         public void Disconnect()
         {
@@ -55,7 +60,45 @@ namespace Independent_Reader_GUI.Services
 
         public void CaptureImage()
         {
+            if (connected)
+            {
+                // TODO: Add code to capture an image
+                MessageBox.Show("Capture image code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("Cannot capture image, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
+        public void StartStream()
+        {
+            if (connected)
+            {
+                streaming = true;
+                // TODO: Add code for streaming to the Imaging Pixture Box
+                MessageBox.Show("Streaming code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+            }
+            else
+            {
+                streaming = false;
+                MessageBox.Show("Cannot start stream, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        public void StopStream()
+        {
+            if (connected)
+            {
+                streaming = false;
+                // TODO: Add code for stopping a stream
+                MessageBox.Show("Streaming code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                streaming = false;
+                MessageBox.Show("FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

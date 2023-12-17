@@ -166,6 +166,15 @@
             imagingStreamButton = new Button();
             imagingPictureBox = new PictureBox();
             settingsTabPage = new TabPage();
+            settingsTECsDataGridView = new DataGridView();
+            settingsTECsPropertyColumn = new DataGridViewTextBoxColumn();
+            settingsTECsTECAColumn = new DataGridViewTextBoxColumn();
+            settingsTECsTECBColumn = new DataGridViewTextBoxColumn();
+            settingsTECsTECCColumn = new DataGridViewTextBoxColumn();
+            settingsTECsTECDColumn = new DataGridViewTextBoxColumn();
+            settingsLEDsLabel = new Label();
+            settingsMotorsDataGridView = new DataGridView();
+            settingsMotorsLabel = new Label();
             metrologyTabPage = new TabPage();
             softwareVersionLabel = new Label();
             firmwareVersionLabel = new Label();
@@ -174,10 +183,12 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            settingsMotorsLabel = new Label();
-            settingsMotorsDataGridView = new DataGridView();
             settingsMotorsMotorColumn = new DataGridViewTextBoxColumn();
             settingsMotorsDefaultSpeedColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsAccelerationColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsDeaccelerationColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsHomeSpeedColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -200,6 +211,7 @@
             ((System.ComponentModel.ISupportInitialize)imagingScanParametersDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).BeginInit();
             settingsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)settingsTECsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -1519,6 +1531,7 @@
             imagingCaptureImageButton.TabIndex = 3;
             imagingCaptureImageButton.Text = "Capture Image";
             imagingCaptureImageButton.UseVisualStyleBackColor = false;
+            imagingCaptureImageButton.Click += imagingCaptureImageButton_Click;
             // 
             // imagingCameraViewLabel
             // 
@@ -1553,6 +1566,8 @@
             // 
             // settingsTabPage
             // 
+            settingsTabPage.Controls.Add(settingsTECsDataGridView);
+            settingsTabPage.Controls.Add(settingsLEDsLabel);
             settingsTabPage.Controls.Add(settingsMotorsDataGridView);
             settingsTabPage.Controls.Add(settingsMotorsLabel);
             settingsTabPage.Location = new Point(4, 24);
@@ -1561,6 +1576,79 @@
             settingsTabPage.TabIndex = 5;
             settingsTabPage.Text = "Settings";
             settingsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // settingsTECsDataGridView
+            // 
+            settingsTECsDataGridView.AllowUserToAddRows = false;
+            settingsTECsDataGridView.AllowUserToDeleteRows = false;
+            settingsTECsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            settingsTECsDataGridView.Columns.AddRange(new DataGridViewColumn[] { settingsTECsPropertyColumn, settingsTECsTECAColumn, settingsTECsTECBColumn, settingsTECsTECCColumn, settingsTECsTECDColumn });
+            settingsTECsDataGridView.Location = new Point(587, 30);
+            settingsTECsDataGridView.Name = "settingsTECsDataGridView";
+            settingsTECsDataGridView.RowHeadersVisible = false;
+            settingsTECsDataGridView.RowTemplate.Height = 25;
+            settingsTECsDataGridView.Size = new Size(521, 541);
+            settingsTECsDataGridView.TabIndex = 3;
+            // 
+            // settingsTECsPropertyColumn
+            // 
+            settingsTECsPropertyColumn.HeaderText = "";
+            settingsTECsPropertyColumn.Name = "settingsTECsPropertyColumn";
+            settingsTECsPropertyColumn.ReadOnly = true;
+            settingsTECsPropertyColumn.Width = 115;
+            // 
+            // settingsTECsTECAColumn
+            // 
+            settingsTECsTECAColumn.HeaderText = "TEC A";
+            settingsTECsTECAColumn.Name = "settingsTECsTECAColumn";
+            // 
+            // settingsTECsTECBColumn
+            // 
+            settingsTECsTECBColumn.HeaderText = "TEC B";
+            settingsTECsTECBColumn.Name = "settingsTECsTECBColumn";
+            // 
+            // settingsTECsTECCColumn
+            // 
+            settingsTECsTECCColumn.HeaderText = "TEC C";
+            settingsTECsTECCColumn.Name = "settingsTECsTECCColumn";
+            // 
+            // settingsTECsTECDColumn
+            // 
+            settingsTECsTECDColumn.HeaderText = "TEC D";
+            settingsTECsTECDColumn.Name = "settingsTECsTECDColumn";
+            // 
+            // settingsLEDsLabel
+            // 
+            settingsLEDsLabel.AutoSize = true;
+            settingsLEDsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            settingsLEDsLabel.Location = new Point(587, 9);
+            settingsLEDsLabel.Name = "settingsLEDsLabel";
+            settingsLEDsLabel.Size = new Size(48, 18);
+            settingsLEDsLabel.TabIndex = 2;
+            settingsLEDsLabel.Text = "TECs";
+            // 
+            // settingsMotorsDataGridView
+            // 
+            settingsMotorsDataGridView.AllowUserToAddRows = false;
+            settingsMotorsDataGridView.AllowUserToDeleteRows = false;
+            settingsMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            settingsMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { settingsMotorsMotorColumn, settingsMotorsDefaultSpeedColumn, settingsMotorsAccelerationColumn, settingsMotorsDeaccelerationColumn, settingsMotorsHomeSpeedColumn, settingsMotorsEnabledColumn });
+            settingsMotorsDataGridView.Location = new Point(8, 30);
+            settingsMotorsDataGridView.Name = "settingsMotorsDataGridView";
+            settingsMotorsDataGridView.RowHeadersVisible = false;
+            settingsMotorsDataGridView.RowTemplate.Height = 25;
+            settingsMotorsDataGridView.Size = new Size(573, 294);
+            settingsMotorsDataGridView.TabIndex = 1;
+            // 
+            // settingsMotorsLabel
+            // 
+            settingsMotorsLabel.AutoSize = true;
+            settingsMotorsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            settingsMotorsLabel.Location = new Point(8, 9);
+            settingsMotorsLabel.Name = "settingsMotorsLabel";
+            settingsMotorsLabel.Size = new Size(56, 18);
+            settingsMotorsLabel.TabIndex = 0;
+            settingsMotorsLabel.Text = "Motors";
             // 
             // metrologyTabPage
             // 
@@ -1651,29 +1739,6 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // settingsMotorsLabel
-            // 
-            settingsMotorsLabel.AutoSize = true;
-            settingsMotorsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            settingsMotorsLabel.Location = new Point(8, 9);
-            settingsMotorsLabel.Name = "settingsMotorsLabel";
-            settingsMotorsLabel.Size = new Size(56, 18);
-            settingsMotorsLabel.TabIndex = 0;
-            settingsMotorsLabel.Text = "Motors";
-            // 
-            // settingsMotorsDataGridView
-            // 
-            settingsMotorsDataGridView.AllowUserToAddRows = false;
-            settingsMotorsDataGridView.AllowUserToDeleteRows = false;
-            settingsMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            settingsMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { settingsMotorsMotorColumn, settingsMotorsDefaultSpeedColumn });
-            settingsMotorsDataGridView.Location = new Point(8, 30);
-            settingsMotorsDataGridView.Name = "settingsMotorsDataGridView";
-            settingsMotorsDataGridView.RowHeadersVisible = false;
-            settingsMotorsDataGridView.RowTemplate.Height = 25;
-            settingsMotorsDataGridView.Size = new Size(471, 321);
-            settingsMotorsDataGridView.TabIndex = 1;
-            // 
             // settingsMotorsMotorColumn
             // 
             settingsMotorsMotorColumn.HeaderText = "Motor";
@@ -1684,7 +1749,27 @@
             // 
             settingsMotorsDefaultSpeedColumn.HeaderText = "Default Speed (µS/s)";
             settingsMotorsDefaultSpeedColumn.Name = "settingsMotorsDefaultSpeedColumn";
-            settingsMotorsDefaultSpeedColumn.Width = 140;
+            // 
+            // settingsMotorsAccelerationColumn
+            // 
+            settingsMotorsAccelerationColumn.HeaderText = "Acceleration (µS/s²)";
+            settingsMotorsAccelerationColumn.Name = "settingsMotorsAccelerationColumn";
+            // 
+            // settingsMotorsDeaccelerationColumn
+            // 
+            settingsMotorsDeaccelerationColumn.HeaderText = "Deacceleration (µS/s²)";
+            settingsMotorsDeaccelerationColumn.Name = "settingsMotorsDeaccelerationColumn";
+            // 
+            // settingsMotorsHomeSpeedColumn
+            // 
+            settingsMotorsHomeSpeedColumn.HeaderText = "Home Speed (µS/s)";
+            settingsMotorsHomeSpeedColumn.Name = "settingsMotorsHomeSpeedColumn";
+            // 
+            // settingsMotorsEnabledColumn
+            // 
+            settingsMotorsEnabledColumn.HeaderText = "Enabled";
+            settingsMotorsEnabledColumn.Name = "settingsMotorsEnabledColumn";
+            settingsMotorsEnabledColumn.Width = 70;
             // 
             // independentReaderForm
             // 
@@ -1730,6 +1815,7 @@
             ((System.ComponentModel.ISupportInitialize)imagingPictureBox).EndInit();
             settingsTabPage.ResumeLayout(false);
             settingsTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)settingsTECsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -1885,7 +1971,18 @@
         private DataGridViewTextBoxColumn runImagingSetupValueColumn;
         private Label settingsMotorsLabel;
         private DataGridView settingsMotorsDataGridView;
+        private Label settingsLEDsLabel;
+        private DataGridView settingsTECsDataGridView;
+        private DataGridViewTextBoxColumn settingsTECsPropertyColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECAColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECBColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECCColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECDColumn;
         private DataGridViewTextBoxColumn settingsMotorsMotorColumn;
         private DataGridViewTextBoxColumn settingsMotorsDefaultSpeedColumn;
+        private DataGridViewTextBoxColumn settingsMotorsAccelerationColumn;
+        private DataGridViewTextBoxColumn settingsMotorsDeaccelerationColumn;
+        private DataGridViewTextBoxColumn settingsMotorsHomeSpeedColumn;
+        private DataGridViewTextBoxColumn settingsMotorsEnabledColumn;
     }
 }
