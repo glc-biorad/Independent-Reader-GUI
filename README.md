@@ -9,7 +9,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - Window Forms
 - OxyPlot.WindowsForms 2.1.2 for Charting
 - Bonsai.Spinnaker 0.7.1
-- 
+- Desktop Developer for C++ on Visual Studio
 
 ## Getting Started
 ### Prerequists
@@ -17,16 +17,19 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - .NET Framework 6.0
 ### Installation
 1. Clone the repo
-2. Open the solution in Visual Studio and build the project
+2. Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
+3. Open the solution in Visual Studio and build the project
 
 ## Usage
-- Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
 
 ## Features
 
 ## License
 
 ## Contact
+- Author: G. Lopez-Candales
+- Email: gabriel_lopez-candales@bio-rad.com
 
 ## Acknowledgments
 - [OxyPlot](https://github.com/oxyplot/oxyplot)
+- [Bonsai.Spinnaker](https://github.com/bonsai-rx/spinnaker)
