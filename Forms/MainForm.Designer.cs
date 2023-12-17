@@ -174,6 +174,12 @@
             settingsTECsTECDColumn = new DataGridViewTextBoxColumn();
             settingsLEDsLabel = new Label();
             settingsMotorsDataGridView = new DataGridView();
+            settingsMotorsMotorColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsDefaultSpeedColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsAccelerationColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsDeaccelerationColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsHomeSpeedColumn = new DataGridViewTextBoxColumn();
+            settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
             settingsMotorsLabel = new Label();
             metrologyTabPage = new TabPage();
             softwareVersionLabel = new Label();
@@ -183,12 +189,10 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            settingsMotorsMotorColumn = new DataGridViewTextBoxColumn();
-            settingsMotorsDefaultSpeedColumn = new DataGridViewTextBoxColumn();
-            settingsMotorsAccelerationColumn = new DataGridViewTextBoxColumn();
-            settingsMotorsDeaccelerationColumn = new DataGridViewTextBoxColumn();
-            settingsMotorsHomeSpeedColumn = new DataGridViewTextBoxColumn();
-            settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
+            controlTECAResetButton = new Button();
+            controlTECBResetButton = new Button();
+            controlTECCResetButton = new Button();
+            controlTECDResetButton = new Button();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -742,6 +746,10 @@
             // 
             // controlTabPage
             // 
+            controlTabPage.Controls.Add(controlTECDResetButton);
+            controlTabPage.Controls.Add(controlTECCResetButton);
+            controlTabPage.Controls.Add(controlTECBResetButton);
+            controlTabPage.Controls.Add(controlTECAResetButton);
             controlTabPage.Controls.Add(controlLEDsDataGridView);
             controlTabPage.Controls.Add(controlLEDsLabel);
             controlTabPage.Controls.Add(controlTECDSetTempButton);
@@ -833,9 +841,9 @@
             controlTECDSetTempButton.BackColor = SystemColors.Highlight;
             controlTECDSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECDSetTempButton.ForeColor = Color.White;
-            controlTECDSetTempButton.Location = new Point(996, 545);
+            controlTECDSetTempButton.Location = new Point(1007, 442);
             controlTECDSetTempButton.Name = "controlTECDSetTempButton";
-            controlTECDSetTempButton.Size = new Size(109, 36);
+            controlTECDSetTempButton.Size = new Size(100, 36);
             controlTECDSetTempButton.TabIndex = 10;
             controlTECDSetTempButton.Text = "Set Temp";
             controlTECDSetTempButton.UseVisualStyleBackColor = false;
@@ -845,9 +853,9 @@
             controlTECCSetTempButton.BackColor = SystemColors.Highlight;
             controlTECCSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECCSetTempButton.ForeColor = Color.White;
-            controlTECCSetTempButton.Location = new Point(881, 545);
+            controlTECCSetTempButton.Location = new Point(901, 442);
             controlTECCSetTempButton.Name = "controlTECCSetTempButton";
-            controlTECCSetTempButton.Size = new Size(109, 36);
+            controlTECCSetTempButton.Size = new Size(100, 36);
             controlTECCSetTempButton.TabIndex = 9;
             controlTECCSetTempButton.Text = "Set Temp";
             controlTECCSetTempButton.UseVisualStyleBackColor = false;
@@ -857,9 +865,9 @@
             controlTECBSetTempButton.BackColor = SystemColors.Highlight;
             controlTECBSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECBSetTempButton.ForeColor = Color.White;
-            controlTECBSetTempButton.Location = new Point(767, 545);
+            controlTECBSetTempButton.Location = new Point(795, 442);
             controlTECBSetTempButton.Name = "controlTECBSetTempButton";
-            controlTECBSetTempButton.Size = new Size(109, 36);
+            controlTECBSetTempButton.Size = new Size(100, 36);
             controlTECBSetTempButton.TabIndex = 8;
             controlTECBSetTempButton.Text = "Set Temp";
             controlTECBSetTempButton.UseVisualStyleBackColor = false;
@@ -869,9 +877,9 @@
             controlTECASetTempButton.BackColor = SystemColors.Highlight;
             controlTECASetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECASetTempButton.ForeColor = Color.White;
-            controlTECASetTempButton.Location = new Point(652, 545);
+            controlTECASetTempButton.Location = new Point(685, 442);
             controlTECASetTempButton.Name = "controlTECASetTempButton";
-            controlTECASetTempButton.Size = new Size(109, 36);
+            controlTECASetTempButton.Size = new Size(100, 36);
             controlTECASetTempButton.TabIndex = 7;
             controlTECASetTempButton.Text = "Set Temp";
             controlTECASetTempButton.UseVisualStyleBackColor = false;
@@ -886,7 +894,7 @@
             controlTECsDataGridView.Name = "controlTECsDataGridView";
             controlTECsDataGridView.RowHeadersVisible = false;
             controlTECsDataGridView.RowTemplate.Height = 25;
-            controlTECsDataGridView.Size = new Size(569, 515);
+            controlTECsDataGridView.Size = new Size(569, 410);
             controlTECsDataGridView.TabIndex = 6;
             // 
             // controlTECsPropertyColumn
@@ -1640,6 +1648,38 @@
             settingsMotorsDataGridView.Size = new Size(573, 294);
             settingsMotorsDataGridView.TabIndex = 1;
             // 
+            // settingsMotorsMotorColumn
+            // 
+            settingsMotorsMotorColumn.HeaderText = "Motor";
+            settingsMotorsMotorColumn.Name = "settingsMotorsMotorColumn";
+            settingsMotorsMotorColumn.ReadOnly = true;
+            // 
+            // settingsMotorsDefaultSpeedColumn
+            // 
+            settingsMotorsDefaultSpeedColumn.HeaderText = "Default Speed (µS/s)";
+            settingsMotorsDefaultSpeedColumn.Name = "settingsMotorsDefaultSpeedColumn";
+            // 
+            // settingsMotorsAccelerationColumn
+            // 
+            settingsMotorsAccelerationColumn.HeaderText = "Acceleration (µS/s²)";
+            settingsMotorsAccelerationColumn.Name = "settingsMotorsAccelerationColumn";
+            // 
+            // settingsMotorsDeaccelerationColumn
+            // 
+            settingsMotorsDeaccelerationColumn.HeaderText = "Deacceleration (µS/s²)";
+            settingsMotorsDeaccelerationColumn.Name = "settingsMotorsDeaccelerationColumn";
+            // 
+            // settingsMotorsHomeSpeedColumn
+            // 
+            settingsMotorsHomeSpeedColumn.HeaderText = "Home Speed (µS/s)";
+            settingsMotorsHomeSpeedColumn.Name = "settingsMotorsHomeSpeedColumn";
+            // 
+            // settingsMotorsEnabledColumn
+            // 
+            settingsMotorsEnabledColumn.HeaderText = "Enabled";
+            settingsMotorsEnabledColumn.Name = "settingsMotorsEnabledColumn";
+            settingsMotorsEnabledColumn.Width = 70;
+            // 
             // settingsMotorsLabel
             // 
             settingsMotorsLabel.AutoSize = true;
@@ -1739,37 +1779,53 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // settingsMotorsMotorColumn
+            // controlTECAResetButton
             // 
-            settingsMotorsMotorColumn.HeaderText = "Motor";
-            settingsMotorsMotorColumn.Name = "settingsMotorsMotorColumn";
-            settingsMotorsMotorColumn.ReadOnly = true;
+            controlTECAResetButton.BackColor = Color.IndianRed;
+            controlTECAResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECAResetButton.ForeColor = Color.White;
+            controlTECAResetButton.Location = new Point(685, 484);
+            controlTECAResetButton.Name = "controlTECAResetButton";
+            controlTECAResetButton.Size = new Size(100, 36);
+            controlTECAResetButton.TabIndex = 13;
+            controlTECAResetButton.Text = "Reset";
+            controlTECAResetButton.UseVisualStyleBackColor = false;
             // 
-            // settingsMotorsDefaultSpeedColumn
+            // controlTECBResetButton
             // 
-            settingsMotorsDefaultSpeedColumn.HeaderText = "Default Speed (µS/s)";
-            settingsMotorsDefaultSpeedColumn.Name = "settingsMotorsDefaultSpeedColumn";
+            controlTECBResetButton.BackColor = Color.IndianRed;
+            controlTECBResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECBResetButton.ForeColor = Color.White;
+            controlTECBResetButton.Location = new Point(795, 484);
+            controlTECBResetButton.Name = "controlTECBResetButton";
+            controlTECBResetButton.Size = new Size(100, 36);
+            controlTECBResetButton.TabIndex = 14;
+            controlTECBResetButton.Text = "Reset";
+            controlTECBResetButton.UseVisualStyleBackColor = false;
             // 
-            // settingsMotorsAccelerationColumn
+            // controlTECCResetButton
             // 
-            settingsMotorsAccelerationColumn.HeaderText = "Acceleration (µS/s²)";
-            settingsMotorsAccelerationColumn.Name = "settingsMotorsAccelerationColumn";
+            controlTECCResetButton.BackColor = Color.IndianRed;
+            controlTECCResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECCResetButton.ForeColor = Color.White;
+            controlTECCResetButton.Location = new Point(901, 484);
+            controlTECCResetButton.Name = "controlTECCResetButton";
+            controlTECCResetButton.Size = new Size(100, 36);
+            controlTECCResetButton.TabIndex = 15;
+            controlTECCResetButton.Text = "Reset";
+            controlTECCResetButton.UseVisualStyleBackColor = false;
             // 
-            // settingsMotorsDeaccelerationColumn
+            // controlTECDResetButton
             // 
-            settingsMotorsDeaccelerationColumn.HeaderText = "Deacceleration (µS/s²)";
-            settingsMotorsDeaccelerationColumn.Name = "settingsMotorsDeaccelerationColumn";
-            // 
-            // settingsMotorsHomeSpeedColumn
-            // 
-            settingsMotorsHomeSpeedColumn.HeaderText = "Home Speed (µS/s)";
-            settingsMotorsHomeSpeedColumn.Name = "settingsMotorsHomeSpeedColumn";
-            // 
-            // settingsMotorsEnabledColumn
-            // 
-            settingsMotorsEnabledColumn.HeaderText = "Enabled";
-            settingsMotorsEnabledColumn.Name = "settingsMotorsEnabledColumn";
-            settingsMotorsEnabledColumn.Width = 70;
+            controlTECDResetButton.BackColor = Color.IndianRed;
+            controlTECDResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECDResetButton.ForeColor = Color.White;
+            controlTECDResetButton.Location = new Point(1007, 484);
+            controlTECDResetButton.Name = "controlTECDResetButton";
+            controlTECDResetButton.Size = new Size(100, 36);
+            controlTECDResetButton.TabIndex = 16;
+            controlTECDResetButton.Text = "Reset";
+            controlTECDResetButton.UseVisualStyleBackColor = false;
             // 
             // independentReaderForm
             // 
@@ -1984,5 +2040,9 @@
         private DataGridViewTextBoxColumn settingsMotorsDeaccelerationColumn;
         private DataGridViewTextBoxColumn settingsMotorsHomeSpeedColumn;
         private DataGridViewTextBoxColumn settingsMotorsEnabledColumn;
+        private Button controlTECDResetButton;
+        private Button controlTECCResetButton;
+        private Button controlTECBResetButton;
+        private Button controlTECAResetButton;
     }
 }

@@ -21,7 +21,7 @@ namespace Independent_Reader_GUI.Models
         public int ClampPosition { get; set; } = 350000;
         public int TrayPosition { get; set; } = 790000;
         public double GlassOffset { get; set; } = 12.3;
-        public string Elastomer { get; set; } = string.Empty;
+        public DataGridViewComboBoxCell ElastomerComboBoxCell = new DataGridViewComboBoxCell();
         public double ElastomerThickness { get; set; } = 0.0;
         public DataGridViewComboBoxCell BergquistComboBoxCell = new DataGridViewComboBoxCell();
         public double BergquistThickness { get; set; } = 0.0;
@@ -37,6 +37,8 @@ namespace Independent_Reader_GUI.Models
             CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell(config.DefaultPartitionType);
             PartitionTypeOptions partitionTypeOptions = new PartitionTypeOptions();
             PartitionTypeComboBoxCell = partitionTypeOptions.GetOptionNamesComboBoxCell();
+            ElastomerOptions elastomerOptions = new ElastomerOptions();
+            ElastomerComboBoxCell = elastomerOptions.GetOptionNamesComboBoxCell();
         }
     }
 }

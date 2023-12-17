@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Elastomers>
+	<Elastomer>
+		<Name>FFBE 3Di2bV1.0M NPF</Name>
+		<ThermalCoefficient>0.0</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>50</ShoreHardness>
+		<Thickness>1.0</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+		<Color>Black</Color>
+		<PolyesterFilm>No</PolyesterFilm>
+		<Mold>3Di2BV1.0</Mold>
+		<PreparedBy>FF</PreparedBy>
+	</Elastomer>
+	<Elastomer>
+		<Name>FFBE 3DPLV1.0M NPF</Name>
+		<ThermalCoefficient>0.0</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>50</ShoreHardness>
+		<Thickness>1.0</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+		<Color>Black</Color>
+		<PolyesterFilm>No</PolyesterFilm>
+		<Mold>3DPLV1.0</Mold>
+		<PreparedBy>FF</PreparedBy>
+	</Elastomer>
+</Elastomers>

@@ -22,16 +22,6 @@ namespace Independent_Reader_GUI.Utilities
                 });
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
-            else if (cellValue == "Elastomer")
-            {
-                comboBoxCell.Items.AddRange(new object[]
-                {
-                    "F-BE-0050-AlM-V1",
-                    "F-BE-0050-XM-V1",
-                    "F-BE-0050-XM-V2"
-                });
-                comboBoxCell.Value = comboBoxCell.Items[0];
-            }
             else if (cellValue == "Image Before")
             {
                 comboBoxCell.Items.AddRange(new object[]
