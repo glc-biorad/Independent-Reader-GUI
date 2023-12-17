@@ -1,4 +1,5 @@
-﻿using Independent_Reader_GUI.Forms;
+﻿using Independent_Reader_GUI.Exceptions;
+using Independent_Reader_GUI.Forms;
 using Independent_Reader_GUI.Models;
 using Independent_Reader_GUI.Resources;
 using Independent_Reader_GUI.Services;
@@ -14,7 +15,8 @@ namespace Independent_Reader_GUI
     public partial class independentReaderForm : Form
     {
         // Private attributes
-        private string defaultProtocolDirectory = "C:\\Users\\u112958\\Source\\Repos\\Independent-Reader-GUI\\ThermocyclingProtocols";
+        Configuration configuration = new Configuration();
+        private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
@@ -30,6 +32,9 @@ namespace Independent_Reader_GUI
 
             // Connect to the FLIR Camera
             cameraService.Connect();
+
+            // Obtain default data paths
+            defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
 
             // Add default data
             AddHomeMotorsDefaultData();
@@ -62,6 +67,7 @@ namespace Independent_Reader_GUI
 
             // Subscribe to value changed events
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
+            this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
 
             // Wire up mouse down events
             thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
@@ -400,7 +406,8 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
             runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
-            runExperimentDataGridView.Rows.Add("Elastomer", runExperimentData.Elastomer);
+            runExperimentDataGridView.Rows.Add("Elastomer");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ElastomerComboBoxCell;
             runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
             runExperimentDataGridView.Rows.Add("Bergquist");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
@@ -464,7 +471,13 @@ namespace Independent_Reader_GUI
         {
             LEDsData controlLEDsData = new LEDsData();
             controlLEDsDataGridView.Rows.Add("State", "N", "N", "N", "N", "N", "N");
-            controlLEDsDataGridView.Rows.Add("IO", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
+            controlLEDsDataGridView.Rows.Add("IO");
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[1] = controlLEDsData.IOCy5ComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[2] = controlLEDsData.IOFAMComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[3] = controlLEDsData.IOHEXComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[4] = controlLEDsData.IOAttoComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[5] = controlLEDsData.IOAlexaComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[6] = controlLEDsData.IOCy5p5ComboBoxCell;
             controlLEDsDataGridView.Rows.Add("Intensity (%)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
             controlLEDsDataGridView.Rows.Add("Exposure (ms)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
         }
@@ -670,6 +683,42 @@ namespace Independent_Reader_GUI
             }
         }
 
+        private void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            // Check if the IO cell values change
+            var propertySelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[0].Value;
+            if (propertySelected.Equals("IO"))
+            {
+                // Turn on or off the LED
+                string ledName = controlLEDsDataGridView.Columns[e.ColumnIndex].HeaderText;
+                LED led = new LED(ledName, configuration, false);
+                var valueSelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (valueSelected.Equals("On"))
+                {
+                    try
+                    {
+                        led.On();
+                    }
+                    catch (LEDNotConnectedException ex)
+                    {
+                        //controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "Off";
+                        return;
+                    }
+                }
+                else if (valueSelected.Equals("Off"))
+                {
+                    try
+                    {
+                        led.Off();
+                    }
+                    catch (LEDNotConnectedException ex)
+                    {
+                        //controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "?";
+                        return;
+                    }
+                }
+            }
+        }
         private void runExperimentDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 1)
