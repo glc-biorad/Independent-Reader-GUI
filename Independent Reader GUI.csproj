@@ -11,10 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Compile Remove="Controls\**" />
+    <Compile Remove="Tests\**" />
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Controls\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="Controls\**" />
+    <None Remove="Tests\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Libraries\" />
-    <Folder Include="Tests\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -84,6 +84,10 @@ namespace Independent_Reader_GUI.Models
         public string DefaultCartridge = string.Empty;
         public string DefaultElastomer = string.Empty;
         public string DefaultBergquist = string.Empty;
+        public int RunDataTimerInterval = int.MinValue;
+        public int EstimateFOVCaptureTimeSeconds = int.MinValue;
+        public int EstimateAssayCaptureTimeSeconds = int.MinValue;
+        public int EstimateSampleCaptureTimeSeconds = int.MinValue;
 
         public Configuration()
         {
@@ -118,6 +122,10 @@ namespace Independent_Reader_GUI.Models
             DefaultCartridge = rootNode.Element("DefaultCartridge").Value;
             DefaultElastomer = rootNode.Element("DefaultElastomer").Value;
             DefaultBergquist = rootNode.Element("DefaultBergquist").Value;
+            RunDataTimerInterval = int.Parse(rootNode.Element("RunDataTimerInterval").Value);
+            EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
+            EstimateAssayCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateAssayCaptureTimeSeconds").Value);
+            EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);
         }
     }
 }

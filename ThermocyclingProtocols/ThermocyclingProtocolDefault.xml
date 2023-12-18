@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Protocol>
 	<Version>1.0</Version>
-	<Name>Default Protocol</Name>
+	<Name>Thermocycling Protocol Default</Name>
 	<Author>glc-biorad</Author>
 	<Date>12/14/2023</Date>
 	<Step>

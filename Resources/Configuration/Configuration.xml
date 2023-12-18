@@ -265,4 +265,9 @@
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
 	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
+	<RunDataTimerInterval>1000</RunDataTimerInterval>
+	<EstimateFOVCaptureTimeSeconds>7</EstimateFOVCaptureTimeSeconds>
+	<EstimateSampleCaptureTimeSeconds>60</EstimateSampleCaptureTimeSeconds>
+	<EstimateAssayCaptureTimeSeconds>20</EstimateAssayCaptureTimeSeconds>
+
 </Configuration>
