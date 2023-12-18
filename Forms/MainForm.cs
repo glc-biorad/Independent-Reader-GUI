@@ -735,7 +735,7 @@ namespace Independent_Reader_GUI
                 {
                     var valueSelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[1].Value;
                     // Get the possible cartridge options.
-                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1] = cartridgeOptions.GetOptionNamesComboBoxCell();
+                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1] = cartridgeOptions.GetOptionNamesComboBoxCell(valueSelected.ToString());
                     var cartridgeSelected = runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1].Value;
                     Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeSelected.ToString());
                     // Convert to millimeters if necessary
