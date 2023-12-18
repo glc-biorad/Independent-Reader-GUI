@@ -15,7 +15,8 @@ namespace Independent_Reader_GUI
     public partial class independentReaderForm : Form
     {
         // Private attributes
-        Configuration configuration = new Configuration();
+        private Configuration configuration = new Configuration();
+        private TimerManager runExperimentDataTimerManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
@@ -56,6 +57,10 @@ namespace Independent_Reader_GUI
 
             // Add default plots
             AddThermocyclingDefaultPlot();
+
+            // Initialize the RunExperimentDataGridView timer after data is added to it
+            runExperimentDataTimerManager = new TimerManager(interval: configuration.RunDataTimerInterval, tickEventHandler: runExperimentDataGridView_TickEventHandler);
+            runExperimentDataTimerManager.Start();
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
@@ -571,13 +576,13 @@ namespace Independent_Reader_GUI
         private void AddImagingLEDsDefaultData()
         {
             LEDsData ledsData = new LEDsData();
-            imagingLEDsDataGridView.Rows.Add("IO");
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.IOCy5ComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.IOFAMComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.IOHEXComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.IOAttoComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.IOAlexaComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.IOCy5p5ComboBoxCell;
+            imagingLEDsDataGridView.Rows.Add("Use");
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.UseCy5ComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.UseFAMComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.UseHEXComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.UseAttoComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.UseAlexaComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.UseCy5p5ComboBoxCell;
             imagingLEDsDataGridView.Rows.Add("Intensity (%)", null, null, null, null, null, null);
             imagingLEDsDataGridView.Rows.Add("Exposure (ms)", null, null, null, null, null, null);
         }
@@ -991,8 +996,68 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Tick Event Handler for the time data in the Run tabs Experiment DataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runExperimentDataGridView_TickEventHandler(object sender, EventArgs e)
+        {
+            double projectedAdditionalTimeSeconds = 0.0;
+            foreach (DataGridViewRow row in runExperimentDataGridView.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Start Time"))
+                {
+                    int rowIndex = row.Index;
+                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.ToString("HH:mm:ss");
+                }
+                else if (row.Cells[0].Value.ToString().Contains("Start Date"))
+                {
+                    int rowIndex = row.Index;
+                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.ToString("MM/dd/yyyy");
+                }
+                else if (row.Cells[0].Value.ToString().Contains("End Time"))
+                {
+                    int rowIndex = row.Index;
+                    DateTime projectedEndTime = DateTime.Now;
+                    foreach (DataGridViewRow imagingSetupRow in runImagingSetupDataGridView.Rows)
+                    {
+                        // TODO: Check the number of samples and or assays to be more precious than just the entire chip being scanned
+                        if (imagingSetupRow.Cells[0].Value.Equals("Image Before") && imagingSetupRow.Cells[1].Value.Equals("Yes"))
+                        {
+                            projectedAdditionalTimeSeconds += configuration.EstimateSampleCaptureTimeSeconds * 8;
+                        }
+                        else if (imagingSetupRow.Cells[0].Value.Equals("Image After") && imagingSetupRow.Cells[1].Value.Equals("Yes"))
+                        {
+                            projectedAdditionalTimeSeconds += configuration.EstimateSampleCaptureTimeSeconds * 8;
+                        }
+                    }
+                    foreach (DataGridViewRow runExperimentDataRow in runExperimentDataGridView.Rows)
+                    {
+                        if (runExperimentDataRow.Cells[0].Value.Equals("Protocol"))
+                        {
+                            // TODO: Get the estimated protocol time from the selected protocol
+                            projectedAdditionalTimeSeconds += 9000;
+                        }
+                    }
+                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.AddSeconds(projectedAdditionalTimeSeconds).ToString("HH:mm:ss");
+                }
+                else if (row.Cells[0].Value.ToString().Contains("End Date"))
+                {
+                    int rowIndex = row.Index;
+                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.AddSeconds(projectedAdditionalTimeSeconds).ToString("MM/dd/yyyy");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the main form closing events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IndependentReaderGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            runExperimentDataTimerManager.Stop();
             cameraService.Disconnect();
         }
 

@@ -8,7 +8,15 @@ namespace Independent_Reader_GUI.Exceptions
 {
     internal class LEDNotConnectedException : Exception
     {
-        private const string message = "LED not connected";
-        public LEDNotConnectedException() : base(message) { }
+        public LEDNotConnectedException() 
+            : base() { }
+        public LEDNotConnectedException(string message) 
+            : base(message) { }
+
+        public LEDNotConnectedException(string message, Exception innerException) 
+            : base(message, innerException) { }
+
+        protected LEDNotConnectedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
     }
 }
