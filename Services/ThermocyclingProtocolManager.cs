@@ -12,6 +12,12 @@ namespace Independent_Reader_GUI.Services
 { 
     internal class ThermocyclingProtocolManager
     {
+        Configuration configuration;
+
+        public ThermocyclingProtocolManager(Configuration configuration)
+        {
+            this.configuration = configuration;
+        }
         /// <summary>
         /// Load in a protocol to a ThermocyclingProtocol instance 
         /// </summary>
@@ -51,13 +57,20 @@ namespace Independent_Reader_GUI.Services
             return protocol;
         }
 
+        /// <summary>
+        /// Save a protocol as an XML
+        /// </summary>
+        /// <param name="protocol"></param>
+        /// <param name="filePath"></param>
+        /// <param name="username"></param>
+        /// <param name="date"></param>
         public void SaveProtocol(ThermocyclingProtocol protocol, string filePath, string username, string date)
         {
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             var protocolXDocument = new XDocument();
             var rootXElement = new XElement("Protocol");
             var versionXElement = new XElement("Versions", "1.0");
-            var nameXElement = new XElement("Name", textInfo.ToTitleCase(Path.GetFileNameWithoutExtension(filePath)).Replace("_", " "));
+            var nameXElement = new XElement("Name", Path.GetFileNameWithoutExtension(filePath).Replace("_", " "));
             var authorXElement = new XElement("Author", username.Replace("User: ", ""));
             var dateXElement = new XElement("Date", date);
             rootXElement.Add(versionXElement);
@@ -91,6 +104,22 @@ namespace Independent_Reader_GUI.Services
             }
             protocolXDocument.Add(rootXElement);
             protocolXDocument.Save(filePath);
+        }
+
+        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
+        {
+            DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
+            // Iterate over the protocol files in the Thermocycling Protocol Directory and get the names for each protocol
+            var files = Directory.GetFiles(configuration.ThermocyclingProtocolsDataPath);
+            foreach ( var file in files)
+            {
+                var filename = Path.GetFileName(file);
+                var protocolName = filename.Replace("_", " ").Replace(".xml", "");
+                comboBoxCell.Items.Add(protocolName);
+            }
+            // TODO: Use the config file to set the default value
+            comboBoxCell.Value = comboBoxCell.Items[0];
+            return comboBoxCell;
         }
     }
 }

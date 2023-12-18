@@ -11,11 +11,13 @@ namespace Independent_Reader_GUI.Resources
     internal class CartridgeOptions
     {
         // FIXME: Replace this with a variable taken from a config file
-        private string cartridgeDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Cartridges\\CartridgeData.xml";
+        Configuration configuration;
+        //private string cartridgeDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Cartridges\\CartridgeData.xml";
         private List<Cartridge> options = new List<Cartridge>();
 
-        public CartridgeOptions()
+        public CartridgeOptions(Configuration configuration)
         {
+            this.configuration = configuration;
             ReadInCartridgeData();
         }
 
@@ -25,7 +27,7 @@ namespace Independent_Reader_GUI.Resources
         private void ReadInCartridgeData()
         {
             // Load in the protocol file
-            XDocument xDocument = XDocument.Load(cartridgeDataPath);
+            XDocument xDocument = XDocument.Load(configuration.CartridgeDataPath);
             // Read in the Cartridge options
             foreach (var cartridgeNode in xDocument.Descendants("Cartridge"))
             {
@@ -44,17 +46,17 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
-        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell(string partitionType)
+        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
         {
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
             foreach (var option in options)
             {
-                if (option.PartitionType.Equals(partitionType))
+                if (option.PartitionType.Equals(configuration.DefaultPartitionType))
                 {
                     comboBoxCell.Items.Add(option.Name);
                 }
             }
-            comboBoxCell.Value = comboBoxCell.Items[0];
+            comboBoxCell.Value = configuration.DefaultCartridge;
             return comboBoxCell;
         }
 

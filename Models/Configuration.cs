@@ -82,6 +82,8 @@ namespace Independent_Reader_GUI.Models
         public string CartridgeDataPath = string.Empty;
         public string DefaultPartitionType = string.Empty;
         public string DefaultCartridge = string.Empty;
+        public string DefaultElastomer = string.Empty;
+        public string DefaultBergquist = string.Empty;
 
         public Configuration()
         {
@@ -114,6 +116,8 @@ namespace Independent_Reader_GUI.Models
             ElastomerDataPath = dataPathsNode.Element("Elastomers").Value;
             DefaultPartitionType = rootNode.Element("DefaultPartitionType").Value;
             DefaultCartridge = rootNode.Element("DefaultCartridge").Value;
+            DefaultElastomer = rootNode.Element("DefaultElastomer").Value;
+            DefaultBergquist = rootNode.Element("DefaultBergquist").Value;
         }
     }
 }
