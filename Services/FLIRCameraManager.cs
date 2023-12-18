@@ -8,7 +8,7 @@ using SpinnakerNET.GenApi;
 
 namespace Independent_Reader_GUI.Services
 {
-    internal class FLIRCameraService
+    internal class FLIRCameraManager
     {
         private bool connected;
         private bool streaming;
@@ -16,7 +16,7 @@ namespace Independent_Reader_GUI.Services
         private ManagedCameraList cameraList = new ManagedCameraList();
         private IManagedCamera? camera = null;
 
-        public FLIRCameraService()
+        public FLIRCameraManager()
         {
             managedSystem = new ManagedSystem();
             cameraList = managedSystem.GetCameras();

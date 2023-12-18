@@ -10,6 +10,12 @@
 			<AttoID>4</AttoID>
 			<AlexaID>5</AlexaID>
 			<Cy5.5ID>6</Cy5.5ID>
+			<Cy5Intensity>20</Cy5Intensity>
+			<FAMIntensity>20</FAMIntensity>
+			<HEXIntensity>20</HEXIntensity>
+			<AttoIntensity>20</AttoIntensity>
+			<AlexaIntensity>20</AlexaIntensity>
+			<Cy5.5Intensity>20</Cy5.5Intensity>
 		</LEDs>
 		<FilterWheel>
 			<Cy5Position></Cy5Position>
@@ -21,70 +27,80 @@
 		</FilterWheel>
 		<Motors>
 			<x>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>1</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</x>
 			<y>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>2</Address>
+				<DefaultSpeed>1000000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</y>
 			<z>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>3</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</z>
 			<FilterWheel>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>4</Address>
+				<DefaultSpeed>80000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</FilterWheel>
 			<ClampA>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>8</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</ClampA>
 			<ClampB>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>9</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</ClampB>
 			<ClampC>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>10</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</ClampC>
 			<ClampD>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>11</Address>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</ClampD>
 			<TrayAB>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>6</Address>
+				<DefaultSpeed>200000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 			</TrayAB>
 			<TrayCD>
-				<DefaultSpeed></DefaultSpeed>
+				<Address>8</Address>
+				<DefaultSpeed>200000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
@@ -93,75 +109,67 @@
 		</Motors>		
 		<TECs>
 			<TECA>
-				<Address></Address>
-				<SinkTempMax></SinkTempMax>
+				<Address>1</Address>
 				<FanRPMMax></FanRPMMax>
-				<FanOnTemp></FanOnTemp>
-				<FanOffTemp></FanOffTemp>
+				<FanOnTemp>30</FanOnTemp>
 				<CurrentMax></CurrentMax>
 				<VoltageMax></VoltageMax>
 				<Kp></Kp>
 				<Ti></Ti>
 				<Td></Td>
-				<ObjectUpperErrorThreshold></ObjectUpperErrorThreshold>
-				<ObjectLowerErrorThreshold></ObjectLowerErrorThreshold>
+				<ObjectUpperErrorThreshold>120</ObjectUpperErrorThreshold>
+				<ObjectLowerErrorThreshold>2</ObjectLowerErrorThreshold>
 				<ObjectMaxTempChange></ObjectMaxTempChange>
-				<SinkUpperErrorThreshold></SinkUpperErrorThreshold>
-				<SinkLowerErrorThreshold></SinkLowerErrorThreshold>
+				<SinkUpperErrorThreshold>110</SinkUpperErrorThreshold>
+				<SinkLowerErrorThreshold>10</SinkLowerErrorThreshold>
 				<SinkMaxTempChange></SinkMaxTempChange>
 			</TECA>
 			<TECB>
-				<Address></Address>
-				<SinkTempMax></SinkTempMax>
+				<Address>2</Address>
 				<FanRPMMax></FanRPMMax>
-				<FanOnTemp></FanOnTemp>
-				<FanOffTemp></FanOffTemp>
+				<FanOnTemp>30</FanOnTemp>
 				<CurrentMax></CurrentMax>
 				<VoltageMax></VoltageMax>
 				<Kp></Kp>
 				<Ti></Ti>
 				<Td></Td>
-				<ObjectUpperErrorThreshold></ObjectUpperErrorThreshold>
-				<ObjectLowerErrorThreshold></ObjectLowerErrorThreshold>
+				<ObjectUpperErrorThreshold>120</ObjectUpperErrorThreshold>
+				<ObjectLowerErrorThreshold>2</ObjectLowerErrorThreshold>
 				<ObjectMaxTempChange></ObjectMaxTempChange>
-				<SinkUpperErrorThreshold></SinkUpperErrorThreshold>
-				<SinkLowerErrorThreshold></SinkLowerErrorThreshold>
+				<SinkUpperErrorThreshold>110</SinkUpperErrorThreshold>
+				<SinkLowerErrorThreshold>10</SinkLowerErrorThreshold>
 				<SinkMaxTempChange></SinkMaxTempChange>
 			</TECB>
 			<TECC>
-				<Address></Address>
-				<SinkTempMax></SinkTempMax>
+				<Address>3</Address>
 				<FanRPMMax></FanRPMMax>
-				<FanOnTemp></FanOnTemp>
-				<FanOffTemp></FanOffTemp>
+				<FanOnTemp>30</FanOnTemp>
 				<CurrentMax></CurrentMax>
 				<VoltageMax></VoltageMax>
 				<Kp></Kp>
 				<Ti></Ti>
 				<Td></Td>
-				<ObjectUpperErrorThreshold></ObjectUpperErrorThreshold>
-				<ObjectLowerErrorThreshold></ObjectLowerErrorThreshold>
+				<ObjectUpperErrorThreshold>120</ObjectUpperErrorThreshold>
+				<ObjectLowerErrorThreshold>2</ObjectLowerErrorThreshold>
 				<ObjectMaxTempChange></ObjectMaxTempChange>
-				<SinkUpperErrorThreshold></SinkUpperErrorThreshold>
-				<SinkLowerErrorThreshold></SinkLowerErrorThreshold>
+				<SinkUpperErrorThreshold>110</SinkUpperErrorThreshold>
+				<SinkLowerErrorThreshold>10</SinkLowerErrorThreshold>
 				<SinkMaxTempChange></SinkMaxTempChange>
 			</TECC>
 			<TECD>
-				<Address></Address>
-				<SinkTempMax></SinkTempMax>
+				<Address>4</Address>
 				<FanRPMMax></FanRPMMax>
-				<FanOnTemp></FanOnTemp>
-				<FanOffTemp></FanOffTemp>
+				<FanOnTemp>30</FanOnTemp>
 				<CurrentMax></CurrentMax>
 				<VoltageMax></VoltageMax>
 				<Kp></Kp>
 				<Ti></Ti>
 				<Td></Td>
-				<ObjectUpperErrorThreshold></ObjectUpperErrorThreshold>
-				<ObjectLowerErrorThreshold></ObjectLowerErrorThreshold>
+				<ObjectUpperErrorThreshold>120</ObjectUpperErrorThreshold>
+				<ObjectLowerErrorThreshold>2</ObjectLowerErrorThreshold>
 				<ObjectMaxTempChange></ObjectMaxTempChange>
-				<SinkUpperErrorThreshold></SinkUpperErrorThreshold>
-				<SinkLowerErrorThreshold></SinkLowerErrorThreshold>
+				<SinkUpperErrorThreshold>110</SinkUpperErrorThreshold>
+				<SinkLowerErrorThreshold>10</SinkLowerErrorThreshold>
 				<SinkMaxTempChange></SinkMaxTempChange>
 			</TECD>
 		</TECs>		
