@@ -19,8 +19,8 @@ namespace Independent_Reader_GUI
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
-        private ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager();
-        private CartridgeOptions cartridgeOptions = new CartridgeOptions();
+        private ThermocyclingProtocolManager protocolManager;
+        private CartridgeOptions cartridgeOptions;
         private FLIRCameraService cameraService = new FLIRCameraService();
 
         /// <summary>
@@ -32,6 +32,10 @@ namespace Independent_Reader_GUI
 
             // Connect to the FLIR Camera
             cameraService.Connect();
+
+            // Initialize
+            protocolManager = new ThermocyclingProtocolManager(configuration);
+            cartridgeOptions = new CartridgeOptions(configuration);
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -391,6 +395,8 @@ namespace Independent_Reader_GUI
         {
             ExperimentData runExperimentData = new ExperimentData();
             runExperimentDataGridView.Rows.Add("Experiment Name", runExperimentData.Name);
+            runExperimentDataGridView.Rows.Add("Protocol");
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ProtocolComboBoxCell;
             runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
             runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
             runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
@@ -729,7 +735,7 @@ namespace Independent_Reader_GUI
                 {
                     var valueSelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[1].Value;
                     // Get the possible cartridge options.
-                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1] = cartridgeOptions.GetOptionNamesComboBoxCell(valueSelected.ToString());
+                    runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1] = cartridgeOptions.GetOptionNamesComboBoxCell();
                     var cartridgeSelected = runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1].Value;
                     Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeSelected.ToString());
                     // Convert to millimeters if necessary

@@ -10,13 +10,14 @@ namespace Independent_Reader_GUI.Resources
 {
     internal class BergquistOptions
     {
-        private Configuration config = new Configuration();
+        private Configuration configuration;
         private string bergquistDataPath = string.Empty;
         private List<Bergquist> options = new List<Bergquist>();
 
-        public BergquistOptions()
+        public BergquistOptions(Configuration configuration)
         {
-            bergquistDataPath = config.BergquistDataPath;
+            this.configuration = configuration;
+            bergquistDataPath = configuration.BergquistDataPath;
             ReadInBergquistData();
         }
 
@@ -43,7 +44,7 @@ namespace Independent_Reader_GUI.Resources
             {
                 comboBoxCell.Items.Add(option.Name);
             }
-            comboBoxCell.Value = comboBoxCell.Items[0];
+            comboBoxCell.Value = configuration.DefaultBergquist;
             return comboBoxCell;
         }
     }

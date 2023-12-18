@@ -263,4 +263,6 @@
 	<CartridgeDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
 	<DefaultPartitionType>Microwells</DefaultPartitionType>
 	<DefaultCartridge>M2M</DefaultCartridge>
+	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
+	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
 </Configuration>

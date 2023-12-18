@@ -1,4 +1,5 @@
 ﻿using Independent_Reader_GUI.Resources;
+using Independent_Reader_GUI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Independent_Reader_GUI.Models
     internal class ExperimentData
     {
         public string Name { get; set; } = string.Empty;
+        public DataGridViewComboBoxCell ProtocolComboBoxCell = new DataGridViewComboBoxCell();
         public DateTime StartDateTime { get; set; } = DateTime.Now;
         public DateTime EndDateTime { get; set; } = DateTime.Now;
         public string Heater { get; set; } = string.Empty;
@@ -30,14 +32,16 @@ namespace Independent_Reader_GUI.Models
 
         public ExperimentData()
         {
-            Configuration config = new Configuration();
-            BergquistOptions bergquistOptions = new BergquistOptions();
+            Configuration configuration = new Configuration();
+            ThermocyclingProtocolManager protocolManager = new ThermocyclingProtocolManager(configuration);
+            ProtocolComboBoxCell = protocolManager.GetOptionNamesComboBoxCell();
+            BergquistOptions bergquistOptions = new BergquistOptions(configuration);
             BergquistComboBoxCell = bergquistOptions.GetOptionNamesComboBoxCell();
-            CartridgeOptions cartridgeOptions = new CartridgeOptions();
-            CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell(config.DefaultPartitionType);
+            CartridgeOptions cartridgeOptions = new CartridgeOptions(configuration);
+            CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell();
             PartitionTypeOptions partitionTypeOptions = new PartitionTypeOptions();
             PartitionTypeComboBoxCell = partitionTypeOptions.GetOptionNamesComboBoxCell();
-            ElastomerOptions elastomerOptions = new ElastomerOptions();
+            ElastomerOptions elastomerOptions = new ElastomerOptions(configuration);
             ElastomerComboBoxCell = elastomerOptions.GetOptionNamesComboBoxCell();
         }
     }

@@ -10,13 +10,14 @@ namespace Independent_Reader_GUI.Resources
 {
     internal class ElastomerOptions
     {
-        private Configuration config = new Configuration();
+        private Configuration configuration;
         private string elastomerDataPath = string.Empty;
         private List<Elastomer> options = new List<Elastomer>();
 
-        public ElastomerOptions()
+        public ElastomerOptions(Configuration configuration)
         {
-            elastomerDataPath = config.ElastomerDataPath;
+            this.configuration = configuration;
+            elastomerDataPath = configuration.ElastomerDataPath;
             ReadInBergquistData();
         }
 
@@ -49,7 +50,7 @@ namespace Independent_Reader_GUI.Resources
             {
                 comboBoxCell.Items.Add(option.Name);
             }
-            comboBoxCell.Value = comboBoxCell.Items[0];
+            comboBoxCell.Value = configuration.DefaultElastomer;
             return comboBoxCell;
         }
     }
