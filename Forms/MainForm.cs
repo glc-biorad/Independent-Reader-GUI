@@ -22,6 +22,7 @@ namespace Independent_Reader_GUI
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager;
         private TECManager tecManager;
+        private MotorsManager motorManager;
         private CartridgeOptions cartridgeOptions;
         private FLIRCameraManager cameraService = new FLIRCameraManager();
         private string runExperimentProtocolName = string.Empty;
@@ -30,6 +31,16 @@ namespace Independent_Reader_GUI
         private TEC tecB;
         private TEC tecC;
         private TEC tecD;
+        private Motor xMotor;
+        private Motor yMotor;
+        private Motor zMotor;
+        private Motor filterWheelMotor;
+        private Motor trayABMotor;
+        private Motor trayCDMotor;
+        private Motor clampAMotor;
+        private Motor clampBMotor;
+        private Motor clampCMotor;
+        private Motor clampDMotor;
 
         /// <summary>
         /// Initialization of the Form
@@ -46,6 +57,18 @@ namespace Independent_Reader_GUI
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C");
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D");
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
+            // Connect to the Motors
+            xMotor = new Motor(address: configuration.xMotorAddress, name: "x");
+            yMotor = new Motor(address: configuration.yMotorAddress, name: "y");
+            zMotor = new Motor(address: configuration.zMotorAddress, name: "z");
+            filterWheelMotor = new Motor(address: configuration.FilterWheelMotorAddress, name: "Filter Wheel");
+            trayABMotor = new Motor(address: configuration.TrayABMotorAddress, name: "Tray AB");
+            trayCDMotor = new Motor(address: configuration.TrayCDMotorAddress, name: "Tray CD");
+            clampAMotor = new Motor(address: configuration.ClampAMotorAddress, name: "Clamp A");
+            clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B");
+            clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C");
+            clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D");
+            motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
 
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
@@ -864,37 +887,37 @@ namespace Independent_Reader_GUI
         private void controlMoveButton_Click(object sender, EventArgs e)
         {
             // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
-            #region To be replaced with a new Utility class for checking if a motor is connected
             int columnIndex = -1;
             string motorState = string.Empty;
-            DataGridViewColumnSearcher ColumnSearcher = new DataGridViewColumnSearcher();
+            DataGridViewColumnSearcher columnSearcher = new DataGridViewColumnSearcher();
             // Get the motor to be moved
             string motorName = controlMotorsComboBox.Text;
-            // Get the state of the motor
-            if (motorName != string.Empty)
+            Motor motor = motorManager.GetMotorByName(motorName);
+            if (motor != null)
             {
-                foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
+                if (!motor.Connected)
                 {
-                    if (row.Cells[0].Value.ToString() == motorName)
-                    {
-                        columnIndex = ColumnSearcher.GetColumnIndexFromHeaderText("State", controlMotorsDataGridView);
-                        motorState = row.Cells[columnIndex].Value.ToString();
-                    }
+                    MessageBox.Show(motorName + " motor cannot move, it is not connected", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (!motor.Homed)
+                {
+                    MessageBox.Show(motorName + " motor cannot move, it has not been homed", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
             }
-            else
+            // Move the motor
+            foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
             {
-                return;
-            }
-            // Move if possible else warn the user
-            if (motorState == "Not Connected")
-            {
-                MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            #endregion
-            else
-            {
-                MessageBox.Show("Code not written yet to move motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (row.Cells[0].Value.ToString() == motorName)
+                {
+                    int positionColumnIndex = columnSearcher.GetColumnIndexFromHeaderText("Position (\u00b5S)", controlMotorsDataGridView);
+                    int speedColumnIndex = columnSearcher.GetColumnIndexFromHeaderText("Speed (\u00b5S/s)", controlMotorsDataGridView);
+                    // TODO: Modify this section such that special cases are handled ("", non integers, etc.)
+                    int position = int.Parse(row.Cells[positionColumnIndex].Value.ToString());
+                    int speed = int.Parse(row.Cells[speedColumnIndex].Value.ToString());
+                    motor.Move(position, speed);
+                }
             }
         }
 
@@ -1116,11 +1139,21 @@ namespace Independent_Reader_GUI
             cameraService.Disconnect();
         }
 
+        /// <summary>
+        /// Click event handler for clicking the Capture Image button on the Imaging tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
             cameraService.CaptureImage();
         }
 
+        /// <summary>
+        /// Click event handler for the setting the temperature of TEC A
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECASetTempButton_Click(object sender, EventArgs e)
         {
             if (tecA.Connected)
@@ -1135,6 +1168,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the setting the temperature of TEC B
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECBSetTempButton_Click(object sender, EventArgs e)
         {
             if (tecB.Connected)
@@ -1149,6 +1187,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the setting the temperature of TEC C
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECCSetTempButton_Click(object sender, EventArgs e)
         {
             if (tecC.Connected)
@@ -1163,6 +1206,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the setting the temperature of TEC D
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECDSetTempButton_Click(object sender, EventArgs e)
         {
             if (tecD.Connected)
@@ -1177,6 +1225,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the reseting of TEC A
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECAResetButton_Click(object sender, EventArgs e)
         {
             if (tecA.Connected)
@@ -1191,6 +1244,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the reseting of TEC  B
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECBResetButton_Click(object sender, EventArgs e)
         {
             if (tecB.Connected)
@@ -1204,7 +1262,11 @@ namespace Independent_Reader_GUI
                 MessageBox.Show("Cannot reset TEC B, TEC B is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
+        /// <summary>
+        /// Click event handler for the reseting of TEC C
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECCResetButton_Click(object sender, EventArgs e)
         {
             if (tecC.Connected)
@@ -1219,6 +1281,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Click event handler for the reseting of TEC D
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void controlTECDResetButton_Click(object sender, EventArgs e)
         {
             if (tecD.Connected)

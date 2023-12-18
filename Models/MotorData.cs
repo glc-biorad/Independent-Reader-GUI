@@ -15,7 +15,7 @@ namespace Independent_Reader_GUI.Models
         public string Name { get; set; } = "?";
         public string IO { get; set; } = "?";
         public string State { get; set; } = "Not Connected";
-        public string Position { get; set; } = "?";
+        public string Position { get; set; } = "";
         public string Speed { get; set; } = "?";
         public string Home { get; set; } = "?";
     }
