@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,85 @@ namespace Independent_Reader_GUI.Models
         public int Count
         {
             get { return Steps.Count; }
+        }
+
+        public List<ThermocyclingProtocolStep> GetStepsBetween(int startIndex, int endIndex)
+        {
+            List<ThermocyclingProtocolStep> betweenSteps = new List<ThermocyclingProtocolStep>();
+            foreach (var step in Steps)
+            {
+                if (step.Index >= startIndex && step.Index <= endIndex)
+                {
+                    betweenSteps.Add(step);
+                }
+            }
+            return betweenSteps;
+        }
+
+        public double GetTimeInSeconds()
+        {
+            double time;
+            double timeInSeconds = 0;
+            string timeUnits;
+            string stepName;
+            foreach (var step in Steps)
+            {
+                stepName = step.TypeName;
+                if (stepName.Equals(ThermocyclingProtocolStepType.Set))
+                {
+                    time = step.Time;
+                    timeUnits = step.TimeUnits;
+                    if (timeUnits != null)
+                    {
+                        if (timeUnits.Equals(TimeUnit.Minutes))
+                        {
+                            timeInSeconds += time * 60;
+                        }
+                        else if (timeUnits.Equals(TimeUnit.Hours))
+                        {
+                            timeInSeconds += time * Math.Pow(60, 2);
+                        }
+                        else
+                        {
+                            timeInSeconds += time;
+                        }
+                    }
+                }
+                else if (stepName.Equals(ThermocyclingProtocolStepType.GoTo))
+                {
+                    double gotoTimeInSeconds = 0.0;
+                    int gotoStepNumber = step.StepNumber;
+                    int cycleCount = step.CycleCount;
+                    int index = step.Index;
+                    var gotoSteps = GetStepsBetween(gotoStepNumber, index - 1);
+                    foreach (var gotoStep in gotoSteps)
+                    {
+                        time = gotoStep.Time;
+                        timeUnits = gotoStep.TimeUnits;
+                        if (timeUnits != null)
+                        {
+                            if (timeUnits.Equals(TimeUnit.Minutes))
+                            {
+                                gotoTimeInSeconds += time * 60;
+                            }
+                            else if (timeUnits.Equals(TimeUnit.Hours))
+                            {
+                                gotoTimeInSeconds += time * Math.Pow(60, 2);
+                            }
+                            else
+                            {
+                                gotoTimeInSeconds += time;
+                            }
+                        }
+                    }
+                    timeInSeconds += gotoTimeInSeconds * cycleCount;
+                }
+                else
+                {
+                    timeInSeconds += 0;
+                }
+            }
+            return timeInSeconds;
         }
     }
 }

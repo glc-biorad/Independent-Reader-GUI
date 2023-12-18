@@ -83,6 +83,7 @@
             runImagingSetupLabel = new Label();
             tunExperimentDataLabel = new Label();
             controlTabPage = new TabPage();
+            controlMotorLabel = new Label();
             controlTECDResetButton = new Button();
             controlTECCResetButton = new Button();
             controlTECBResetButton = new Button();
@@ -193,7 +194,6 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            controlMotorLabel = new Label();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -634,17 +634,20 @@
             // 
             runSampleMetaDataIDColumn.HeaderText = "ID";
             runSampleMetaDataIDColumn.Name = "runSampleMetaDataIDColumn";
+            runSampleMetaDataIDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // runSampleMetaDataNameColumn
             // 
             runSampleMetaDataNameColumn.HeaderText = "Name";
             runSampleMetaDataNameColumn.Name = "runSampleMetaDataNameColumn";
+            runSampleMetaDataNameColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             runSampleMetaDataNameColumn.Width = 224;
             // 
             // runImagingSetupDataGridView
             // 
             runImagingSetupDataGridView.AllowUserToAddRows = false;
             runImagingSetupDataGridView.AllowUserToDeleteRows = false;
+            runImagingSetupDataGridView.AllowUserToResizeRows = false;
             runImagingSetupDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             runImagingSetupDataGridView.Columns.AddRange(new DataGridViewColumn[] { runImagingSetupPropertyColumn, runImagingSetupValueColumn });
             runImagingSetupDataGridView.Location = new Point(396, 24);
@@ -659,18 +662,21 @@
             runImagingSetupPropertyColumn.HeaderText = "Property";
             runImagingSetupPropertyColumn.Name = "runImagingSetupPropertyColumn";
             runImagingSetupPropertyColumn.ReadOnly = true;
+            runImagingSetupPropertyColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             runImagingSetupPropertyColumn.Width = 210;
             // 
             // runImagingSetupValueColumn
             // 
             runImagingSetupValueColumn.HeaderText = "Value";
             runImagingSetupValueColumn.Name = "runImagingSetupValueColumn";
+            runImagingSetupValueColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             runImagingSetupValueColumn.Width = 145;
             // 
             // runExperimentDataGridView
             // 
             runExperimentDataGridView.AllowUserToAddRows = false;
             runExperimentDataGridView.AllowUserToDeleteRows = false;
+            runExperimentDataGridView.AllowUserToResizeRows = false;
             runExperimentDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             runExperimentDataGridView.Columns.AddRange(new DataGridViewColumn[] { runExperimentDataPropertyColumn, runExperimentDataValueColumn });
             runExperimentDataGridView.Location = new Point(6, 24);
@@ -685,12 +691,14 @@
             runExperimentDataPropertyColumn.HeaderText = "Property";
             runExperimentDataPropertyColumn.Name = "runExperimentDataPropertyColumn";
             runExperimentDataPropertyColumn.ReadOnly = true;
+            runExperimentDataPropertyColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             runExperimentDataPropertyColumn.Width = 190;
             // 
             // runExperimentDataValueColumn
             // 
             runExperimentDataValueColumn.HeaderText = "Value";
             runExperimentDataValueColumn.Name = "runExperimentDataValueColumn";
+            runExperimentDataValueColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             runExperimentDataValueColumn.Width = 190;
             // 
             // runRunButton
@@ -772,53 +780,67 @@
             controlTabPage.Text = "Control";
             controlTabPage.UseVisualStyleBackColor = true;
             // 
+            // controlMotorLabel
+            // 
+            controlMotorLabel.AutoSize = true;
+            controlMotorLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlMotorLabel.Location = new Point(117, 335);
+            controlMotorLabel.Name = "controlMotorLabel";
+            controlMotorLabel.Size = new Size(48, 18);
+            controlMotorLabel.TabIndex = 17;
+            controlMotorLabel.Text = "Motor";
+            // 
             // controlTECDResetButton
             // 
             controlTECDResetButton.BackColor = Color.IndianRed;
             controlTECDResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECDResetButton.ForeColor = Color.White;
-            controlTECDResetButton.Location = new Point(1007, 484);
+            controlTECDResetButton.Location = new Point(1007, 540);
             controlTECDResetButton.Name = "controlTECDResetButton";
             controlTECDResetButton.Size = new Size(100, 36);
             controlTECDResetButton.TabIndex = 16;
             controlTECDResetButton.Text = "Reset";
             controlTECDResetButton.UseVisualStyleBackColor = false;
+            controlTECDResetButton.Click += controlTECDResetButton_Click;
             // 
             // controlTECCResetButton
             // 
             controlTECCResetButton.BackColor = Color.IndianRed;
             controlTECCResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECCResetButton.ForeColor = Color.White;
-            controlTECCResetButton.Location = new Point(901, 484);
+            controlTECCResetButton.Location = new Point(901, 540);
             controlTECCResetButton.Name = "controlTECCResetButton";
             controlTECCResetButton.Size = new Size(100, 36);
             controlTECCResetButton.TabIndex = 15;
             controlTECCResetButton.Text = "Reset";
             controlTECCResetButton.UseVisualStyleBackColor = false;
+            controlTECCResetButton.Click += controlTECCResetButton_Click;
             // 
             // controlTECBResetButton
             // 
             controlTECBResetButton.BackColor = Color.IndianRed;
             controlTECBResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECBResetButton.ForeColor = Color.White;
-            controlTECBResetButton.Location = new Point(795, 484);
+            controlTECBResetButton.Location = new Point(795, 540);
             controlTECBResetButton.Name = "controlTECBResetButton";
             controlTECBResetButton.Size = new Size(100, 36);
             controlTECBResetButton.TabIndex = 14;
             controlTECBResetButton.Text = "Reset";
             controlTECBResetButton.UseVisualStyleBackColor = false;
+            controlTECBResetButton.Click += controlTECBResetButton_Click;
             // 
             // controlTECAResetButton
             // 
             controlTECAResetButton.BackColor = Color.IndianRed;
             controlTECAResetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECAResetButton.ForeColor = Color.White;
-            controlTECAResetButton.Location = new Point(685, 484);
+            controlTECAResetButton.Location = new Point(685, 540);
             controlTECAResetButton.Name = "controlTECAResetButton";
             controlTECAResetButton.Size = new Size(100, 36);
             controlTECAResetButton.TabIndex = 13;
             controlTECAResetButton.Text = "Reset";
             controlTECAResetButton.UseVisualStyleBackColor = false;
+            controlTECAResetButton.Click += controlTECAResetButton_Click;
             // 
             // controlLEDsDataGridView
             // 
@@ -831,7 +853,7 @@
             controlLEDsDataGridView.Name = "controlLEDsDataGridView";
             controlLEDsDataGridView.RowHeadersVisible = false;
             controlLEDsDataGridView.RowTemplate.Height = 25;
-            controlLEDsDataGridView.Size = new Size(423, 171);
+            controlLEDsDataGridView.Size = new Size(423, 103);
             controlLEDsDataGridView.TabIndex = 12;
             // 
             // controlLEDsPropertyColumn
@@ -899,48 +921,52 @@
             controlTECDSetTempButton.BackColor = SystemColors.Highlight;
             controlTECDSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECDSetTempButton.ForeColor = Color.White;
-            controlTECDSetTempButton.Location = new Point(1007, 442);
+            controlTECDSetTempButton.Location = new Point(1007, 498);
             controlTECDSetTempButton.Name = "controlTECDSetTempButton";
             controlTECDSetTempButton.Size = new Size(100, 36);
             controlTECDSetTempButton.TabIndex = 10;
             controlTECDSetTempButton.Text = "Set Temp";
             controlTECDSetTempButton.UseVisualStyleBackColor = false;
+            controlTECDSetTempButton.Click += controlTECDSetTempButton_Click;
             // 
             // controlTECCSetTempButton
             // 
             controlTECCSetTempButton.BackColor = SystemColors.Highlight;
             controlTECCSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECCSetTempButton.ForeColor = Color.White;
-            controlTECCSetTempButton.Location = new Point(901, 442);
+            controlTECCSetTempButton.Location = new Point(901, 498);
             controlTECCSetTempButton.Name = "controlTECCSetTempButton";
             controlTECCSetTempButton.Size = new Size(100, 36);
             controlTECCSetTempButton.TabIndex = 9;
             controlTECCSetTempButton.Text = "Set Temp";
             controlTECCSetTempButton.UseVisualStyleBackColor = false;
+            controlTECCSetTempButton.Click += controlTECCSetTempButton_Click;
             // 
             // controlTECBSetTempButton
             // 
             controlTECBSetTempButton.BackColor = SystemColors.Highlight;
             controlTECBSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECBSetTempButton.ForeColor = Color.White;
-            controlTECBSetTempButton.Location = new Point(795, 442);
+            controlTECBSetTempButton.Location = new Point(795, 498);
             controlTECBSetTempButton.Name = "controlTECBSetTempButton";
             controlTECBSetTempButton.Size = new Size(100, 36);
             controlTECBSetTempButton.TabIndex = 8;
             controlTECBSetTempButton.Text = "Set Temp";
             controlTECBSetTempButton.UseVisualStyleBackColor = false;
+            controlTECBSetTempButton.Click += controlTECBSetTempButton_Click;
             // 
             // controlTECASetTempButton
             // 
             controlTECASetTempButton.BackColor = SystemColors.Highlight;
             controlTECASetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlTECASetTempButton.ForeColor = Color.White;
-            controlTECASetTempButton.Location = new Point(685, 442);
+            controlTECASetTempButton.Location = new Point(685, 498);
             controlTECASetTempButton.Name = "controlTECASetTempButton";
             controlTECASetTempButton.Size = new Size(100, 36);
             controlTECASetTempButton.TabIndex = 7;
             controlTECASetTempButton.Text = "Set Temp";
             controlTECASetTempButton.UseVisualStyleBackColor = false;
+            controlTECASetTempButton.Click += controlTECASetTempButton_Click;
             // 
             // controlTECsDataGridView
             // 
@@ -953,7 +979,7 @@
             controlTECsDataGridView.Name = "controlTECsDataGridView";
             controlTECsDataGridView.RowHeadersVisible = false;
             controlTECsDataGridView.RowTemplate.Height = 25;
-            controlTECsDataGridView.Size = new Size(569, 410);
+            controlTECsDataGridView.Size = new Size(569, 466);
             controlTECsDataGridView.TabIndex = 6;
             // 
             // controlTECsPropertyColumn
@@ -1850,16 +1876,6 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // controlMotorLabel
-            // 
-            controlMotorLabel.AutoSize = true;
-            controlMotorLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            controlMotorLabel.Location = new Point(117, 335);
-            controlMotorLabel.Name = "controlMotorLabel";
-            controlMotorLabel.Size = new Size(48, 18);
-            controlMotorLabel.TabIndex = 17;
-            controlMotorLabel.Text = "Motor";
-            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1953,10 +1969,6 @@
         private Button runAddAssayButton;
         private DataGridViewTextBoxColumn runAssayMetaDataIDColumn;
         private DataGridViewTextBoxColumn runAssayMetaDataNameColumn;
-        private DataGridViewTextBoxColumn runSampleMetaDataIDColumn;
-        private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
-        private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
-        private DataGridViewTextBoxColumn runExperimentDataValueColumn;
         private Button runClearFormButton;
         private DataGridViewTextBoxColumn homeLEDsPropertiesColumn;
         private DataGridViewTextBoxColumn homeLEDsCy5Column;
@@ -2038,8 +2050,6 @@
         private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
         private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
         private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
-        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
-        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
         private Label settingsMotorsLabel;
         private DataGridView settingsMotorsDataGridView;
         private Label settingsLEDsLabel;
@@ -2078,5 +2088,11 @@
         private DataGridViewTextBoxColumn controlTECsTECCColumn;
         private DataGridViewTextBoxColumn controlTECsTECDColumn;
         private Label controlMotorLabel;
+        private DataGridViewTextBoxColumn runSampleMetaDataIDColumn;
+        private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
+        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
+        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
+        private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
+        private DataGridViewTextBoxColumn runExperimentDataValueColumn;
     }
 }

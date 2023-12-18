@@ -8,9 +8,9 @@
     <Index>0</Index>
     <TypeName>Set</TypeName>
     <Temperature>101</Temperature>
-    <Time>960</Time>
+    <Time>8</Time>
     <TemperatureUnits>Celsius</TemperatureUnits>
-    <TimeUnits>seconds</TimeUnits>
+    <TimeUnits>minutes</TimeUnits>
   </Step>
   <Step>
     <Index>1</Index>

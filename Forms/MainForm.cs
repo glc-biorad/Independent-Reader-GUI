@@ -21,8 +21,15 @@ namespace Independent_Reader_GUI
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager;
+        private TECManager tecManager;
         private CartridgeOptions cartridgeOptions;
-        private FLIRCameraService cameraService = new FLIRCameraService();
+        private FLIRCameraManager cameraService = new FLIRCameraManager();
+        private string runExperimentProtocolName = string.Empty;
+        private double runExperimentProtocolTime = 0.0;
+        private TEC tecA;
+        private TEC tecB;
+        private TEC tecC;
+        private TEC tecD;
 
         /// <summary>
         /// Initialization of the Form
@@ -33,6 +40,12 @@ namespace Independent_Reader_GUI
 
             // Connect to the FLIR Camera
             cameraService.Connect();
+            // Connect to the TECs
+            tecA = new TEC(id: configuration.TECAAddress, name: "TEC A");
+            tecB = new TEC(id: configuration.TECBAddress, name: "TEC B");
+            tecC = new TEC(id: configuration.TECCAddress, name: "TEC C");
+            tecD = new TEC(id: configuration.TECDAddress, name: "TEC D");
+            tecManager = new TECManager(tecA, tecB, tecC, tecD);
 
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
@@ -411,9 +424,9 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.PartitionTypeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", runExperimentData.CartridgeLength);
-            runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", runExperimentData.CartridgeWidth);
-            runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", runExperimentData.CartridgeHeight);
+            runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Length);
+            runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Width);
+            runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Height);
             runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
             runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
@@ -463,16 +476,16 @@ namespace Independent_Reader_GUI
         private void AddControlMotorsDefaultData()
         {
             MotorData controlMotorData = new MotorData();
-            controlMotorsDataGridView.Rows.Add("x", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("y", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("z", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, controlMotorData.Speed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("x", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.xMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("y", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.yMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("z", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.zMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.FilterWheelMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampAMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampBMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampCMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.TrayABMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.TrayCDMotorDefaultSpeed, controlMotorData.Home);
         }
 
         /// <summary>
@@ -489,8 +502,13 @@ namespace Independent_Reader_GUI
             controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[4] = controlLEDsData.IOAttoComboBoxCell;
             controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[5] = controlLEDsData.IOAlexaComboBoxCell;
             controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[6] = controlLEDsData.IOCy5p5ComboBoxCell;
-            controlLEDsDataGridView.Rows.Add("Intensity (%)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
-            controlLEDsDataGridView.Rows.Add("Exposure (ms)", controlLEDsData.ValueCy5, controlLEDsData.ValueFAM, controlLEDsData.ValueHEX, controlLEDsData.ValueAtto, controlLEDsData.ValueAlexa, controlLEDsData.ValueCy5p5);
+            controlLEDsDataGridView.Rows.Add("Intensity (%)", 
+                configuration.Cy5Intensity, 
+                configuration.FAMIntensity, 
+                configuration.HEXIntensity,
+                configuration.AttoIntensity,
+                configuration.AttoIntensity, 
+                configuration.Cy5p5Intensity);
         }
 
         /// <summary>
@@ -501,14 +519,39 @@ namespace Independent_Reader_GUI
             TECsData controlTECsData = new TECsData();
             controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Actual Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Target Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("New Object Temp (\u00B0C)");
+            controlTECsDataGridView.Rows.Add("Actual Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
+            controlTECsDataGridView.Rows.Add("Target Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Temp Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Object Upper Error Threshold (\u00B0C)", 
+                configuration.TECAObjectUpperErrorThreshold,
+                configuration.TECBObjectUpperErrorThreshold,
+                configuration.TECCObjectUpperErrorThreshold,
+                configuration.TECDObjectUpperErrorThreshold);
+            controlTECsDataGridView.Rows.Add("Object Lower Error Threshold (\u00B0C)", 
+                configuration.TECAObjectLowerErrorThreshold,
+                configuration.TECBObjectLowerErrorThreshold,
+                configuration.TECCObjectLowerErrorThreshold,
+                configuration.TECDObjectLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Sink Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Sink Temp Max (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Fan RPM", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Fan off Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Sink Upper Error Threshold (°C)", 
+                configuration.TECASinkUpperErrorThreshold,
+                configuration.TECBSinkUpperErrorThreshold,
+                configuration.TECCSinkUpperErrorThreshold,
+                configuration.TECDSinkUpperErrorThreshold);
+            controlTECsDataGridView.Rows.Add("Sink Lower Error Threshold (°C)", 
+                configuration.TECASinkLowerErrorThreshold,
+                configuration.TECBSinkLowerErrorThreshold,
+                configuration.TECCSinkLowerErrorThreshold,
+                configuration.TECDSinkLowerErrorThreshold);
+            controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)", 
+                configuration.TECAFanOnTemp,
+                configuration.TECBFanOnTemp,
+                configuration.TECCFanOnTemp,
+                configuration.TECDFanOnTemp);
+            controlTECsDataGridView.Rows.Add("Fan Control Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Max Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
@@ -617,41 +660,44 @@ namespace Independent_Reader_GUI
         private void homeDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             var cellValue = e.Value as string;
-            if (cellValue.Equals("Connected"))
+            if (cellValue != null)
             {
-                // Change Connected cells to MediumSeaGreen
-                e.CellStyle.BackColor = Color.MediumSeaGreen;
-                e.CellStyle.ForeColor = Color.White;
-            }
-            else if (cellValue.Equals("C"))
-            {
-                // Change C cells to MediumSeaGreen
-                e.CellStyle.BackColor = Color.MediumSeaGreen;
-                e.CellStyle.ForeColor = Color.White;
-            }
-            else if (cellValue.Equals("Not Connected"))
-            {
-                // Change Not cells to Red
-                e.CellStyle.BackColor = Color.Red;
-                e.CellStyle.ForeColor = Color.White;
-            }
-            else if (cellValue.Equals("N"))
-            {
-                // Change N cells to Red
-                e.CellStyle.BackColor = Color.Red;
-                e.CellStyle.ForeColor = Color.White;
-            }
-            else if (cellValue.Equals("Not Homed"))
-            {
-                // Change N cells to Gold
-                e.CellStyle.BackColor = Color.Gold;
-                e.CellStyle.ForeColor = Color.White;
-            }
-            else
-            {
-                e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
-                e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
-            }
+                if (cellValue.Equals("Connected"))
+                {
+                    // Change Connected cells to MediumSeaGreen
+                    e.CellStyle.BackColor = Color.MediumSeaGreen;
+                    e.CellStyle.ForeColor = Color.White;
+                }
+                else if (cellValue.Equals("C"))
+                {
+                    // Change C cells to MediumSeaGreen
+                    e.CellStyle.BackColor = Color.MediumSeaGreen;
+                    e.CellStyle.ForeColor = Color.White;
+                }
+                else if (cellValue.Equals("Not Connected"))
+                {
+                    // Change Not cells to Red
+                    e.CellStyle.BackColor = Color.Red;
+                    e.CellStyle.ForeColor = Color.White;
+                }
+                else if (cellValue.Equals("N"))
+                {
+                    // Change N cells to Red
+                    e.CellStyle.BackColor = Color.Red;
+                    e.CellStyle.ForeColor = Color.White;
+                }
+                else if (cellValue.Equals("Not Homed"))
+                {
+                    // Change N cells to Gold
+                    e.CellStyle.BackColor = Color.Gold;
+                    e.CellStyle.ForeColor = Color.White;
+                }
+                else
+                {
+                    e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
+                    e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
+                }
+            }     
         }
 
         /// <summary>
@@ -1004,6 +1050,7 @@ namespace Independent_Reader_GUI
         private void runExperimentDataGridView_TickEventHandler(object sender, EventArgs e)
         {
             double projectedAdditionalTimeSeconds = 0.0;
+            double protocolTimeInSeconds = 0.0;
             foreach (DataGridViewRow row in runExperimentDataGridView.Rows)
             {
                 if (row.Cells[0].Value.ToString().Contains("Start Time"))
@@ -1022,7 +1069,7 @@ namespace Independent_Reader_GUI
                     DateTime projectedEndTime = DateTime.Now;
                     foreach (DataGridViewRow imagingSetupRow in runImagingSetupDataGridView.Rows)
                     {
-                        // TODO: Check the number of samples and or assays to be more precious than just the entire chip being scanned
+                        // TODO: Check the number of samples and or assays to be more precious than just the entire chip being scanned and the number of channels
                         if (imagingSetupRow.Cells[0].Value.Equals("Image Before") && imagingSetupRow.Cells[1].Value.Equals("Yes"))
                         {
                             projectedAdditionalTimeSeconds += configuration.EstimateSampleCaptureTimeSeconds * 8;
@@ -1037,7 +1084,15 @@ namespace Independent_Reader_GUI
                         if (runExperimentDataRow.Cells[0].Value.Equals("Protocol"))
                         {
                             // TODO: Get the estimated protocol time from the selected protocol
-                            projectedAdditionalTimeSeconds += 9000;
+                            string protocolName = runExperimentDataRow.Cells[1].Value.ToString();
+                            if (!runExperimentProtocolName.Equals(protocolName))
+                            {
+                                string protocolFileName = protocolName.Replace(" ", "_") + ".xml";
+                                string protocolFilePath = configuration.ThermocyclingProtocolsDataPath + protocolFileName;
+                                ThermocyclingProtocol protocol = protocolManager.LoadProtocol(protocolFilePath);
+                                protocolTimeInSeconds = protocol.GetTimeInSeconds();
+                            }
+                            projectedAdditionalTimeSeconds += protocolTimeInSeconds;
                         }
                     }
                     runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.AddSeconds(projectedAdditionalTimeSeconds).ToString("HH:mm:ss");
@@ -1064,6 +1119,118 @@ namespace Independent_Reader_GUI
         private void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
             cameraService.CaptureImage();
+        }
+
+        private void controlTECASetTempButton_Click(object sender, EventArgs e)
+        {
+            if (tecA.Connected)
+            {
+                // TODO: Implement code to handle setting the temperature of the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecA.SetTemp();
+            }
+            else
+            {
+                MessageBox.Show("Cannot set TEC A's temperature, TEC A is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECBSetTempButton_Click(object sender, EventArgs e)
+        {
+            if (tecB.Connected)
+            {
+                // TODO: Implement code to handle setting the temperature of the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecB.SetTemp();
+            }
+            else
+            {
+                MessageBox.Show("Cannot set TEC B's temperature, TEC B is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECCSetTempButton_Click(object sender, EventArgs e)
+        {
+            if (tecC.Connected)
+            {
+                // TODO: Implement code to handle setting the temperature of the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecC.SetTemp();
+            }
+            else
+            {
+                MessageBox.Show("Cannot set TEC C's temperature, TEC C is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECDSetTempButton_Click(object sender, EventArgs e)
+        {
+            if (tecD.Connected)
+            {
+                // TODO: Implement code to handle setting the temperature of the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecD.SetTemp();
+            }
+            else
+            {
+                MessageBox.Show("Cannot set TEC D's temperature, TEC D is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECAResetButton_Click(object sender, EventArgs e)
+        {
+            if (tecA.Connected)
+            {
+                // TODO: Implement code to handle resetting the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecA.Reset();
+            }
+            else
+            {
+                MessageBox.Show("Cannot reset TEC A, TEC A is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECBResetButton_Click(object sender, EventArgs e)
+        {
+            if (tecB.Connected)
+            {
+                // TODO: Implement code to handle resetting the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecB.Reset();
+            }
+            else
+            {
+                MessageBox.Show("Cannot reset TEC B, TEC B is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECCResetButton_Click(object sender, EventArgs e)
+        {
+            if (tecC.Connected)
+            {
+                // TODO: Implement code to handle resetting the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecC.Reset();
+            }
+            else
+            {
+                MessageBox.Show("Cannot reset " + tecC.Name + ", " + tecC.Name + " is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void controlTECDResetButton_Click(object sender, EventArgs e)
+        {
+            if (tecD.Connected)
+            {
+                // TODO: Implement code to handle resetting the TEC
+                // FIXME: So that this cannot work if a protocol is currently running on this tec
+                tecD.Reset();
+            }
+            else
+            {
+                MessageBox.Show("Cannot reset " + tecD.Name + ", " + tecD.Name + " is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

@@ -106,6 +106,10 @@ namespace Independent_Reader_GUI.Services
             protocolXDocument.Save(filePath);
         }
 
+        /// <summary>
+        /// Get DataGridViewComboBoxCell of protocol names
+        /// </summary>
+        /// <returns></returns>
         public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
         {
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
