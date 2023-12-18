@@ -38,7 +38,7 @@ namespace Independent_Reader_GUI.Models
             BergquistOptions bergquistOptions = new BergquistOptions(configuration);
             BergquistComboBoxCell = bergquistOptions.GetOptionNamesComboBoxCell();
             CartridgeOptions cartridgeOptions = new CartridgeOptions(configuration);
-            CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell();
+            CartridgeComboBoxCell = cartridgeOptions.GetOptionNamesComboBoxCell(configuration.DefaultPartitionType);
             PartitionTypeOptions partitionTypeOptions = new PartitionTypeOptions();
             PartitionTypeComboBoxCell = partitionTypeOptions.GetOptionNamesComboBoxCell();
             ElastomerOptions elastomerOptions = new ElastomerOptions(configuration);

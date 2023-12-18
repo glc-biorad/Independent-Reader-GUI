@@ -44,7 +44,7 @@ namespace Independent_Reader_GUI.Resources
             {
                 comboBoxCell.Items.Add(option.Name);
             }
-            comboBoxCell.Value = configuration.DefaultBergquist;
+            comboBoxCell.Value = comboBoxCell.Items[0];
             return comboBoxCell;
         }
     }

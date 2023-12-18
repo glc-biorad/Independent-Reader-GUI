@@ -46,17 +46,17 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
-        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
+        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell(string partitionType)
         {
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
             foreach (var option in options)
             {
-                if (option.PartitionType.Equals(configuration.DefaultPartitionType))
+                if (option.PartitionType.Equals(partitionType))
                 {
                     comboBoxCell.Items.Add(option.Name);
                 }
             }
-            comboBoxCell.Value = configuration.DefaultCartridge;
+            comboBoxCell.Value = comboBoxCell.Items[0];
             return comboBoxCell;
         }
 
