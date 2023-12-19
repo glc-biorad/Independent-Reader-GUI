@@ -11,6 +11,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - Bonsai.Spinnaker 0.7.1
 - Desktop Developer for C++ on Visual Studio
 - iText7 8.0.2
+- BouncyCastle.NetCore 2.2.1
 
 ## Getting Started
 ### Prerequists
