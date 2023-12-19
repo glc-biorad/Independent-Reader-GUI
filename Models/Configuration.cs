@@ -129,6 +129,8 @@ namespace Independent_Reader_GUI.Models
         public double TECCFanOnTemp = double.NaN;
         public double TECDFanOnTemp = double.NaN;
         public string ReportsDataPath;
+        public string AssetsDataPath;
+        public string ReportLogoDataPath;
 
         public Configuration()
         {
@@ -227,9 +229,11 @@ namespace Independent_Reader_GUI.Models
             // Read in the DataPaths
             var dataPathsNode = rootNode.Element("DataPaths");
             ReportsDataPath = dataPathsNode.Element("Reports").Value;
+            ReportLogoDataPath = dataPathsNode.Element("ReportLogo").Value;
             BergquistDataPath = dataPathsNode.Element("Bergquists").Value;
             CartridgeDataPath = dataPathsNode.Element("Cartridges").Value;
             ElastomerDataPath = dataPathsNode.Element("Elastomers").Value;
+            AssetsDataPath = dataPathsNode.Element("Assets").Value;
             DefaultPartitionType = rootNode.Element("DefaultPartitionType").Value;
             DefaultCartridge = rootNode.Element("DefaultCartridge").Value;
             DefaultElastomer = rootNode.Element("DefaultElastomer").Value;
