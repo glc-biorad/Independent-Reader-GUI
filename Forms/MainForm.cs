@@ -1217,9 +1217,13 @@ namespace Independent_Reader_GUI
             // TODO: Implement code to start the thermocycling protocol and image during if necessary
             // TODO: Implement code to image after if necessary
             // Generate the report for the run
-            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath + runExperimentDataGridView.Rows[0].Cells[1].Value.ToString().Replace(" ", "_") + "_Report");
+            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath + runExperimentDataGridView.Rows[0].Cells[1].Value.ToString().Replace(" ", "_") + "_Report.pdf");
             reportManager.SetTitle(runExperimentDataGridView.Rows[0].Cells[1].Value + " dPCR Report");
+            reportManager.AddHeaderLogo(configuration.ReportLogoDataPath, 50, 50);
+            reportManager.AddSubSection("Experiment Data", "Experiment data includes all information regarding the experimental setup on the instrument. This includes the experiment name, the instrument's configuration, dPCR cartridge information, as well as any excess materials used in the run.");
             reportManager.AddTable(runExperimentDataGridView);
+            reportManager.AddSubSection("Imaging Setup", "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
+            reportManager.AddTable(runImagingSetupDataGridView);
             reportManager.Close();
             // TODO: Email the user that the run is complete and a copy of the report
         }
