@@ -24,9 +24,11 @@
 
   <ItemGroup>
     <Folder Include="Libraries\" />
+    <Folder Include="Reports\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="8.0.2" />
     <PackageReference Include="OxyPlot.WindowsForms" Version="2.1.2" />
   </ItemGroup>
 

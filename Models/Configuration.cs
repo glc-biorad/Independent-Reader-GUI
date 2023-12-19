@@ -128,6 +128,7 @@ namespace Independent_Reader_GUI.Models
         public double TECBFanOnTemp = double.NaN;
         public double TECCFanOnTemp = double.NaN;
         public double TECDFanOnTemp = double.NaN;
+        public string ReportsDataPath;
 
         public Configuration()
         {
@@ -225,6 +226,7 @@ namespace Independent_Reader_GUI.Models
             TECDFanOnTemp = double.Parse(tecDNode.Element("FanOnTemp").Value);
             // Read in the DataPaths
             var dataPathsNode = rootNode.Element("DataPaths");
+            ReportsDataPath = dataPathsNode.Element("Reports").Value;
             BergquistDataPath = dataPathsNode.Element("Bergquists").Value;
             CartridgeDataPath = dataPathsNode.Element("Cartridges").Value;
             ElastomerDataPath = dataPathsNode.Element("Elastomers").Value;

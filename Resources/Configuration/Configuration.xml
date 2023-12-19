@@ -179,6 +179,7 @@
 		<Bergquists>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</Bergquists>
 		<Elastomers>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Elastomers\ElastomerData.xml</Elastomers>
 		<Cartridges>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</Cartridges>
+		<Reports>C:\Users\u112958\source\repos\Independent-Reader-GUI\Reports\</Reports>
 	</DataPaths>
 	<glc-biorad>
 		<Defaults>
