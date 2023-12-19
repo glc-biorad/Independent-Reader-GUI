@@ -926,7 +926,7 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void controlHomeButton_Click(object sender, EventArgs e)
+        private async void controlHomeButton_Click(object sender, EventArgs e)
         {
             // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
             #region To be replaced with a new Utility class for checking if a motor is connected
@@ -960,6 +960,18 @@ namespace Independent_Reader_GUI
             else
             {
                 MessageBox.Show("Code not written yet to home motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (motorName.Equals(trayABMotor.Name)) 
+                {
+                    await motorManager.HomeTrayABSafelyAsync();
+                }
+                else if (motorName.Equals(trayCDMotor.Name))
+                {
+                    await motorManager.HomeTrayCDSafelyAsync();
+                }
+                else
+                {
+                    await motorManager.GetMotorByName(motorName).HomeAsync();
+                }
             }
         }
 
