@@ -10,8 +10,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - OxyPlot.WindowsForms 2.1.2 for Charting
 - Bonsai.Spinnaker 0.7.1
 - Desktop Developer for C++ on Visual Studio
-- iText7 8.0.2
-- BouncyCastle.NetCore 2.2.1
+- iText7 7.25
 
 ## Getting Started
 ### Prerequists
