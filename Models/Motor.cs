@@ -17,7 +17,7 @@ namespace Independent_Reader_GUI.Models
         private TimeSpan waitTimeSpan;
         private const int checkInTimeInMilliseconds = 200;
 
-        public Motor(string name, int address, double timeoutInMilliseconds = 2000) 
+        public Motor(string name, int address, double timeoutInMilliseconds = 3000) 
         {
             this.name = name;
             this.address = address;
@@ -51,7 +51,7 @@ namespace Independent_Reader_GUI.Models
                     // TODO: Implement code for moving the motor using the API
                     MessageBox.Show("Code to move the motor has yet to be implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Stopwatch stopwatch = Stopwatch.StartNew();
-                    while (!homed || (stopwatch.Elapsed < waitTimeSpan))
+                    while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                     {
                         MessageBox.Show(stopwatch.Elapsed.ToString());
                         await Task.Delay(checkInTimeInMilliseconds);

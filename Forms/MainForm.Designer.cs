@@ -712,6 +712,7 @@
             runRunButton.TabIndex = 4;
             runRunButton.Text = "Run";
             runRunButton.UseVisualStyleBackColor = false;
+            runRunButton.Click += runRunButton_Click;
             // 
             // runAssayMetaDataLabel
             // 
