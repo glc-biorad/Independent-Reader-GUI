@@ -10,7 +10,9 @@ namespace Independent_Reader_GUI.Models
     {
         public string? Name { get; set; } = null;
         public double? ThermalCoefficient { get; set; } = null;
+        public string ThermalCoefficientUnits { get; set; } = string.Empty;
         public double? Thickness { get; set; } = null;
+        public string ThicknessUnits { get; set; } = string.Empty;
         public int? ShoreHardness {  get; set; } = null;
     }
 }

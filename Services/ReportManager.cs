@@ -1,4 +1,5 @@
-﻿using iText.IO.Font.Constants;
+﻿using Independent_Reader_GUI.Models;
+using iText.IO.Font.Constants;
 using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
@@ -17,15 +18,16 @@ namespace Independent_Reader_GUI.Services
 {
     internal class ReportManager
     {
-        private string title = string.Empty; // Convention will be dPCR Report ({experiment_name})
         private string filePath;
         private PdfWriter writer;
         private PdfDocument pdf;
         private Document document;
-        private PdfFont sectionTitleFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-        private int sectionTitleFontSize = 16;
-        private PdfFont sectionTextFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
-        private int sectionTextFontSize = 12;
+        private PdfFont mainTitleFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+        private int mainTitleFontSize = 32;
+        private PdfFont subsectionTitleFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+        private int subsectionTitleFontSize = 16;
+        private PdfFont subsectionTextFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+        private int subsectionTextFontSize = 12;
         private DeviceRgb columnHeaderBackgroundColor = new DeviceRgb(235, 222, 199);
         private PdfFont columnHeaderFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
@@ -37,32 +39,54 @@ namespace Independent_Reader_GUI.Services
             document = new Document(pdf);
         }
 
-        public void Close()
+        public async Task CloseAsync()
         {
             document.Close();
             pdf.Close();
             writer.Close();
+            await Task.Delay(1);
         }
 
-        public void SetTitle(string title)
+        public async Task AddThermocyclingProtocolPlotAsync(ThermocyclingProtocol protocol)
         {
-            this.title = title;
+            await Task.Delay(1);
         }
 
-        public void AddSubSection(string sectionTitle, string sectionText)
+        public async Task AddMainTitleAsync(string titleText)
+        {
+            Paragraph title = new Paragraph(titleText);
+            title.SetFont(mainTitleFont);
+            title.SetFontSize(mainTitleFontSize);
+            title.SetMarginBottom(10);
+            document.Add(title);
+            await Task.Delay(1);
+        }
+
+        public async Task AddParagraphTextAsync(string paragraphText)
+        {
+            Paragraph paragraph = new Paragraph(paragraphText);
+            paragraph.SetFont(subsectionTextFont);
+            paragraph.SetFontSize(subsectionTextFontSize);
+            paragraph.SetMarginBottom(10);
+            document.Add(paragraph);
+            await Task.Delay(1);
+        }
+
+        public async Task AddSubSectionAsync(string sectionTitle, string sectionText)
         {
             Paragraph title = new Paragraph(sectionTitle);
-            title.SetFont(sectionTitleFont);
-            title.SetFontSize(sectionTextFontSize);
+            title.SetFont(subsectionTitleFont);
+            title.SetFontSize(subsectionTextFontSize);
             document.Add(title);
             Paragraph text = new Paragraph(sectionText);
-            text.SetFont(sectionTextFont);
-            text.SetFontSize(sectionTextFontSize);
+            text.SetFont(subsectionTextFont);
+            text.SetFontSize(subsectionTextFontSize);
             text.SetMarginBottom(10);
             document.Add(text);
+            await Task.Delay(1);
         }
 
-        public void AddHeaderLogo(string logoFilePath, int width, int height)
+        public async Task AddHeaderLogoAsync(string logoFilePath, int width, int height)
         {
             ImageData imageData = ImageDataFactory.Create(logoFilePath);
             iText.Layout.Element.Image logoImage = new iText.Layout.Element.Image(imageData);
@@ -71,9 +95,10 @@ namespace Independent_Reader_GUI.Services
             logoImage.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT);
             logoImage.SetMarginBottom(10);
             document.Add(logoImage);
+            await Task.Delay(1);
         }
 
-        public void AddTable(DataGridView dataGridView)
+        public async Task AddTableAsync(DataGridView dataGridView)
         {
             Table table = new Table(dataGridView.ColumnCount);
             // Add Header Text to the table
@@ -97,6 +122,7 @@ namespace Independent_Reader_GUI.Services
             table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
             table.SetMarginBottom(10);
             document.Add(table);
+            await Task.Delay(1);
         }
     }
 }
