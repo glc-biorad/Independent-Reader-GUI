@@ -8,9 +8,9 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - .NET Framework 6.0
 - Window Forms
 - OxyPlot.WindowsForms 2.1.2 for Charting
-- Bonsai.Spinnaker 0.7.1
+- Bonsai.Spinnaker 0.7.1 for using the Spinnaker SDK (FLIR Camera)
 - Desktop Developer for C++ on Visual Studio
-- iText7 7.25
+- iText7 7.25 for PDF report generation
 
 ## Getting Started
 ### Prerequists
