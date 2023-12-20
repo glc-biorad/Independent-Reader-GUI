@@ -16,6 +16,7 @@ namespace Independent_Reader_GUI
     {
         // Private attributes
         private Configuration configuration = new Configuration();
+        private DataGridViewManager dataGridViewManager = new DataGridViewManager();
         private TimerManager runExperimentDataTimerManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
@@ -24,6 +25,8 @@ namespace Independent_Reader_GUI
         private TECManager tecManager;
         private MotorsManager motorManager;
         private CartridgeOptions cartridgeOptions;
+        private ElastomerOptions elastomerOptions;
+        private BergquistOptions bergquistOptions;
         private FLIRCameraManager cameraService = new FLIRCameraManager();
         private string runExperimentProtocolName = string.Empty;
         private double runExperimentProtocolTime = 0.0;
@@ -73,6 +76,8 @@ namespace Independent_Reader_GUI
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
             cartridgeOptions = new CartridgeOptions(configuration);
+            elastomerOptions = new ElastomerOptions(configuration);
+            bergquistOptions = new BergquistOptions(configuration);
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -109,6 +114,24 @@ namespace Independent_Reader_GUI
             this.controlLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.thermocyclingProtocolStatusesDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.dataGridView_SetupComboBoxes();
+
+
+            // Set initial colors for connected modules
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecA.Connected, "Connected", "Not Connected", 0, 1);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecB.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecC.Connected, "Connected", "Not Connected", 0, 3);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecD.Connected, "Connected", "Not Connected", 0, 4);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraService.Connected, "Connected", "Not Connected", 0, 0);
 
             // Subscribe to value changed events
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
@@ -152,10 +175,9 @@ namespace Independent_Reader_GUI
             CameraData homeCamera = new CameraData
             {
                 State = "Not Connected",
-                Exposure = "600000",
-                Temp = "3400"
+                IO = "?"
             };
-            homeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.Exposure, homeCamera.Temp);
+            homeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.IO);
         }
 
         /// <summary>
@@ -368,10 +390,10 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
             runExperimentDataGridView.Rows.Add("Elastomer");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ElastomerComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", runExperimentData.ElastomerThickness);
+            runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", elastomerOptions.GetElastomerFromName(configuration.DefaultElastomer).Thickness);
             runExperimentDataGridView.Rows.Add("Bergquist");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", runExperimentData.BergquistThickness);
+            runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", bergquistOptions.GetBergquistFromName(configuration.DefaultBergquist).Thickness);
             runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
         }
@@ -573,6 +595,7 @@ namespace Independent_Reader_GUI
 
         /// <summary>
         /// Cell Formatting for all Data Grid Views on the Home Tab upon loading of the main Form.
+        /// After interface with each module is complete this method should be obsolete
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1208,7 +1231,7 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void runRunButton_Click(object sender, EventArgs e)
+        private async void runRunButton_Click(object sender, EventArgs e)
         {
             // TODO: Implement code to ensure the run will start successfully (Connected motors, clamps are out of the way, etc)
             // TODO: Implement code to close the tray for the correct heater
@@ -1217,14 +1240,24 @@ namespace Independent_Reader_GUI
             // TODO: Implement code to start the thermocycling protocol and image during if necessary
             // TODO: Implement code to image after if necessary
             // Generate the report for the run
-            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath + runExperimentDataGridView.Rows[0].Cells[1].Value.ToString().Replace(" ", "_") + "_Report.pdf");
-            reportManager.SetTitle(runExperimentDataGridView.Rows[0].Cells[1].Value + " dPCR Report");
-            reportManager.AddHeaderLogo(configuration.ReportLogoDataPath, 50, 50);
-            reportManager.AddSubSection("Experiment Data", "Experiment data includes all information regarding the experimental setup on the instrument. This includes the experiment name, the instrument's configuration, dPCR cartridge information, as well as any excess materials used in the run.");
-            reportManager.AddTable(runExperimentDataGridView);
-            reportManager.AddSubSection("Imaging Setup", "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
-            reportManager.AddTable(runImagingSetupDataGridView);
-            reportManager.Close();
+            var experimentName = runExperimentDataGridView.Rows[0].Cells[1].Value.ToString();
+            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath + experimentName.Replace(" ", "_") + "_Report.pdf");
+            await reportManager.AddHeaderLogoAsync(configuration.ReportLogoDataPath, 50, 50);
+            await reportManager.AddMainTitleAsync(runExperimentDataGridView.Rows[0].Cells[1].Value + " dPCR Report");
+            await reportManager.AddParagraphTextAsync("This report for experiment " 
+                + experimentName
+                + " includes experiment data, setup data for imaging before, during, and/or after the run," 
+                + " errors/warnings regarding the run, the expected protocol and estimated thermocycling metrology. The report also includes" 
+                + " any stitched images before and/or after the run. It does not include postprocessing of the images, but this report can be augmented"
+                + " with postprocessing data after the fact. Initial conditions for the run can be found to trace any unexpected behavior after thermocycling."
+                + " This report does not include the actual thermal profile experienced by the system but is estimated based on the materials at the heater"
+                + " cartridge interface.");
+            await reportManager.AddSubSectionAsync("Experiment Data", "Experiment data includes all information regarding the experimental setup on the instrument."
+                + " This includes the experiment name, the instrument's configuration, dPCR cartridge information, as well as any excess materials used in the run.");
+            await reportManager.AddTableAsync(runExperimentDataGridView);
+            await reportManager.AddSubSectionAsync("Imaging Setup", "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
+            await reportManager.AddTableAsync(runImagingSetupDataGridView);
+            await reportManager.CloseAsync();
             // TODO: Email the user that the run is complete and a copy of the report
         }
     }

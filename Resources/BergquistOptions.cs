@@ -33,8 +33,21 @@ namespace Independent_Reader_GUI.Resources
                 bergquist.ThermalCoefficient = double.Parse(bergquistNode.Element("ThermalCoefficient").Value.ToString());
                 bergquist.ShoreHardness = int.Parse(bergquistNode.Element("ShoreHardness").Value.ToString());
                 bergquist.Thickness = double.Parse(bergquistNode.Element("Thickness").Value.ToString());
+                bergquist.ThicknessUnits = bergquistNode.Element("ThicknessUnits").Value.ToString();
                 options.Add(bergquist);
             }
+        }
+
+        public Bergquist? GetBergquistFromName(string name)
+        {
+            foreach (var option in options)
+            {
+                if (option.Name == name)
+                {
+                    return option;
+                }
+            }
+            return null;
         }
 
         public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()

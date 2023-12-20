@@ -18,10 +18,10 @@ namespace Independent_Reader_GUI.Resources
         {
             this.configuration = configuration;
             elastomerDataPath = configuration.ElastomerDataPath;
-            ReadInBergquistData();
+            ReadInElastomerData();
         }
 
-        private void ReadInBergquistData()
+        private void ReadInElastomerData()
         {
             // Load in the protocol file
             XDocument xDocument = XDocument.Load(elastomerDataPath);
@@ -41,6 +41,18 @@ namespace Independent_Reader_GUI.Resources
                 elastomer.PreparedBy = elastomerNode.Element("PreparedBy").Value.ToString();
                 options.Add(elastomer);
             }
+        }
+
+        public Elastomer? GetElastomerFromName(string name)
+        {
+            foreach (var option in options)
+            {
+                if (option.Name == name)
+                {
+                    return option;
+                }
+            }
+            return null;
         }
 
         public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()

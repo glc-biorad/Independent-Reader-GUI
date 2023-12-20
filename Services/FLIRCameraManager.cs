@@ -35,7 +35,6 @@ namespace Independent_Reader_GUI.Services
             }
             catch (System.ArgumentOutOfRangeException ex)
             {
-                MessageBox.Show("FLIR camera not found", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 connected = false;
             }
         }
@@ -71,6 +70,12 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        public async Task CaptureImageAsync()
+        {
+            CaptureImage();
+            await Task.Delay(1);
+        }
+
         public void StartStream()
         {
             if (connected)
@@ -84,6 +89,12 @@ namespace Independent_Reader_GUI.Services
                 streaming = false;
                 MessageBox.Show("Cannot start stream, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        public async Task StartStreamAsync()
+        {
+            StartStream();
+            await Task.Delay(1);
         }
 
         public void StopStream()

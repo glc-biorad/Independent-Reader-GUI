@@ -9,7 +9,6 @@ namespace Independent_Reader_GUI.Models
     internal class CameraData
     {
         public string State { get; set; } = "?";
-        public string Exposure { get; set; } = "?";
-        public string Temp { get; set; } = "?";
+        public string IO { get; set; } = "?";
     }
 }

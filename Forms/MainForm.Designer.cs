@@ -48,8 +48,7 @@
             homeLEDsLabel = new Label();
             homeCameraDataGridView = new DataGridView();
             homeCameraStateColumn = new DataGridViewTextBoxColumn();
-            homeCameraExposureColumn = new DataGridViewTextBoxColumn();
-            homeCameraTempColumn = new DataGridViewTextBoxColumn();
+            homeCameraIOColumn = new DataGridViewTextBoxColumn();
             homeCameraLabel = new Label();
             homeMotorsDataGridView = new DataGridView();
             homeMotorsMotorColumn = new DataGridViewTextBoxColumn();
@@ -321,7 +320,7 @@
             homeLEDsDataGridView.ReadOnly = true;
             homeLEDsDataGridView.RowHeadersVisible = false;
             homeLEDsDataGridView.RowTemplate.Height = 25;
-            homeLEDsDataGridView.Size = new Size(513, 149);
+            homeLEDsDataGridView.Size = new Size(513, 138);
             homeLEDsDataGridView.TabIndex = 5;
             // 
             // homeLEDsPropertiesColumn
@@ -388,14 +387,14 @@
             homeCameraDataGridView.AllowUserToAddRows = false;
             homeCameraDataGridView.AllowUserToDeleteRows = false;
             homeCameraDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            homeCameraDataGridView.Columns.AddRange(new DataGridViewColumn[] { homeCameraStateColumn, homeCameraExposureColumn, homeCameraTempColumn });
+            homeCameraDataGridView.Columns.AddRange(new DataGridViewColumn[] { homeCameraStateColumn, homeCameraIOColumn });
             homeCameraDataGridView.Enabled = false;
             homeCameraDataGridView.Location = new Point(8, 335);
             homeCameraDataGridView.Name = "homeCameraDataGridView";
             homeCameraDataGridView.ReadOnly = true;
             homeCameraDataGridView.RowHeadersVisible = false;
             homeCameraDataGridView.RowTemplate.Height = 25;
-            homeCameraDataGridView.Size = new Size(284, 70);
+            homeCameraDataGridView.Size = new Size(269, 59);
             homeCameraDataGridView.TabIndex = 3;
             // 
             // homeCameraStateColumn
@@ -403,20 +402,14 @@
             homeCameraStateColumn.HeaderText = "State";
             homeCameraStateColumn.Name = "homeCameraStateColumn";
             homeCameraStateColumn.ReadOnly = true;
+            homeCameraStateColumn.Width = 140;
             // 
-            // homeCameraExposureColumn
+            // homeCameraIOColumn
             // 
-            homeCameraExposureColumn.HeaderText = "Exposure (ms)";
-            homeCameraExposureColumn.Name = "homeCameraExposureColumn";
-            homeCameraExposureColumn.ReadOnly = true;
-            homeCameraExposureColumn.Width = 120;
-            // 
-            // homeCameraTempColumn
-            // 
-            homeCameraTempColumn.HeaderText = "Temp (K)";
-            homeCameraTempColumn.Name = "homeCameraTempColumn";
-            homeCameraTempColumn.ReadOnly = true;
-            homeCameraTempColumn.Width = 60;
+            homeCameraIOColumn.HeaderText = "IO";
+            homeCameraIOColumn.Name = "homeCameraIOColumn";
+            homeCameraIOColumn.ReadOnly = true;
+            homeCameraIOColumn.Width = 120;
             // 
             // homeCameraLabel
             // 
@@ -1952,9 +1945,6 @@
         private Label userLabel;
         private Button logoutButton;
         private Button resetButton;
-        private DataGridViewTextBoxColumn homeCameraStateColumn;
-        private DataGridViewTextBoxColumn homeCameraExposureColumn;
-        private DataGridViewTextBoxColumn homeCameraTempColumn;
         private DataGridView runAssayMetaDataGridView;
         private Button runRemoveSampleButton;
         private Button runAddSampleButton;
@@ -2095,5 +2085,7 @@
         private DataGridViewTextBoxColumn runImagingSetupValueColumn;
         private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
         private DataGridViewTextBoxColumn runExperimentDataValueColumn;
+        private DataGridViewTextBoxColumn homeCameraStateColumn;
+        private DataGridViewTextBoxColumn homeCameraIOColumn;
     }
 }
