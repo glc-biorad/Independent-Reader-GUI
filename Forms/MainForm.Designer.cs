@@ -185,6 +185,41 @@
             settingsMotorsHomeSpeedColumn = new DataGridViewTextBoxColumn();
             settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
             settingsMotorsLabel = new Label();
+            configureTabPage = new TabPage();
+            configureUpdateImageScanningButton = new Button();
+            configureCartridgeComboBox = new ComboBox();
+            configureCartridgeLabel = new Label();
+            dataGridView1 = new DataGridView();
+            configureImageScanningPropertyCOlumn = new DataGridViewTextBoxColumn();
+            configureImageScanningAColumn = new DataGridViewTextBoxColumn();
+            configureImageScanningBColumn = new DataGridViewTextBoxColumn();
+            configureImageScanningCColumn = new DataGridViewTextBoxColumn();
+            configureImageScanningDColumn = new DataGridViewTextBoxColumn();
+            configureImageScanningLabel = new Label();
+            configureBergquistsDataGridView = new DataGridView();
+            configureBergquistsNameColumn = new DataGridViewTextBoxColumn();
+            configureBergquistsThicknessColumn = new DataGridViewTextBoxColumn();
+            configureBergquistsThermalCoefficientColumn = new DataGridViewTextBoxColumn();
+            configureBergquistsShoreHardnessColumn = new DataGridViewTextBoxColumn();
+            configureBergquistsLabel = new Label();
+            configureElastomerDataGridView = new DataGridView();
+            configureElastomerNameColumn = new DataGridViewTextBoxColumn();
+            configureElastomerThicknessColumn = new DataGridViewTextBoxColumn();
+            configureElastomerThermalCoefficientColumn = new DataGridViewTextBoxColumn();
+            configureElastomerShoreHardnessColumn = new DataGridViewTextBoxColumn();
+            configureElastomerMoldColumn = new DataGridViewTextBoxColumn();
+            configureElastomerFilmColumn = new DataGridViewTextBoxColumn();
+            configureElastomerPreparedByColumn = new DataGridViewTextBoxColumn();
+            configureElastomersLabel = new Label();
+            configureCartridgesDataGridView = new DataGridView();
+            configureCartridgesNameColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesPartitionTypeColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesSamplesColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesAssaysColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesLengthColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesWidthColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesHeightColumn = new DataGridViewTextBoxColumn();
+            configureCartridgesLabel = new Label();
             metrologyTabPage = new TabPage();
             softwareVersionLabel = new Label();
             firmwareVersionLabel = new Label();
@@ -193,6 +228,9 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
+            configureUpdateCartridgeDataButton = new Button();
+            configureUpdateElastomerData = new Button();
+            configureBergquistDataButton = new Button();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -217,6 +255,11 @@
             settingsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)settingsTECsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).BeginInit();
+            configureTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)configureBergquistsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)configureElastomerDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)configureCartridgesDataGridView).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -227,6 +270,7 @@
             tabControl.Controls.Add(thermocyclingTabPage);
             tabControl.Controls.Add(imagingTabPage);
             tabControl.Controls.Add(settingsTabPage);
+            tabControl.Controls.Add(configureTabPage);
             tabControl.Controls.Add(metrologyTabPage);
             tabControl.Location = new Point(0, 0);
             tabControl.Name = "tabControl";
@@ -1781,6 +1825,297 @@
             settingsMotorsLabel.TabIndex = 0;
             settingsMotorsLabel.Text = "Motors";
             // 
+            // configureTabPage
+            // 
+            configureTabPage.Controls.Add(configureBergquistDataButton);
+            configureTabPage.Controls.Add(configureUpdateElastomerData);
+            configureTabPage.Controls.Add(configureUpdateCartridgeDataButton);
+            configureTabPage.Controls.Add(configureUpdateImageScanningButton);
+            configureTabPage.Controls.Add(configureCartridgeComboBox);
+            configureTabPage.Controls.Add(configureCartridgeLabel);
+            configureTabPage.Controls.Add(dataGridView1);
+            configureTabPage.Controls.Add(configureImageScanningLabel);
+            configureTabPage.Controls.Add(configureBergquistsDataGridView);
+            configureTabPage.Controls.Add(configureBergquistsLabel);
+            configureTabPage.Controls.Add(configureElastomerDataGridView);
+            configureTabPage.Controls.Add(configureElastomersLabel);
+            configureTabPage.Controls.Add(configureCartridgesDataGridView);
+            configureTabPage.Controls.Add(configureCartridgesLabel);
+            configureTabPage.Location = new Point(4, 24);
+            configureTabPage.Name = "configureTabPage";
+            configureTabPage.Padding = new Padding(3);
+            configureTabPage.Size = new Size(1116, 584);
+            configureTabPage.TabIndex = 7;
+            configureTabPage.Text = "Configure";
+            configureTabPage.UseVisualStyleBackColor = true;
+            // 
+            // configureUpdateImageScanningButton
+            // 
+            configureUpdateImageScanningButton.BackColor = SystemColors.Highlight;
+            configureUpdateImageScanningButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureUpdateImageScanningButton.ForeColor = Color.White;
+            configureUpdateImageScanningButton.Location = new Point(1008, 320);
+            configureUpdateImageScanningButton.Name = "configureUpdateImageScanningButton";
+            configureUpdateImageScanningButton.Size = new Size(98, 30);
+            configureUpdateImageScanningButton.TabIndex = 10;
+            configureUpdateImageScanningButton.Text = "Update";
+            configureUpdateImageScanningButton.UseVisualStyleBackColor = false;
+            // 
+            // configureCartridgeComboBox
+            // 
+            configureCartridgeComboBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgeComboBox.FormattingEnabled = true;
+            configureCartridgeComboBox.Location = new Point(828, 322);
+            configureCartridgeComboBox.Name = "configureCartridgeComboBox";
+            configureCartridgeComboBox.Size = new Size(165, 26);
+            configureCartridgeComboBox.TabIndex = 9;
+            // 
+            // configureCartridgeLabel
+            // 
+            configureCartridgeLabel.AutoSize = true;
+            configureCartridgeLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgeLabel.Location = new Point(748, 327);
+            configureCartridgeLabel.Name = "configureCartridgeLabel";
+            configureCartridgeLabel.Size = new Size(74, 18);
+            configureCartridgeLabel.TabIndex = 8;
+            configureCartridgeLabel.Text = "Cartridge";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { configureImageScanningPropertyCOlumn, configureImageScanningAColumn, configureImageScanningBColumn, configureImageScanningCColumn, configureImageScanningDColumn });
+            dataGridView1.Location = new Point(680, 29);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(430, 282);
+            dataGridView1.TabIndex = 7;
+            // 
+            // configureImageScanningPropertyCOlumn
+            // 
+            configureImageScanningPropertyCOlumn.HeaderText = "";
+            configureImageScanningPropertyCOlumn.Name = "configureImageScanningPropertyCOlumn";
+            configureImageScanningPropertyCOlumn.ReadOnly = true;
+            configureImageScanningPropertyCOlumn.Width = 120;
+            // 
+            // configureImageScanningAColumn
+            // 
+            configureImageScanningAColumn.HeaderText = "A";
+            configureImageScanningAColumn.Name = "configureImageScanningAColumn";
+            configureImageScanningAColumn.Width = 75;
+            // 
+            // configureImageScanningBColumn
+            // 
+            configureImageScanningBColumn.HeaderText = "B";
+            configureImageScanningBColumn.Name = "configureImageScanningBColumn";
+            configureImageScanningBColumn.Width = 75;
+            // 
+            // configureImageScanningCColumn
+            // 
+            configureImageScanningCColumn.HeaderText = "C";
+            configureImageScanningCColumn.Name = "configureImageScanningCColumn";
+            configureImageScanningCColumn.Width = 75;
+            // 
+            // configureImageScanningDColumn
+            // 
+            configureImageScanningDColumn.HeaderText = "D";
+            configureImageScanningDColumn.Name = "configureImageScanningDColumn";
+            configureImageScanningDColumn.Width = 75;
+            // 
+            // configureImageScanningLabel
+            // 
+            configureImageScanningLabel.AutoSize = true;
+            configureImageScanningLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureImageScanningLabel.Location = new Point(680, 8);
+            configureImageScanningLabel.Name = "configureImageScanningLabel";
+            configureImageScanningLabel.Size = new Size(120, 18);
+            configureImageScanningLabel.TabIndex = 6;
+            configureImageScanningLabel.Text = "Image Scanning";
+            // 
+            // configureBergquistsDataGridView
+            // 
+            configureBergquistsDataGridView.AllowUserToAddRows = false;
+            configureBergquistsDataGridView.AllowUserToDeleteRows = false;
+            configureBergquistsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            configureBergquistsDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureBergquistsNameColumn, configureBergquistsThicknessColumn, configureBergquistsThermalCoefficientColumn, configureBergquistsShoreHardnessColumn });
+            configureBergquistsDataGridView.Location = new Point(8, 413);
+            configureBergquistsDataGridView.Name = "configureBergquistsDataGridView";
+            configureBergquistsDataGridView.RowHeadersVisible = false;
+            configureBergquistsDataGridView.RowTemplate.Height = 25;
+            configureBergquistsDataGridView.Size = new Size(647, 130);
+            configureBergquistsDataGridView.TabIndex = 5;
+            // 
+            // configureBergquistsNameColumn
+            // 
+            configureBergquistsNameColumn.HeaderText = "Name";
+            configureBergquistsNameColumn.Name = "configureBergquistsNameColumn";
+            configureBergquistsNameColumn.Width = 120;
+            // 
+            // configureBergquistsThicknessColumn
+            // 
+            configureBergquistsThicknessColumn.HeaderText = "Thickness (mm)";
+            configureBergquistsThicknessColumn.Name = "configureBergquistsThicknessColumn";
+            configureBergquistsThicknessColumn.Width = 120;
+            // 
+            // configureBergquistsThermalCoefficientColumn
+            // 
+            configureBergquistsThermalCoefficientColumn.HeaderText = "Thermal Coefficient (W/m K)";
+            configureBergquistsThermalCoefficientColumn.Name = "configureBergquistsThermalCoefficientColumn";
+            configureBergquistsThermalCoefficientColumn.Width = 250;
+            // 
+            // configureBergquistsShoreHardnessColumn
+            // 
+            configureBergquistsShoreHardnessColumn.HeaderText = "Shore Hardness";
+            configureBergquistsShoreHardnessColumn.Name = "configureBergquistsShoreHardnessColumn";
+            configureBergquistsShoreHardnessColumn.Width = 150;
+            // 
+            // configureBergquistsLabel
+            // 
+            configureBergquistsLabel.AutoSize = true;
+            configureBergquistsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistsLabel.Location = new Point(10, 392);
+            configureBergquistsLabel.Name = "configureBergquistsLabel";
+            configureBergquistsLabel.Size = new Size(83, 18);
+            configureBergquistsLabel.TabIndex = 4;
+            configureBergquistsLabel.Text = "Bergquists";
+            // 
+            // configureElastomerDataGridView
+            // 
+            configureElastomerDataGridView.AllowUserToAddRows = false;
+            configureElastomerDataGridView.AllowUserToDeleteRows = false;
+            configureElastomerDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            configureElastomerDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureElastomerNameColumn, configureElastomerThicknessColumn, configureElastomerThermalCoefficientColumn, configureElastomerShoreHardnessColumn, configureElastomerMoldColumn, configureElastomerFilmColumn, configureElastomerPreparedByColumn });
+            configureElastomerDataGridView.Location = new Point(8, 225);
+            configureElastomerDataGridView.Name = "configureElastomerDataGridView";
+            configureElastomerDataGridView.RowHeadersVisible = false;
+            configureElastomerDataGridView.RowTemplate.Height = 25;
+            configureElastomerDataGridView.Size = new Size(647, 130);
+            configureElastomerDataGridView.TabIndex = 3;
+            // 
+            // configureElastomerNameColumn
+            // 
+            configureElastomerNameColumn.HeaderText = "Name";
+            configureElastomerNameColumn.Name = "configureElastomerNameColumn";
+            configureElastomerNameColumn.Width = 120;
+            // 
+            // configureElastomerThicknessColumn
+            // 
+            configureElastomerThicknessColumn.HeaderText = "Thickness (mm)";
+            configureElastomerThicknessColumn.Name = "configureElastomerThicknessColumn";
+            configureElastomerThicknessColumn.Width = 90;
+            // 
+            // configureElastomerThermalCoefficientColumn
+            // 
+            configureElastomerThermalCoefficientColumn.HeaderText = "Thermal Coefficient (W/m K)";
+            configureElastomerThermalCoefficientColumn.Name = "configureElastomerThermalCoefficientColumn";
+            configureElastomerThermalCoefficientColumn.Width = 140;
+            // 
+            // configureElastomerShoreHardnessColumn
+            // 
+            configureElastomerShoreHardnessColumn.HeaderText = "Shore Hardness";
+            configureElastomerShoreHardnessColumn.Name = "configureElastomerShoreHardnessColumn";
+            configureElastomerShoreHardnessColumn.Width = 80;
+            // 
+            // configureElastomerMoldColumn
+            // 
+            configureElastomerMoldColumn.HeaderText = "Mold";
+            configureElastomerMoldColumn.Name = "configureElastomerMoldColumn";
+            configureElastomerMoldColumn.Width = 70;
+            // 
+            // configureElastomerFilmColumn
+            // 
+            configureElastomerFilmColumn.HeaderText = "Film";
+            configureElastomerFilmColumn.Name = "configureElastomerFilmColumn";
+            configureElastomerFilmColumn.Width = 70;
+            // 
+            // configureElastomerPreparedByColumn
+            // 
+            configureElastomerPreparedByColumn.HeaderText = "Prepared By";
+            configureElastomerPreparedByColumn.Name = "configureElastomerPreparedByColumn";
+            configureElastomerPreparedByColumn.Width = 70;
+            // 
+            // configureElastomersLabel
+            // 
+            configureElastomersLabel.AutoSize = true;
+            configureElastomersLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureElastomersLabel.Location = new Point(6, 204);
+            configureElastomersLabel.Name = "configureElastomersLabel";
+            configureElastomersLabel.Size = new Size(87, 18);
+            configureElastomersLabel.TabIndex = 2;
+            configureElastomersLabel.Text = "Elastomers";
+            // 
+            // configureCartridgesDataGridView
+            // 
+            configureCartridgesDataGridView.AllowUserToAddRows = false;
+            configureCartridgesDataGridView.AllowUserToDeleteRows = false;
+            configureCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            configureCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureCartridgesNameColumn, configureCartridgesPartitionTypeColumn, configureCartridgesSamplesColumn, configureCartridgesAssaysColumn, configureCartridgesLengthColumn, configureCartridgesWidthColumn, configureCartridgesHeightColumn });
+            configureCartridgesDataGridView.Location = new Point(8, 29);
+            configureCartridgesDataGridView.Name = "configureCartridgesDataGridView";
+            configureCartridgesDataGridView.RowHeadersVisible = false;
+            configureCartridgesDataGridView.RowTemplate.Height = 25;
+            configureCartridgesDataGridView.Size = new Size(647, 130);
+            configureCartridgesDataGridView.TabIndex = 1;
+            // 
+            // configureCartridgesNameColumn
+            // 
+            configureCartridgesNameColumn.HeaderText = "Name";
+            configureCartridgesNameColumn.Name = "configureCartridgesNameColumn";
+            configureCartridgesNameColumn.ReadOnly = true;
+            configureCartridgesNameColumn.Width = 120;
+            // 
+            // configureCartridgesPartitionTypeColumn
+            // 
+            configureCartridgesPartitionTypeColumn.HeaderText = "Partition Type";
+            configureCartridgesPartitionTypeColumn.Name = "configureCartridgesPartitionTypeColumn";
+            configureCartridgesPartitionTypeColumn.ReadOnly = true;
+            configureCartridgesPartitionTypeColumn.Width = 80;
+            // 
+            // configureCartridgesSamplesColumn
+            // 
+            configureCartridgesSamplesColumn.HeaderText = "Number of Samples";
+            configureCartridgesSamplesColumn.Name = "configureCartridgesSamplesColumn";
+            configureCartridgesSamplesColumn.ReadOnly = true;
+            // 
+            // configureCartridgesAssaysColumn
+            // 
+            configureCartridgesAssaysColumn.HeaderText = "Number of Assays";
+            configureCartridgesAssaysColumn.Name = "configureCartridgesAssaysColumn";
+            configureCartridgesAssaysColumn.ReadOnly = true;
+            // 
+            // configureCartridgesLengthColumn
+            // 
+            configureCartridgesLengthColumn.HeaderText = "Length (mm)";
+            configureCartridgesLengthColumn.Name = "configureCartridgesLengthColumn";
+            configureCartridgesLengthColumn.ReadOnly = true;
+            configureCartridgesLengthColumn.Width = 80;
+            // 
+            // configureCartridgesWidthColumn
+            // 
+            configureCartridgesWidthColumn.HeaderText = "Width (mm)";
+            configureCartridgesWidthColumn.Name = "configureCartridgesWidthColumn";
+            configureCartridgesWidthColumn.ReadOnly = true;
+            configureCartridgesWidthColumn.Width = 80;
+            // 
+            // configureCartridgesHeightColumn
+            // 
+            configureCartridgesHeightColumn.HeaderText = "Height (mm)";
+            configureCartridgesHeightColumn.Name = "configureCartridgesHeightColumn";
+            configureCartridgesHeightColumn.ReadOnly = true;
+            configureCartridgesHeightColumn.Width = 80;
+            // 
+            // configureCartridgesLabel
+            // 
+            configureCartridgesLabel.AutoSize = true;
+            configureCartridgesLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgesLabel.Location = new Point(8, 8);
+            configureCartridgesLabel.Name = "configureCartridgesLabel";
+            configureCartridgesLabel.Size = new Size(82, 18);
+            configureCartridgesLabel.TabIndex = 0;
+            configureCartridgesLabel.Text = "Cartridges";
+            // 
             // metrologyTabPage
             // 
             metrologyTabPage.Location = new Point(4, 24);
@@ -1870,6 +2205,42 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
+            // configureUpdateCartridgeDataButton
+            // 
+            configureUpdateCartridgeDataButton.BackColor = SystemColors.Highlight;
+            configureUpdateCartridgeDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureUpdateCartridgeDataButton.ForeColor = Color.White;
+            configureUpdateCartridgeDataButton.Location = new Point(447, 165);
+            configureUpdateCartridgeDataButton.Name = "configureUpdateCartridgeDataButton";
+            configureUpdateCartridgeDataButton.Size = new Size(208, 30);
+            configureUpdateCartridgeDataButton.TabIndex = 11;
+            configureUpdateCartridgeDataButton.Text = "Update Cartridge Data";
+            configureUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
+            // 
+            // configureUpdateElastomerData
+            // 
+            configureUpdateElastomerData.BackColor = SystemColors.Highlight;
+            configureUpdateElastomerData.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureUpdateElastomerData.ForeColor = Color.White;
+            configureUpdateElastomerData.Location = new Point(447, 361);
+            configureUpdateElastomerData.Name = "configureUpdateElastomerData";
+            configureUpdateElastomerData.Size = new Size(208, 30);
+            configureUpdateElastomerData.TabIndex = 12;
+            configureUpdateElastomerData.Text = "Update Elastomer Data";
+            configureUpdateElastomerData.UseVisualStyleBackColor = false;
+            // 
+            // configureBergquistDataButton
+            // 
+            configureBergquistDataButton.BackColor = SystemColors.Highlight;
+            configureBergquistDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistDataButton.ForeColor = Color.White;
+            configureBergquistDataButton.Location = new Point(447, 548);
+            configureBergquistDataButton.Name = "configureBergquistDataButton";
+            configureBergquistDataButton.Size = new Size(208, 30);
+            configureBergquistDataButton.TabIndex = 13;
+            configureBergquistDataButton.Text = "Update Bergquist Data";
+            configureBergquistDataButton.UseVisualStyleBackColor = false;
+            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1916,6 +2287,12 @@
             settingsTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)settingsTECsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)settingsMotorsDataGridView).EndInit();
+            configureTabPage.ResumeLayout(false);
+            configureTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)configureBergquistsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)configureElastomerDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)configureCartridgesDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2087,5 +2464,43 @@
         private DataGridViewTextBoxColumn runExperimentDataValueColumn;
         private DataGridViewTextBoxColumn homeCameraStateColumn;
         private DataGridViewTextBoxColumn homeCameraIOColumn;
+        private TabPage configureTabPage;
+        private DataGridView configureCartridgesDataGridView;
+        private Label configureCartridgesLabel;
+        private Label configureElastomersLabel;
+        private DataGridViewTextBoxColumn configureCartridgesNameColumn;
+        private DataGridViewTextBoxColumn configureCartridgesPartitionTypeColumn;
+        private DataGridViewTextBoxColumn configureCartridgesSamplesColumn;
+        private DataGridViewTextBoxColumn configureCartridgesAssaysColumn;
+        private DataGridViewTextBoxColumn configureCartridgesLengthColumn;
+        private DataGridViewTextBoxColumn configureCartridgesWidthColumn;
+        private DataGridViewTextBoxColumn configureCartridgesHeightColumn;
+        private DataGridView configureBergquistsDataGridView;
+        private Label configureBergquistsLabel;
+        private DataGridView configureElastomerDataGridView;
+        private Label configureImageScanningLabel;
+        private DataGridView dataGridView1;
+        private DataGridViewTextBoxColumn configureBergquistsNameColumn;
+        private DataGridViewTextBoxColumn configureBergquistsThicknessColumn;
+        private DataGridViewTextBoxColumn configureBergquistsThermalCoefficientColumn;
+        private DataGridViewTextBoxColumn configureBergquistsShoreHardnessColumn;
+        private DataGridViewTextBoxColumn configureElastomerNameColumn;
+        private DataGridViewTextBoxColumn configureElastomerThicknessColumn;
+        private DataGridViewTextBoxColumn configureElastomerThermalCoefficientColumn;
+        private DataGridViewTextBoxColumn configureElastomerShoreHardnessColumn;
+        private DataGridViewTextBoxColumn configureElastomerMoldColumn;
+        private DataGridViewTextBoxColumn configureElastomerFilmColumn;
+        private DataGridViewTextBoxColumn configureElastomerPreparedByColumn;
+        private Button configureUpdateImageScanningButton;
+        private ComboBox configureCartridgeComboBox;
+        private Label configureCartridgeLabel;
+        private DataGridViewTextBoxColumn configureImageScanningPropertyCOlumn;
+        private DataGridViewTextBoxColumn configureImageScanningAColumn;
+        private DataGridViewTextBoxColumn configureImageScanningBColumn;
+        private DataGridViewTextBoxColumn configureImageScanningCColumn;
+        private DataGridViewTextBoxColumn configureImageScanningDColumn;
+        private Button configureUpdateCartridgeDataButton;
+        private Button configureUpdateElastomerData;
+        private Button configureBergquistDataButton;
     }
 }

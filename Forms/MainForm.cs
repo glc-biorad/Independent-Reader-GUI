@@ -117,6 +117,8 @@ namespace Independent_Reader_GUI
 
 
             // Set initial colors for connected modules
+            // TODO: Put this region of code in a function to be called every N seconds
+            #region
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 0, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 0, 2);
@@ -132,6 +134,7 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecC.Connected, "Connected", "Not Connected", 0, 3);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecD.Connected, "Connected", "Not Connected", 0, 4);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraService.Connected, "Connected", "Not Connected", 0, 0);
+            #endregion
 
             // Subscribe to value changed events
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
@@ -404,22 +407,47 @@ namespace Independent_Reader_GUI
         private void AddRunImagingSetupDefaultData()
         {
             ImagingSetupData runImagingSetupData = new ImagingSetupData();
-            runImagingSetupDataGridView.Rows.Add("Image Before", runImagingSetupData.ImageBefore);
-            runImagingSetupDataGridView.Rows.Add("Image During (FOV)", runImagingSetupData.ImageDuringFOV);
+            runImagingSetupDataGridView.Rows.Add("X0 (\u03BCS)", runImagingSetupData.X0);
+            runImagingSetupDataGridView.Rows.Add("Y0 (\u03BCS)", runImagingSetupData.Y0);
+            runImagingSetupDataGridView.Rows.Add("Z0 (\u03BCS)", runImagingSetupData.Z0);
+            runImagingSetupDataGridView.Rows.Add("FOV dX (\u03BCS)", runImagingSetupData.FOVdX);
+            runImagingSetupDataGridView.Rows.Add("dY (\u03BCS)", runImagingSetupData.dY);
+            runImagingSetupDataGridView.Rows.Add("Rotational Offset (\u00B0)", runImagingSetupData.RotationalOffset);
+            runImagingSetupDataGridView.Rows.Add("Use Autofocus");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.UseAutofocus;
+            runImagingSetupDataGridView.Rows.Add("Image Before");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageBefore;
+            runImagingSetupDataGridView.Rows.Add("Image During (FOV)");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageDuringFOV;
             runImagingSetupDataGridView.Rows.Add("Image During Frequency (FOV)", runImagingSetupData.ImageDuringFrequencyFOV);
-            runImagingSetupDataGridView.Rows.Add("Image During (Assay)", runImagingSetupData.ImageDuringAssay);
+            runImagingSetupDataGridView.Rows.Add("Image During (Assay)");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageDuringAssay;
             runImagingSetupDataGridView.Rows.Add("Image During Frequency (Assay)", runImagingSetupData.ImageDuringFrequencyAssay);
-            runImagingSetupDataGridView.Rows.Add("Image During (Sample)", runImagingSetupData.ImageDuringFOV);
+            runImagingSetupDataGridView.Rows.Add("Image During (Sample)");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageDuringSample;
             runImagingSetupDataGridView.Rows.Add("Image During Frequency (Sample)", runImagingSetupData.ImageDuringFrequencySample);
-            runImagingSetupDataGridView.Rows.Add("Image After", runImagingSetupData.ImageAfter);
+            runImagingSetupDataGridView.Rows.Add("Image After");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageAfter;
             runImagingSetupDataGridView.Rows.Add("S3 Bucket Path", runImagingSetupData.S3BucketPath);
             runImagingSetupDataGridView.Rows.Add("Local Path", runImagingSetupData.LocalPath);
-            runImagingSetupDataGridView.Rows.Add("Image in Cy5", runImagingSetupData.ImageInCy5);
-            runImagingSetupDataGridView.Rows.Add("Image in FAM", runImagingSetupData.ImageInFAM);
-            runImagingSetupDataGridView.Rows.Add("Image in HEX", runImagingSetupData.ImageInHEX);
-            runImagingSetupDataGridView.Rows.Add("Image in Atto", runImagingSetupData.ImageInAtto);
-            runImagingSetupDataGridView.Rows.Add("Image in Alexa", runImagingSetupData.ImageInAlexa);
-            runImagingSetupDataGridView.Rows.Add("Image in Cy5.5", runImagingSetupData.ImageInCy5p5);
+            runImagingSetupDataGridView.Rows.Add("Image in Cy5");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInCy5;
+            runImagingSetupDataGridView.Rows.Add("Image in FAM");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInFAM;
+            runImagingSetupDataGridView.Rows.Add("Image in HEX");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInHEX;
+            runImagingSetupDataGridView.Rows.Add("Image in Atto");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInAtto;
+            runImagingSetupDataGridView.Rows.Add("Image in Alexa");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInAlexa;
+            runImagingSetupDataGridView.Rows.Add("Image in Cy5.5");
+            runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.ImageInCy5p5;
+            runImagingSetupDataGridView.Rows.Add("Cy5 Intensity (%)", runImagingSetupData.IntensityCy5);
+            runImagingSetupDataGridView.Rows.Add("FAM Intensity (%)", runImagingSetupData.IntensityFAM);
+            runImagingSetupDataGridView.Rows.Add("HEX Intensity (%)", runImagingSetupData.IntensityHEX);
+            runImagingSetupDataGridView.Rows.Add("Atto Intensity (%)", runImagingSetupData.IntensityAtto);
+            runImagingSetupDataGridView.Rows.Add("Alexa Intensity (%)", runImagingSetupData.IntensityAlexa);
+            runImagingSetupDataGridView.Rows.Add("Cy5.5 Intensity (%)", runImagingSetupData.IntensityCy5p5);
             runImagingSetupDataGridView.Rows.Add("Cy5 Exposure (ms)", runImagingSetupData.ExposureCy5);
             runImagingSetupDataGridView.Rows.Add("FAM Exposure (ms)", runImagingSetupData.ExposureFAM);
             runImagingSetupDataGridView.Rows.Add("HEX Exposure (ms)", runImagingSetupData.ExposureHEX);
@@ -664,22 +692,22 @@ namespace Independent_Reader_GUI
                     }
                 }
             }
-            foreach (DataGridViewRow row in runImagingSetupDataGridView.Rows)
-            {
-                if (!row.IsNewRow) // check to skip the new row template
-                {
-                    var cellValue = row.Cells[0].Value; // Obtain the cell value in the first column
-                    if (cellValue != null)
-                    {
-                        DataGridViewComboBoxFormatter ComboBoxFormater = new DataGridViewComboBoxFormatter();
-                        var comboBoxCell = ComboBoxFormater.GetCellValueComboBox(cellValue.ToString());
-                        if (comboBoxCell != null)
-                        {
-                            row.Cells[1] = comboBoxCell;
-                        }
-                    }
-                }
-            }
+            //foreach (DataGridViewRow row in runImagingSetupDataGridView.Rows)
+            //{
+            //    if (!row.IsNewRow) // check to skip the new row template
+            //    {
+            //        var cellValue = row.Cells[0].Value; // Obtain the cell value in the first column
+            //        if (cellValue != null)
+            //        {
+            //            DataGridViewComboBoxFormatter ComboBoxFormater = new DataGridViewComboBoxFormatter();
+            //            var comboBoxCell = ComboBoxFormater.GetCellValueComboBox(cellValue.ToString());
+            //            if (comboBoxCell != null)
+            //            {
+            //                row.Cells[1] = comboBoxCell;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -751,6 +779,11 @@ namespace Independent_Reader_GUI
             }
         }
 
+        /// <summary>
+        /// Form loading event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_Load(object sender, EventArgs e)
         {
             // Change the default cell selection for data grid views on form loading
@@ -1244,10 +1277,10 @@ namespace Independent_Reader_GUI
             ReportManager reportManager = new ReportManager(configuration.ReportsDataPath + experimentName.Replace(" ", "_") + "_Report.pdf");
             await reportManager.AddHeaderLogoAsync(configuration.ReportLogoDataPath, 50, 50);
             await reportManager.AddMainTitleAsync(runExperimentDataGridView.Rows[0].Cells[1].Value + " dPCR Report");
-            await reportManager.AddParagraphTextAsync("This report for experiment " 
+            await reportManager.AddParagraphTextAsync("This report for experiment "
                 + experimentName
-                + " includes experiment data, setup data for imaging before, during, and/or after the run," 
-                + " errors/warnings regarding the run, the expected protocol and estimated thermocycling metrology. The report also includes" 
+                + " includes experiment data, setup data for imaging before, during, and/or after the run,"
+                + " errors/warnings regarding the run, the expected protocol and estimated thermocycling metrology. The report also includes"
                 + " any stitched images before and/or after the run. It does not include postprocessing of the images, but this report can be augmented"
                 + " with postprocessing data after the fact. Initial conditions for the run can be found to trace any unexpected behavior after thermocycling."
                 + " This report does not include the actual thermal profile experienced by the system but is estimated based on the materials at the heater"
