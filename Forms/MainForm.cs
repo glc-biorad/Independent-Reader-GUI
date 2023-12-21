@@ -16,8 +16,10 @@ namespace Independent_Reader_GUI
     {
         // Private attributes
         private Configuration configuration = new Configuration();
+        private readonly APIManager apiManager = new APIManager();
         private DataGridViewManager dataGridViewManager = new DataGridViewManager();
         private TimerManager runExperimentDataTimerManager;
+        private TimerManager controlTabTimerManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
@@ -27,7 +29,7 @@ namespace Independent_Reader_GUI
         private CartridgeOptions cartridgeOptions;
         private ElastomerOptions elastomerOptions;
         private BergquistOptions bergquistOptions;
-        private FLIRCameraManager cameraService = new FLIRCameraManager();
+        private FLIRCameraManager cameraManager = new FLIRCameraManager();
         private string runExperimentProtocolName = string.Empty;
         private double runExperimentProtocolTime = 0.0;
         private TEC tecA;
@@ -52,8 +54,13 @@ namespace Independent_Reader_GUI
         {
             InitializeComponent();
 
+            // Check if the FastAPI server is potentially down
+            if (apiManager == null)
+            {
+                MessageBox.Show("The API could be down or the connection to the Chassis Board could be lost", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             // Connect to the FLIR Camera
-            cameraService.Connect();
+            cameraManager.Connect();
             // Connect to the TECs
             tecA = new TEC(id: configuration.TECAAddress, name: "TEC A");
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B");
@@ -61,16 +68,33 @@ namespace Independent_Reader_GUI
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D");
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
-            xMotor = new Motor(address: configuration.xMotorAddress, name: "x");
-            yMotor = new Motor(address: configuration.yMotorAddress, name: "y");
-            zMotor = new Motor(address: configuration.zMotorAddress, name: "z");
-            filterWheelMotor = new Motor(address: configuration.FilterWheelMotorAddress, name: "Filter Wheel");
-            trayABMotor = new Motor(address: configuration.TrayABMotorAddress, name: "Tray AB");
-            trayCDMotor = new Motor(address: configuration.TrayCDMotorAddress, name: "Tray CD");
-            clampAMotor = new Motor(address: configuration.ClampAMotorAddress, name: "Clamp A");
-            clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B");
-            clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C");
-            clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D");
+            xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
+            yMotor = new Motor(address: configuration.yMotorAddress, name: "y", apiManager: apiManager);            
+            zMotor = new Motor(address: configuration.zMotorAddress, name: "z", apiManager: apiManager);           
+            filterWheelMotor = new Motor(address: configuration.FilterWheelMotorAddress, name: "Filter Wheel", apiManager: apiManager);            
+            trayABMotor = new Motor(address: configuration.TrayABMotorAddress, name: "Tray AB", apiManager: apiManager);            
+            trayCDMotor = new Motor(address: configuration.TrayCDMotorAddress, name: "Tray CD", apiManager: apiManager);            
+            clampAMotor = new Motor(address: configuration.ClampAMotorAddress, name: "Clamp A", apiManager: apiManager);           
+            clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);            
+            clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);            
+            clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D", apiManager: apiManager);
+            try
+            {
+                Task.Run(async () => await xMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await yMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await zMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await trayABMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await trayCDMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampAMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampBMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampCMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampDMotor.CheckConnectionAsync()).Wait();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not connect to motors");
+            }
             motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
 
             // Initialize
@@ -102,6 +126,8 @@ namespace Independent_Reader_GUI
             // Initialize the RunExperimentDataGridView timer after data is added to it
             runExperimentDataTimerManager = new TimerManager(interval: configuration.RunDataTimerInterval, tickEventHandler: runExperimentDataGridView_TickEventHandler);
             runExperimentDataTimerManager.Start();
+            controlTabTimerManager = new TimerManager(interval: configuration.ControlTabTimerInterval, tickEventHandler: controlTab_TickEventHandler);
+            controlTabTimerManager.Start();
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
@@ -120,20 +146,31 @@ namespace Independent_Reader_GUI
             // TODO: Put this region of code in a function to be called every N seconds
             #region
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecA.Connected, "Connected", "Not Connected", 0, 1);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecB.Connected, "Connected", "Not Connected", 0, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecC.Connected, "Connected", "Not Connected", 0, 3);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecD.Connected, "Connected", "Not Connected", 0, 4);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraService.Connected, "Connected", "Not Connected", 0, 0);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            // Control Tab
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
             #endregion
 
             // Subscribe to value changed events
@@ -156,16 +193,16 @@ namespace Independent_Reader_GUI
         private void AddHomeMotorsDefaultData()
         {
             MotorData motorData = new MotorData();
-            homeMotorsDataGridView.Rows.Add("x", motorData.IO, motorData.State, motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("y", motorData.IO, motorData.State, motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("z", motorData.IO, motorData.State, motorData.Position, configuration.zMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Filter Wheel", motorData.IO, motorData.State, motorData.Position, configuration.FilterWheelMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Tray AB", motorData.IO, motorData.State, motorData.Position, configuration.TrayABMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Tray CD", motorData.IO, motorData.State, motorData.Position, configuration.TrayCDMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp A", motorData.IO, motorData.State, motorData.Position, configuration.ClampAMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp B", motorData.IO, motorData.State, motorData.Position, configuration.ClampBMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp C", motorData.IO, motorData.State, motorData.Position, configuration.ClampCMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp D", motorData.IO, motorData.State, motorData.Position, configuration.ClampDMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("x", motorData.Version, motorData.State, motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("y", motorData.Version, motorData.State, motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("z", motorData.Version, motorData.State, motorData.Position, configuration.zMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Filter Wheel", motorData.Version, motorData.State, motorData.Position, configuration.FilterWheelMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Tray AB", motorData.Version, motorData.State, motorData.Position, configuration.TrayABMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Tray CD", motorData.Version, motorData.State, motorData.Position, configuration.TrayCDMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Clamp A", motorData.Version, motorData.State, motorData.Position, configuration.ClampAMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Clamp B", motorData.Version, motorData.State, motorData.Position, configuration.ClampBMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Clamp C", motorData.Version, motorData.State, motorData.Position, configuration.ClampCMotorDefaultSpeed, motorData.Home);
+            homeMotorsDataGridView.Rows.Add("Clamp D", motorData.Version, motorData.State, motorData.Position, configuration.ClampDMotorDefaultSpeed, motorData.Home);
         }
 
         /// <summary>
@@ -462,16 +499,16 @@ namespace Independent_Reader_GUI
         private void AddControlMotorsDefaultData()
         {
             MotorData controlMotorData = new MotorData();
-            controlMotorsDataGridView.Rows.Add("x", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.xMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("y", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.yMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("z", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.zMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.FilterWheelMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampAMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampBMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampCMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.TrayABMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.IO, controlMotorData.State, controlMotorData.Position, configuration.TrayCDMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("x", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.xMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("y", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.yMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("z", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.zMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.FilterWheelMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayABMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayCDMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampAMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampBMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampCMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
         }
 
         /// <summary>
@@ -838,10 +875,6 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private async void controlMoveButton_Click(object sender, EventArgs e)
         {
-            // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
-            int columnIndex = -1;
-            string motorState = string.Empty;
-            DataGridViewColumnSearcher columnSearcher = new DataGridViewColumnSearcher();
             // Get the motor to be moved
             string motorName = controlMotorsComboBox.Text;
             Motor motor = motorManager.GetMotorByName(motorName);
@@ -852,24 +885,15 @@ namespace Independent_Reader_GUI
                     MessageBox.Show(motorName + " motor cannot move, it is not connected", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                if (!motor.Homed)
-                {
-                    MessageBox.Show(motorName + " motor cannot move, it has not been homed", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
-            // Move the motor
-            foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
-            {
-                if (row.Cells[0].Value.ToString() == motorName)
-                {
-                    int positionColumnIndex = columnSearcher.GetColumnIndexFromHeaderText("Position (\u00b5S)", controlMotorsDataGridView);
-                    int speedColumnIndex = columnSearcher.GetColumnIndexFromHeaderText("Speed (\u00b5S/s)", controlMotorsDataGridView);
-                    // TODO: Modify this section such that special cases are handled ("", non integers, etc.)
-                    int position = int.Parse(row.Cells[positionColumnIndex].Value.ToString());
-                    int speed = int.Parse(row.Cells[speedColumnIndex].Value.ToString());
-                    await motor.MoveAsync(position, speed);
-                }
+                // TODO: Add this section of code back in once the Home column for the ControlMotorsDataGridView values are set
+                //if (!motor.Homed)
+                //{
+                //    MessageBox.Show(motorName + " motor cannot move, it has not been homed", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //    return;
+                //}
+                int position = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Position (μS)", motorName, controlMotorsDataGridView));
+                int velocity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Speed (μS/s)", motorName, controlMotorsDataGridView)); //(\u00b5S)
+                await motor.MoveAsync(position, velocity);
             }
         }
 
@@ -880,50 +904,16 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private async void controlHomeButton_Click(object sender, EventArgs e)
         {
-            // TODO: Replace this region of code with a reusable Utility class for checking motor connectivity
-            #region To be replaced with a new Utility class for checking if a motor is connected
-            int columnIndex = -1;
-            string motorState = string.Empty;
-            DataGridViewColumnSearcher ColumnSearcher = new DataGridViewColumnSearcher();
             // Get the motor to be homed
             string motorName = controlMotorsComboBox.Text;
-            // Get the state of the motor
-            if (motorName != string.Empty)
+            var motor = motorManager.GetMotorByName(motorName);
+            if (motor.Connected)
             {
-                foreach (DataGridViewRow row in controlMotorsDataGridView.Rows)
-                {
-                    if (row.Cells[0].Value.ToString() == motorName)
-                    {
-                        columnIndex = ColumnSearcher.GetColumnIndexFromHeaderText("State", controlMotorsDataGridView);
-                        motorState = row.Cells[columnIndex].Value.ToString();
-                    }
-                }
+                await motor.HomeAsync();
             }
             else
-            {
-                return;
-            }
-            // Home if possible else warn the user
-            if (motorState == "Not Connected")
             {
                 MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            #endregion
-            else
-            {
-                MessageBox.Show("Code not written yet to home motors.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (motorName.Equals(trayABMotor.Name))
-                {
-                    await motorManager.HomeTrayABSafelyAsync();
-                }
-                else if (motorName.Equals(trayCDMotor.Name))
-                {
-                    await motorManager.HomeTrayCDSafelyAsync();
-                }
-                else
-                {
-                    await motorManager.GetMotorByName(motorName).HomeAsync();
-                }
             }
         }
 
@@ -1019,13 +1009,36 @@ namespace Independent_Reader_GUI
 
         private void imagingStreamButton_Click(object sender, EventArgs e)
         {
-            if (cameraService.Streaming)
+            if (cameraManager.Streaming)
             {
-                cameraService.StopStream();
+                cameraManager.StopStream();
             }
             else
             {
-                cameraService.StartStream();
+                cameraManager.StartStream();
+            }
+        }
+
+        public async void controlTab_TickEventHandler(object sender, EventArgs e)
+        {
+            // FIXME: If I turn off the instrument and turn it back on the instrument does not show being connected again 
+            // FIXME: Could be that I need to check if each motor is connected here at the onset
+            // Check if the APIManger is connect (if not API server could be down)
+            if (apiManager != null)
+            {
+                // Check the motors
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
+                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
+                // TODO: Check the TECs
+                // TODO: Check the LEDs
             }
         }
 
@@ -1100,7 +1113,9 @@ namespace Independent_Reader_GUI
         private void IndependentReaderGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             runExperimentDataTimerManager.Stop();
-            cameraService.Disconnect();
+            controlTabTimerManager.Stop();
+            cameraManager.Disconnect();
+            apiManager.Disponse();
         }
 
         /// <summary>
@@ -1110,7 +1125,7 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
-            cameraService.CaptureImage();
+            cameraManager.CaptureImage();
         }
 
         /// <summary>
@@ -1292,6 +1307,12 @@ namespace Independent_Reader_GUI
             await reportManager.AddTableAsync(runImagingSetupDataGridView);
             await reportManager.CloseAsync();
             // TODO: Email the user that the run is complete and a copy of the report
+        }
+
+        private async void logoutButton_Click(object sender, EventArgs e)
+        {
+            var p = await xMotor.GetPositionAsync();
+            MessageBox.Show(p.ToString());
         }
     }
 }

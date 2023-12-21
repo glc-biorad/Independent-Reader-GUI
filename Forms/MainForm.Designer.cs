@@ -52,7 +52,7 @@
             homeCameraLabel = new Label();
             homeMotorsDataGridView = new DataGridView();
             homeMotorsMotorColumn = new DataGridViewTextBoxColumn();
-            homeMotorsIOColumn = new DataGridViewTextBoxColumn();
+            homeMotorsVersionColumn = new DataGridViewTextBoxColumn();
             homeMotorsStateColumn = new DataGridViewTextBoxColumn();
             homeMotorsStepsColumn = new DataGridViewTextBoxColumn();
             homeMotorsSpeedColumn = new DataGridViewTextBoxColumn();
@@ -186,6 +186,9 @@
             settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
             settingsMotorsLabel = new Label();
             configureTabPage = new TabPage();
+            configureBergquistDataButton = new Button();
+            configureUpdateElastomerData = new Button();
+            configureUpdateCartridgeDataButton = new Button();
             configureUpdateImageScanningButton = new Button();
             configureCartridgeComboBox = new ComboBox();
             configureCartridgeLabel = new Label();
@@ -228,9 +231,6 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            configureUpdateCartridgeDataButton = new Button();
-            configureUpdateElastomerData = new Button();
-            configureBergquistDataButton = new Button();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -471,7 +471,7 @@
             homeMotorsDataGridView.AllowUserToDeleteRows = false;
             homeMotorsDataGridView.AllowUserToResizeRows = false;
             homeMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            homeMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { homeMotorsMotorColumn, homeMotorsIOColumn, homeMotorsStateColumn, homeMotorsStepsColumn, homeMotorsSpeedColumn, homeMotorsHomeColumn });
+            homeMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { homeMotorsMotorColumn, homeMotorsVersionColumn, homeMotorsStateColumn, homeMotorsStepsColumn, homeMotorsSpeedColumn, homeMotorsHomeColumn });
             homeMotorsDataGridView.Enabled = false;
             homeMotorsDataGridView.Location = new Point(8, 24);
             homeMotorsDataGridView.Name = "homeMotorsDataGridView";
@@ -493,14 +493,14 @@
             homeMotorsMotorColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             homeMotorsMotorColumn.Width = 80;
             // 
-            // homeMotorsIOColumn
+            // homeMotorsVersionColumn
             // 
-            homeMotorsIOColumn.HeaderText = "IO";
-            homeMotorsIOColumn.Name = "homeMotorsIOColumn";
-            homeMotorsIOColumn.ReadOnly = true;
-            homeMotorsIOColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            homeMotorsIOColumn.ToolTipText = "Action status of motor";
-            homeMotorsIOColumn.Width = 70;
+            homeMotorsVersionColumn.HeaderText = "Version";
+            homeMotorsVersionColumn.Name = "homeMotorsVersionColumn";
+            homeMotorsVersionColumn.ReadOnly = true;
+            homeMotorsVersionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            homeMotorsVersionColumn.ToolTipText = "Firmware version loaded on the motor board";
+            homeMotorsVersionColumn.Width = 70;
             // 
             // homeMotorsStateColumn
             // 
@@ -1099,7 +1099,7 @@
             controlMotorsComboBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             controlMotorsComboBox.FormattingEnabled = true;
             controlMotorsComboBox.ItemHeight = 18;
-            controlMotorsComboBox.Items.AddRange(new object[] { "x", "y", "z", "Filter Wheel", "Clamp A", "Clamp B", "Clamp C", "Clamp D", "Tray AB", "Tray CD" });
+            controlMotorsComboBox.Items.AddRange(new object[] { "x", "y", "z", "Filter Wheel", "Tray AB", "Tray CD", "Clamp A", "Clamp B", "Clamp C", "Clamp D" });
             controlMotorsComboBox.Location = new Point(171, 333);
             controlMotorsComboBox.Name = "controlMotorsComboBox";
             controlMotorsComboBox.Size = new Size(132, 26);
@@ -1849,6 +1849,42 @@
             configureTabPage.Text = "Configure";
             configureTabPage.UseVisualStyleBackColor = true;
             // 
+            // configureBergquistDataButton
+            // 
+            configureBergquistDataButton.BackColor = SystemColors.Highlight;
+            configureBergquistDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistDataButton.ForeColor = Color.White;
+            configureBergquistDataButton.Location = new Point(447, 548);
+            configureBergquistDataButton.Name = "configureBergquistDataButton";
+            configureBergquistDataButton.Size = new Size(208, 30);
+            configureBergquistDataButton.TabIndex = 13;
+            configureBergquistDataButton.Text = "Update Bergquist Data";
+            configureBergquistDataButton.UseVisualStyleBackColor = false;
+            // 
+            // configureUpdateElastomerData
+            // 
+            configureUpdateElastomerData.BackColor = SystemColors.Highlight;
+            configureUpdateElastomerData.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureUpdateElastomerData.ForeColor = Color.White;
+            configureUpdateElastomerData.Location = new Point(447, 361);
+            configureUpdateElastomerData.Name = "configureUpdateElastomerData";
+            configureUpdateElastomerData.Size = new Size(208, 30);
+            configureUpdateElastomerData.TabIndex = 12;
+            configureUpdateElastomerData.Text = "Update Elastomer Data";
+            configureUpdateElastomerData.UseVisualStyleBackColor = false;
+            // 
+            // configureUpdateCartridgeDataButton
+            // 
+            configureUpdateCartridgeDataButton.BackColor = SystemColors.Highlight;
+            configureUpdateCartridgeDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureUpdateCartridgeDataButton.ForeColor = Color.White;
+            configureUpdateCartridgeDataButton.Location = new Point(447, 165);
+            configureUpdateCartridgeDataButton.Name = "configureUpdateCartridgeDataButton";
+            configureUpdateCartridgeDataButton.Size = new Size(208, 30);
+            configureUpdateCartridgeDataButton.TabIndex = 11;
+            configureUpdateCartridgeDataButton.Text = "Update Cartridge Data";
+            configureUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
+            // 
             // configureUpdateImageScanningButton
             // 
             configureUpdateImageScanningButton.BackColor = SystemColors.Highlight;
@@ -2191,6 +2227,7 @@
             logoutButton.TabIndex = 6;
             logoutButton.Text = "Logout";
             logoutButton.UseVisualStyleBackColor = false;
+            logoutButton.Click += logoutButton_Click;
             // 
             // resetButton
             // 
@@ -2204,42 +2241,6 @@
             resetButton.TabIndex = 7;
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
-            // 
-            // configureUpdateCartridgeDataButton
-            // 
-            configureUpdateCartridgeDataButton.BackColor = SystemColors.Highlight;
-            configureUpdateCartridgeDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            configureUpdateCartridgeDataButton.ForeColor = Color.White;
-            configureUpdateCartridgeDataButton.Location = new Point(447, 165);
-            configureUpdateCartridgeDataButton.Name = "configureUpdateCartridgeDataButton";
-            configureUpdateCartridgeDataButton.Size = new Size(208, 30);
-            configureUpdateCartridgeDataButton.TabIndex = 11;
-            configureUpdateCartridgeDataButton.Text = "Update Cartridge Data";
-            configureUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
-            // 
-            // configureUpdateElastomerData
-            // 
-            configureUpdateElastomerData.BackColor = SystemColors.Highlight;
-            configureUpdateElastomerData.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            configureUpdateElastomerData.ForeColor = Color.White;
-            configureUpdateElastomerData.Location = new Point(447, 361);
-            configureUpdateElastomerData.Name = "configureUpdateElastomerData";
-            configureUpdateElastomerData.Size = new Size(208, 30);
-            configureUpdateElastomerData.TabIndex = 12;
-            configureUpdateElastomerData.Text = "Update Elastomer Data";
-            configureUpdateElastomerData.UseVisualStyleBackColor = false;
-            // 
-            // configureBergquistDataButton
-            // 
-            configureBergquistDataButton.BackColor = SystemColors.Highlight;
-            configureBergquistDataButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            configureBergquistDataButton.ForeColor = Color.White;
-            configureBergquistDataButton.Location = new Point(447, 548);
-            configureBergquistDataButton.Name = "configureBergquistDataButton";
-            configureBergquistDataButton.Size = new Size(208, 30);
-            configureBergquistDataButton.TabIndex = 13;
-            configureBergquistDataButton.Text = "Update Bergquist Data";
-            configureBergquistDataButton.UseVisualStyleBackColor = false;
             // 
             // independentReaderForm
             // 
@@ -2351,12 +2352,6 @@
         private Label controlMotorsLabel;
         private Label controlTECsLabel;
         private Button controlHomeButton;
-        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
-        private DataGridViewTextBoxColumn homeMotorsIOColumn;
-        private DataGridViewTextBoxColumn homeMotorsStateColumn;
-        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
-        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
-        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
         private DataGridView controlLEDsDataGridView;
         private Label controlLEDsLabel;
         private Button controlTECDSetTempButton;
@@ -2502,5 +2497,11 @@
         private Button configureUpdateCartridgeDataButton;
         private Button configureUpdateElastomerData;
         private Button configureBergquistDataButton;
+        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
+        private DataGridViewTextBoxColumn homeMotorsVersionColumn;
+        private DataGridViewTextBoxColumn homeMotorsStateColumn;
+        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
+        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
     }
 }

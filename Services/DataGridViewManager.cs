@@ -21,5 +21,29 @@ namespace Independent_Reader_GUI.Services
                 dataGridView.Rows[rowIndex].Cells[columnIndex].Value = valueOnOutcomeFailed;
             }
         }
+
+        public string GetColumnCellValueByColumnAndRowName(string headerText, string rowText, DataGridView dataGridView)
+        {
+            // Get the column index by the header text
+            int columnIndex = -1;
+            int rowIndex = -1;
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                if (column.HeaderText == headerText)
+                {
+                    columnIndex = column.Index;
+                }
+            }
+            // Get the row index by the row text
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Cells[0].Value == rowText)
+                {
+                    rowIndex = row.Index;
+                }
+            }
+            // Get the cell value
+            return dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+        }
     }
 }
