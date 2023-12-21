@@ -101,6 +101,7 @@ namespace Independent_Reader_GUI.Models
         public string DefaultElastomer = string.Empty;
         public string DefaultBergquist = string.Empty;
         public int RunDataTimerInterval = int.MinValue;
+        public int ControlTabTimerInterval = int.MinValue;
         public int EstimateFOVCaptureTimeSeconds = int.MinValue;
         public int EstimateAssayCaptureTimeSeconds = int.MinValue;
         public int EstimateSampleCaptureTimeSeconds = int.MinValue;
@@ -239,6 +240,7 @@ namespace Independent_Reader_GUI.Models
             DefaultElastomer = rootNode.Element("DefaultElastomer").Value;
             DefaultBergquist = rootNode.Element("DefaultBergquist").Value;
             RunDataTimerInterval = int.Parse(rootNode.Element("RunDataTimerInterval").Value);
+            ControlTabTimerInterval = int.Parse(rootNode.Element("ControlTabTimerInterval").Value);
             EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
             EstimateAssayCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateAssayCaptureTimeSeconds").Value);
             EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);

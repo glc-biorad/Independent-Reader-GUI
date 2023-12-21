@@ -99,7 +99,7 @@
 				<Enabled></Enabled>
 			</TrayAB>
 			<TrayCD>
-				<Address>8</Address>
+				<Address>7</Address>
 				<DefaultSpeed>200000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
@@ -277,6 +277,7 @@
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
 	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
+	<ControlTabTimerInterval>20000</ControlTabTimerInterval>
 	<EstimateFOVCaptureTimeSeconds>7</EstimateFOVCaptureTimeSeconds>
 	<EstimateSampleCaptureTimeSeconds>60</EstimateSampleCaptureTimeSeconds>
 	<EstimateAssayCaptureTimeSeconds>20</EstimateAssayCaptureTimeSeconds>

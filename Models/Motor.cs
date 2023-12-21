@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Services;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -9,97 +11,147 @@ namespace Independent_Reader_GUI.Models
 {
     internal class Motor
     {
+        private readonly APIManager apiManager;
         private string name = string.Empty;
         private int address = int.MinValue;
         public string IO = string.Empty;
+        public string Version = string.Empty;
         private bool connected = false;
         private bool homed = false;
         private TimeSpan waitTimeSpan;
         private const int checkInTimeInMilliseconds = 200;
 
-        public Motor(string name, int address, double timeoutInMilliseconds = 3000) 
+        public Motor(string name, int address, APIManager apiManager, double timeoutInMilliseconds = 3000) 
         {
             this.name = name;
             this.address = address;
             this.waitTimeSpan = TimeSpan.FromMilliseconds(timeoutInMilliseconds);
-            // Check the connection for the motor
-            CheckConnection();
-        }
-
-        public void Move(int positionInMicrosteps, int speedInMicrostepsPerSecond)
-        {
-            // Check the motor is connected
-            CheckConnection();
-            if (connected)
-            {
-                if (homed)
-                {
-                    // TODO: Implement code for moving the motor using the API
-                    MessageBox.Show("Code to move the motor has yet to be implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            this.apiManager = apiManager;
         }
 
         public async Task MoveAsync(int positionInMicrosteps, int speedInMicrostepsPerSecond)
         {
             // Check the motor is connected
-            CheckConnection();
+            await CheckConnectionAsync();
+            await Task.Delay(1);
             if (connected)
             {
-                if (homed)
+                //if (homed)
+                if (true)
                 {
-                    // TODO: Implement code for moving the motor using the API
-                    MessageBox.Show("Code to move the motor has yet to be implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Generate a API Motor Request
+                    APIMotorRequest apiMotorRequest = new APIMotorRequest(id: address, positionInMicrosteps, speedInMicrostepsPerSecond);
+                    // Send the request to the API
+                    await apiManager.PostAsync<APIMotorRequest, APIResponse>(
+                        $"http://127.0.0.1:8000/reader/axis/move/{address}?position=-{apiMotorRequest.postion}&velocity={apiMotorRequest.velocity}", 
+                        apiMotorRequest);
+                    await Task.Delay(1);
                     Stopwatch stopwatch = Stopwatch.StartNew();
                     while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                     {
-                        MessageBox.Show(stopwatch.Elapsed.ToString());
+                        // Check in every so often
                         await Task.Delay(checkInTimeInMilliseconds);
                     }
                 }
             }
         }
 
-        public void Home()
-        {
-            // Check the motor is connected
-            CheckConnection();
-            if (connected)
-            {
-                // TODO: Implement code for homing the motor using the API
-                MessageBox.Show("Code to home the motor has yet to be implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
         public async Task HomeAsync()
         {
             // Check the motor is connected
-            CheckConnection();
+            await CheckConnectionAsync();
+            await Task.Delay(1);
             if (connected)
             {
-                // TODO: Implement code for homing the motor using the API
-                MessageBox.Show("Code to home the motor has yet to be implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Generate a API Motor Request
+                APIMotorRequest apiMotorRequest = new APIMotorRequest(id: address);
+                // Send the request to the API
+                await apiManager.PostAsync<APIMotorRequest, APIResponse>($"http://127.0.0.1:8000/reader/axis/home/{address}", apiMotorRequest);
+                await Task.Delay(1);
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                 {
                     // TODO: Check if the motor has been homed
+                    var position = await GetPositionAsync();
+                    await Task.Delay(1);
+                    if (position != null)
+                    {
+                        if (position == 0)
+                        {
+                            homed = true;
+                        }                        
+                        else
+                        {
+                            homed = false;
+                        }
+                    }
+                    else if (position == null)
+                    {
+                        // TODO: Replace with something better (a custom exception MotorResponseException?)
+                        //throw new ApplicationException($"Error in homing the {name} motor, recieved a null response.");
+                        MessageBox.Show($"Failed to home {name} motor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    // Check in every so often
                     await Task.Delay(checkInTimeInMilliseconds);
                 }
             }
         }
 
+        public async Task<string?> GetVersionAsync()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
+            await Task.Delay(1);
+            return data.Response;
+        }
+
+        public async Task<int?> GetPositionAsync()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/position/{address}");
+            await Task.Delay(1);
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the position from the response
+            int? position;
+            try
+            {
+                position = int.Parse(response.Split(",").Last());
+            }
+            catch (Exception ex)
+            {
+                // FIXME: Handle null position
+                position = null;
+                //MessageBox.Show($"Get position for {name} motor was unsuccessful", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return position;
+        }
+
         public void CheckConnection()
         {
+            Task.Run(async () => await CheckConnectionAsync()).Wait();
+        }
+
+        public async Task CheckConnectionAsync()
+        {
             // TODO: Implement code for checking if the motor is connected (check version from the API and check for successful response)
-            connected = false;
-            //if (true)
-            //{
-            //    connected = true;
-            //}
-            //else
-            //{
-            //    connected = false;
-            //}
+            var responseValue = await GetPositionAsync();
+            await Task.Delay(1);
+            if (responseValue != null)
+            {
+                connected = true;
+            }
+            else
+            {
+                connected = false;
+            }
         }
 
         public bool CheckIfHomingComplete()
