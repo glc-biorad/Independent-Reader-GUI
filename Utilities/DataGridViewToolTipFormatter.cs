@@ -40,7 +40,7 @@ namespace Independent_Reader_GUI.Utilities
             {
                 return "Thermally conductive layer if applicable.";
             }
-            else if (cellValue == "Surface Area (mm x mm)")
+            else if (cellValue == "Contact Surface Area (mm x mm)")
             {
                 return "Surface area interface between dPCR system and heater surface (used for estimating pressure on dPCR system)";
             }

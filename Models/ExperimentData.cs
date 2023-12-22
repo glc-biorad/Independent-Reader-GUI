@@ -27,7 +27,7 @@ namespace Independent_Reader_GUI.Models
         public double ElastomerThickness { get; set; } = 0.0;
         public DataGridViewComboBoxCell BergquistComboBoxCell = new DataGridViewComboBoxCell();
         public double BergquistThickness { get; set; } = 0.0;
-        public double SurfaceArea { get; set; } = 0.0;
+        public double ContactSurfaceArea { get; set; } = 0.0;
         public double Pressure { get; set; } = 0.0;
 
         public ExperimentData()

@@ -96,10 +96,10 @@
             controlLEDsAlexaColumn = new DataGridViewTextBoxColumn();
             controlLEDsCy5p5Column = new DataGridViewTextBoxColumn();
             controlLEDsLabel = new Label();
-            controlTECDSetTempButton = new Button();
-            controlTECCSetTempButton = new Button();
-            controlTECBSetTempButton = new Button();
-            controlTECASetTempButton = new Button();
+            controlTECDUpdateButton = new Button();
+            controlTECCUpdateButton = new Button();
+            controlTECBUpdateButton = new Button();
+            controlTECAUpdateButton = new Button();
             controlTECsDataGridView = new DataGridView();
             controlTECsPropertyColumn = new DataGridViewTextBoxColumn();
             controlTECsTECAColumn = new DataGridViewTextBoxColumn();
@@ -112,7 +112,7 @@
             controlMotorsComboBox = new ComboBox();
             controlMotorsDataGridView = new DataGridView();
             controlMotorsMotorColumn = new DataGridViewTextBoxColumn();
-            controlMotorsIOColumn = new DataGridViewTextBoxColumn();
+            controlMotorsVersionColumn = new DataGridViewTextBoxColumn();
             controlMotorsStateColumn = new DataGridViewTextBoxColumn();
             controlMotorsPositionColumn = new DataGridViewTextBoxColumn();
             controlMotorsSpeedColumn = new DataGridViewTextBoxColumn();
@@ -590,6 +590,7 @@
             runRemoveAssayButton.TabIndex = 12;
             runRemoveAssayButton.Text = "Remove Assay";
             runRemoveAssayButton.UseVisualStyleBackColor = false;
+            runRemoveAssayButton.Click += runRemoveAssayButton_Click;
             // 
             // runAddAssayButton
             // 
@@ -602,6 +603,7 @@
             runAddAssayButton.TabIndex = 11;
             runAddAssayButton.Text = "Add Assay";
             runAddAssayButton.UseVisualStyleBackColor = false;
+            runAddAssayButton.Click += runAddAssayButton_Click;
             // 
             // runAssayMetaDataGridView
             // 
@@ -800,10 +802,10 @@
             controlTabPage.Controls.Add(controlTECAResetButton);
             controlTabPage.Controls.Add(controlLEDsDataGridView);
             controlTabPage.Controls.Add(controlLEDsLabel);
-            controlTabPage.Controls.Add(controlTECDSetTempButton);
-            controlTabPage.Controls.Add(controlTECCSetTempButton);
-            controlTabPage.Controls.Add(controlTECBSetTempButton);
-            controlTabPage.Controls.Add(controlTECASetTempButton);
+            controlTabPage.Controls.Add(controlTECDUpdateButton);
+            controlTabPage.Controls.Add(controlTECCUpdateButton);
+            controlTabPage.Controls.Add(controlTECBUpdateButton);
+            controlTabPage.Controls.Add(controlTECAUpdateButton);
             controlTabPage.Controls.Add(controlTECsDataGridView);
             controlTabPage.Controls.Add(controlTECsLabel);
             controlTabPage.Controls.Add(controlHomeButton);
@@ -954,57 +956,57 @@
             controlLEDsLabel.TabIndex = 11;
             controlLEDsLabel.Text = "LEDs";
             // 
-            // controlTECDSetTempButton
+            // controlTECDUpdateButton
             // 
-            controlTECDSetTempButton.BackColor = SystemColors.Highlight;
-            controlTECDSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            controlTECDSetTempButton.ForeColor = Color.White;
-            controlTECDSetTempButton.Location = new Point(1007, 498);
-            controlTECDSetTempButton.Name = "controlTECDSetTempButton";
-            controlTECDSetTempButton.Size = new Size(100, 36);
-            controlTECDSetTempButton.TabIndex = 10;
-            controlTECDSetTempButton.Text = "Set Temp";
-            controlTECDSetTempButton.UseVisualStyleBackColor = false;
-            controlTECDSetTempButton.Click += controlTECDSetTempButton_Click;
+            controlTECDUpdateButton.BackColor = SystemColors.Highlight;
+            controlTECDUpdateButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECDUpdateButton.ForeColor = Color.White;
+            controlTECDUpdateButton.Location = new Point(1007, 498);
+            controlTECDUpdateButton.Name = "controlTECDUpdateButton";
+            controlTECDUpdateButton.Size = new Size(100, 36);
+            controlTECDUpdateButton.TabIndex = 10;
+            controlTECDUpdateButton.Text = "Update";
+            controlTECDUpdateButton.UseVisualStyleBackColor = false;
+            controlTECDUpdateButton.Click += controlTECDSetTempButton_Click;
             // 
-            // controlTECCSetTempButton
+            // controlTECCUpdateButton
             // 
-            controlTECCSetTempButton.BackColor = SystemColors.Highlight;
-            controlTECCSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            controlTECCSetTempButton.ForeColor = Color.White;
-            controlTECCSetTempButton.Location = new Point(901, 498);
-            controlTECCSetTempButton.Name = "controlTECCSetTempButton";
-            controlTECCSetTempButton.Size = new Size(100, 36);
-            controlTECCSetTempButton.TabIndex = 9;
-            controlTECCSetTempButton.Text = "Set Temp";
-            controlTECCSetTempButton.UseVisualStyleBackColor = false;
-            controlTECCSetTempButton.Click += controlTECCSetTempButton_Click;
+            controlTECCUpdateButton.BackColor = SystemColors.Highlight;
+            controlTECCUpdateButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECCUpdateButton.ForeColor = Color.White;
+            controlTECCUpdateButton.Location = new Point(901, 498);
+            controlTECCUpdateButton.Name = "controlTECCUpdateButton";
+            controlTECCUpdateButton.Size = new Size(100, 36);
+            controlTECCUpdateButton.TabIndex = 9;
+            controlTECCUpdateButton.Text = "Update";
+            controlTECCUpdateButton.UseVisualStyleBackColor = false;
+            controlTECCUpdateButton.Click += controlTECCSetTempButton_Click;
             // 
-            // controlTECBSetTempButton
+            // controlTECBUpdateButton
             // 
-            controlTECBSetTempButton.BackColor = SystemColors.Highlight;
-            controlTECBSetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            controlTECBSetTempButton.ForeColor = Color.White;
-            controlTECBSetTempButton.Location = new Point(795, 498);
-            controlTECBSetTempButton.Name = "controlTECBSetTempButton";
-            controlTECBSetTempButton.Size = new Size(100, 36);
-            controlTECBSetTempButton.TabIndex = 8;
-            controlTECBSetTempButton.Text = "Set Temp";
-            controlTECBSetTempButton.UseVisualStyleBackColor = false;
-            controlTECBSetTempButton.Click += controlTECBSetTempButton_Click;
+            controlTECBUpdateButton.BackColor = SystemColors.Highlight;
+            controlTECBUpdateButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECBUpdateButton.ForeColor = Color.White;
+            controlTECBUpdateButton.Location = new Point(795, 498);
+            controlTECBUpdateButton.Name = "controlTECBUpdateButton";
+            controlTECBUpdateButton.Size = new Size(100, 36);
+            controlTECBUpdateButton.TabIndex = 8;
+            controlTECBUpdateButton.Text = "Update";
+            controlTECBUpdateButton.UseVisualStyleBackColor = false;
+            controlTECBUpdateButton.Click += controlTECBSetTempButton_Click;
             // 
-            // controlTECASetTempButton
+            // controlTECAUpdateButton
             // 
-            controlTECASetTempButton.BackColor = SystemColors.Highlight;
-            controlTECASetTempButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            controlTECASetTempButton.ForeColor = Color.White;
-            controlTECASetTempButton.Location = new Point(685, 498);
-            controlTECASetTempButton.Name = "controlTECASetTempButton";
-            controlTECASetTempButton.Size = new Size(100, 36);
-            controlTECASetTempButton.TabIndex = 7;
-            controlTECASetTempButton.Text = "Set Temp";
-            controlTECASetTempButton.UseVisualStyleBackColor = false;
-            controlTECASetTempButton.Click += controlTECASetTempButton_Click;
+            controlTECAUpdateButton.BackColor = SystemColors.Highlight;
+            controlTECAUpdateButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            controlTECAUpdateButton.ForeColor = Color.White;
+            controlTECAUpdateButton.Location = new Point(685, 498);
+            controlTECAUpdateButton.Name = "controlTECAUpdateButton";
+            controlTECAUpdateButton.Size = new Size(100, 36);
+            controlTECAUpdateButton.TabIndex = 7;
+            controlTECAUpdateButton.Text = "Update";
+            controlTECAUpdateButton.UseVisualStyleBackColor = false;
+            controlTECAUpdateButton.Click += controlTECASetTempButton_Click;
             // 
             // controlTECsDataGridView
             // 
@@ -1112,7 +1114,7 @@
             controlMotorsDataGridView.AllowUserToDeleteRows = false;
             controlMotorsDataGridView.AllowUserToResizeRows = false;
             controlMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            controlMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { controlMotorsMotorColumn, controlMotorsIOColumn, controlMotorsStateColumn, controlMotorsPositionColumn, controlMotorsSpeedColumn, controlMotorsHomeColumn });
+            controlMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { controlMotorsMotorColumn, controlMotorsVersionColumn, controlMotorsStateColumn, controlMotorsPositionColumn, controlMotorsSpeedColumn, controlMotorsHomeColumn });
             controlMotorsDataGridView.Location = new Point(8, 26);
             controlMotorsDataGridView.Name = "controlMotorsDataGridView";
             controlMotorsDataGridView.RowHeadersVisible = false;
@@ -1128,13 +1130,13 @@
             controlMotorsMotorColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             controlMotorsMotorColumn.Width = 80;
             // 
-            // controlMotorsIOColumn
+            // controlMotorsVersionColumn
             // 
-            controlMotorsIOColumn.HeaderText = "IO";
-            controlMotorsIOColumn.Name = "controlMotorsIOColumn";
-            controlMotorsIOColumn.ReadOnly = true;
-            controlMotorsIOColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlMotorsIOColumn.Width = 70;
+            controlMotorsVersionColumn.HeaderText = "Version";
+            controlMotorsVersionColumn.Name = "controlMotorsVersionColumn";
+            controlMotorsVersionColumn.ReadOnly = true;
+            controlMotorsVersionColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            controlMotorsVersionColumn.Width = 70;
             // 
             // controlMotorsStateColumn
             // 
@@ -2354,10 +2356,10 @@
         private Button controlHomeButton;
         private DataGridView controlLEDsDataGridView;
         private Label controlLEDsLabel;
-        private Button controlTECDSetTempButton;
-        private Button controlTECCSetTempButton;
-        private Button controlTECBSetTempButton;
-        private Button controlTECASetTempButton;
+        private Button controlTECDUpdateButton;
+        private Button controlTECCUpdateButton;
+        private Button controlTECBUpdateButton;
+        private Button controlTECAUpdateButton;
         private DataGridView controlTECsDataGridView;
         private DataGridViewTextBoxColumn homeTECsProprtyColumn;
         private DataGridViewTextBoxColumn homeTECsTECAColumn;
@@ -2432,12 +2434,6 @@
         private Button controlTECCResetButton;
         private Button controlTECBResetButton;
         private Button controlTECAResetButton;
-        private DataGridViewTextBoxColumn controlMotorsMotorColumn;
-        private DataGridViewTextBoxColumn controlMotorsIOColumn;
-        private DataGridViewTextBoxColumn controlMotorsStateColumn;
-        private DataGridViewTextBoxColumn controlMotorsPositionColumn;
-        private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
-        private DataGridViewTextBoxColumn controlMotorsHomeColumn;
         private DataGridViewTextBoxColumn controlLEDsPropertyColumn;
         private DataGridViewTextBoxColumn controlLEDsCy5Column;
         private DataGridViewTextBoxColumn controlLEDsFAMColumn;
@@ -2503,5 +2499,11 @@
         private DataGridViewTextBoxColumn homeMotorsStepsColumn;
         private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
         private DataGridViewTextBoxColumn homeMotorsHomeColumn;
+        private DataGridViewTextBoxColumn controlMotorsMotorColumn;
+        private DataGridViewTextBoxColumn controlMotorsVersionColumn;
+        private DataGridViewTextBoxColumn controlMotorsStateColumn;
+        private DataGridViewTextBoxColumn controlMotorsPositionColumn;
+        private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn controlMotorsHomeColumn;
     }
 }

@@ -69,14 +69,14 @@ namespace Independent_Reader_GUI
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
             xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
-            yMotor = new Motor(address: configuration.yMotorAddress, name: "y", apiManager: apiManager);            
-            zMotor = new Motor(address: configuration.zMotorAddress, name: "z", apiManager: apiManager);           
-            filterWheelMotor = new Motor(address: configuration.FilterWheelMotorAddress, name: "Filter Wheel", apiManager: apiManager);            
-            trayABMotor = new Motor(address: configuration.TrayABMotorAddress, name: "Tray AB", apiManager: apiManager);            
-            trayCDMotor = new Motor(address: configuration.TrayCDMotorAddress, name: "Tray CD", apiManager: apiManager);            
-            clampAMotor = new Motor(address: configuration.ClampAMotorAddress, name: "Clamp A", apiManager: apiManager);           
-            clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);            
-            clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);            
+            yMotor = new Motor(address: configuration.yMotorAddress, name: "y", apiManager: apiManager);
+            zMotor = new Motor(address: configuration.zMotorAddress, name: "z", apiManager: apiManager);
+            filterWheelMotor = new Motor(address: configuration.FilterWheelMotorAddress, name: "Filter Wheel", apiManager: apiManager);
+            trayABMotor = new Motor(address: configuration.TrayABMotorAddress, name: "Tray AB", apiManager: apiManager);
+            trayCDMotor = new Motor(address: configuration.TrayCDMotorAddress, name: "Tray CD", apiManager: apiManager);
+            clampAMotor = new Motor(address: configuration.ClampAMotorAddress, name: "Clamp A", apiManager: apiManager);
+            clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);
+            clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);
             clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D", apiManager: apiManager);
             try
             {
@@ -388,8 +388,10 @@ namespace Independent_Reader_GUI
                 ValueTECC = "24.0",
                 ValueTECD = "24.0",
             };
+            TECsData homeTECsData = new TECsData();
             homeTECsDataGridView.Rows.Add(homeTECsState.PropertyName, homeTECsState.ValueTECA, homeTECsState.ValueTECB, homeTECsState.ValueTECC, homeTECsState.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsIO.PropertyName, homeTECsIO.ValueTECA, homeTECsIO.ValueTECB, homeTECsIO.ValueTECC, homeTECsIO.ValueTECD);
+            homeTECsDataGridView.Rows.Add("Version", homeTECsData.ValueTECA, homeTECsData.ValueTECB, homeTECsData.ValueTECC, homeTECsData.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsActualTemp.PropertyName, homeTECsActualTemp.ValueTECA, homeTECsActualTemp.ValueTECB, homeTECsActualTemp.ValueTECC, homeTECsActualTemp.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsTargetTemp.PropertyName, homeTECsTargetTemp.ValueTECA, homeTECsTargetTemp.ValueTECB, homeTECsTargetTemp.ValueTECC, homeTECsTargetTemp.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsTempEnabled.PropertyName, homeTECsTempEnabled.ValueTECA, homeTECsTempEnabled.ValueTECB, homeTECsTempEnabled.ValueTECC, homeTECsTempEnabled.ValueTECD);
@@ -414,28 +416,38 @@ namespace Independent_Reader_GUI
             runExperimentDataGridView.Rows.Add("Protocol");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ProtocolComboBoxCell;
             runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
             runExperimentDataGridView.Rows.Add("Partition Type");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.PartitionTypeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
             runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Length);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Width);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Height);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
             runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
             runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
             runExperimentDataGridView.Rows.Add("Elastomer");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ElastomerComboBoxCell;
             runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", elastomerOptions.GetElastomerFromName(configuration.DefaultElastomer).Thickness);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
             runExperimentDataGridView.Rows.Add("Bergquist");
             runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
             runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", bergquistOptions.GetBergquistFromName(configuration.DefaultBergquist).Thickness);
-            runExperimentDataGridView.Rows.Add("Surface Area (mm x mm)", runExperimentData.SurfaceArea);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+            runExperimentDataGridView.Rows.Add("Contact Surface Area (mm x mm)", runExperimentData.ContactSurfaceArea);
             runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
+            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
         }
 
         /// <summary>
@@ -541,23 +553,31 @@ namespace Independent_Reader_GUI
         {
             TECsData controlTECsData = new TECsData();
             controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
+            // NOTE: Pull the Firmware version from the TECs on Form loading, leave these defaults here. 
+            controlTECsDataGridView.Rows.Add("Version", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("New Object Temp (\u00B0C)");
             controlTECsDataGridView.Rows.Add("Actual Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Target Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Temp Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Object Upper Error Threshold (\u00B0C)",
                 configuration.TECAObjectUpperErrorThreshold,
                 configuration.TECBObjectUpperErrorThreshold,
                 configuration.TECCObjectUpperErrorThreshold,
                 configuration.TECDObjectUpperErrorThreshold);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Object Lower Error Threshold (\u00B0C)",
                 configuration.TECAObjectLowerErrorThreshold,
                 configuration.TECBObjectLowerErrorThreshold,
                 configuration.TECCObjectLowerErrorThreshold,
                 configuration.TECDObjectLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Sink Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Sink Upper Error Threshold (°C)",
                 configuration.TECASinkUpperErrorThreshold,
                 configuration.TECBSinkUpperErrorThreshold,
@@ -569,6 +589,7 @@ namespace Independent_Reader_GUI
                 configuration.TECCSinkLowerErrorThreshold,
                 configuration.TECDSinkLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)",
                 configuration.TECAFanOnTemp,
                 configuration.TECBFanOnTemp,
@@ -576,8 +597,10 @@ namespace Independent_Reader_GUI
                 configuration.TECDFanOnTemp);
             controlTECsDataGridView.Rows.Add("Fan Control Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Max Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Max Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
         }
 
@@ -869,6 +892,42 @@ namespace Independent_Reader_GUI
         }
 
         /// <summary>
+        /// Click event for the Run tab Add Assay button. Will only add a new assay if all other data
+        /// is filled in the Assay Meta data grid view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runAddAssayButton_Click(object sender, EventArgs e)
+        {
+            // Add a new row only if the other rows are filled out otherwise provide a warning to the user.
+            foreach (DataGridViewRow row in runAssayMetaDataGridView.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.Value == string.Empty)
+                    {
+                        // Warning message 
+                        MessageBox.Show("Assay Meta Data Form is missing data, complete form before adding more samples.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+            object[] newRow = new object[] { string.Empty, string.Empty };
+            runAssayMetaDataGridView.Rows.Add(newRow);
+        }
+
+        /// <summary>
+        /// Click event for the Run tab Remove Assay Button. Will delete all selected rows.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runRemoveAssayButton_Click(object sender, EventArgs e)
+        {
+            DataGridViewContentDeleter ContentDeleter = new DataGridViewContentDeleter();
+            ContentDeleter.DeleteSelectedRows(runAssayMetaDataGridView);
+        }
+
+        /// <summary>
         /// Click event for the Control Tab Move motor button.
         /// </summary>
         /// <param name="sender"></param>
@@ -907,14 +966,17 @@ namespace Independent_Reader_GUI
             // Get the motor to be homed
             string motorName = controlMotorsComboBox.Text;
             var motor = motorManager.GetMotorByName(motorName);
-            if (motor.Connected)
+            if (motor != null)
             {
-                await motor.HomeAsync();
-            }
-            else
-            {
-                MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+                if (motor.Connected)
+                {
+                    await motor.HomeAsync();
+                }
+                else
+                {
+                    MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }           
         }
 
         /// <summary>

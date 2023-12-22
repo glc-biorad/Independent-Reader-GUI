@@ -11,7 +11,8 @@ namespace Independent_Reader_GUI.Models
     internal class Configuration
     {
         // FIXME: Replace this with a variable taken from a config file
-        public string ConfigurationDataPath = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\Configuration\\Configuration.xml";
+        private string user = "u112958";
+        public string ConfigurationDataPath;
         public string InstrumentName = string.Empty;
         public string InstrumentID = string.Empty;
         public int Cy5ID = int.MinValue;
@@ -135,6 +136,7 @@ namespace Independent_Reader_GUI.Models
 
         public Configuration()
         {
+            ConfigurationDataPath = $"C:\\Users\\{user}\\source\\repos\\Independent-Reader-GUI\\Resources\\Configuration\\Configuration.xml";
             ReadInConfigurationData();
         }
 

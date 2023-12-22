@@ -1,4 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration [
+	<!ENTITY BASEPATH "C:\Users\u112958\source\repos\">
+]>
 <Configuration>
 	<Instrument>
 		<Name>Independent Reader</Name>
@@ -175,13 +178,13 @@
 		</TECs>		
 	</Instrument>
 	<DataPaths>
-		<ThermocyclingProtocols>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocols>
-		<Bergquists>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</Bergquists>
-		<Elastomers>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Elastomers\ElastomerData.xml</Elastomers>
-		<Cartridges>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</Cartridges>
-		<Reports>C:\Users\u112958\source\repos\Independent-Reader-GUI\Reports\</Reports>
-		<Assets>C:\Users\u112958\source\repos\Independent-Reader-GUI\Assets</Assets>
-		<ReportLogo>C:\Users\u112958\source\repos\Independent-Reader-GUI\Assets\bio-rad-laboratories-logo.png</ReportLogo>
+		<ThermocyclingProtocols>&BASEPATH;ThermocyclingProtocols\</ThermocyclingProtocols>
+		<Bergquists>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</Bergquists>
+		<Elastomers>&BASEPATH;Independent-Reader-GUI\Resources\Elastomers\ElastomerData.xml</Elastomers>
+		<Cartridges>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</Cartridges>
+		<Reports>&BASEPATH;Independent-Reader-GUI\Reports\</Reports>
+		<Assets>&BASEPATH;Independent-Reader-GUI\Assets</Assets>
+		<ReportLogo>&BASEPATH;Independent-Reader-GUI\Assets\bio-rad-laboratories-logo.png</ReportLogo>
 	</DataPaths>
 	<glc-biorad>
 		<Defaults>
@@ -223,7 +226,7 @@
 			<ImagerDx>1000</ImagerDx>
 			<ImagerDy>1000</ImagerDy>
 			<ImagedDz>1000</ImagedDz>
-			<ThermocyclingProtocol>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
 		</Defaults>
 	</glc-biorad>
 	<acd-biorad>
@@ -264,14 +267,14 @@
 			<ImagerDx>1000</ImagerDx>
 			<ImagerDy>1000</ImagerDy>
 			<ImagedDz>1000</ImagedDz>
-			<ThermocyclingProtocol>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
 		</Defaults>
 	</acd-biorad>
 	<InstrumentName>Independent Reader</InstrumentName>
 	<InstrumentID>1</InstrumentID>
-	<ThermocyclingProtocolsDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
-	<BergquistDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
-	<CartridgeDataPath>C:\Users\u112958\source\repos\Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
+	<ThermocyclingProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
+	<BergquistDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
+	<CartridgeDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
 	<DefaultPartitionType>Microwells</DefaultPartitionType>
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
