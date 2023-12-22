@@ -9,6 +9,7 @@ using OxyPlot.Annotations;
 using OxyPlot.Series;
 using System.ComponentModel;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Independent_Reader_GUI
 {
@@ -552,6 +553,22 @@ namespace Independent_Reader_GUI
         private void AddControlTECsDefaultData()
         {
             TECsData controlTECsData = new TECsData();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledA = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledB = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledC = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledD = new DataGridViewComboBoxCell();
+            dataGridViewComboBoxCellTempEnabledA.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellTempEnabledB.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellTempEnabledC.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellTempEnabledD.Items.AddRange(new object[] { "Yes", "No" });
+            DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledA = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledB = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledC = new DataGridViewComboBoxCell();
+            DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledD = new DataGridViewComboBoxCell();
+            dataGridViewComboBoxCellFanEnabledA.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellFanEnabledB.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellFanEnabledC.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellFanEnabledD.Items.AddRange(new object[] { "Yes", "No" });
             controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
@@ -564,7 +581,11 @@ namespace Independent_Reader_GUI
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Target Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
-            controlTECsDataGridView.Rows.Add("Temp Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Temp Enabled");
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1] = dataGridViewComboBoxCellTempEnabledA;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2] = dataGridViewComboBoxCellTempEnabledB;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3] = dataGridViewComboBoxCellTempEnabledC;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4] = dataGridViewComboBoxCellTempEnabledD;
             controlTECsDataGridView.Rows.Add("Object Upper Error Threshold (\u00B0C)",
                 configuration.TECAObjectUpperErrorThreshold,
                 configuration.TECBObjectUpperErrorThreshold,
@@ -595,7 +616,11 @@ namespace Independent_Reader_GUI
                 configuration.TECBFanOnTemp,
                 configuration.TECCFanOnTemp,
                 configuration.TECDFanOnTemp);
-            controlTECsDataGridView.Rows.Add("Fan Control Enabled", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Fan Control Enabled");
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1] = dataGridViewComboBoxCellFanEnabledA;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2] = dataGridViewComboBoxCellFanEnabledB;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3] = dataGridViewComboBoxCellFanEnabledC;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4] = dataGridViewComboBoxCellFanEnabledD;
             controlTECsDataGridView.Rows.Add("Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Max Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
@@ -976,7 +1001,7 @@ namespace Independent_Reader_GUI
                 {
                     MessageBox.Show("Motor is not connected.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }           
+            }
         }
 
         /// <summary>
@@ -999,9 +1024,30 @@ namespace Independent_Reader_GUI
                 step.TypeName = stepTypeName;
                 step.Time = stepTime;
                 step.Index = index;
-                //plotManager.AddStepOld(stepTemperature, stepTime, stepTypeName);
                 protocol.AddStep(step);
                 plotManager.AddStep(step);
+            }
+        }
+
+        private void thermocyclingAddGoToButton_Click(object sender, EventArgs e)
+        {
+            // Open a ThermocyclingProtocolAddGoToForm window
+            ThermocyclingProtocolAddGotoForm addGoToForm = new ThermocyclingProtocolAddGotoForm(plotManager);
+            try
+            {
+                if (addGoToForm.ShowDialog() == DialogResult.OK)
+                {
+                    int stepNumber = addGoToForm.StepNumber;
+                    int cycleCount = addGoToForm.CycleCount;
+                    ThermocyclingProtocolGoToStep step = new ThermocyclingProtocolGoToStep(stepNumber, cycleCount);
+                    step.Index = protocol.Count;
+                    protocol.AddStep(step);
+                    plotManager.AddStep(step);
+                }
+            }
+            catch (ObjectDisposedException ex)
+            {
+                return;
             }
         }
 

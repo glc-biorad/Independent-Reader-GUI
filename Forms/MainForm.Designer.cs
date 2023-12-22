@@ -101,11 +101,6 @@
             controlTECBUpdateButton = new Button();
             controlTECAUpdateButton = new Button();
             controlTECsDataGridView = new DataGridView();
-            controlTECsPropertyColumn = new DataGridViewTextBoxColumn();
-            controlTECsTECAColumn = new DataGridViewTextBoxColumn();
-            controlTECsTECBColumn = new DataGridViewTextBoxColumn();
-            controlTECsTECCColumn = new DataGridViewTextBoxColumn();
-            controlTECsTECDColumn = new DataGridViewTextBoxColumn();
             controlTECsLabel = new Label();
             controlHomeButton = new Button();
             controlMoveButton = new Button();
@@ -231,6 +226,11 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
+            controlTECsPropertyColumn = new DataGridViewTextBoxColumn();
+            controlTECsTECAColumn = new DataGridViewTextBoxColumn();
+            controlTECsTECBColumn = new DataGridViewTextBoxColumn();
+            controlTECsTECCColumn = new DataGridViewTextBoxColumn();
+            controlTECsTECDColumn = new DataGridViewTextBoxColumn();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -1022,42 +1022,6 @@
             controlTECsDataGridView.Size = new Size(569, 466);
             controlTECsDataGridView.TabIndex = 6;
             // 
-            // controlTECsPropertyColumn
-            // 
-            controlTECsPropertyColumn.HeaderText = "";
-            controlTECsPropertyColumn.Name = "controlTECsPropertyColumn";
-            controlTECsPropertyColumn.ReadOnly = true;
-            controlTECsPropertyColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlTECsPropertyColumn.Width = 140;
-            // 
-            // controlTECsTECAColumn
-            // 
-            controlTECsTECAColumn.HeaderText = "TEC A";
-            controlTECsTECAColumn.Name = "controlTECsTECAColumn";
-            controlTECsTECAColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlTECsTECAColumn.Width = 105;
-            // 
-            // controlTECsTECBColumn
-            // 
-            controlTECsTECBColumn.HeaderText = "TEC B";
-            controlTECsTECBColumn.Name = "controlTECsTECBColumn";
-            controlTECsTECBColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlTECsTECBColumn.Width = 105;
-            // 
-            // controlTECsTECCColumn
-            // 
-            controlTECsTECCColumn.HeaderText = "TEC C";
-            controlTECsTECCColumn.Name = "controlTECsTECCColumn";
-            controlTECsTECCColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlTECsTECCColumn.Width = 105;
-            // 
-            // controlTECsTECDColumn
-            // 
-            controlTECsTECDColumn.HeaderText = "TEC D";
-            controlTECsTECDColumn.Name = "controlTECsTECDColumn";
-            controlTECsTECDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            controlTECsTECDColumn.Width = 105;
-            // 
             // controlTECsLabel
             // 
             controlTECsLabel.AutoSize = true;
@@ -1212,6 +1176,7 @@
             thermocyclingAddGoToButton.TabIndex = 16;
             thermocyclingAddGoToButton.Text = "Add GoTo";
             thermocyclingAddGoToButton.UseVisualStyleBackColor = false;
+            thermocyclingAddGoToButton.Click += thermocyclingAddGoToButton_Click;
             // 
             // thermocyclingTECDKillButton
             // 
@@ -2244,6 +2209,38 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
+            // controlTECsPropertyColumn
+            // 
+            controlTECsPropertyColumn.HeaderText = "";
+            controlTECsPropertyColumn.Name = "controlTECsPropertyColumn";
+            controlTECsPropertyColumn.ReadOnly = true;
+            controlTECsPropertyColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            controlTECsPropertyColumn.Width = 140;
+            // 
+            // controlTECsTECAColumn
+            // 
+            controlTECsTECAColumn.HeaderText = "TEC A";
+            controlTECsTECAColumn.Name = "controlTECsTECAColumn";
+            controlTECsTECAColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // controlTECsTECBColumn
+            // 
+            controlTECsTECBColumn.HeaderText = "TEC B";
+            controlTECsTECBColumn.Name = "controlTECsTECBColumn";
+            controlTECsTECBColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // controlTECsTECCColumn
+            // 
+            controlTECsTECCColumn.HeaderText = "TEC C";
+            controlTECsTECCColumn.Name = "controlTECsTECCColumn";
+            controlTECsTECCColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // controlTECsTECDColumn
+            // 
+            controlTECsTECDColumn.HeaderText = "TEC D";
+            controlTECsTECDColumn.Name = "controlTECsTECDColumn";
+            controlTECsTECDColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2441,11 +2438,6 @@
         private DataGridViewTextBoxColumn controlLEDsAttoColumn;
         private DataGridViewTextBoxColumn controlLEDsAlexaColumn;
         private DataGridViewTextBoxColumn controlLEDsCy5p5Column;
-        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
-        private DataGridViewTextBoxColumn controlTECsTECAColumn;
-        private DataGridViewTextBoxColumn controlTECsTECBColumn;
-        private DataGridViewTextBoxColumn controlTECsTECCColumn;
-        private DataGridViewTextBoxColumn controlTECsTECDColumn;
         private Label controlMotorLabel;
         private DataGridViewTextBoxColumn runSampleMetaDataIDColumn;
         private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
@@ -2505,5 +2497,10 @@
         private DataGridViewTextBoxColumn controlMotorsPositionColumn;
         private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
         private DataGridViewTextBoxColumn controlMotorsHomeColumn;
+        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
+        private DataGridViewTextBoxColumn controlTECsTECAColumn;
+        private DataGridViewTextBoxColumn controlTECsTECBColumn;
+        private DataGridViewTextBoxColumn controlTECsTECCColumn;
+        private DataGridViewTextBoxColumn controlTECsTECDColumn;
     }
 }
