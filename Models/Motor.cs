@@ -100,9 +100,16 @@ namespace Independent_Reader_GUI.Models
         public async Task<string?> GetVersionAsync()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
-            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
-            await Task.Delay(5);
-            return data.Response;
+            try
+            {
+                var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
+                await Task.Delay(5);
+                return data.Response;
+            }
+            catch (Exception ex)
+            {
+                return "?";
+            }
         }
 
         public async Task<int?> GetPositionAsync()
@@ -128,7 +135,7 @@ namespace Independent_Reader_GUI.Models
             catch (Exception ex)
             {
                 // FIXME: Handle null position
-                position = null;
+                position = int.MinValue;
                 //MessageBox.Show($"Get position for {name} motor was unsuccessful", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return position;
