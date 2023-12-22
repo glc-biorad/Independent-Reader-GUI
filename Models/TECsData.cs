@@ -13,5 +13,6 @@ namespace Independent_Reader_GUI.Models
         public string ValueTECB { get; set; } = "?";
         public string ValueTECC { get; set; } = "?";
         public string ValueTECD { get; set; } = "?";
+
     }
 }
