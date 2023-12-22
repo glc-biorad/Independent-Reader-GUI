@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,22 +11,13 @@ namespace Independent_Reader_GUI.Models
     {
         private int id = int.MinValue;
         private string name = string.Empty;
-        public bool Connected;
+        private bool connected;
+        private readonly APIManager apiManager;
 
-        public TEC(int id, string name)
+        public TEC(int id, string name, APIManager apiManager)
         {
+            this.apiManager = apiManager;
             this.id = id;
-            this.name = name;
-            if (id == GetBoardAddress())
-            {
-                Connected = true;
-            }
-            else
-            {
-                Connected = false;
-                //MessageBox.Show(name.ToUpper() + " is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
             this.name = name;
         }
 
@@ -39,11 +31,86 @@ namespace Independent_Reader_GUI.Models
             get { return name; }
         }
 
-        public int GetBoardAddress()
+        public bool Connected
         {
-            int boardAddress = int.MinValue;
-            // TODO: Implement code to get the address for this TEC board (use to test connection)
-            return boardAddress;
+            get { return connected; }
+        }
+
+        public void CheckConnection()
+        {
+            Task.Run(async () => await CheckConnectionAsync()).Wait();
+        }
+
+        public async Task CheckConnectionAsync()
+        {
+            var responseValue = await GetBoardAddressAsync();            
+            await Task.Delay(5);
+            if (responseValue != null)
+            {
+                connected = true;
+            }
+            else
+            {
+                connected = false;
+            }
+        }
+
+        public async Task<int?> GetBoardAddressAsync()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/device-address/?heater=Heater%20{name.Last()}");
+            await Task.Delay(5);
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the Device Address from the response
+            int? deviceAddress;
+            try
+            {
+                deviceAddress = int.Parse(response);
+            }
+            catch (Exception ex)
+            {
+                // FIXME: Handle no response
+                deviceAddress = null;
+                MessageBox.Show($"Could not retreive Device Address for {name}, got response: {response}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return deviceAddress;
+        }
+
+        public async Task<string> GetVersionAsync()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/firmware-version/?heater=Heater%20{name.Last()}");
+            await Task.Delay(5);
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the Firmware Version from the response
+            string firmwareVersion;
+            try
+            {
+                firmwareVersion = response;
+            }
+            catch (Exception ex)
+            {
+                // FIXME: Handle no response
+                firmwareVersion = "?";
+                MessageBox.Show($"Could not retreive Firmware Version for {name}, got response: {response}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return firmwareVersion;
         }
 
         public void Reset()

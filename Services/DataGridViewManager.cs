@@ -22,6 +22,40 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        public void SetTextBoxCellStringValueByColumnandRowNames(DataGridView dataGridView,
+            string columnName, string rowName, string cellValue)
+        {
+            int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+            int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+            dataGridView.Rows[rowIndex].Cells[columnIndex].Value = cellValue;
+        }
+
+        public int GetColumnIndexFromName(DataGridView dataGridView, string columnName)
+        {
+            int columnIndex = -1;
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                if (column.HeaderText == columnName)
+                {
+                    columnIndex = column.Index;
+                }
+            }
+            return columnIndex;
+        }
+
+        public int GetRowIndexFromName(DataGridView dataGridView, string rowName)
+        {
+            int rowIndex = -1;
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == rowName)
+                {
+                    rowIndex = row.Index;
+                }
+            }
+            return rowIndex;
+        }
+
         public string GetColumnCellValueByColumnAndRowName(string headerText, string rowText, DataGridView dataGridView)
         {
             // Get the column index by the header text

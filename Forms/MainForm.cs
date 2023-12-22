@@ -63,10 +63,21 @@ namespace Independent_Reader_GUI
             // Connect to the FLIR Camera
             cameraManager.Connect();
             // Connect to the TECs
-            tecA = new TEC(id: configuration.TECAAddress, name: "TEC A");
-            tecB = new TEC(id: configuration.TECBAddress, name: "TEC B");
-            tecC = new TEC(id: configuration.TECCAddress, name: "TEC C");
-            tecD = new TEC(id: configuration.TECDAddress, name: "TEC D");
+            tecA = new TEC(id: configuration.TECAAddress, name: "TEC A", apiManager: apiManager);
+            tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager);
+            tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
+            tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
+            try
+            {                
+                Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
+                //Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
+                //Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
+                //Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not connect to motors");
+            }
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
             xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
@@ -869,7 +880,7 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form_Load(object sender, EventArgs e)
+        private async void Form_Load(object sender, EventArgs e)
         {
             // Change the default cell selection for data grid views on form loading
             homeMotorsDataGridView.ClearSelection();
@@ -878,6 +889,30 @@ namespace Independent_Reader_GUI
             homeLEDsDataGridView.ClearSelection();
             runExperimentDataGridView.CurrentCell = runExperimentDataGridView.Rows[0].Cells[1];
             runImagingSetupDataGridView.CurrentCell = runImagingSetupDataGridView.Rows[0].Cells[1];
+
+            // Obtain single use data
+            string xMotorVersion = await xMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion);
+            string yMotorVersion = await yMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion);
+            string zMotorVersion = await zMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion);
+            string filterWheelMotorVersion = await filterWheelMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion);
+            string trayABMotorVersion = await trayABMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion);
+            string trayCDMotorVersion = await trayCDMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion);
+            string tecAFirmwareVersion = await tecA.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion);
+            string clampAMotorVersion = await clampAMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion);
+            string clampBMotorVersion = await clampBMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion);
+            string clampCMotorVersion = await clampCMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion);
+            string clampDMotorVersion = await clampDMotor.GetVersionAsync();
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion);
         }
 
         /// <summary>
@@ -1408,11 +1443,25 @@ namespace Independent_Reader_GUI
                 + " with postprocessing data after the fact. Initial conditions for the run can be found to trace any unexpected behavior after thermocycling."
                 + " This report does not include the actual thermal profile experienced by the system but is estimated based on the materials at the heater"
                 + " cartridge interface.");
-            await reportManager.AddSubSectionAsync("Experiment Data", "Experiment data includes all information regarding the experimental setup on the instrument."
+            await reportManager.AddSubSectionAsync("Experiment Data", 
+                "Experiment data includes all information regarding the experimental setup on the instrument."
                 + " This includes the experiment name, the instrument's configuration, dPCR cartridge information, as well as any excess materials used in the run.");
             await reportManager.AddTableAsync(runExperimentDataGridView);
-            await reportManager.AddSubSectionAsync("Imaging Setup", "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
+            await reportManager.AddSubSectionAsync("Cartridge Layout",
+                "Cartridge layout summarizes information regarding the sample and assay loading in the cartridge. This includes the names for each sample loaded"
+                + " as well as for each assay loaded. An empty cell is an indication of a sample or assay section that was not loaded for this run.");
+            await reportManager.AddSubSectionAsync("Imaging Setup", 
+                "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
             await reportManager.AddTableAsync(runImagingSetupDataGridView);
+            await reportManager.AddSubSectionAsync("Initial Conditions and Constants",
+                "These are the initial conditions determined at the onset of the run, covering a range of values that implicitly or explicitly affect the run's outcome."
+                + " The initial conditions include information pertaining to the TECs initial object and sink temperature which could potentially affect ramp rates for the" 
+                + " entire run. Other initial conditions are as influential, but may slightly extend the projected run time, such as error states on the TEC which"
+                + " require a reset.");
+            await reportManager.AddSubSectionAsync("Versions", 
+                "Versions include all version pertaining to the Firmware loaded on each submodule and module board (including the Firmware loaded on the"
+                + " TEC boards). Software versions are also included, these are version numbers for the Image Analysis Model used in post-processing, the"
+                + " version of the Autofocus model, GUI, Backend, and API.");
             await reportManager.CloseAsync();
             // TODO: Email the user that the run is complete and a copy of the report
         }
