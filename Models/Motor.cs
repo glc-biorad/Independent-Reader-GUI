@@ -33,7 +33,7 @@ namespace Independent_Reader_GUI.Models
         {
             // Check the motor is connected
             await CheckConnectionAsync();
-            await Task.Delay(1);
+            await Task.Delay(5);
             if (connected)
             {
                 //if (homed)
@@ -45,7 +45,7 @@ namespace Independent_Reader_GUI.Models
                     await apiManager.PostAsync<APIMotorRequest, APIResponse>(
                         $"http://127.0.0.1:8000/reader/axis/move/{address}?position=-{apiMotorRequest.postion}&velocity={apiMotorRequest.velocity}", 
                         apiMotorRequest);
-                    await Task.Delay(1);
+                    await Task.Delay(5);
                     Stopwatch stopwatch = Stopwatch.StartNew();
                     while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                     {
@@ -60,20 +60,20 @@ namespace Independent_Reader_GUI.Models
         {
             // Check the motor is connected
             await CheckConnectionAsync();
-            await Task.Delay(1);
+            await Task.Delay(5);
             if (connected)
             {
                 // Generate a API Motor Request
                 APIMotorRequest apiMotorRequest = new APIMotorRequest(id: address);
                 // Send the request to the API
                 await apiManager.PostAsync<APIMotorRequest, APIResponse>($"http://127.0.0.1:8000/reader/axis/home/{address}", apiMotorRequest);
-                await Task.Delay(1);
+                await Task.Delay(5);
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                 {
                     // TODO: Check if the motor has been homed
                     var position = await GetPositionAsync();
-                    await Task.Delay(1);
+                    await Task.Delay(5);
                     if (position != null)
                     {
                         if (position == 0)
@@ -101,7 +101,7 @@ namespace Independent_Reader_GUI.Models
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
             var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
-            await Task.Delay(1);
+            await Task.Delay(5);
             return data.Response;
         }
 
@@ -109,7 +109,7 @@ namespace Independent_Reader_GUI.Models
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
             var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/position/{address}");
-            await Task.Delay(1);
+            await Task.Delay(5);
             // TODO: Check the submodule id and the module id
             // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
             #region
@@ -143,7 +143,7 @@ namespace Independent_Reader_GUI.Models
         {
             // TODO: Implement code for checking if the motor is connected (check version from the API and check for successful response)
             var responseValue = await GetPositionAsync();
-            await Task.Delay(1);
+            await Task.Delay(5);
             if (responseValue != null)
             {
                 connected = true;
