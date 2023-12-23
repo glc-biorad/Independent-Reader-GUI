@@ -27,7 +27,34 @@ namespace Independent_Reader_GUI.Services
         {
             int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
             int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+            try
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Value = cellValue;
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        public void SetTextBoxCellStringValueByIndices(DataGridView dataGridView,
+            string cellValue, int rowIndex, int columnIndex)
+        {
             dataGridView.Rows[rowIndex].Cells[columnIndex].Value = cellValue;
+        }
+
+        public void SetTextBoxCellStringValueByRowIndexandColumnName(DataGridView dataGridView,
+            string cellValue, int rowIndex, string columnName)
+        {
+            int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+            try
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Value = cellValue;
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
 
         public int GetColumnIndexFromName(DataGridView dataGridView, string columnName)
@@ -78,6 +105,19 @@ namespace Independent_Reader_GUI.Services
             }
             // Get the cell value
             return dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+        }
+
+        public string? GetColumnCellValueByColumnNameAndRowIndex(DataGridView dataGridView, string columnName, int rowIndex)
+        {
+            int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+            try
+            {
+                return dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

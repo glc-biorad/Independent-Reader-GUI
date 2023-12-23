@@ -43,6 +43,11 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
+        public List<Elastomer> Options
+        {
+            get { return options; }
+        }
+
         public Elastomer? GetElastomerFromName(string name)
         {
             foreach (var option in options)
