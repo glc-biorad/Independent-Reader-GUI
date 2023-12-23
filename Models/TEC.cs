@@ -43,13 +43,20 @@ namespace Independent_Reader_GUI.Models
 
         public async Task CheckConnectionAsync()
         {
-            var responseValue = await GetBoardAddressAsync();            
-            await Task.Delay(5);
-            if (responseValue != null)
+            try
             {
-                connected = true;
+                var responseValue = await GetBoardAddressAsync();
+                await Task.Delay(5);
+                if (responseValue != null)
+                {
+                    connected = true;
+                }
+                else
+                {
+                    connected = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 connected = false;
             }
@@ -87,8 +94,16 @@ namespace Independent_Reader_GUI.Models
         public async Task<string> GetVersionAsync()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
-            var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/firmware-version/?heater=Heater%20{name.Last()}");
-            await Task.Delay(5);
+            APIResponse data;
+            try
+            {
+                data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/firmware-version/?heater=Heater%20{name.Last()}");
+                await Task.Delay(5);
+            }
+            catch (Exception ex)
+            {
+                data = new APIResponse();
+            }
             // TODO: Check the submodule id and the module id
             // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
             #region
@@ -100,15 +115,10 @@ namespace Independent_Reader_GUI.Models
             #endregion
             // Obtain the Firmware Version from the response
             string firmwareVersion;
-            try
+            firmwareVersion = response;
+            if (firmwareVersion == string.Empty)
             {
-                firmwareVersion = response;
-            }
-            catch (Exception ex)
-            {
-                // FIXME: Handle no response
                 firmwareVersion = "?";
-                MessageBox.Show($"Could not retreive Firmware Version for {name}, got response: {response}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return firmwareVersion;
         }

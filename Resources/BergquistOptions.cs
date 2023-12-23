@@ -38,6 +38,11 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
+        public List<Bergquist> Options
+        {
+            get { return options; }
+        }
+
         public Bergquist? GetBergquistFromName(string name)
         {
             foreach (var option in options)

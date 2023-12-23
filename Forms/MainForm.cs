@@ -67,17 +67,11 @@ namespace Independent_Reader_GUI
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager);
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
-            try
-            {                
-                Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
-                //Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
-                //Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
-                //Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Could not connect to motors");
-            }
+            Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
+
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
             xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
@@ -190,7 +184,7 @@ namespace Independent_Reader_GUI
             this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
 
             // Wire up mouse down events
-            thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
+            //thermocyclingPlotView.MouseDown += (s, e) => thermocyclingPlotView_MouseDown(s, e);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -423,43 +417,50 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddRunExperimentDefaultData()
         {
-            ExperimentData runExperimentData = new ExperimentData();
-            runExperimentDataGridView.Rows.Add("Experiment Name", runExperimentData.Name);
-            runExperimentDataGridView.Rows.Add("Protocol");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ProtocolComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
-            runExperimentDataGridView.Rows.Add("Partition Type");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.PartitionTypeComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Cartridge");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Length);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Width);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Height);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
-            runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
-            runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
-            runExperimentDataGridView.Rows.Add("Elastomer");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ElastomerComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", elastomerOptions.GetElastomerFromName(configuration.DefaultElastomer).Thickness);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Bergquist");
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
-            runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", bergquistOptions.GetBergquistFromName(configuration.DefaultBergquist).Thickness);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
-            runExperimentDataGridView.Rows.Add("Contact Surface Area (mm x mm)", runExperimentData.ContactSurfaceArea);
-            runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
-            runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(AddRunExperimentDefaultData));
+            }
+            else
+            {
+                ExperimentData runExperimentData = new ExperimentData();
+                runExperimentDataGridView.Rows.Add("Experiment Name", runExperimentData.Name);
+                runExperimentDataGridView.Rows.Add("Protocol");
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ProtocolComboBoxCell;
+                runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Projected End Time (HH:mm:ss)", runExperimentData.EndDateTime.ToString("HH:mm:ss"));
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Projected End Date (MM/dd/YYYY)", runExperimentData.EndDateTime.ToString("MM/dd/yyyy"));
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Heater", runExperimentData.Heater);
+                runExperimentDataGridView.Rows.Add("Partition Type");
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.PartitionTypeComboBoxCell;
+                runExperimentDataGridView.Rows.Add("Cartridge");
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.CartridgeComboBoxCell;
+                runExperimentDataGridView.Rows.Add("Cartridge Length (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Length);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Cartridge Width (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Width);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Cartridge Height (mm)", cartridgeOptions.GetCartridgeFromName(runExperimentData.CartridgeComboBoxCell.Value.ToString()).Height);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Clamp Position (\u03BCs)", runExperimentData.ClampPosition);
+                runExperimentDataGridView.Rows.Add("Tray Position (\u03BCs)", runExperimentData.TrayPosition);
+                runExperimentDataGridView.Rows.Add("Glass Offset (mm)", runExperimentData.GlassOffset);
+                runExperimentDataGridView.Rows.Add("Elastomer");
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ElastomerComboBoxCell;
+                runExperimentDataGridView.Rows.Add("Elastomer Thickness (mm)", elastomerOptions.GetElastomerFromName(configuration.DefaultElastomer).Thickness);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Bergquist");
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.BergquistComboBoxCell;
+                runExperimentDataGridView.Rows.Add("Bergquist Thickness (mm)", bergquistOptions.GetBergquistFromName(configuration.DefaultBergquist).Thickness);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+                runExperimentDataGridView.Rows.Add("Contact Surface Area (mm x mm)", runExperimentData.ContactSurfaceArea);
+                runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+            }
         }
 
         /// <summary>
@@ -891,28 +892,78 @@ namespace Independent_Reader_GUI
             runImagingSetupDataGridView.CurrentCell = runImagingSetupDataGridView.Rows[0].Cells[1];
 
             // Obtain single use data
-            string xMotorVersion = await xMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion);
-            string yMotorVersion = await yMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion);
-            string zMotorVersion = await zMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion);
-            string filterWheelMotorVersion = await filterWheelMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion);
-            string trayABMotorVersion = await trayABMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion);
-            string trayCDMotorVersion = await trayCDMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion);
-            string tecAFirmwareVersion = await tecA.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion);
-            string clampAMotorVersion = await clampAMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion);
-            string clampBMotorVersion = await clampBMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion);
-            string clampCMotorVersion = await clampCMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion);
-            string clampDMotorVersion = await clampDMotor.GetVersionAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion);
+            SingleUseDataLoad();
+
+            // Load in Configure Combo Boxes
+            LoadConfigureComboBoxInitialData();
+        }
+
+        private async void SingleUseDataLoad()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(SingleUseDataLoad));
+            }
+            else
+            {
+                string xMotorVersion = await xMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion);
+                string yMotorVersion = await yMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion);
+                string zMotorVersion = await zMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion);
+                string filterWheelMotorVersion = await filterWheelMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion);
+                string trayABMotorVersion = await trayABMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion);
+                string trayCDMotorVersion = await trayCDMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion);
+                string tecAFirmwareVersion = await tecA.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion);
+                string tecBFirmwareVersion = await tecB.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC B", "Version", tecBFirmwareVersion);
+                string tecCFirmwareVersion = await tecC.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC C", "Version", tecCFirmwareVersion);
+                string tecDFirmwareVersion = await tecD.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC D", "Version", tecDFirmwareVersion);
+                string clampAMotorVersion = await clampAMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion);
+                string clampBMotorVersion = await clampBMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion);
+                string clampCMotorVersion = await clampCMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion);
+                string clampDMotorVersion = await clampDMotor.GetVersionAsync();
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion);
+            }
+        }
+
+        private void LoadConfigureComboBoxInitialData()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(LoadConfigureComboBoxInitialData));
+            }
+            else
+            {
+                List<Cartridge> cartridgeOptionsList = cartridgeOptions.Options;
+                foreach (var option in cartridgeOptionsList)
+                {
+                    configureCartridgeComboBox.Items.Add(option.Name);
+                }
+                configureCartridgeComboBox.SelectedItem = cartridgeOptionsList.First().Name;
+                List<Elastomer> elastomerOptionsList = elastomerOptions.Options;
+                foreach (var option in elastomerOptionsList)
+                {
+                    configureElastomerComboBox.Items.Add(option.Name);
+                }
+                configureElastomerComboBox.SelectedItem = elastomerOptionsList.First().Name;
+                List<Bergquist> bergquistOptionsList = bergquistOptions.Options;
+                foreach (var option in bergquistOptionsList)
+                {
+                    configureBergquistComboBox.Items.Add(option.Name);
+                }
+                configureBergquistComboBox.SelectedItem = bergquistOptionsList.First().Name;
+            }
         }
 
         /// <summary>
@@ -1095,15 +1146,15 @@ namespace Independent_Reader_GUI
         {
             // Convert Windows Forms mouse event args to OxyPlot ScreenPoint
             var screenPoint = new ScreenPoint(e.X, e.Y);
+            //MessageBox.Show($"{e.X}, {e.Y}");
+            // Invoke the plot manager's mouse down handler
+            // FIXME: Clicking on the Plot View causes the GUI to crash, this needs to be resolved
             // Create an OxyPlot mouse event args
             var oxyArgs = new OxyMouseDownEventArgs
             {
                 Position = screenPoint,
                 ChangedButton = OxyMouseButton.Left // assumes a left mouse click
             };
-
-            // Invoke the plot manager's mouse down handler
-            // FIXME: Clicking on the Plot View causes the GUI to crash, this needs to be resolved
             plotManager.HandleMouseDown(sender, oxyArgs);
         }
 
@@ -1443,22 +1494,22 @@ namespace Independent_Reader_GUI
                 + " with postprocessing data after the fact. Initial conditions for the run can be found to trace any unexpected behavior after thermocycling."
                 + " This report does not include the actual thermal profile experienced by the system but is estimated based on the materials at the heater"
                 + " cartridge interface.");
-            await reportManager.AddSubSectionAsync("Experiment Data", 
+            await reportManager.AddSubSectionAsync("Experiment Data",
                 "Experiment data includes all information regarding the experimental setup on the instrument."
                 + " This includes the experiment name, the instrument's configuration, dPCR cartridge information, as well as any excess materials used in the run.");
             await reportManager.AddTableAsync(runExperimentDataGridView);
             await reportManager.AddSubSectionAsync("Cartridge Layout",
                 "Cartridge layout summarizes information regarding the sample and assay loading in the cartridge. This includes the names for each sample loaded"
                 + " as well as for each assay loaded. An empty cell is an indication of a sample or assay section that was not loaded for this run.");
-            await reportManager.AddSubSectionAsync("Imaging Setup", 
+            await reportManager.AddSubSectionAsync("Imaging Setup",
                 "Imaging setup includes all information regarding the imaging performed before, during, and after the run.");
             await reportManager.AddTableAsync(runImagingSetupDataGridView);
             await reportManager.AddSubSectionAsync("Initial Conditions and Constants",
                 "These are the initial conditions determined at the onset of the run, covering a range of values that implicitly or explicitly affect the run's outcome."
-                + " The initial conditions include information pertaining to the TECs initial object and sink temperature which could potentially affect ramp rates for the" 
+                + " The initial conditions include information pertaining to the TECs initial object and sink temperature which could potentially affect ramp rates for the"
                 + " entire run. Other initial conditions are as influential, but may slightly extend the projected run time, such as error states on the TEC which"
                 + " require a reset.");
-            await reportManager.AddSubSectionAsync("Versions", 
+            await reportManager.AddSubSectionAsync("Versions",
                 "Versions include all version pertaining to the Firmware loaded on each submodule and module board (including the Firmware loaded on the"
                 + " TEC boards). Software versions are also included, these are version numbers for the Image Analysis Model used in post-processing, the"
                 + " version of the Autofocus model, GUI, Backend, and API.");
@@ -1470,6 +1521,105 @@ namespace Independent_Reader_GUI
         {
             var p = await xMotor.GetPositionAsync();
             MessageBox.Show(p.ToString());
+        }
+
+        private void configureCartridgeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Update the cartridge options to get the most update to date results
+            cartridgeOptions.Update();
+            // FIXME: This needs to be resolved, this region of code causes issues (Stackoverflow)
+            // Reload in the data to the comboboxcell
+            //configureCartridgeComboBox.Items.Clear();
+            //foreach (var option in cartridgeOptions.Options)
+            //{
+            //    configureCartridgeComboBox.Items.Add(option.Name);
+            //}
+            //configureCartridgeComboBox.SelectedItem = cartridgeOptions.Options.First().Name;
+            // Get the Cartridge Name
+            string cartridgeName = configureCartridgeComboBox.SelectedItem.ToString();
+            // Get the Cartridge instance from the name
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeName);
+            // Fill in the DataGridView for the cartridge on the Configure Tab
+            configureCartridgesDataGridView.Rows.Clear();
+            configureCartridgesDataGridView.Rows.Add();
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Name, rowIndex: 0, columnName: "Name");
+            // FIXME: Make the Partition Type column cell a DataGridViewComboBox
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.PartitionType, rowIndex: 0, columnName: "Partition Type");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.NumberofSampleChambers.ToString(), rowIndex: 0, columnName: "Number of Samples");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.NumberofAssayChambers.ToString(), rowIndex: 0, columnName: "Number of Assays");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Length.ToString(), rowIndex: 0, columnName: "Length (mm)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Width.ToString(), rowIndex: 0, columnName: "Width (mm)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Height.ToString(), rowIndex: 0, columnName: "Height (mm)");
+        }
+
+        private void configureSaveNewCartridgeButton_Click(object sender, EventArgs e)
+        {
+            // Ensure all cells are filled with appropriate inputs
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+            string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
+            int numberOfSampleChambers;
+            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
+            {
+                MessageBox.Show("Cannot have a non-integer value for the number of samples in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            int numberOfAssayChambers;
+            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
+            {
+                MessageBox.Show("Cannot have a non-integer value for the number of assays in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            double length;
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
+            {
+                MessageBox.Show("Cannot have a non-real value for the length of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            double width;
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
+            {
+                MessageBox.Show("Cannot have a non-real value for the width of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            double height;
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
+            {
+                MessageBox.Show("Cannot have a non-real value for the height of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            if (name == string.Empty)
+            {
+                MessageBox.Show("A cartridge must have a name in order to save it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            if (partitionType == string.Empty)
+            {
+                MessageBox.Show("A cartridge must have a valid partition type in order to save it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            if (name == string.Empty)
+            {
+                MessageBox.Show("A cartridge must have a name", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            if (cartridgeOptions.NameInOptions(name))
+            {
+                MessageBox.Show($"A cartridge named {name} already exists, choose a unique name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+            }
+            // TODO: Make sure that the Cartridge name does not already exist and is unique
+            // Add this cartridge to the Cartridges XML data file
+            Cartridge cartridge = new Cartridge();
+            cartridge.Name = name;
+            cartridge.PartitionType = partitionType;
+            cartridge.NumberofSampleChambers = numberOfSampleChambers;
+            cartridge.NumberofAssayChambers = numberOfAssayChambers;
+            cartridge.Length = length;
+            cartridge.Width = width;
+            cartridge.Height = height;
+            cartridgeOptions.SaveNewCartridge(cartridge);
+        }
+
+        private void configureDeleteCartridgeButton_Click(object sender, EventArgs e)
+        {
+            // Get the name of cartridge to be deleted
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+            if (name != null)
+            {
+                // Delete the cartridge from the XML data
+                cartridgeOptions.DeleteCartridgeByName(name);
+            }
         }
     }
 }

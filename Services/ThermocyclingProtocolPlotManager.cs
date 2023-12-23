@@ -5,6 +5,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -286,40 +287,65 @@ namespace Independent_Reader_GUI.Services
         {
             // Get the x position of the mouse within the plot view
             var xPosition = Axis.InverseTransform(args.Position, plotModel.Axes[0], plotModel.Axes[1]).X;
+            var yPosition = Axis.InverseTransform(args.Position, plotModel.Axes[0], plotModel.Axes[1]).Y;
+            if (xPosition > sections.Last().Item1 + dx)
+            {
+                return;
+            }
+            if (xPosition < 0)
+            {
+                return;
+            }
+            if (!(yPosition >= -10 && yPosition <= 108))
+            {
+                return;
+            }
             // Determine which section was clicked
             selectedSection = sections.FirstOrDefault(s => xPosition >= s.Item1 && xPosition <= s.Item2);
             if (selectedSection != null)
             {
                 // Highlight the selected section and update the plot
                 HighlightSelectedSection();
-                UpdatePlot();
+                // FIXME: get this section of code to work without the message box
+                MessageBox.Show("GUI crashes without this popup");
+                //UpdatePlot();
             }
         }
 
         private void HighlightSelectedSection()
-        {           
+        {
             var yAxis = plotModel.Axes.FirstOrDefault(a => a.Position == AxisPosition.Left);
             if (yAxis != null)
             {
                 List<DataPoint> points = new List<DataPoint>
-            {
-                new DataPoint(selectedSection.Item1, 0),
-                new DataPoint(selectedSection.Item1, yAxis.ActualMaximum),
-                new DataPoint(selectedSection.Item2, yAxis.ActualMaximum),
-                new DataPoint(selectedSection.Item2, 0)
-            };
+                {
+                    new DataPoint(selectedSection.Item1, -15),
+                    new DataPoint(selectedSection.Item1, yAxis.ActualMaximum),
+                    new DataPoint(selectedSection.Item2, yAxis.ActualMaximum),
+                    new DataPoint(selectedSection.Item2, -15)
+                };
                 List<DataPoint> points2 = new List<DataPoint>
-            {
-                new DataPoint(selectedSection.Item1, 0),
-                new DataPoint(selectedSection.Item2, 0)
-            };
-                // Clear previous highlights
+                {
+                    new DataPoint(selectedSection.Item1, -15),
+                    new DataPoint(selectedSection.Item2, -15)
+                };
 
                 if (selectedSection != null)
                 {
                     var areaSeries = new AreaSeries { Color = OxyColor.FromAColor(50, OxyColors.Blue) };
-                    areaSeries.Points.Clear(); // clear the read-only points property
-                    areaSeries.Points2.Clear(); // clear the read-only points2 property
+                    // Look to clear old highlighted sections
+                    AreaSeries? seriesToRemove = null;
+                    foreach (var series in plotModel.Series)
+                    {
+                        if (series.GetType() == typeof(AreaSeries))
+                        {
+                            seriesToRemove = series as AreaSeries;
+                        }
+                    }
+                    if (seriesToRemove != null)
+                    {
+                        plotModel.Series.Remove(seriesToRemove);
+                    }
                     areaSeries.Points.AddRange(points);
                     areaSeries.Points2.AddRange(points2);
                     plotModel.Series.Add(areaSeries);
