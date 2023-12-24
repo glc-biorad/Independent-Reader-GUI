@@ -83,6 +83,26 @@ namespace Independent_Reader_GUI.Services
             return rowIndex;
         }
 
+        /// <summary>
+        /// Get the Column Name (HeaderText) from the column index
+        /// </summary>
+        /// <param name="dataGridView">DataGridView to be checked</param>
+        /// <param name="columnIndex">Column index for the column of interest</param>
+        /// <returns>HeaderText for the column, otherwise null if nothing found</returns>
+        public string? GetColumnNameFromIndex(DataGridView dataGridView, int columnIndex)
+        {
+            string? columnName = null;
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                if (column.Index == columnIndex)
+                {
+                    columnName = column.HeaderText;
+                    return columnName;
+                }
+            }
+            return columnName;
+        }
+
         public string GetColumnCellValueByColumnAndRowName(string headerText, string rowText, DataGridView dataGridView)
         {
             // Get the column index by the header text

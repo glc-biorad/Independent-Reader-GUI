@@ -179,6 +179,9 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
             #endregion
 
+            // Subscribe to CellClick events
+            this.controlMotorsDataGridView.CellClick += new DataGridViewCellEventHandler(controlMotorsDataGridView_CellClick);
+
             // Subscribe to value changed events
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
             this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
@@ -843,6 +846,19 @@ namespace Independent_Reader_GUI
                 }
             }
         }
+
+        private void controlMotorsDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // If input is being added to either the position or speed for a motor get the name of the motor
+            if (dataGridViewManager.GetColumnNameFromIndex(controlMotorsDataGridView, e.ColumnIndex) == "Position (\u03BCS)" ||
+                dataGridViewManager.GetColumnNameFromIndex(controlMotorsDataGridView, e.ColumnIndex) == "Speed (\u03BCS/s)")
+            {
+                // Update the selected item in the Motor ComboBox on the Control tab
+                string name = controlMotorsDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                controlMotorsComboBox.SelectedItem = name;
+            }
+        }
+
         private void runExperimentDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 1)
