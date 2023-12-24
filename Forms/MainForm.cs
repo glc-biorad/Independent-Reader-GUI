@@ -1621,5 +1621,180 @@ namespace Independent_Reader_GUI
                 cartridgeOptions.DeleteCartridgeByName(name);
             }
         }
+
+        private void configureUpdateCartridgeDataButton_Click(object sender, EventArgs e)
+        {
+            // Get the name of the cartridge to be updated
+            string? oldName = configureCartridgeComboBox.SelectedItem.ToString();
+            if (oldName != null)
+            {
+                string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+                string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
+                int numberOfSampleChambers;
+                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
+                {
+                    MessageBox.Show("Cannot have a non-integer value for the number of samples in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                int numberOfAssayChambers;
+                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
+                {
+                    MessageBox.Show("Cannot have a non-integer value for the number of assays in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                double length;
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
+                {
+                    MessageBox.Show("Cannot have a non-real value for the length of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                double width;
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
+                {
+                    MessageBox.Show("Cannot have a non-real value for the width of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                double height;
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
+                {
+                    MessageBox.Show("Cannot have a non-real value for the height of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                if (name == string.Empty)
+                {
+                    MessageBox.Show("A cartridge must have a name in order to save it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                if (partitionType == string.Empty)
+                {
+                    MessageBox.Show("A cartridge must have a valid partition type in order to save it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                if (name == string.Empty)
+                {
+                    MessageBox.Show("A cartridge must have a name", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                if (!cartridgeOptions.NameInOptions(oldName))
+                {
+                    MessageBox.Show($"A cartridge named {oldName} does not exists,.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                }
+                // TODO: Make sure that the Cartridge name does not already exist and is unique
+                // Add this cartridge to the Cartridges XML data file
+                Cartridge cartridge = new Cartridge();
+                cartridge.Name = name;
+                cartridge.PartitionType = partitionType;
+                cartridge.NumberofSampleChambers = numberOfSampleChambers;
+                cartridge.NumberofAssayChambers = numberOfAssayChambers;
+                cartridge.Length = length;
+                cartridge.Width = width;
+                cartridge.Height = height;
+                // Update the cartridge from the XML data
+                cartridgeOptions.UpdateCartridge(name, cartridge);
+            }
+        }
+
+        private void configureElastomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Update the elastomer options to get the most up to date options
+            elastomerOptions.Update();
+            // TODO: update the combo box options
+            // Get the elastomer from the name
+            string? name = configureElastomerComboBox.SelectedItem.ToString();
+            if (name != string.Empty)
+            {
+                Elastomer? elastomer = elastomerOptions.GetElastomerFromName(name);
+                if (elastomer != null)
+                {
+                    configureElastomerDataGridView.Rows.Clear();
+                    configureElastomerDataGridView.Rows.Add();
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Name, 0, "Name");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Thickness.ToString(), 0, "Thickness (mm)");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.ThermalCoefficient.ToString(), 0, "Thermal Coefficient (W/m K)");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.ShoreHardness.ToString(), 0, "Shore Hardness");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Mold.ToString(), 0, "Mold");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Film.ToString(), 0, "Film");
+                }
+            }
+        }
+
+        private void configureSaveNewElastomerButton_Click(object sender, EventArgs e)
+        {
+            // Update the elastomer options to get the most up to date options
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Name", 0);
+            string? thickness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Thickness (mm)", 0);
+            string? thermalCoefficient = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Thermal Coefficient (W/m K)", 0);
+            string? shoreHardness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Shore Hardness", 0);
+            string? mold = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Mold", 0);
+            string? film = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Film", 0);
+            string?[] properties = { name, thickness, thermalCoefficient, shoreHardness, mold, film };
+            if (properties.Contains(string.Empty) || properties.Contains(null))
+            {
+                MessageBox.Show("An elastomer property is missing, save failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                Elastomer elastomer = new Elastomer();
+                if (elastomerOptions.NameInOptions(name))
+                {
+                    MessageBox.Show($"{name} already exists, choose a different name, save failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                }
+                else
+                {
+                    elastomer.Name = name;
+                }
+                if (double.TryParse(thickness, out _))
+                {
+                    elastomer.Thickness = double.Parse(thickness);
+                }
+                else
+                {
+                    MessageBox.Show("Thickness must be a real value, save failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                }
+                if (double.TryParse(thermalCoefficient, out _))
+                {
+                    elastomer.ThermalCoefficient = double.Parse(thermalCoefficient);
+                }
+                else
+                {
+                    MessageBox.Show("Thermal Coefficient must be a real value, save failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                }
+                if (double.TryParse(shoreHardness, out _))
+                {
+                    elastomer.ShoreHardness = double.Parse(shoreHardness);
+                }
+                else
+                {
+                    MessageBox.Show("Shore Hardness must be a real value, save failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
+                }
+                elastomer.Film = film;
+                elastomer.Mold = mold;
+                // Add the new elastomer
+                elastomerOptions.SaveNewElastomer(elastomer);
+            }
+        }
+
+        private void configureDeleteElastomerButton_Click(object sender, EventArgs e)
+        {
+            // Get the name of the elastomer to be deleted
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Name", 0);
+            if (name != null)
+            {
+                // Delete the elastomer from the XML data
+                elastomerOptions.DeleteElastomerByName(name);
+            }
+        }
+
+        private void configureUpdateElastomerData_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Code to update the Elastomer data has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void configureBergquistDataButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Code to update the Bergquist data has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void configureSaveNewBergquistButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Code to save a new Bergquist has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void configureDeleteBergquistButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Code to delete a Bergquist has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

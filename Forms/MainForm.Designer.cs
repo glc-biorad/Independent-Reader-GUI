@@ -1886,6 +1886,7 @@
             configureDeleteBergquistButton.TabIndex = 29;
             configureDeleteBergquistButton.Text = "Delete Bergquist";
             configureDeleteBergquistButton.UseVisualStyleBackColor = false;
+            configureDeleteBergquistButton.Click += configureDeleteBergquistButton_Click;
             // 
             // configureDeleteElastomerButton
             // 
@@ -1898,6 +1899,7 @@
             configureDeleteElastomerButton.TabIndex = 28;
             configureDeleteElastomerButton.Text = "Delete Elastomer";
             configureDeleteElastomerButton.UseVisualStyleBackColor = false;
+            configureDeleteElastomerButton.Click += configureDeleteElastomerButton_Click;
             // 
             // configureSaveNewBergquistButton
             // 
@@ -1910,6 +1912,7 @@
             configureSaveNewBergquistButton.TabIndex = 27;
             configureSaveNewBergquistButton.Text = "Save New Bergquist";
             configureSaveNewBergquistButton.UseVisualStyleBackColor = false;
+            configureSaveNewBergquistButton.Click += configureSaveNewBergquistButton_Click;
             // 
             // configureSaveNewElastomerButton
             // 
@@ -1922,6 +1925,7 @@
             configureSaveNewElastomerButton.TabIndex = 26;
             configureSaveNewElastomerButton.Text = "Save New Elastomer";
             configureSaveNewElastomerButton.UseVisualStyleBackColor = false;
+            configureSaveNewElastomerButton.Click += configureSaveNewElastomerButton_Click;
             // 
             // configureDeleteCartridgeButton
             // 
@@ -2027,6 +2031,7 @@
             configureElastomerComboBox.Name = "configureElastomerComboBox";
             configureElastomerComboBox.Size = new Size(206, 26);
             configureElastomerComboBox.TabIndex = 16;
+            configureElastomerComboBox.SelectedIndexChanged += configureElastomerComboBox_SelectedIndexChanged;
             // 
             // configureCartridgeComboBox
             // 
@@ -2126,6 +2131,7 @@
             configureBergquistDataButton.TabIndex = 13;
             configureBergquistDataButton.Text = "Update Bergquist Data";
             configureBergquistDataButton.UseVisualStyleBackColor = false;
+            configureBergquistDataButton.Click += configureBergquistDataButton_Click;
             // 
             // configureUpdateElastomerData
             // 
@@ -2138,6 +2144,7 @@
             configureUpdateElastomerData.TabIndex = 12;
             configureUpdateElastomerData.Text = "Update Elastomer Data";
             configureUpdateElastomerData.UseVisualStyleBackColor = false;
+            configureUpdateElastomerData.Click += configureUpdateElastomerData_Click;
             // 
             // configureUpdateCartridgeDataButton
             // 
@@ -2150,6 +2157,7 @@
             configureUpdateCartridgeDataButton.TabIndex = 11;
             configureUpdateCartridgeDataButton.Text = "Update Cartridge Data";
             configureUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
+            configureUpdateCartridgeDataButton.Click += configureUpdateCartridgeDataButton_Click;
             // 
             // configureImageScanningLabel
             // 
@@ -2171,7 +2179,7 @@
             configureBergquistsDataGridView.Name = "configureBergquistsDataGridView";
             configureBergquistsDataGridView.RowHeadersVisible = false;
             configureBergquistsDataGridView.RowTemplate.Height = 25;
-            configureBergquistsDataGridView.Size = new Size(1100, 60);
+            configureBergquistsDataGridView.Size = new Size(1100, 55);
             configureBergquistsDataGridView.TabIndex = 5;
             // 
             // configureBergquistsNameColumn
@@ -2218,7 +2226,7 @@
             configureElastomerDataGridView.Name = "configureElastomerDataGridView";
             configureElastomerDataGridView.RowHeadersVisible = false;
             configureElastomerDataGridView.RowTemplate.Height = 25;
-            configureElastomerDataGridView.Size = new Size(1102, 60);
+            configureElastomerDataGridView.Size = new Size(1102, 55);
             configureElastomerDataGridView.TabIndex = 3;
             // 
             // configureElastomerNameColumn
@@ -2279,7 +2287,7 @@
             configureCartridgesDataGridView.Name = "configureCartridgesDataGridView";
             configureCartridgesDataGridView.RowHeadersVisible = false;
             configureCartridgesDataGridView.RowTemplate.Height = 25;
-            configureCartridgesDataGridView.Size = new Size(1100, 60);
+            configureCartridgesDataGridView.Size = new Size(1100, 55);
             configureCartridgesDataGridView.TabIndex = 1;
             // 
             // configureCartridgesNameColumn
