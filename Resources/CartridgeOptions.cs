@@ -99,6 +99,30 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
+        public void UpdateCartridge(string oldName, Cartridge cartridge)
+        {
+            // Update the XML
+            XDocument cartridgeXDocument = XDocument.Load(configuration.CartridgeDataPath);
+            var cartridgeXElements = cartridgeXDocument.Root?.Elements();
+            XElement? elementToUpdate = null;
+            foreach (XElement cartridgeXElement in cartridgeXElements)
+            {
+                if (cartridgeXElement.Element("Name").Value == oldName)
+                {
+                    elementToUpdate = cartridgeXElement;
+                    elementToUpdate.Element("Name").Value = cartridge.Name;
+                    elementToUpdate.Element("NumberofSampleChambers").Value = cartridge.NumberofSampleChambers.ToString();
+                    elementToUpdate.Element("NumberofAssayChambers").Value = cartridge.NumberofAssayChambers.ToString();
+                    elementToUpdate.Element("Length").Value = cartridge.Length.ToString();
+                    elementToUpdate.Element("Width").Value = cartridge.Width.ToString();
+                    elementToUpdate.Element("Height").Value = cartridge.Height.ToString();
+                    cartridgeXDocument.Save(configuration.CartridgeDataPath);
+                    break;
+                }              
+            }
+            Update();
+        }
+
         public void DeleteCartridgeByName(string name)
         {
             Cartridge? cartridge = GetCartridgeFromName(name);
