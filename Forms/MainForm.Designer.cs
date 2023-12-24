@@ -28,6 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             homeTabPage = new TabPage();
             homeTECsDataGridView = new DataGridView();
@@ -322,6 +332,8 @@
             homeTECsDataGridView.Name = "homeTECsDataGridView";
             homeTECsDataGridView.ReadOnly = true;
             homeTECsDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeTECsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle1;
             homeTECsDataGridView.RowTemplate.Height = 25;
             homeTECsDataGridView.Size = new Size(545, 402);
             homeTECsDataGridView.TabIndex = 7;
@@ -378,6 +390,8 @@
             homeLEDsDataGridView.Name = "homeLEDsDataGridView";
             homeLEDsDataGridView.ReadOnly = true;
             homeLEDsDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeLEDsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
             homeLEDsDataGridView.RowTemplate.Height = 25;
             homeLEDsDataGridView.Size = new Size(513, 138);
             homeLEDsDataGridView.TabIndex = 5;
@@ -452,6 +466,8 @@
             homeCameraDataGridView.Name = "homeCameraDataGridView";
             homeCameraDataGridView.ReadOnly = true;
             homeCameraDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle3.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeCameraDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             homeCameraDataGridView.RowTemplate.Height = 25;
             homeCameraDataGridView.Size = new Size(269, 59);
             homeCameraDataGridView.TabIndex = 3;
@@ -493,6 +509,8 @@
             homeMotorsDataGridView.ReadOnly = true;
             homeMotorsDataGridView.RowHeadersVisible = false;
             homeMotorsDataGridView.RowHeadersWidth = 10;
+            dataGridViewCellStyle4.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeMotorsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.Font = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             homeMotorsDataGridView.RowTemplate.Height = 25;
@@ -2054,6 +2072,8 @@
             configureImageScanningDataGridView.Location = new Point(8, 365);
             configureImageScanningDataGridView.Name = "configureImageScanningDataGridView";
             configureImageScanningDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             configureImageScanningDataGridView.RowTemplate.Height = 25;
             configureImageScanningDataGridView.Size = new Size(1100, 104);
             configureImageScanningDataGridView.TabIndex = 14;
@@ -2178,6 +2198,8 @@
             configureBergquistsDataGridView.Location = new Point(8, 254);
             configureBergquistsDataGridView.Name = "configureBergquistsDataGridView";
             configureBergquistsDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle6.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             configureBergquistsDataGridView.RowTemplate.Height = 25;
             configureBergquistsDataGridView.Size = new Size(1100, 55);
             configureBergquistsDataGridView.TabIndex = 5;
@@ -2225,8 +2247,10 @@
             configureElastomerDataGridView.Location = new Point(6, 145);
             configureElastomerDataGridView.Name = "configureElastomerDataGridView";
             configureElastomerDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle7;
             configureElastomerDataGridView.RowTemplate.Height = 25;
-            configureElastomerDataGridView.Size = new Size(1102, 55);
+            configureElastomerDataGridView.Size = new Size(1102, 50);
             configureElastomerDataGridView.TabIndex = 3;
             // 
             // configureElastomerNameColumn
@@ -2283,11 +2307,29 @@
             configureCartridgesDataGridView.AllowUserToResizeRows = false;
             configureCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             configureCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureCartridgesNameColumn, configureCartridgesPartitionTypeColumn, configureCartridgesSamplesColumn, configureCartridgesAssaysColumn, configureCartridgesLengthColumn, configureCartridgesWidthColumn, configureCartridgesHeightColumn });
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            configureCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
             configureCartridgesDataGridView.Location = new Point(8, 29);
             configureCartridgesDataGridView.Name = "configureCartridgesDataGridView";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = SystemColors.Control;
+            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            configureCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             configureCartridgesDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle10.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
             configureCartridgesDataGridView.RowTemplate.Height = 25;
-            configureCartridgesDataGridView.Size = new Size(1100, 55);
+            configureCartridgesDataGridView.Size = new Size(1100, 50);
             configureCartridgesDataGridView.TabIndex = 1;
             // 
             // configureCartridgesNameColumn

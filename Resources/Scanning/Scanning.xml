@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Scanning>
+	<A>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+			<Bergquist>COH-1019LVC</Bergquist>
+			<X0>725500</X0>
+			<Y0>10000</Y0>
+			<Z0>325000</Z0>
+			<FOVdX>23000</FOVdX>
+			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+	</A>
+	<B>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+			<Bergquist>COH-1019LVC</Bergquist>
+			<X0>725500</X0>
+			<Y0>10000</Y0>
+			<Z0>325000</Z0>
+			<FOVdX>23000</FOVdX>
+			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+	</B>
+	<C>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+			<Bergquist>COH-1019LVC</Bergquist>
+			<X0>725500</X0>
+			<Y0>10000</Y0>
+			<Z0>325000</Z0>
+			<FOVdX>23000</FOVdX>
+			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+	</C>
+	<D>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+			<Bergquist>COH-1019LVC</Bergquist>
+			<X0>725500</X0>
+			<Y0>10000</Y0>
+			<Z0>325000</Z0>
+			<FOVdX>23000</FOVdX>
+			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+	</D>
+</Scanning>
