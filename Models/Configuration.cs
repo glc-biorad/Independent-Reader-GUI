@@ -101,6 +101,7 @@ namespace Independent_Reader_GUI.Models
         public string DefaultCartridge = string.Empty;
         public string DefaultElastomer = string.Empty;
         public string DefaultBergquist = string.Empty;
+        public double DefaultGlassOffset = double.NaN;
         public int RunDataTimerInterval = int.MinValue;
         public int ControlTabTimerInterval = int.MinValue;
         public int EstimateFOVCaptureTimeSeconds = int.MinValue;
@@ -132,6 +133,7 @@ namespace Independent_Reader_GUI.Models
         public double TECDFanOnTemp = double.NaN;
         public string ReportsDataPath;
         public string AssetsDataPath;
+        public string ScanningDataPath;
         public string ReportLogoDataPath;
 
         public Configuration()
@@ -236,11 +238,13 @@ namespace Independent_Reader_GUI.Models
             BergquistDataPath = dataPathsNode.Element("Bergquists").Value;
             CartridgeDataPath = dataPathsNode.Element("Cartridges").Value;
             ElastomerDataPath = dataPathsNode.Element("Elastomers").Value;
+            ScanningDataPath = dataPathsNode.Element("Scanning").Value;
             AssetsDataPath = dataPathsNode.Element("Assets").Value;
             DefaultPartitionType = rootNode.Element("DefaultPartitionType").Value;
             DefaultCartridge = rootNode.Element("DefaultCartridge").Value;
             DefaultElastomer = rootNode.Element("DefaultElastomer").Value;
             DefaultBergquist = rootNode.Element("DefaultBergquist").Value;
+            DefaultGlassOffset = double.Parse(rootNode.Element("DefaultGlassOffset").Value);
             RunDataTimerInterval = int.Parse(rootNode.Element("RunDataTimerInterval").Value);
             ControlTabTimerInterval = int.Parse(rootNode.Element("ControlTabTimerInterval").Value);
             EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
