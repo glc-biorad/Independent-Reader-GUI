@@ -30,6 +30,7 @@ namespace Independent_Reader_GUI
         private CartridgeOptions cartridgeOptions;
         private ElastomerOptions elastomerOptions;
         private BergquistOptions bergquistOptions;
+        private ScanningOptions scanningOptions;
         private FLIRCameraManager cameraManager = new FLIRCameraManager();
         private string runExperimentProtocolName = string.Empty;
         private double runExperimentProtocolTime = 0.0;
@@ -108,6 +109,7 @@ namespace Independent_Reader_GUI
             cartridgeOptions = new CartridgeOptions(configuration);
             elastomerOptions = new ElastomerOptions(configuration);
             bergquistOptions = new BergquistOptions(configuration);
+            scanningOptions = new ScanningOptions(configuration, configureImageScanningDataGridView);
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -792,6 +794,13 @@ namespace Independent_Reader_GUI
                     }
                 }
             }
+
+            // Setup the Glass Offset ComboBox
+            foreach (var glassOffsetOption in scanningOptions.GlassOffsets)
+            {
+                configureGlassOffsetComboBox.Items.Add(glassOffsetOption.ToString());
+            }
+            configureGlassOffsetComboBox.SelectedItem = configuration.DefaultGlassOffset;
             //foreach (DataGridViewRow row in runImagingSetupDataGridView.Rows)
             //{
             //    if (!row.IsNewRow) // check to skip the new row template
@@ -1811,6 +1820,19 @@ namespace Independent_Reader_GUI
         private void configureDeleteBergquistButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Code to delete a Bergquist has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void configureGlassOffsetComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Clear the Configure tab's Image Scanning data grid view
+            configureImageScanningDataGridView.Rows.Clear();
+            // Make sure value is valid
+            if (double.TryParse(configureGlassOffsetComboBox.SelectedItem.ToString(), out _))
+            {
+                scanningOptions.ReadInScanningData(dataGridView: configureImageScanningDataGridView,
+                    cartridgeName: configureCartridgeComboBox.SelectedItem.ToString(), glassOffset: double.Parse(configureGlassOffsetComboBox.SelectedItem.ToString()),
+                    elastomerName: configureElastomerComboBox.SelectedItem.ToString(), configureBergquistComboBox.SelectedItem.ToString());
+            }
         }
     }
 }

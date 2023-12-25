@@ -182,6 +182,7 @@
 		<Bergquists>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</Bergquists>
 		<Elastomers>&BASEPATH;Independent-Reader-GUI\Resources\Elastomers\ElastomerData.xml</Elastomers>
 		<Cartridges>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</Cartridges>
+		<Scanning>&BASEPATH;Independent-Reader-GUI\Resources\Scanning\ScanningData.xml</Scanning>
 		<Reports>&BASEPATH;Independent-Reader-GUI\Reports\</Reports>
 		<Assets>&BASEPATH;Independent-Reader-GUI\Assets</Assets>
 		<ReportLogo>&BASEPATH;Independent-Reader-GUI\Assets\bio-rad-laboratories-logo.png</ReportLogo>
@@ -279,6 +280,7 @@
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
 	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
+	<DefaultGlassOffset>12.3</DefaultGlassOffset>
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
 	<ControlTabTimerInterval>20000</ControlTabTimerInterval>
 	<EstimateFOVCaptureTimeSeconds>7</EstimateFOVCaptureTimeSeconds>

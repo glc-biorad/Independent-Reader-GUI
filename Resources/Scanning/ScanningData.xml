@@ -5,6 +5,8 @@
 			<Cartridge>M2M</Cartridge>
 			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
 			<Bergquist>COH-1019LVC</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
 			<X0>725500</X0>
 			<Y0>10000</Y0>
 			<Z0>325000</Z0>
@@ -19,6 +21,8 @@
 			<Cartridge>M2M</Cartridge>
 			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
 			<Bergquist>COH-1019LVC</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
 			<X0>725500</X0>
 			<Y0>10000</Y0>
 			<Z0>325000</Z0>
@@ -33,6 +37,8 @@
 			<Cartridge>M2M</Cartridge>
 			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
 			<Bergquist>COH-1019LVC</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
 			<X0>725500</X0>
 			<Y0>10000</Y0>
 			<Z0>325000</Z0>
@@ -47,6 +53,8 @@
 			<Cartridge>M2M</Cartridge>
 			<Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
 			<Bergquist>COH-1019LVC</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
 			<X0>725500</X0>
 			<Y0>10000</Y0>
 			<Z0>325000</Z0>

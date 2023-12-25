@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             homeTabPage = new TabPage();
             homeTECsDataGridView = new DataGridView();
@@ -196,6 +196,8 @@
             settingsMotorsEnabledColumn = new DataGridViewTextBoxColumn();
             settingsMotorsLabel = new Label();
             configureTabPage = new TabPage();
+            configureGlassOffsetComboBox = new ComboBox();
+            configureGlassOffsetLabel = new Label();
             configureDeleteBergquistButton = new Button();
             configureDeleteElastomerButton = new Button();
             configureSaveNewBergquistButton = new Button();
@@ -205,16 +207,13 @@
             configureBergquistLabel = new Label();
             configureElastomerLabel = new Label();
             configureCartridgeLabel = new Label();
-            configureCatridgeImageSetupLabel = new Label();
-            configureCatridgeImageScanningComboBox = new ComboBox();
+            configureImageScanningNoteLabel = new Label();
             congifureUpdateImageScanningButton = new Button();
             configureBergquistComboBox = new ComboBox();
             configureElastomerComboBox = new ComboBox();
             configureCartridgeComboBox = new ComboBox();
             configureImageScanningDataGridView = new DataGridView();
             configureImageScanningHeaterColumn = new DataGridViewTextBoxColumn();
-            configureImageScanningElastomerColumn = new DataGridViewTextBoxColumn();
-            configureImageScanningBergquistColumn = new DataGridViewTextBoxColumn();
             configureImageScanningX0Column = new DataGridViewTextBoxColumn();
             configureImageScanningy0Column = new DataGridViewTextBoxColumn();
             configureImageScanningz0Column = new DataGridViewTextBoxColumn();
@@ -332,8 +331,8 @@
             homeTECsDataGridView.Name = "homeTECsDataGridView";
             homeTECsDataGridView.ReadOnly = true;
             homeTECsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeTECsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeTECsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle11;
             homeTECsDataGridView.RowTemplate.Height = 25;
             homeTECsDataGridView.Size = new Size(545, 402);
             homeTECsDataGridView.TabIndex = 7;
@@ -390,8 +389,8 @@
             homeLEDsDataGridView.Name = "homeLEDsDataGridView";
             homeLEDsDataGridView.ReadOnly = true;
             homeLEDsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeLEDsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeLEDsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
             homeLEDsDataGridView.RowTemplate.Height = 25;
             homeLEDsDataGridView.Size = new Size(513, 138);
             homeLEDsDataGridView.TabIndex = 5;
@@ -466,8 +465,8 @@
             homeCameraDataGridView.Name = "homeCameraDataGridView";
             homeCameraDataGridView.ReadOnly = true;
             homeCameraDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle3.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeCameraDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle13.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeCameraDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle13;
             homeCameraDataGridView.RowTemplate.Height = 25;
             homeCameraDataGridView.Size = new Size(269, 59);
             homeCameraDataGridView.TabIndex = 3;
@@ -509,8 +508,8 @@
             homeMotorsDataGridView.ReadOnly = true;
             homeMotorsDataGridView.RowHeadersVisible = false;
             homeMotorsDataGridView.RowHeadersWidth = 10;
-            dataGridViewCellStyle4.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeMotorsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle14.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeMotorsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.Font = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             homeMotorsDataGridView.RowTemplate.Height = 25;
@@ -1859,6 +1858,8 @@
             // 
             // configureTabPage
             // 
+            configureTabPage.Controls.Add(configureGlassOffsetComboBox);
+            configureTabPage.Controls.Add(configureGlassOffsetLabel);
             configureTabPage.Controls.Add(configureDeleteBergquistButton);
             configureTabPage.Controls.Add(configureDeleteElastomerButton);
             configureTabPage.Controls.Add(configureSaveNewBergquistButton);
@@ -1868,8 +1869,7 @@
             configureTabPage.Controls.Add(configureBergquistLabel);
             configureTabPage.Controls.Add(configureElastomerLabel);
             configureTabPage.Controls.Add(configureCartridgeLabel);
-            configureTabPage.Controls.Add(configureCatridgeImageSetupLabel);
-            configureTabPage.Controls.Add(configureCatridgeImageScanningComboBox);
+            configureTabPage.Controls.Add(configureImageScanningNoteLabel);
             configureTabPage.Controls.Add(congifureUpdateImageScanningButton);
             configureTabPage.Controls.Add(configureBergquistComboBox);
             configureTabPage.Controls.Add(configureElastomerComboBox);
@@ -1892,6 +1892,26 @@
             configureTabPage.TabIndex = 7;
             configureTabPage.Text = "Configure";
             configureTabPage.UseVisualStyleBackColor = true;
+            // 
+            // configureGlassOffsetComboBox
+            // 
+            configureGlassOffsetComboBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureGlassOffsetComboBox.FormattingEnabled = true;
+            configureGlassOffsetComboBox.Location = new Point(752, 508);
+            configureGlassOffsetComboBox.Name = "configureGlassOffsetComboBox";
+            configureGlassOffsetComboBox.Size = new Size(142, 26);
+            configureGlassOffsetComboBox.TabIndex = 31;
+            configureGlassOffsetComboBox.SelectedIndexChanged += configureGlassOffsetComboBox_SelectedIndexChanged;
+            // 
+            // configureGlassOffsetLabel
+            // 
+            configureGlassOffsetLabel.AutoSize = true;
+            configureGlassOffsetLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            configureGlassOffsetLabel.Location = new Point(617, 511);
+            configureGlassOffsetLabel.Name = "configureGlassOffsetLabel";
+            configureGlassOffsetLabel.Size = new Size(133, 18);
+            configureGlassOffsetLabel.TabIndex = 30;
+            configureGlassOffsetLabel.Text = "Glass Offset (mm)";
             // 
             // configureDeleteBergquistButton
             // 
@@ -2001,31 +2021,22 @@
             configureCartridgeLabel.TabIndex = 21;
             configureCartridgeLabel.Text = "Cartridge";
             // 
-            // configureCatridgeImageSetupLabel
+            // configureImageScanningNoteLabel
             // 
-            configureCatridgeImageSetupLabel.AutoSize = true;
-            configureCatridgeImageSetupLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            configureCatridgeImageSetupLabel.Location = new Point(608, 481);
-            configureCatridgeImageSetupLabel.Name = "configureCatridgeImageSetupLabel";
-            configureCatridgeImageSetupLabel.Size = new Size(74, 18);
-            configureCatridgeImageSetupLabel.TabIndex = 20;
-            configureCatridgeImageSetupLabel.Text = "Cartridge";
-            // 
-            // configureCatridgeImageScanningComboBox
-            // 
-            configureCatridgeImageScanningComboBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            configureCatridgeImageScanningComboBox.FormattingEnabled = true;
-            configureCatridgeImageScanningComboBox.Location = new Point(688, 478);
-            configureCatridgeImageScanningComboBox.Name = "configureCatridgeImageScanningComboBox";
-            configureCatridgeImageScanningComboBox.Size = new Size(206, 26);
-            configureCatridgeImageScanningComboBox.TabIndex = 19;
+            configureImageScanningNoteLabel.AutoSize = true;
+            configureImageScanningNoteLabel.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureImageScanningNoteLabel.Location = new Point(8, 502);
+            configureImageScanningNoteLabel.Name = "configureImageScanningNoteLabel";
+            configureImageScanningNoteLabel.Size = new Size(571, 15);
+            configureImageScanningNoteLabel.TabIndex = 20;
+            configureImageScanningNoteLabel.Text = "This table is updated based on the options selected for \"Cartridge\", \"Elastomer\", and \"Bergquist\" above.";
             // 
             // congifureUpdateImageScanningButton
             // 
             congifureUpdateImageScanningButton.BackColor = SystemColors.Highlight;
             congifureUpdateImageScanningButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             congifureUpdateImageScanningButton.ForeColor = Color.White;
-            congifureUpdateImageScanningButton.Location = new Point(900, 475);
+            congifureUpdateImageScanningButton.Location = new Point(900, 505);
             congifureUpdateImageScanningButton.Name = "congifureUpdateImageScanningButton";
             congifureUpdateImageScanningButton.Size = new Size(208, 30);
             congifureUpdateImageScanningButton.TabIndex = 18;
@@ -2064,18 +2075,17 @@
             // configureImageScanningDataGridView
             // 
             configureImageScanningDataGridView.AllowUserToAddRows = false;
-            configureImageScanningDataGridView.AllowUserToDeleteRows = false;
             configureImageScanningDataGridView.AllowUserToResizeColumns = false;
             configureImageScanningDataGridView.AllowUserToResizeRows = false;
             configureImageScanningDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            configureImageScanningDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureImageScanningHeaterColumn, configureImageScanningElastomerColumn, configureImageScanningBergquistColumn, configureImageScanningX0Column, configureImageScanningy0Column, configureImageScanningz0Column, configureImageScanningFOVdXColumn, configureImageScanningdYColumn, configureImageScanningRotationalOffsetColumn });
+            configureImageScanningDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureImageScanningHeaterColumn, configureImageScanningX0Column, configureImageScanningy0Column, configureImageScanningz0Column, configureImageScanningFOVdXColumn, configureImageScanningdYColumn, configureImageScanningRotationalOffsetColumn });
             configureImageScanningDataGridView.Location = new Point(8, 365);
             configureImageScanningDataGridView.Name = "configureImageScanningDataGridView";
             configureImageScanningDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle15.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             configureImageScanningDataGridView.RowTemplate.Height = 25;
-            configureImageScanningDataGridView.Size = new Size(1100, 104);
+            configureImageScanningDataGridView.Size = new Size(1100, 134);
             configureImageScanningDataGridView.TabIndex = 14;
             // 
             // configureImageScanningHeaterColumn
@@ -2084,61 +2094,48 @@
             configureImageScanningHeaterColumn.Name = "configureImageScanningHeaterColumn";
             configureImageScanningHeaterColumn.ReadOnly = true;
             configureImageScanningHeaterColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningHeaterColumn.Width = 120;
-            // 
-            // configureImageScanningElastomerColumn
-            // 
-            configureImageScanningElastomerColumn.HeaderText = "Elastomer";
-            configureImageScanningElastomerColumn.Name = "configureImageScanningElastomerColumn";
-            configureImageScanningElastomerColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningElastomerColumn.Width = 140;
-            // 
-            // configureImageScanningBergquistColumn
-            // 
-            configureImageScanningBergquistColumn.HeaderText = "Bergquist";
-            configureImageScanningBergquistColumn.Name = "configureImageScanningBergquistColumn";
-            configureImageScanningBergquistColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningBergquistColumn.Width = 140;
             // 
             // configureImageScanningX0Column
             // 
             configureImageScanningX0Column.HeaderText = "x0 (μS)";
             configureImageScanningX0Column.Name = "configureImageScanningX0Column";
             configureImageScanningX0Column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            configureImageScanningX0Column.Width = 180;
             // 
             // configureImageScanningy0Column
             // 
             configureImageScanningy0Column.HeaderText = "y0 (μS)";
             configureImageScanningy0Column.Name = "configureImageScanningy0Column";
             configureImageScanningy0Column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningy0Column.Width = 120;
+            configureImageScanningy0Column.Width = 180;
             // 
             // configureImageScanningz0Column
             // 
             configureImageScanningz0Column.HeaderText = "z0 (μS)";
             configureImageScanningz0Column.Name = "configureImageScanningz0Column";
             configureImageScanningz0Column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            configureImageScanningz0Column.Width = 180;
             // 
             // configureImageScanningFOVdXColumn
             // 
             configureImageScanningFOVdXColumn.HeaderText = "FOV dX (μS)";
             configureImageScanningFOVdXColumn.Name = "configureImageScanningFOVdXColumn";
             configureImageScanningFOVdXColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningFOVdXColumn.Width = 120;
+            configureImageScanningFOVdXColumn.Width = 150;
             // 
             // configureImageScanningdYColumn
             // 
             configureImageScanningdYColumn.HeaderText = "dY (μS)";
             configureImageScanningdYColumn.Name = "configureImageScanningdYColumn";
             configureImageScanningdYColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningdYColumn.Width = 120;
+            configureImageScanningdYColumn.Width = 150;
             // 
             // configureImageScanningRotationalOffsetColumn
             // 
             configureImageScanningRotationalOffsetColumn.HeaderText = "Rotational Offset (°)";
             configureImageScanningRotationalOffsetColumn.Name = "configureImageScanningRotationalOffsetColumn";
             configureImageScanningRotationalOffsetColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
-            configureImageScanningRotationalOffsetColumn.Width = 130;
+            configureImageScanningRotationalOffsetColumn.Width = 150;
             // 
             // configureBergquistDataButton
             // 
@@ -2198,8 +2195,8 @@
             configureBergquistsDataGridView.Location = new Point(8, 254);
             configureBergquistsDataGridView.Name = "configureBergquistsDataGridView";
             configureBergquistsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle6.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle16.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle16;
             configureBergquistsDataGridView.RowTemplate.Height = 25;
             configureBergquistsDataGridView.Size = new Size(1100, 55);
             configureBergquistsDataGridView.TabIndex = 5;
@@ -2247,8 +2244,8 @@
             configureElastomerDataGridView.Location = new Point(6, 145);
             configureElastomerDataGridView.Name = "configureElastomerDataGridView";
             configureElastomerDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle17.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle17;
             configureElastomerDataGridView.RowTemplate.Height = 25;
             configureElastomerDataGridView.Size = new Size(1102, 50);
             configureElastomerDataGridView.TabIndex = 3;
@@ -2307,27 +2304,27 @@
             configureCartridgesDataGridView.AllowUserToResizeRows = false;
             configureCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             configureCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureCartridgesNameColumn, configureCartridgesPartitionTypeColumn, configureCartridgesSamplesColumn, configureCartridgesAssaysColumn, configureCartridgesLengthColumn, configureCartridgesWidthColumn, configureCartridgesHeightColumn });
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Window;
-            dataGridViewCellStyle8.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            configureCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = SystemColors.Window;
+            dataGridViewCellStyle18.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle18.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
+            configureCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle18;
             configureCartridgesDataGridView.Location = new Point(8, 29);
             configureCartridgesDataGridView.Name = "configureCartridgesDataGridView";
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = SystemColors.Control;
-            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            configureCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle19.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle19.BackColor = SystemColors.Control;
+            dataGridViewCellStyle19.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle19.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle19.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle19.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle19.WrapMode = DataGridViewTriState.True;
+            configureCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle19;
             configureCartridgesDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle10.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle20.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
             configureCartridgesDataGridView.RowTemplate.Height = 25;
             configureCartridgesDataGridView.Size = new Size(1100, 50);
             configureCartridgesDataGridView.TabIndex = 1;
@@ -2719,20 +2716,10 @@
         private DataGridViewTextBoxColumn configureBergquistsThermalCoefficientColumn;
         private DataGridViewTextBoxColumn configureBergquistsShoreHardnessColumn;
         private DataGridView configureImageScanningDataGridView;
-        private DataGridViewTextBoxColumn configureImageScanningHeaterColumn;
-        private DataGridViewTextBoxColumn configureImageScanningElastomerColumn;
-        private DataGridViewTextBoxColumn configureImageScanningBergquistColumn;
-        private DataGridViewTextBoxColumn configureImageScanningX0Column;
-        private DataGridViewTextBoxColumn configureImageScanningy0Column;
-        private DataGridViewTextBoxColumn configureImageScanningz0Column;
-        private DataGridViewTextBoxColumn configureImageScanningFOVdXColumn;
-        private DataGridViewTextBoxColumn configureImageScanningdYColumn;
-        private DataGridViewTextBoxColumn configureImageScanningRotationalOffsetColumn;
         private ComboBox configureCartridgeComboBox;
         private ComboBox configureBergquistComboBox;
         private ComboBox configureElastomerComboBox;
-        private Label configureCatridgeImageSetupLabel;
-        private ComboBox configureCatridgeImageScanningComboBox;
+        private Label configureImageScanningNoteLabel;
         private Button congifureUpdateImageScanningButton;
         private Label configureBergquistLabel;
         private Label configureElastomerLabel;
@@ -2750,5 +2737,14 @@
         private DataGridViewTextBoxColumn configureCartridgesLengthColumn;
         private DataGridViewTextBoxColumn configureCartridgesWidthColumn;
         private DataGridViewTextBoxColumn configureCartridgesHeightColumn;
+        private DataGridViewTextBoxColumn configureImageScanningHeaterColumn;
+        private DataGridViewTextBoxColumn configureImageScanningX0Column;
+        private DataGridViewTextBoxColumn configureImageScanningy0Column;
+        private DataGridViewTextBoxColumn configureImageScanningz0Column;
+        private DataGridViewTextBoxColumn configureImageScanningFOVdXColumn;
+        private DataGridViewTextBoxColumn configureImageScanningdYColumn;
+        private DataGridViewTextBoxColumn configureImageScanningRotationalOffsetColumn;
+        private ComboBox configureGlassOffsetComboBox;
+        private Label configureGlassOffsetLabel;
     }
 }
