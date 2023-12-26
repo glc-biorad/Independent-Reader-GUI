@@ -3,6 +3,20 @@
 ## Overview
 Independent Reader GUI is a tool for utilizing the full functionality of the Independent Reader Module. It allows user to view all running submodule metrological data and connective status, control submodules, create/edit dPCR thermocycling protocols on 4 individual thermocycling heaters, run protocols on these heaters, image dPCR cartridges, perform full workflow runs (image, thermocycle, image, etc.), and set default settings/configurations for the instrument.
 
+## To-Do
+# Home Tab
+- Check motor positions every N seconds to update the Home tab (use MotorManagers class)
+- Change the Home column of the Home tab's Motor DataGridView to a ComboBox so that users can set it to "Homed" or "Not Homed" when the GUI is opened
+- At Form loading check if the LEDs are connected (setup LED queries and commands via the BRADx-API code repo)
+- Check the Actual Temperature of the object and sink for all TECs using the TECsManager class every N seconds
+- At Form loading load in the TECs DataGridView values of interest
+# Run Tab
+- Update X0, Y0, Z0, FOV dX, and dY based on the Cartridge, Elastomer, Bergquist, and Glass Offset. If this combonation is not found in the ScanningData XML file, add it on the onset of the run
+- Update Bergquist and Elastomer Thickness TextBox values based on changes with the Elastomer and Bergquist ComboBox selections
+- Block the user if they attempt a run without an experiment name or any samples/assays set
+- Warn the user if they attempt a run without contact surface, no data save locations, and no imaging before, during, or after the run.
+- Update the time calculation used to predict the end time based on the number of channels used, assays, and samples
+
 ## Technology Used
 - C#
 - .NET Framework 6.0
