@@ -256,7 +256,7 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            thermocyclingPlottedProtocolNameLabel = new Label();
+            thermocyclingProtocolNameTextBox = new TextBox();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -1207,7 +1207,7 @@
             // 
             // thermocyclingTabPage
             // 
-            thermocyclingTabPage.Controls.Add(thermocyclingPlottedProtocolNameLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingProtocolNameTextBox);
             thermocyclingTabPage.Controls.Add(thermocyclingPlottedProtocolLabel);
             thermocyclingTabPage.Controls.Add(thermocyclingAddGoToButton);
             thermocyclingTabPage.Controls.Add(thermocyclingTECDKillButton);
@@ -2485,16 +2485,13 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
-            // thermocyclingPlottedProtocolNameLabel
+            // thermocyclingProtocolNameTextBox
             // 
-            thermocyclingPlottedProtocolNameLabel.AutoSize = true;
-            thermocyclingPlottedProtocolNameLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingPlottedProtocolNameLabel.Location = new Point(705, 12);
-            thermocyclingPlottedProtocolNameLabel.Name = "thermocyclingPlottedProtocolNameLabel";
-            thermocyclingPlottedProtocolNameLabel.Size = new Size(30, 18);
-            thermocyclingPlottedProtocolNameLabel.TabIndex = 18;
-            thermocyclingPlottedProtocolNameLabel.Text = "NA";
-            thermocyclingPlottedProtocolNameLabel.Visible = false;
+            thermocyclingProtocolNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingProtocolNameTextBox.Location = new Point(711, 12);
+            thermocyclingProtocolNameTextBox.Name = "thermocyclingProtocolNameTextBox";
+            thermocyclingProtocolNameTextBox.Size = new Size(279, 26);
+            thermocyclingProtocolNameTextBox.TabIndex = 19;
             // 
             // independentReaderForm
             // 
@@ -2772,6 +2769,6 @@
         private ComboBox configureGlassOffsetComboBox;
         private Label configureGlassOffsetLabel;
         private Label thermocyclingPlottedProtocolLabel;
-        private Label thermocyclingPlottedProtocolNameLabel;
+        private TextBox thermocyclingProtocolNameTextBox;
     }
 }

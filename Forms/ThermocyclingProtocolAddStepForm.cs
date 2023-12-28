@@ -1,4 +1,5 @@
 ﻿using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Independent_Reader_GUI.Forms
         private Label stepTimeLabel;
         private TextBox stepTimeTextBox;
         private Label stepTypeNameLabel;
+        private Label stepTimeUnitsLabel;
+        private ComboBox stepTimeUnitsComboBox;
         private ComboBox stepTypeNameComboBox;
         private Button okButton;
         private Button cancelButton;
@@ -28,7 +31,7 @@ namespace Independent_Reader_GUI.Forms
 
             // Step Temperature label initialization and placement
             stepTemperatureLabel = new Label();
-            stepTemperatureLabel.Text = "Step Temperature (\u00B0C)";
+            stepTemperatureLabel.Text = "Temperature (\u00B0C)";
             stepTemperatureLabel.Location = new Point(10, 5);
             stepTemperatureLabel.Size = new Size(180, 18);
             stepTemperatureLabel.Font = new Font(Name = "Arial", 12);
@@ -36,14 +39,33 @@ namespace Independent_Reader_GUI.Forms
             // Step Time text box initialization and placement
             stepTimeTextBox = new TextBox();
             stepTimeTextBox.Location = new Point(10, 70);
-            stepTimeTextBox.Size = new Size(180, 36);
+            stepTimeTextBox.Size = new Size(80, 36);
 
             // Step Time label initialization and placement
             stepTimeLabel = new Label();
-            stepTimeLabel.Text = "Step Time (s)";
+            stepTimeLabel.Text = "Time";
             stepTimeLabel.Location = new Point(10, 50);
-            stepTimeLabel.Size = new Size(180, 18);
+            stepTimeLabel.Size = new Size(80, 18);
             stepTimeLabel.Font = new Font(Name = "Arial", 12);
+
+            // Step Time Units Label initialization and placement
+            stepTimeUnitsLabel = new Label();
+            stepTimeUnitsLabel.Text = "Units";
+            stepTimeUnitsLabel.Location = new Point(100, 50);
+            stepTimeUnitsLabel.Size = new Size(80, 18);
+            stepTimeUnitsLabel.Font = new Font(Name = "Arial", 12);
+
+            // Step Time Units combo box initialization and placement
+            stepTimeUnitsComboBox = new ComboBox();
+            stepTimeUnitsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            stepTimeUnitsComboBox.Items.AddRange(new object[]
+            {
+                TimeUnit.Seconds,
+                TimeUnit.Minutes
+            });
+            stepTimeUnitsComboBox.SelectedIndex = 0; // default to first item in the drop down list
+            stepTimeUnitsComboBox.Location = new Point(100, 70);
+            stepTimeUnitsComboBox.Size = new Size(90, 36);
 
             // Step Type Name combo box initialization and placement
             stepTypeNameComboBox = new ComboBox();
@@ -59,7 +81,7 @@ namespace Independent_Reader_GUI.Forms
 
             // Step Type Name label initialization and placement
             stepTypeNameLabel = new Label();
-            stepTypeNameLabel.Text = "Step Type";
+            stepTypeNameLabel.Text = "Type";
             stepTypeNameLabel.Location = new Point(10, 95);
             stepTypeNameLabel.Size = new Size(180, 18);
             stepTypeNameLabel.Font = new Font(Name = "Arial", 12);
@@ -80,12 +102,14 @@ namespace Independent_Reader_GUI.Forms
             ClientSize = new Size(200, 195);
             Controls.AddRange(new Control[]
             {
-                stepTemperatureTextBox,
                 stepTemperatureLabel,
-                stepTypeNameComboBox,
-                stepTypeNameLabel,
+                stepTemperatureTextBox,
                 stepTimeLabel,
                 stepTimeTextBox,
+                stepTimeUnitsLabel,
+                stepTimeUnitsComboBox,
+                stepTypeNameComboBox,
+                stepTypeNameLabel,
                 okButton,
                 cancelButton
             });
@@ -115,6 +139,11 @@ namespace Independent_Reader_GUI.Forms
         public double StepTime
         {
             get { return double.Parse(stepTimeTextBox.Text); }
+        }
+
+        public string StepTimeUnits
+        {
+            get { return stepTimeUnitsComboBox.SelectedItem.ToString(); }
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -170,11 +199,13 @@ namespace Independent_Reader_GUI.Forms
                 {
                     stepTimeTextBox.Text = "\u221E";
                     stepTimeTextBox.Enabled = false;
+                    stepTimeUnitsComboBox.Enabled = false;
                 }
                 else
                 {
                     stepTimeTextBox.Enabled = true;
                     stepTimeTextBox.Text = string.Empty;
+                    stepTimeUnitsComboBox.Enabled = true;
                 }
             }
         }

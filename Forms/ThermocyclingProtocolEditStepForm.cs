@@ -1,4 +1,5 @@
 ﻿using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Resources;
 using Independent_Reader_GUI.Services;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace Independent_Reader_GUI.Forms
         private TextBox stepTemperatureTextBox;
         private Label stepTimeLabel;
         private TextBox stepTimeTextBox;
+        private Label stepTimeUnitsLabel;
+        private ComboBox stepTimeUnitsComboBox;
         private Button okButton;
         private Button cancelButton;
         private ThermocyclingProtocolPlotManager plotManager = null;
@@ -51,7 +54,7 @@ namespace Independent_Reader_GUI.Forms
 
             // Step Time label initialization and placement
             stepTemperatureLabel = new Label();
-            stepTemperatureLabel.Text = "Step Temperature (\u00B0C)";
+            stepTemperatureLabel.Text = "Temperature (\u00B0C)";
             stepTemperatureLabel.Location = new Point(10, 50);
             stepTemperatureLabel.Size = new Size(180, 18);
             stepTemperatureLabel.Font = new Font(Name = "Arial", 12);
@@ -59,14 +62,33 @@ namespace Independent_Reader_GUI.Forms
             // Step Time text box initialization and placement
             stepTimeTextBox = new TextBox();
             stepTimeTextBox.Location = new Point(10, 125);
-            stepTimeTextBox.Size = new Size(180, 36);
+            stepTimeTextBox.Size = new Size(80, 36);
 
             // Step Time label initialization and placement
             stepTimeLabel = new Label();
-            stepTimeLabel.Text = "Step Time (s)";
+            stepTimeLabel.Text = "Time";
             stepTimeLabel.Location = new Point(10, 95);
-            stepTimeLabel.Size = new Size(180, 18);
+            stepTimeLabel.Size = new Size(80, 18);
             stepTimeLabel.Font = new Font(Name = "Arial", 12);
+
+            // Step Time Units Label initialization and placement
+            stepTimeUnitsLabel = new Label();
+            stepTimeUnitsLabel.Text = "Units";
+            stepTimeUnitsLabel.Location = new Point(100, 95);
+            stepTimeUnitsLabel.Size = new Size(90, 18);
+            stepTimeUnitsLabel.Font = new Font(Name = "Arial", 12);
+
+            // Step Time Units combo box initialization and placement
+            stepTimeUnitsComboBox = new ComboBox();
+            stepTimeUnitsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            stepTimeUnitsComboBox.Items.AddRange(new object[]
+            {
+                TimeUnit.Seconds,
+                TimeUnit.Minutes
+            });
+            stepTimeUnitsComboBox.SelectedIndex = 0; // default to first item in the drop down list
+            stepTimeUnitsComboBox.Location = new Point(100, 125);
+            stepTimeUnitsComboBox.Size = new Size(90, 36);
 
             // Ok Button initialization and placement
             okButton = new Button();
@@ -90,6 +112,8 @@ namespace Independent_Reader_GUI.Forms
                 stepTemperatureTextBox,
                 stepTimeTextBox,
                 stepTimeLabel,
+                stepTimeUnitsLabel,
+                stepTimeUnitsComboBox,
                 okButton,
                 cancelButton
             });
@@ -121,6 +145,11 @@ namespace Independent_Reader_GUI.Forms
             get { return double.Parse(stepTimeTextBox.Text); }
         }
 
+        public string StepTimeUnits
+        {
+            get { return stepTimeUnitsComboBox.SelectedItem.ToString(); }
+        }
+
         private void okButton_Click(object sender, EventArgs e)
         {
             // Ensure temp and time are valid
@@ -129,14 +158,30 @@ namespace Independent_Reader_GUI.Forms
                 MessageBox.Show("Please enter a valid step temperature (\u00B0C)", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (!int.TryParse(stepTimeTextBox.Text, out _))
+            if (stepTimeTextBox.Enabled)
             {
-                MessageBox.Show("Please enter a valid step time (s)", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (!int.TryParse(stepTimeTextBox.Text, out _))
+                {
+                    MessageBox.Show("Please enter a valid step time (s)", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                DialogResult = DialogResult.OK;
+                plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedItem.ToString()) - 1,
+                    double.Parse(stepTemperatureTextBox.Text),
+                    double.Parse(stepTimeTextBox.Text),
+                    stepTimeUnitsComboBox.SelectedItem.ToString());
+                Close();
+            }     
+            else
+            {
+                // FIXME: The EditStep method for the PlotManager cannot edit Hold steps
+                DialogResult = DialogResult.OK;
+                plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedItem.ToString()) - 1,
+                    double.Parse(stepTemperatureTextBox.Text),
+                    double.Parse(stepTimeTextBox.Text),
+                    stepTimeUnitsComboBox.SelectedItem.ToString());
+                Close();
             }
-            DialogResult = DialogResult.OK;
-            plotManager.EditStep(int.Parse(stepNumberComboBox.SelectedItem.ToString()) - 1, double.Parse(stepTemperatureTextBox.Text), double.Parse(stepTimeTextBox.Text));
-            Close();
         }
 
         private void StepTemperature_TextChanged(object sender, EventArgs e)
@@ -174,7 +219,19 @@ namespace Independent_Reader_GUI.Forms
             ThermocyclingProtocolStep step = plotManager.GetStep(stepNumber);
             // Fill the text boxes for temperature and time
             stepTemperatureTextBox.Text = step.Temperature.ToString();
-            stepTimeTextBox.Text = step.Time.ToString();
+            if (step.TypeName.Equals(ThermocyclingProtocolStepType.Hold))
+            {
+                stepTimeTextBox.Text = "\u221E";
+                stepTimeTextBox.Enabled = false;
+                stepTimeUnitsComboBox.Enabled = false;
+            }
+            else
+            {
+                stepTimeTextBox.Text = step.Time.ToString();
+                stepTimeTextBox.Enabled = true;
+                stepTimeUnitsComboBox.Enabled = true;
+                stepTimeUnitsComboBox.SelectedItem = step.TimeUnits;
+            }
         }
     }
 }

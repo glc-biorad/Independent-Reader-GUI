@@ -191,7 +191,7 @@ namespace Independent_Reader_GUI.Services
                 series.Points.Add(new DataPoint(section.Item1, 0));
                 series.Points.Add(new DataPoint(section.Item2, 0));
                 // Add annotations for plotting
-                var stepNumberAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, 0), Text = "GoTo Step " + step.StepNumber.ToString() };
+                var stepNumberAnnotation = new TextAnnotation { TextPosition = new DataPoint(x + dx / 2, 0), Text = "GoTo Step " + (step.StepNumber+1).ToString() };
                 var stepAnnotation = new TextAnnotation
                 {
                     TextPosition = new DataPoint(x + dx / 2, 0 + yBufferStepAnnotation),
@@ -262,7 +262,7 @@ namespace Independent_Reader_GUI.Services
             return seriesIndex;
         }
 
-        public void EditStep(int stepIndex, double stepTemperature, double stepTime)
+        public void EditStep(int stepIndex, double stepTemperature, double stepTime, string stepTimeUnits)
         {
             // TODO: This method edits the wrong step (minus 1 for step index) and does not change the text annotations or time
             // Modify the steps list 
@@ -279,7 +279,7 @@ namespace Independent_Reader_GUI.Services
             }
             if (plotModel.Annotations[stepAnnotationsStartIndex+2] is TextAnnotation timeAnnotation)
             {
-                timeAnnotation.Text = stepTime.ToString() + " s";
+                timeAnnotation.Text = stepTime.ToString() + $" {stepTimeUnits[0].ToString().ToLower()}";
                 timeAnnotation.TextPosition = new DataPoint(dx * stepIndex + dx / 2, stepTemperature-yBufferTimeAnnotation);
             }
             int seriesStartIndex = GetSeriesStartIndex(stepIndex);

@@ -1130,11 +1130,13 @@ namespace Independent_Reader_GUI
                 double stepTemperature = addStepForm.StepTemperature;
                 string stepTypeName = addStepForm.StepTypeName;
                 double stepTime = addStepForm.StepTime;
+                string stepTimeUnits = addStepForm.StepTimeUnits;
                 int index = protocol.Count;
                 ThermocyclingProtocolStep step = new ThermocyclingProtocolStep();
                 step.Temperature = stepTemperature;
                 step.TypeName = stepTypeName;
                 step.Time = stepTime;
+                step.TimeUnits = stepTimeUnits;
                 step.Index = index;
                 protocol.AddStep(step);
                 plotManager.AddStep(step);
@@ -1199,7 +1201,20 @@ namespace Independent_Reader_GUI
                 {
                     int stepNumber = editStepForm.StepNumber;
                     double stepTemperature = editStepForm.StepTemperature;
-                    double stepTime = editStepForm.StepTime;
+                    if (editStepForm.StepTime.ToString() == "\u221E")
+                    {
+                        ThermocyclingProtocolHoldStep editedStep = new ThermocyclingProtocolHoldStep(stepTemperature);
+                        protocol.EditStep(stepNumber - 1, editedStep);
+                        return;
+                    }
+                    else
+                    {
+                        double stepTime = editStepForm.StepTime;
+                        string stepTimeUnits = editStepForm.StepTimeUnits;
+                        ThermocyclingProtocolSetStep editedStep = new ThermocyclingProtocolSetStep(temperature: stepTemperature, time: stepTime, timeUnits: stepTimeUnits);
+                        protocol.EditStep(stepNumber - 1, editedStep);
+                        return;
+                    }
                 }
             }       
         }
@@ -1215,14 +1230,20 @@ namespace Independent_Reader_GUI
                 plotManager.ClearPlot();
                 protocol = protocolManager.LoadProtocol(filePath);
                 plotManager.PlotProtocol(protocol);
-                // Set the "Plotted Protocol Name Label"
-                thermocyclingPlottedProtocolNameLabel.Visible = true;
-                thermocyclingPlottedProtocolNameLabel.Text = protocol.Name;
+                // Set the "Plotted Protocol Name"
+                thermocyclingProtocolNameTextBox.Text = protocol.Name;
             }
         }
 
         private void thermocyclingSaveProtocolButton_Click(object sender, EventArgs e)
         {
+            string protocolName = thermocyclingProtocolNameTextBox.Text;
+            if (protocolName == string.Empty)
+            {
+                MessageBox.Show("Cannot save this protocol, it must be given a name in the 'Plotted Protocol' text box.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            protocol.SetName(protocolName);
             FileSearcher fileSearcher = new FileSearcher();
             // Determine where to save this protocol
             // FIXME: take the initial directory default value from a config file 
