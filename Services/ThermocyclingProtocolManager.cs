@@ -71,7 +71,7 @@ namespace Independent_Reader_GUI.Services
             var protocolXDocument = new XDocument();
             var rootXElement = new XElement("Protocol");
             var versionXElement = new XElement("Versions", "1.0");
-            var nameXElement = new XElement("Name", Path.GetFileNameWithoutExtension(filePath).Replace("_", " "));
+            var nameXElement = new XElement("Name", protocol.Name);
             var authorXElement = new XElement("Author", username.Replace("User: ", ""));
             var dateXElement = new XElement("Date", date);
             rootXElement.Add(versionXElement);

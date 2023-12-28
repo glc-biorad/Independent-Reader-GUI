@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Protocol>
+  <Versions>1.0</Versions>
+  <Name>MW Amplification Test (Pink Bergquist)</Name>
+  <Author>glc-biorad</Author>
+  <Date>12/28/2023</Date>
+  <Step>
+    <Index>0</Index>
+    <TypeName>Set</TypeName>
+    <Temperature>101</Temperature>
+    <Time>8</Time>
+    <TemperatureUnits>Celsius</TemperatureUnits>
+    <TimeUnits>minutes</TimeUnits>
+  </Step>
+  <Step>
+    <Index>1</Index>
+    <TypeName>Set</TypeName>
+    <Temperature>57</Temperature>
+    <Time>120</Time>
+    <TemperatureUnits>Celsius</TemperatureUnits>
+    <TimeUnits>seconds</TimeUnits>
+  </Step>
+  <Step>
+    <Index>2</Index>
+    <TypeName>Set</TypeName>
+    <Temperature>104</Temperature>
+    <Time>60</Time>
+    <TemperatureUnits>Celsius</TemperatureUnits>
+    <TimeUnits>seconds</TimeUnits>
+  </Step>
+  <Step>
+    <Index>3</Index>
+    <TypeName>GoTo</TypeName>
+    <StepNumber>1</StepNumber>
+    <CycleCount>50</CycleCount>
+  </Step>
+  <Step>
+    <Index>4</Index>
+    <TypeName>Hold</TypeName>
+    <Temperature>30</Temperature>
+    <TemperatureUnits>Celsius</TemperatureUnits>
+  </Step>
+</Protocol>
