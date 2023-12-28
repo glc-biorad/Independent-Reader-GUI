@@ -145,6 +145,7 @@ namespace Independent_Reader_GUI
             this.homeLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.controlMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.controlTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.controlTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.controlTECsDataGridView_CellFormatting);
             this.controlLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.thermocyclingProtocolStatusesDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.dataGridView_SetupComboBoxes();
@@ -1191,13 +1192,16 @@ namespace Independent_Reader_GUI
         private void thermocyclingEditStepButton_Click(object sender, EventArgs e)
         {
             // Open a Thermocycling Edit Step Form window
-            ThermocyclingProtocolEditStepForm editStepForm = new ThermocyclingProtocolEditStepForm(plotManager);
-            if (editStepForm.ShowDialog() == DialogResult.OK)
+            if (plotManager.StepCount > 0)
             {
-                int stepNumber = editStepForm.StepNumber;
-                double stepTemperature = editStepForm.StepTemperature;
-                double stepTime = editStepForm.StepTime;
-            }
+                ThermocyclingProtocolEditStepForm editStepForm = new ThermocyclingProtocolEditStepForm(plotManager);
+                if (editStepForm.ShowDialog() == DialogResult.OK)
+                {
+                    int stepNumber = editStepForm.StepNumber;
+                    double stepTemperature = editStepForm.StepTemperature;
+                    double stepTime = editStepForm.StepTime;
+                }
+            }       
         }
 
         private void thermocyclingLoadProtocolButton_Click(object sender, EventArgs e)
@@ -1207,10 +1211,13 @@ namespace Independent_Reader_GUI
             var filePath = fileSearcher.GetLoadFilePath(initialDirectory: defaultProtocolDirectory);
             if (filePath != null)
             {
-                // FIXME: ClearPlot dos not behave as expected
-                //plotManager.ClearPlot();
+                // FIXME: ClearPlot dos not behave as expected, x axis does not reset to 0
+                plotManager.ClearPlot();
                 protocol = protocolManager.LoadProtocol(filePath);
                 plotManager.PlotProtocol(protocol);
+                // Set the "Plotted Protocol Name Label"
+                thermocyclingPlottedProtocolNameLabel.Visible = true;
+                thermocyclingPlottedProtocolNameLabel.Text = protocol.Name;
             }
         }
 
@@ -1358,6 +1365,12 @@ namespace Independent_Reader_GUI
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
                 // FIXME: So that this cannot work if a protocol is currently running on this tec
+                double temp;
+                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName("TEC A", "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                if (!double.TryParse(cellValue, out _))
+                {
+                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 tecA.SetTemp();
             }
             else
@@ -1546,6 +1559,47 @@ namespace Independent_Reader_GUI
         {
             var p = await xMotor.GetPositionAsync();
             MessageBox.Show(p.ToString());
+        }
+
+        /// <summary>
+        /// Cell Validating handler for the ControlTECsDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlTECsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Ensure that the Actual Object Temp is a valid number
+            string? rowName = dataGridViewManager.GetRowNameFromIndex(controlTECsDataGridView, e.RowIndex);
+            if (rowName != null)
+            {
+                if (rowName == "New Object Temp (\u00B0C)" && e.ColumnIndex > 0)
+                {
+                    var cellValue = controlTECsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    if (cellValue != null)
+                    {
+                        // Format the cell based on the value
+                        if (!double.TryParse(cellValue.ToString(), out _))
+                        {
+                            e.CellStyle.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            e.CellStyle.ForeColor = Color.Black;
+                        }
+                    }
+                }
+                else if (rowName == "Temp Enabled" && e.ColumnIndex > 0)
+                {
+                    var cellValue = controlTECsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    if (cellValue != null)
+                    {
+                        // Format the cell based on the value
+                        // FIXME: This does not work (the ComboBox does not change color)
+                        e.CellStyle.BackColor = Color.Yellow;
+                        //dataGridViewManager.ChangeCellStyleBackgroundBasedOnOption(dataGridViewComboBoxCellTempEnabledA, Color.White, Color.Yellow, "Yes", "No");
+                    }
+                }
+            }
         }
 
         private void configureCartridgeComboBox_SelectedIndexChanged(object sender, EventArgs e)

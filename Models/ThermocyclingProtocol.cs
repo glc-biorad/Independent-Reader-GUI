@@ -9,7 +9,19 @@ namespace Independent_Reader_GUI.Models
 {
     internal class ThermocyclingProtocol
     {
+        private string name = string.Empty;
+
         public List<ThermocyclingProtocolStep> Steps = new List<ThermocyclingProtocolStep>();
+
+        public string Name
+        {
+            get { return name; }
+        }
+
+        public void SetName(string protocolName)
+        {
+            name = protocolName;
+        }
 
         /// <summary>
         /// Add a step to the thermocycling protocol

@@ -103,6 +103,20 @@ namespace Independent_Reader_GUI.Services
             return columnName;
         }
 
+        public string? GetRowNameFromIndex(DataGridView dataGridView, int rowIndex)
+        {
+            string? rowName = null;
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Index == rowIndex)
+                {
+                    rowName = row.Cells[0].Value.ToString();
+                    return rowName;
+                }
+            }
+            return rowName;
+        }
+
         public string GetColumnCellValueByColumnAndRowName(string headerText, string rowText, DataGridView dataGridView)
         {
             // Get the column index by the header text

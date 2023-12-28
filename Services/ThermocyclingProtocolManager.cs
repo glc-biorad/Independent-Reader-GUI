@@ -28,6 +28,7 @@ namespace Independent_Reader_GUI.Services
             ThermocyclingProtocol protocol = new ThermocyclingProtocol();           
             // Load in the protocol file
             XDocument protocolXDocument = XDocument.Load(filePath);
+            protocol.SetName(protocolXDocument.Root.Element("Name").Value);
             // Read in the steps
             foreach (var stepNode in protocolXDocument.Descendants("Step"))
             {
