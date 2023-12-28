@@ -60,6 +60,34 @@ namespace Independent_Reader_GUI.Services
             plotModel.Axes.Add(yAxis);            
         }
 
+        private void Reset()
+        {
+            x = 0; // Reset where the sections start
+            stepCount = 0; // Reset the number of steps
+            sections = new List<Tuple<int, int>>(); // Reinitalize the sections
+            series = new LineSeries(); // Reinitialize the series
+            plotModel.Series.Add(series);
+            // Initialize the plot axes
+            var xAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Minimum = double.NaN, // auto-scaling
+                Maximum = double.NaN, // auto-scaling
+                IsZoomEnabled = false,
+                IsPanEnabled = false
+            };
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Minimum = double.NaN, // auto-scaling
+                Maximum = double.NaN, // auto-scaling
+                IsZoomEnabled = false,
+                IsPanEnabled = false
+            };
+            plotModel.Axes.Add(xAxis);
+            plotModel.Axes.Add(yAxis);
+        }
+
         /// <summary>
         /// Calculate the min and max y values including a buffer to take into account annotations
         /// </summary>
@@ -116,6 +144,7 @@ namespace Independent_Reader_GUI.Services
             plotModel.Axes.Clear();
             plotModel.ResetAllAxes();
             UpdatePlot();
+            Reset();
         }
 
         /// <summary>
