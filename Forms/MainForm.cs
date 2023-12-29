@@ -676,16 +676,22 @@ namespace Independent_Reader_GUI
             ScanParameterData scanParameterData = new ScanParameterData();
             imagingScanParametersDataGridView.Rows.Add("Heater");
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
-            imagingScanParametersDataGridView.Rows.Add("Partition Type");
-            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.PartitionType;
+            imagingScanParametersDataGridView.Rows.Add("Elastomer");
+            scanParameterData.Elastomer = elastomerOptions.GetOptionNamesComboBoxCell();
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Elastomer;
+            imagingScanParametersDataGridView.Rows.Add("Bergquist");
+            scanParameterData.Bergquist = bergquistOptions.GetOptionNamesComboBoxCell();
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Bergquist;
             imagingScanParametersDataGridView.Rows.Add("Cartridge");
+            scanParameterData.Cartridge = cartridgeOptions.GetOptionNamesComboBoxCell();
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Cartridge;
-            imagingScanParametersDataGridView.Rows.Add("x0", scanParameterData.X0);
-            imagingScanParametersDataGridView.Rows.Add("y0", scanParameterData.Y0);
-            imagingScanParametersDataGridView.Rows.Add("z0", scanParameterData.Z0);
-            imagingScanParametersDataGridView.Rows.Add("FOV dx", scanParameterData.FOVdX);
-            imagingScanParametersDataGridView.Rows.Add("dy", scanParameterData.dY);
-            imagingScanParametersDataGridView.Rows.Add("Rotational Offset", scanParameterData.RotationalOffset);
+            imagingScanParametersDataGridView.Rows.Add("Glass Offset (mm)", configuration.DefaultGlassOffset);
+            imagingScanParametersDataGridView.Rows.Add("x0 (\u03BCS)",scanParameterData.X0);
+            imagingScanParametersDataGridView.Rows.Add("y0 (\u03BCS)", scanParameterData.Y0);
+            imagingScanParametersDataGridView.Rows.Add("z0 (\u03BCS)", scanParameterData.Z0);
+            imagingScanParametersDataGridView.Rows.Add("FOV dX (\u03BCS)", scanParameterData.FOVdX);
+            imagingScanParametersDataGridView.Rows.Add("dY (\u03BCS)", scanParameterData.dY);
+            imagingScanParametersDataGridView.Rows.Add("Rotational Offset (\u00B0)", scanParameterData.RotationalOffset);
         }
 
         private void AddImagingLEDsDefaultData()

@@ -162,6 +162,17 @@ namespace Independent_Reader_GUI.Resources
             get { return options; }
         }
 
+        public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
+        {
+            DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
+            foreach (Cartridge option in options)
+            {
+                cell.Items.Add(option.Name);
+            }
+            cell.Value = cell.Items[0];
+            return cell;
+        }
+
         public DataGridViewComboBoxCell GetOptionNamesComboBoxCell(string partitionType)
         {
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
