@@ -7,6 +7,7 @@ using Independent_Reader_GUI.Utilities;
 using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Series;
+using SpinnakerNET;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
@@ -542,12 +543,12 @@ namespace Independent_Reader_GUI
             runImagingSetupDataGridView.Rows.Add("Atto Intensity (%)", runImagingSetupData.IntensityAtto);
             runImagingSetupDataGridView.Rows.Add("Alexa Intensity (%)", runImagingSetupData.IntensityAlexa);
             runImagingSetupDataGridView.Rows.Add("Cy5.5 Intensity (%)", runImagingSetupData.IntensityCy5p5);
-            runImagingSetupDataGridView.Rows.Add("Cy5 Exposure (ms)", runImagingSetupData.ExposureCy5);
-            runImagingSetupDataGridView.Rows.Add("FAM Exposure (ms)", runImagingSetupData.ExposureFAM);
-            runImagingSetupDataGridView.Rows.Add("HEX Exposure (ms)", runImagingSetupData.ExposureHEX);
-            runImagingSetupDataGridView.Rows.Add("Atto Exposure (ms)", runImagingSetupData.ExposureAtto);
-            runImagingSetupDataGridView.Rows.Add("Alexa Exposure (ms)", runImagingSetupData.ExposureAlexa);
-            runImagingSetupDataGridView.Rows.Add("Cy5.5 Exposure (ms)", runImagingSetupData.ExposureCy5p5);
+            runImagingSetupDataGridView.Rows.Add("Cy5 Exposure (\u03BCs)", runImagingSetupData.ExposureCy5);
+            runImagingSetupDataGridView.Rows.Add("FAM Exposure (\u03BCs)", runImagingSetupData.ExposureFAM);
+            runImagingSetupDataGridView.Rows.Add("HEX Exposure (\u03BCs)", runImagingSetupData.ExposureHEX);
+            runImagingSetupDataGridView.Rows.Add("Atto Exposure (\u03BCs)", runImagingSetupData.ExposureAtto);
+            runImagingSetupDataGridView.Rows.Add("Alexa Exposure (\u03BCs)", runImagingSetupData.ExposureAlexa);
+            runImagingSetupDataGridView.Rows.Add("Cy5.5 Exposure (\u03BCs)", runImagingSetupData.ExposureCy5p5);
         }
 
         /// <summary>
@@ -1308,7 +1309,7 @@ namespace Independent_Reader_GUI
             // FIXME: The number of samples does not change
             foreach (DataGridViewRow row in runSampleMetaDataGridView.Rows)
             {
-                if (row.Cells[1].Value != string.Empty)
+                if (row.Cells[1].Value != null)
                 {
                     numberOfSamplesToImage++;
                 }
@@ -1318,10 +1319,91 @@ namespace Independent_Reader_GUI
             // FIXME: The number of assays does not change
             foreach (DataGridViewRow row in runAssayMetaDataGridView.Rows)
             {
-                if (row.Cells[1].Value != "")
+                if (row.Cells[1].Value != null)
                 {
                     numberOfAssaysToImage++;
                 }
+            }
+            // Determine if the user is imaging in any of the channels
+            int exposureTime = 0;
+            TimeUnit timeUnitResource = new TimeUnit();
+            bool imageInCy5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Cy5", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInCy5)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Cy5 Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Cy5 Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
+            }
+            bool imageInFAM = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in FAM", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInFAM)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "FAM Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "FAM Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
+            }
+            bool imageInHEX = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in HEX", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInHEX)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "HEX Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "HEX Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
+            }
+            bool imageInAtto = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Atto", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInAtto)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Atto Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Atto Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
+            }
+            bool imageInAlexa = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Alexa", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInAlexa)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Alexa Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Alexa Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
+            }
+            bool imageInCy5p5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Cy5.5", runImagingSetupDataGridView) == "Yes") ? true : false;
+            if (imageInCy5p5)
+            {
+                if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Cy5.5 Exposure (μs)", runImagingSetupDataGridView), out _))
+                {
+                    exposureTime = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Cy5.5 Exposure (\u03BCs)", runImagingSetupDataGridView));
+                }
+                else
+                {
+                    exposureTime = 0;
+                }
+                projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
             }
             // Calculate the additional time from imaging (before and/or after) based on the number of samples and assays
             int timeInSecondsToImage = numberOfSamplesToImage * numberOfAssaysToImage * configuration.EstimateAssayCaptureTimeSeconds;

@@ -35,9 +35,9 @@ namespace Independent_Reader_GUI.Models
         public string ExposureCy5 { get; set; } = "300000";
         public string ExposureFAM { get; set; } = "600000";
         public string ExposureHEX { get; set; } = "500000";
-        public string ExposureAtto { get; set; } = "NA";
-        public string ExposureAlexa { get; set; } = "NA";
-        public string ExposureCy5p5 { get; set; } = "NA";
+        public string ExposureAtto { get; set; } = "200000";
+        public string ExposureAlexa { get; set; } = "900000";
+        public string ExposureCy5p5 { get; set; } = "300000";
         public int IntensityCy5 { get; set; } = 20;
         public int IntensityFAM { get; set; } = 20;
         public int IntensityHEX { get; set; } = 20;
