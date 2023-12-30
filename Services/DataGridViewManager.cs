@@ -8,6 +8,37 @@ namespace Independent_Reader_GUI.Services
 {
     internal class DataGridViewManager
     {
+        public void SetupDataGridViewWithValues(DataGridView dataGridView, List< List<string> > rowsContent)
+        {
+            foreach (var rowContent in rowsContent)
+            {
+                dataGridView.Rows.Add();
+                foreach (var cellContent in rowContent)
+                {
+                    dataGridView.Rows.Add(cellContent);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Obtain a row given the cell value in a particular column
+        /// </summary>
+        /// <param name="dataGridView">DataGridView of interest</param>
+        /// <param name="name">String to search for in the particular row</param>
+        /// <param name="columnIndex">Column to search for the name in (default to the first column)</param>
+        /// <returns></returns>
+        public DataGridViewRow? GetRowFromName(DataGridView dataGridView, string name, int columnIndex = 0)
+        {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Cells[columnIndex].Value.ToString() == name)
+                {
+                    return row;
+                }
+            }
+            return null;
+        }
+
         public void SetTextBoxCellStringValueByIndicesBasedOnOutcome(DataGridView dataGridView, 
             bool outcome, string valueOnOutcome, string valueOnOutcomeFailed, 
             int rowIndex, int columnIndex)

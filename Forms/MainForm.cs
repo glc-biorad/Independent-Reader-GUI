@@ -121,6 +121,8 @@ namespace Independent_Reader_GUI
             AddHomeTECsDefaultData();
             AddRunExperimentDefaultData();
             AddRunImagingSetupDefaultData();
+            AddRunSamplesMetaDefaultData();
+            AddRunAssaysMetaDefaultData();
             AddControlMotorsDefaultData();
             AddControlLEDsDefaultData();
             AddControlTECsDefaultData();
@@ -466,6 +468,30 @@ namespace Independent_Reader_GUI
                 runExperimentDataGridView.Rows.Add("Contact Surface Area (mm x mm)", runExperimentData.ContactSurfaceArea);
                 runExperimentDataGridView.Rows.Add("Pressure (KPa)", runExperimentData.Pressure);
                 runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
+            }
+        }
+
+        private void AddRunSamplesMetaDefaultData()
+        {
+            Cartridge cartridge = new Cartridge();
+            cartridge = cartridgeOptions.GetCartridgeFromName(configuration.DefaultCartridge);
+            // Setup Sample DataGridView
+            int numberOfSampleChambers = cartridge.NumberofSampleChambers;
+            for (int i = 0; i < numberOfSampleChambers; i++)
+            {
+                runSampleMetaDataGridView.Rows.Add($"{i + 1}", $"Sample {i + 1}");
+            }
+        }
+
+        private void AddRunAssaysMetaDefaultData()
+        {
+            Cartridge cartridge = new Cartridge();
+            cartridge = cartridgeOptions.GetCartridgeFromName(configuration.DefaultCartridge);
+            // Setup Assays Meta DataGridView
+            int numberOfAssayChambers = cartridge.NumberofAssayChambers;
+            for (int i = 0; i < numberOfAssayChambers; i++)
+            {
+                runAssayMetaDataGridView.Rows.Add($"{i + 1}", $"Assay {i + 1}");
             }
         }
 
@@ -893,6 +919,19 @@ namespace Independent_Reader_GUI
                     runExperimentDataGridView.Rows[e.RowIndex + 2].Cells[1].Value = cartridge.Length.ToString();
                     runExperimentDataGridView.Rows[e.RowIndex + 3].Cells[1].Value = cartridge.Width.ToString();
                     runExperimentDataGridView.Rows[e.RowIndex + 4].Cells[1].Value = cartridge.Height.ToString();
+                    // Setup Sample and Assays
+                    int numberOfSampleChambers = cartridge.NumberofSampleChambers;
+                    runSampleMetaDataGridView.Rows.Clear();
+                    for (int i = 0; i < numberOfSampleChambers; i++)
+                    {
+                        runSampleMetaDataGridView.Rows.Add($"{i + 1}", $"Sample {i + 1}");
+                    }
+                    int numberOfAssayChambers = cartridge.NumberofAssayChambers;
+                    runAssayMetaDataGridView.Rows.Clear();
+                    for (int i = 0; i < numberOfAssayChambers; i++)
+                    {
+                        runAssayMetaDataGridView.Rows.Add($"{i + 1}", $"Assay {i + 1}");
+                    }
                 }
                 // Handle Cartridge Changes
                 else if (propertySelected.Equals("Cartridge"))
@@ -904,6 +943,19 @@ namespace Independent_Reader_GUI
                     runExperimentDataGridView.Rows[e.RowIndex + 1].Cells[1].Value = cartridge.Length.ToString();
                     runExperimentDataGridView.Rows[e.RowIndex + 2].Cells[1].Value = cartridge.Width.ToString();
                     runExperimentDataGridView.Rows[e.RowIndex + 3].Cells[1].Value = cartridge.Height.ToString();
+                    // Setup Sample and Assays
+                    int numberOfSampleChambers = cartridge.NumberofSampleChambers;
+                    runSampleMetaDataGridView.Rows.Clear();
+                    for (int i = 0; i < numberOfSampleChambers; i++)
+                    {
+                        runSampleMetaDataGridView.Rows.Add($"{i + 1}", $"Sample {i+1}");
+                    }
+                    int numberOfAssayChambers = cartridge.NumberofAssayChambers;
+                    runAssayMetaDataGridView.Rows.Clear();
+                    for (int i = 0; i< numberOfAssayChambers; i++)
+                    {
+                        runAssayMetaDataGridView.Rows.Add($"{i + 1}", $"Assay {i+1}");
+                    }
                 }
             }
         }
@@ -996,78 +1048,6 @@ namespace Independent_Reader_GUI
                 }
                 configureBergquistComboBox.SelectedItem = bergquistOptionsList.First().Name;
             }
-        }
-
-        /// <summary>
-        /// Click event for the Run tab Add Sample button. Will only add a new sample if all other data
-        /// is filled in the Sample Meta data grid view.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void runAddSampleButton_Click(object sender, EventArgs e)
-        {
-            // Add a new row only if the other rows are filled out otherwise provide a warning to the user.
-            foreach (DataGridViewRow row in runSampleMetaDataGridView.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.Value == string.Empty)
-                    {
-                        // Warning message 
-                        MessageBox.Show("Sample Meta Data Form is missing data, complete form before adding more samples.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
-            }
-            object[] newRow = new object[] { string.Empty, string.Empty };
-            runSampleMetaDataGridView.Rows.Add(newRow);
-        }
-
-        /// <summary>
-        /// Click event for the Run tab Remove Sample button. Will delete all selected cell rows.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void runRemoveSampleButton_Click(object sender, EventArgs e)
-        {
-            DataGridViewContentDeleter ContentDeleter = new DataGridViewContentDeleter();
-            ContentDeleter.DeleteSelectedRows(runSampleMetaDataGridView);
-        }
-
-        /// <summary>
-        /// Click event for the Run tab Add Assay button. Will only add a new assay if all other data
-        /// is filled in the Assay Meta data grid view
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void runAddAssayButton_Click(object sender, EventArgs e)
-        {
-            // Add a new row only if the other rows are filled out otherwise provide a warning to the user.
-            foreach (DataGridViewRow row in runAssayMetaDataGridView.Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    if (cell.Value == string.Empty)
-                    {
-                        // Warning message 
-                        MessageBox.Show("Assay Meta Data Form is missing data, complete form before adding more samples.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
-            }
-            object[] newRow = new object[] { string.Empty, string.Empty };
-            runAssayMetaDataGridView.Rows.Add(newRow);
-        }
-
-        /// <summary>
-        /// Click event for the Run tab Remove Assay Button. Will delete all selected rows.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void runRemoveAssayButton_Click(object sender, EventArgs e)
-        {
-            DataGridViewContentDeleter ContentDeleter = new DataGridViewContentDeleter();
-            ContentDeleter.DeleteSelectedRows(runAssayMetaDataGridView);
         }
 
         /// <summary>
@@ -1304,58 +1284,61 @@ namespace Independent_Reader_GUI
         {
             double projectedAdditionalTimeSeconds = 0.0;
             double protocolTimeInSeconds = 0.0;
-            foreach (DataGridViewRow row in runExperimentDataGridView.Rows)
+            DateTime projectedEndTime = DateTime.Now;
+            // Get Start Time Row
+            DataGridViewRow r = new DataGridViewRow();
+            // Get the Start Time row
+            r = dataGridViewManager.GetRowFromName(runExperimentDataGridView, "Start Time (HH:mm:ss)");
+            r.Cells[1].Value = DateTime.Now.ToString("HH:mm:ss");
+            // Get the Start Date row
+            r = dataGridViewManager.GetRowFromName(runExperimentDataGridView, "Start Date (MM/dd/YYYY)");
+            r.Cells[1].Value = DateTime.Now.ToString("MM/dd/yyyy");
+            // Get the Protocol Name 
+            string protocolName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Protocol", runExperimentDataGridView);
+            // Load in the protocol 
+            ThermocyclingProtocol selectedProtocol = protocolManager.GetProtocolFromName(protocolName);
+            // Calculate the Protocol Time in seconds based on the Protocol Name
+            protocolTimeInSeconds = selectedProtocol.GetTimeInSeconds();
+            projectedEndTime = projectedEndTime.AddSeconds(protocolTimeInSeconds);
+            // Determine if imaging before and/or after
+            bool imageBefore = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image Before", runImagingSetupDataGridView) == "Yes") ? true : false; 
+            bool imageAfter = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image After", runImagingSetupDataGridView) == "Yes") ? true : false;
+            // Determine the number of samples
+            int numberOfSamplesToImage = 0;
+            // FIXME: The number of samples does not change
+            foreach (DataGridViewRow row in runSampleMetaDataGridView.Rows)
             {
-                if (row.Cells[0].Value.ToString().Contains("Start Time"))
+                if (row.Cells[1].Value != string.Empty)
                 {
-                    int rowIndex = row.Index;
-                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.ToString("HH:mm:ss");
-                }
-                else if (row.Cells[0].Value.ToString().Contains("Start Date"))
-                {
-                    int rowIndex = row.Index;
-                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.ToString("MM/dd/yyyy");
-                }
-                else if (row.Cells[0].Value.ToString().Contains("End Time"))
-                {
-                    int rowIndex = row.Index;
-                    DateTime projectedEndTime = DateTime.Now;
-                    foreach (DataGridViewRow imagingSetupRow in runImagingSetupDataGridView.Rows)
-                    {
-                        // TODO: Check the number of samples and or assays to be more precious than just the entire chip being scanned and the number of channels
-                        if (imagingSetupRow.Cells[0].Value.Equals("Image Before") && imagingSetupRow.Cells[1].Value.Equals("Yes"))
-                        {
-                            projectedAdditionalTimeSeconds += configuration.EstimateSampleCaptureTimeSeconds * 8;
-                        }
-                        else if (imagingSetupRow.Cells[0].Value.Equals("Image After") && imagingSetupRow.Cells[1].Value.Equals("Yes"))
-                        {
-                            projectedAdditionalTimeSeconds += configuration.EstimateSampleCaptureTimeSeconds * 8;
-                        }
-                    }
-                    foreach (DataGridViewRow runExperimentDataRow in runExperimentDataGridView.Rows)
-                    {
-                        if (runExperimentDataRow.Cells[0].Value.Equals("Protocol"))
-                        {
-                            // TODO: Get the estimated protocol time from the selected protocol
-                            string protocolName = runExperimentDataRow.Cells[1].Value.ToString();
-                            if (!runExperimentProtocolName.Equals(protocolName))
-                            {
-                                string protocolFileName = protocolName.Replace(" ", "_") + ".xml";
-                                string protocolFilePath = configuration.ThermocyclingProtocolsDataPath + protocolFileName;
-                                ThermocyclingProtocol protocol = protocolManager.LoadProtocol(protocolFilePath);
-                                protocolTimeInSeconds = protocol.GetTimeInSeconds();
-                            }
-                            projectedAdditionalTimeSeconds += protocolTimeInSeconds;
-                        }
-                    }
-                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.AddSeconds(projectedAdditionalTimeSeconds).ToString("HH:mm:ss");
-                }
-                else if (row.Cells[0].Value.ToString().Contains("End Date"))
-                {
-                    int rowIndex = row.Index;
-                    runExperimentDataGridView.Rows[rowIndex].Cells[1].Value = DateTime.Now.AddSeconds(projectedAdditionalTimeSeconds).ToString("MM/dd/yyyy");
+                    numberOfSamplesToImage++;
                 }
             }
+            // Determine the number of assays
+            int numberOfAssaysToImage = 0;
+            // FIXME: The number of assays does not change
+            foreach (DataGridViewRow row in runAssayMetaDataGridView.Rows)
+            {
+                if (row.Cells[1].Value != "")
+                {
+                    numberOfAssaysToImage++;
+                }
+            }
+            // Calculate the additional time from imaging (before and/or after) based on the number of samples and assays
+            int timeInSecondsToImage = numberOfSamplesToImage * numberOfAssaysToImage * configuration.EstimateAssayCaptureTimeSeconds;
+            if (imageBefore)
+            {
+                projectedEndTime = projectedEndTime.AddSeconds(timeInSecondsToImage);
+            }
+            if (imageAfter)
+            {
+                projectedEndTime = projectedEndTime.AddSeconds(timeInSecondsToImage);
+            }
+            // Get the End Time row
+            r = dataGridViewManager.GetRowFromName(runExperimentDataGridView, "Projected End Time (HH:mm:ss)");
+            r.Cells[1].Value = projectedEndTime.ToString("HH:mm:ss");
+            // Get the ENd Date row
+            r = dataGridViewManager.GetRowFromName(runExperimentDataGridView, "Projected End Date (MM/dd/YYYY)");
+            r.Cells[1].Value = projectedEndTime.ToString("MM/dd/yyyy");
         }
 
         /// <summary>

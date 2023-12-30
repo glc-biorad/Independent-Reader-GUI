@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Globalization;
 using System.Runtime.Intrinsics.X86;
+using iText.Kernel.XMP.Impl;
 
 namespace Independent_Reader_GUI.Services
 { 
@@ -114,17 +115,61 @@ namespace Independent_Reader_GUI.Services
         public DataGridViewComboBoxCell GetOptionNamesComboBoxCell()
         {
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
-            // Iterate over the protocol files in the Thermocycling Protocol Directory and get the names for each protocol
-            var files = Directory.GetFiles(configuration.ThermocyclingProtocolsDataPath);
-            foreach ( var file in files)
+            // Get the protocol files from the Thermocycling Protocol Data Path from the configuration file
+            var protocolFiles = from file in Directory.EnumerateFiles(configuration.ThermocyclingProtocolsDataPath) select file;
+            // Iterate through the files and check the names
+            foreach (var protocolFile in protocolFiles)
             {
-                var filename = Path.GetFileName(file);
-                var protocolName = filename.Replace("_", " ").Replace(".xml", "");
+                XDocument protocolXDoc = XDocument.Load(protocolFile);
+                string protocolName = protocolXDoc.Root.Element("Name").Value;
                 comboBoxCell.Items.Add(protocolName);
             }
             // TODO: Use the config file to set the default value
             comboBoxCell.Value = comboBoxCell.Items[0];
             return comboBoxCell;
+        }
+
+        public string GetProtocolFilePathFromProtocolName(string name)
+        {
+            // Get the protocol files from the Thermocycling Protocol Data Path from the configuration file
+            var protocolFiles = from file in Directory.EnumerateFiles(configuration.ThermocyclingProtocolsDataPath) select file;
+            // Iterate through the files and check the names
+            foreach (var protocolFile in protocolFiles)
+            {
+                XDocument protocolXDoc = XDocument.Load(protocolFile);
+                string protocolName = protocolXDoc.Root.Element("Name").Value;
+                if (protocolName == name)
+                {
+                    return protocolFile;
+                }
+            }
+            return null;
+        }
+
+        public ThermocyclingProtocol GetProtocolFromName(string name)
+        {
+            // Get the file path from the name
+            string filePath = GetProtocolFilePathFromProtocolName(name);
+            // Load in the protocol
+            ThermocyclingProtocol protocol = LoadProtocol(filePath);
+            return protocol;
+        }
+
+        public bool ProtocolNameExists(string name)
+        {
+            // Get the protocol files from the Thermocycling Protocol Data Path from the configuration file
+            var protocolFiles = from file in Directory.EnumerateFiles(configuration.ThermocyclingProtocolsDataPath) select file;
+            // Iterate through the files and check the names
+            foreach (var protocolFile in protocolFiles)
+            {
+                XDocument protocolXDoc = XDocument.Load(protocolFile);
+                string protocolName = protocolXDoc.Root.Element("Name").Value;
+                if (protocolName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

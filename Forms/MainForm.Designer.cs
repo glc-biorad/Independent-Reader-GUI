@@ -72,13 +72,9 @@
             homeMotorsLabel = new Label();
             runTabPage = new TabPage();
             runClearFormButton = new Button();
-            runRemoveAssayButton = new Button();
-            runAddAssayButton = new Button();
             runAssayMetaDataGridView = new DataGridView();
             runAssayMetaDataIDColumn = new DataGridViewTextBoxColumn();
             runAssayMetaDataNameColumn = new DataGridViewTextBoxColumn();
-            runRemoveSampleButton = new Button();
-            runAddSampleButton = new Button();
             runSampleMetaDataGridView = new DataGridView();
             runSampleMetaDataIDColumn = new DataGridViewTextBoxColumn();
             runSampleMetaDataNameColumn = new DataGridViewTextBoxColumn();
@@ -582,11 +578,7 @@
             // runTabPage
             // 
             runTabPage.Controls.Add(runClearFormButton);
-            runTabPage.Controls.Add(runRemoveAssayButton);
-            runTabPage.Controls.Add(runAddAssayButton);
             runTabPage.Controls.Add(runAssayMetaDataGridView);
-            runTabPage.Controls.Add(runRemoveSampleButton);
-            runTabPage.Controls.Add(runAddSampleButton);
             runTabPage.Controls.Add(runSampleMetaDataGridView);
             runTabPage.Controls.Add(runImagingSetupDataGridView);
             runTabPage.Controls.Add(runExperimentDataGridView);
@@ -615,32 +607,6 @@
             runClearFormButton.Text = "Clear Form";
             runClearFormButton.UseVisualStyleBackColor = false;
             // 
-            // runRemoveAssayButton
-            // 
-            runRemoveAssayButton.BackColor = Color.IndianRed;
-            runRemoveAssayButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runRemoveAssayButton.ForeColor = Color.White;
-            runRemoveAssayButton.Location = new Point(957, 453);
-            runRemoveAssayButton.Name = "runRemoveAssayButton";
-            runRemoveAssayButton.Size = new Size(151, 32);
-            runRemoveAssayButton.TabIndex = 12;
-            runRemoveAssayButton.Text = "Remove Assay";
-            runRemoveAssayButton.UseVisualStyleBackColor = false;
-            runRemoveAssayButton.Click += runRemoveAssayButton_Click;
-            // 
-            // runAddAssayButton
-            // 
-            runAddAssayButton.BackColor = Color.MediumSeaGreen;
-            runAddAssayButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runAddAssayButton.ForeColor = Color.White;
-            runAddAssayButton.Location = new Point(800, 453);
-            runAddAssayButton.Name = "runAddAssayButton";
-            runAddAssayButton.Size = new Size(151, 32);
-            runAddAssayButton.TabIndex = 11;
-            runAddAssayButton.Text = "Add Assay";
-            runAddAssayButton.UseVisualStyleBackColor = false;
-            runAddAssayButton.Click += runAddAssayButton_Click;
-            // 
             // runAssayMetaDataGridView
             // 
             runAssayMetaDataGridView.AllowUserToAddRows = false;
@@ -664,32 +630,6 @@
             runAssayMetaDataNameColumn.HeaderText = "Name";
             runAssayMetaDataNameColumn.Name = "runAssayMetaDataNameColumn";
             runAssayMetaDataNameColumn.Width = 224;
-            // 
-            // runRemoveSampleButton
-            // 
-            runRemoveSampleButton.BackColor = Color.IndianRed;
-            runRemoveSampleButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runRemoveSampleButton.ForeColor = Color.White;
-            runRemoveSampleButton.Location = new Point(957, 273);
-            runRemoveSampleButton.Name = "runRemoveSampleButton";
-            runRemoveSampleButton.Size = new Size(151, 32);
-            runRemoveSampleButton.TabIndex = 9;
-            runRemoveSampleButton.Text = "Remove Sample";
-            runRemoveSampleButton.UseVisualStyleBackColor = false;
-            runRemoveSampleButton.Click += runRemoveSampleButton_Click;
-            // 
-            // runAddSampleButton
-            // 
-            runAddSampleButton.BackColor = Color.MediumSeaGreen;
-            runAddSampleButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runAddSampleButton.ForeColor = Color.White;
-            runAddSampleButton.Location = new Point(800, 273);
-            runAddSampleButton.Name = "runAddSampleButton";
-            runAddSampleButton.Size = new Size(151, 32);
-            runAddSampleButton.TabIndex = 8;
-            runAddSampleButton.Text = "Add Sample";
-            runAddSampleButton.UseVisualStyleBackColor = false;
-            runAddSampleButton.Click += runAddSampleButton_Click;
             // 
             // runSampleMetaDataGridView
             // 
@@ -2596,8 +2536,6 @@
         private Button logoutButton;
         private Button resetButton;
         private DataGridView runAssayMetaDataGridView;
-        private Button runRemoveSampleButton;
-        private Button runAddSampleButton;
         private DataGridView runSampleMetaDataGridView;
         private DataGridView runImagingSetupDataGridView;
         private DataGridView runExperimentDataGridView;
@@ -2606,8 +2544,6 @@
         private Label runSampleMetaDataLabel;
         private Label runImagingSetupLabel;
         private Label tunExperimentDataLabel;
-        private Button runRemoveAssayButton;
-        private Button runAddAssayButton;
         private DataGridViewTextBoxColumn runAssayMetaDataIDColumn;
         private DataGridViewTextBoxColumn runAssayMetaDataNameColumn;
         private Button runClearFormButton;
