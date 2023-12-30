@@ -13,5 +13,12 @@ namespace Independent_Reader_GUI.Resources
         public const string Minutes = "minutes";
         public const string Hours = "hours";
         public const string Milliseconds = "milliseconds";
+        public const string Microseconds = "\u03BCs";
+
+        public double ConvertMicrosecondsToSeconds(double microseconds)
+        {
+            double seconds = microseconds / 1000000;
+            return seconds;
+        }
     }
 }
