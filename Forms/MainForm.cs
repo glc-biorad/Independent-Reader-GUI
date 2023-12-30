@@ -1366,7 +1366,7 @@ namespace Independent_Reader_GUI
                 }
                 projectedEndTime = projectedEndTime.AddSeconds(timeUnitResource.ConvertMicrosecondsToSeconds(exposureTime));
             }
-            bool imageInAtto = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Atto", runImagingSetupDataGridView) == "Yes") ? true : false;
+            bool imageInAtto = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image in Atto", runImagingSetupDataGridView).ToString() == "Yes") ? true : false;
             if (imageInAtto)
             {
                 if (int.TryParse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Atto Exposure (μs)", runImagingSetupDataGridView), out _))
