@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,8 @@ namespace Independent_Reader_GUI.Utilities
             DataGridViewComboBoxCell comboBoxCell = new DataGridViewComboBoxCell();
             if (cellValue == "Heater")
             {
-                comboBoxCell.Items.AddRange(new object[]
-                {
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                });
+                HeaterOptions heaterOptions = new HeaterOptions();
+                comboBoxCell = heaterOptions.Options;
                 comboBoxCell.Value = comboBoxCell.Items[0];
             }
             else if (cellValue == "Image Before")
