@@ -14,7 +14,6 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - Update Bergquist and Elastomer Thickness TextBox values based on changes with the Elastomer and Bergquist ComboBox selections
 - Block the user if they attempt a run without an experiment name or any samples/assays set
 - Warn the user if they attempt a run without contact surface, no data save locations, and no imaging before, during, or after the run.
-- Update the time calculation used to predict the end time based on the number of channels used, assays, and samples
 - Complete the Run button functionality
   - Warn or block the user
   - Generate the prerun report
@@ -40,7 +39,6 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - .NET Framework 6.0
 - Window Forms
 - OxyPlot.WindowsForms 2.1.2 for Charting
-- Bonsai.Spinnaker 0.7.1 for using the Spinnaker SDK (FLIR Camera)
 - Desktop Developer for C++ on Visual Studio
 - iText7 7.25 for PDF report generation
 
@@ -50,12 +48,15 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - .NET Framework 6.0
 ### Installation
 1. Clone the repo
-2. Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
-3. Open the solution in Visual Studio and build the project
+2. Open the solution in Visual Studio and build the project
 
 ## Usage
 
 ## Features
+
+## Troubleshooting
+### Spinnaker SDK BadImage Error
+Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
 
 ## License
 
