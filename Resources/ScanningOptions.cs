@@ -15,6 +15,12 @@ namespace Independent_Reader_GUI.Resources
     internal class ScanningOptions
     {
         private Configuration configuration;
+        private XDocument xDocument;
+        private XElement? scanningNode;
+        private XElement? aNode;
+        private XElement? bNode;
+        private XElement? cNode;
+        private XElement? dNode;
         private ScanningOption scanningOptionTECA = new ScanningOption();
         private ScanningOption scanningOptionTECB = new ScanningOption();
         private ScanningOption scanningOptionTECC = new ScanningOption();
@@ -24,7 +30,38 @@ namespace Independent_Reader_GUI.Resources
         public ScanningOptions(Configuration configuration, DataGridView dataGridView)
         {
             this.configuration = configuration;
+            // Load in the Scanning Data XML document
+            xDocument = XDocument.Load(configuration.ScanningDataPath);
+            // Get the root node "Scanning" and for each TEC
+            scanningNode = xDocument.Root;
+            aNode = scanningNode.Element("A");
+            bNode = scanningNode.Element("B");
+            cNode = scanningNode.Element("C");
+            dNode = scanningNode.Element("D");
             ReadInScanningData(dataGridView, configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
+        }
+
+        /// <summary>
+        /// Get scanning data for a particular Heater ,Cartridge, Glass Offset, Elastomer, and Bergquist option
+        /// </summary>
+        /// <param name="heater">Heater for the scanning data</param>
+        /// <param name="cartridgeName">Cartridge for the scanning data</param>
+        /// <param name="glassOffset">Glass Offset for the scanning data</param>
+        /// <param name="elastomerName">Elastomer name for the scannig data</param>
+        /// <param name="bergquistName">Bergquist name for the scanning data</param>
+        /// <returns>ScanningOption</returns>
+        public ScanningOption GetScanningOptionData(string heater, string cartridgeName, double glassOffset, string elastomerName, string bergquistName)
+        {
+            XElement? tecNode;
+            HeaterOptions heaterOptions = new HeaterOptions();
+            tecNode = (heater == heaterOptions.A) ? aNode
+                : (heater == heaterOptions.B) ? bNode
+                : (heater == heaterOptions.C) ? cNode
+                : (heater == heaterOptions.D) ? dNode
+                : null;
+            ScanningOption scanningOption = new ScanningOption();
+            SetScanningOptionFromTECNode(tecNode, scanningOption, cartridgeName, elastomerName, bergquistName, glassOffset);
+            return scanningOption;
         }
 
         /// <summary>
@@ -36,18 +73,11 @@ namespace Independent_Reader_GUI.Resources
         /// <param name="bergquist">Bergquist name for the bergquist that is on top of the cartridge during imaging</param>
         public void ReadInScanningData(DataGridView dataGridView, string cartridgeName, double glassOffset, string elastomerName, string bergquistName)
         {
-            // Load in the Scanning data file
-            XDocument xDocument = XDocument.Load(configuration.ScanningDataPath);
-            var scanningNode = xDocument.Root;
             // Read in the Scanning options for this combination
             // Obtain data from the XML file
-            XElement? aNode = scanningNode.Element("A");
             SetScanningOptionFromTECNode(aNode, scanningOptionTECA, cartridgeName, elastomerName, bergquistName, glassOffset);
-            XElement? bNode = scanningNode.Element("B");
             SetScanningOptionFromTECNode(bNode, scanningOptionTECB, cartridgeName, elastomerName, bergquistName, glassOffset);
-            XElement? cNode = scanningNode.Element("C");
             SetScanningOptionFromTECNode(cNode, scanningOptionTECC, cartridgeName, elastomerName, bergquistName, glassOffset);
-            XElement? dNode = scanningNode.Element("D");
             SetScanningOptionFromTECNode(dNode, scanningOptionTECD, cartridgeName, elastomerName, bergquistName, glassOffset);
             // Load this data into the Configure tab's ImageScanningDataGridView
             SetDataGridViewRowFromScanningOption(dataGridView, scanningOptionTECA, 0);

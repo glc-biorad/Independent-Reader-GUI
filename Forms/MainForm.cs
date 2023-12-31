@@ -32,6 +32,7 @@ namespace Independent_Reader_GUI
         private ElastomerOptions elastomerOptions;
         private BergquistOptions bergquistOptions;
         private ScanningOptions scanningOptions;
+        private ScanningOption defaultScanningOption;
         private FLIRCameraManager cameraManager = new FLIRCameraManager();
         private string runExperimentProtocolName = string.Empty;
         private double runExperimentProtocolTime = 0.0;
@@ -69,6 +70,7 @@ namespace Independent_Reader_GUI
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager);
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
+            // NOTE: This section of code slows down initialization of the GUI
             Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
             Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
             Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
@@ -86,6 +88,7 @@ namespace Independent_Reader_GUI
             clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);
             clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);
             clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D", apiManager: apiManager);
+            // NOTE: This section of code slows down initialization of the GUI
             try
             {
                 Task.Run(async () => await xMotor.CheckConnectionAsync()).Wait();
@@ -111,6 +114,7 @@ namespace Independent_Reader_GUI
             elastomerOptions = new ElastomerOptions(configuration);
             bergquistOptions = new BergquistOptions(configuration);
             scanningOptions = new ScanningOptions(configuration, configureImageScanningDataGridView);
+            defaultScanningOption = scanningOptions.GetScanningOptionData("A", configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -502,12 +506,12 @@ namespace Independent_Reader_GUI
         private void AddRunImagingSetupDefaultData()
         {
             ImagingSetupData runImagingSetupData = new ImagingSetupData();
-            runImagingSetupDataGridView.Rows.Add("X0 (\u03BCS)", runImagingSetupData.X0);
-            runImagingSetupDataGridView.Rows.Add("Y0 (\u03BCS)", runImagingSetupData.Y0);
-            runImagingSetupDataGridView.Rows.Add("Z0 (\u03BCS)", runImagingSetupData.Z0);
-            runImagingSetupDataGridView.Rows.Add("FOV dX (\u03BCS)", runImagingSetupData.FOVdX);
-            runImagingSetupDataGridView.Rows.Add("dY (\u03BCS)", runImagingSetupData.dY);
-            runImagingSetupDataGridView.Rows.Add("Rotational Offset (\u00B0)", runImagingSetupData.RotationalOffset);
+            runImagingSetupDataGridView.Rows.Add("X0 (\u03BCS)", defaultScanningOption.X0);
+            runImagingSetupDataGridView.Rows.Add("Y0 (\u03BCS)", defaultScanningOption.Y0);
+            runImagingSetupDataGridView.Rows.Add("Z0 (\u03BCS)", defaultScanningOption.Z0);
+            runImagingSetupDataGridView.Rows.Add("FOV dX (\u03BCS)", defaultScanningOption.FOVdX);
+            runImagingSetupDataGridView.Rows.Add("dY (\u03BCS)", defaultScanningOption.dY);
+            runImagingSetupDataGridView.Rows.Add("Rotational Offset (\u00B0)", defaultScanningOption.RotationalOffset);
             runImagingSetupDataGridView.Rows.Add("Use Autofocus");
             runImagingSetupDataGridView.Rows[runImagingSetupDataGridView.Rows.Count - 1].Cells[1] = runImagingSetupData.UseAutofocus;
             runImagingSetupDataGridView.Rows.Add("Image Before");
@@ -703,22 +707,27 @@ namespace Independent_Reader_GUI
             ScanParameterData scanParameterData = new ScanParameterData();
             imagingScanParametersDataGridView.Rows.Add("Heater");
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
+            // FIXME: Use the configuration file to set this default value for the heater
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1].Value = "A";
             imagingScanParametersDataGridView.Rows.Add("Elastomer");
             scanParameterData.Elastomer = elastomerOptions.GetOptionNamesComboBoxCell();
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Elastomer;
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1].Value = configuration.DefaultElastomer;
             imagingScanParametersDataGridView.Rows.Add("Bergquist");
             scanParameterData.Bergquist = bergquistOptions.GetOptionNamesComboBoxCell();
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Bergquist;
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1].Value = configuration.DefaultBergquist;
             imagingScanParametersDataGridView.Rows.Add("Cartridge");
             scanParameterData.Cartridge = cartridgeOptions.GetOptionNamesComboBoxCell();
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Cartridge;
+            imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1].Value = configuration.DefaultCartridge;
             imagingScanParametersDataGridView.Rows.Add("Glass Offset (mm)", configuration.DefaultGlassOffset);
-            imagingScanParametersDataGridView.Rows.Add("x0 (\u03BCS)",scanParameterData.X0);
-            imagingScanParametersDataGridView.Rows.Add("y0 (\u03BCS)", scanParameterData.Y0);
-            imagingScanParametersDataGridView.Rows.Add("z0 (\u03BCS)", scanParameterData.Z0);
-            imagingScanParametersDataGridView.Rows.Add("FOV dX (\u03BCS)", scanParameterData.FOVdX);
-            imagingScanParametersDataGridView.Rows.Add("dY (\u03BCS)", scanParameterData.dY);
-            imagingScanParametersDataGridView.Rows.Add("Rotational Offset (\u00B0)", scanParameterData.RotationalOffset);
+            imagingScanParametersDataGridView.Rows.Add("x0 (\u03BCS)", defaultScanningOption.X0);
+            imagingScanParametersDataGridView.Rows.Add("y0 (\u03BCS)", defaultScanningOption.Y0);
+            imagingScanParametersDataGridView.Rows.Add("z0 (\u03BCS)", defaultScanningOption.Z0);
+            imagingScanParametersDataGridView.Rows.Add("FOV dX (\u03BCS)", defaultScanningOption.FOVdX);
+            imagingScanParametersDataGridView.Rows.Add("dY (\u03BCS)", defaultScanningOption.dY);
+            imagingScanParametersDataGridView.Rows.Add("Rotational Offset (\u00B0)", defaultScanningOption.RotationalOffset);
         }
 
         private void AddImagingLEDsDefaultData()
