@@ -42,6 +42,7 @@
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             homeTabPage = new TabPage();
+            homeAPIConnectedRadioButton = new RadioButton();
             homeTECsDataGridView = new DataGridView();
             homeTECsProprtyColumn = new DataGridViewTextBoxColumn();
             homeTECsTECAColumn = new DataGridViewTextBoxColumn();
@@ -304,6 +305,7 @@
             // 
             // homeTabPage
             // 
+            homeTabPage.Controls.Add(homeAPIConnectedRadioButton);
             homeTabPage.Controls.Add(homeTECsDataGridView);
             homeTabPage.Controls.Add(homeTECsLabel);
             homeTabPage.Controls.Add(homeLEDsDataGridView);
@@ -319,6 +321,22 @@
             homeTabPage.TabIndex = 0;
             homeTabPage.Text = "Home";
             homeTabPage.UseVisualStyleBackColor = true;
+            // 
+            // homeAPIConnectedRadioButton
+            // 
+            homeAPIConnectedRadioButton.Appearance = Appearance.Button;
+            homeAPIConnectedRadioButton.AutoSize = true;
+            homeAPIConnectedRadioButton.BackColor = Color.MediumSeaGreen;
+            homeAPIConnectedRadioButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            homeAPIConnectedRadioButton.ForeColor = Color.White;
+            homeAPIConnectedRadioButton.ImageAlign = ContentAlignment.TopRight;
+            homeAPIConnectedRadioButton.Location = new Point(985, 550);
+            homeAPIConnectedRadioButton.Name = "homeAPIConnectedRadioButton";
+            homeAPIConnectedRadioButton.Size = new Size(123, 28);
+            homeAPIConnectedRadioButton.TabIndex = 9;
+            homeAPIConnectedRadioButton.TabStop = true;
+            homeAPIConnectedRadioButton.Text = "API Connected";
+            homeAPIConnectedRadioButton.UseVisualStyleBackColor = false;
             // 
             // homeTECsDataGridView
             // 
@@ -2727,5 +2745,6 @@
         private Label configureGlassOffsetLabel;
         private Label thermocyclingPlottedProtocolLabel;
         private TextBox thermocyclingProtocolNameTextBox;
+        private RadioButton homeAPIConnectedRadioButton;
     }
 }

@@ -58,10 +58,11 @@ namespace Independent_Reader_GUI
         {
             InitializeComponent();
 
-            // Check if the FastAPI server is potentially down
-            if (apiManager == null)
+            // TODO: Replace with a .Connect() method
+            Task.Run(async () => await apiManager.CheckAPIConnection()).Wait();
+            if (!apiManager.Connected)
             {
-                MessageBox.Show("The API could be down or the connection to the Chassis Board could be lost", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                homeAPIConnectedRadioButton.BackColor = Color.Red;
             }
             // Connect to the FLIR Camera
             cameraManager.Connect();
@@ -70,7 +71,7 @@ namespace Independent_Reader_GUI
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager);
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
-            // NOTE: This section of code slows down initialization of the GUI
+            // NOTE: This section of code slows down initialization of the GUI if .Wait() is included
             Task.Run(async () => await tecA.CheckConnectionAsync());//.Wait();
             Task.Run(async () => await tecB.CheckConnectionAsync());//.Wait();
             Task.Run(async () => await tecC.CheckConnectionAsync());//.Wait();
@@ -88,7 +89,7 @@ namespace Independent_Reader_GUI
             clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);
             clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);
             clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D", apiManager: apiManager);
-            // NOTE: This section of code slows down initialization of the GUI
+            // NOTE: This section of code slows down initialization of the GUI with the .Wait() used
             try
             {
                 Task.Run(async () => await xMotor.CheckConnectionAsync());//.Wait();
@@ -104,7 +105,7 @@ namespace Independent_Reader_GUI
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Could not connect to motors");
+                Console.WriteLine("Could not connect to all motors");
             }
             motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
 

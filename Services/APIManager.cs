@@ -13,6 +13,7 @@ namespace Independent_Reader_GUI.Services
     internal class APIManager
     {
         private HttpClient client;
+        private bool connected;
 
         public APIManager()
         {
@@ -22,6 +23,25 @@ namespace Independent_Reader_GUI.Services
         public HttpClient Client
         {
             get { return client; }
+        }
+
+        public bool Connected
+        {
+            get { return connected; }
+        }
+
+        public async Task CheckAPIConnection()
+        {
+            try
+            {
+                // TODO: Obtain the base url somewhere else
+                HttpResponseMessage _ = await client.GetAsync("http://127.0.0.1:8000/");
+                connected = _.IsSuccessStatusCode;
+            }
+            catch
+            {
+                connected = false;
+            }
         }
 
         public async Task<TResponse> GetAsync<TResponse>(string endpoint)
