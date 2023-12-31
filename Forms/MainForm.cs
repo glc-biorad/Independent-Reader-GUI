@@ -441,6 +441,7 @@ namespace Independent_Reader_GUI
                 runExperimentDataGridView.Rows.Add("Experiment Name", runExperimentData.Name);
                 runExperimentDataGridView.Rows.Add("Protocol");
                 runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1] = runExperimentData.ProtocolComboBoxCell;
+                runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].Value = configuration.DefaultThermocyclingProtocolName;
                 runExperimentDataGridView.Rows.Add("Start Time (HH:mm:ss)", runExperimentData.StartDateTime.ToString("HH:mm:ss"));
                 runExperimentDataGridView.Rows[runExperimentDataGridView.Rows.Count - 1].Cells[1].ReadOnly = true;
                 runExperimentDataGridView.Rows.Add("Start Date (MM/dd/YYYY)", runExperimentData.StartDateTime.ToString("MM/dd/yyyy"));
@@ -959,13 +960,13 @@ namespace Independent_Reader_GUI
                     runSampleMetaDataGridView.Rows.Clear();
                     for (int i = 0; i < numberOfSampleChambers; i++)
                     {
-                        runSampleMetaDataGridView.Rows.Add($"{i + 1}", $"Sample {i+1}");
+                        runSampleMetaDataGridView.Rows.Add($"{i + 1}", $"Sample {i + 1}");
                     }
                     int numberOfAssayChambers = cartridge.NumberofAssayChambers;
                     runAssayMetaDataGridView.Rows.Clear();
-                    for (int i = 0; i< numberOfAssayChambers; i++)
+                    for (int i = 0; i < numberOfAssayChambers; i++)
                     {
-                        runAssayMetaDataGridView.Rows.Add($"{i + 1}", $"Assay {i+1}");
+                        runAssayMetaDataGridView.Rows.Add($"{i + 1}", $"Assay {i + 1}");
                     }
                 }
             }
@@ -1213,7 +1214,7 @@ namespace Independent_Reader_GUI
                         return;
                     }
                 }
-            }       
+            }
         }
 
         private void thermocyclingLoadProtocolButton_Click(object sender, EventArgs e)
@@ -1312,7 +1313,7 @@ namespace Independent_Reader_GUI
             protocolTimeInSeconds = selectedProtocol.GetTimeInSeconds();
             projectedEndTime = projectedEndTime.AddSeconds(protocolTimeInSeconds);
             // Determine if imaging before and/or after
-            bool imageBefore = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image Before", runImagingSetupDataGridView) == "Yes") ? true : false; 
+            bool imageBefore = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image Before", runImagingSetupDataGridView) == "Yes") ? true : false;
             bool imageAfter = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Image After", runImagingSetupDataGridView) == "Yes") ? true : false;
             // Determine the number of samples
             int numberOfSamplesToImage = 0;
@@ -1988,6 +1989,149 @@ namespace Independent_Reader_GUI
                 scanningOptions.ReadInScanningData(dataGridView: configureImageScanningDataGridView,
                     cartridgeName: configureCartridgeComboBox.SelectedItem.ToString(), glassOffset: double.Parse(configureGlassOffsetComboBox.SelectedItem.ToString()),
                     elastomerName: configureElastomerComboBox.SelectedItem.ToString(), configureBergquistComboBox.SelectedItem.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the RunSampleMetaDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runSampleMetaDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(runSampleMetaDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the RunImagingSetupDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runImagingSetupDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(runImagingSetupDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the RunExperimentDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runExperimentDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(runExperimentDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the RunAssayMetaDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runAssayMetaDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(runAssayMetaDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ControlMotorsDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlMotorsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(controlMotorsDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ControlTECsDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void controlTECsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(controlTECsDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ImagingScanParametersDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void imagingScanParametersDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(imagingScanParametersDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events ConfigureCartridgeDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configureCartridgesDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureCartridgesDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ConfigureElastomerDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configureElastomerDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureElastomerDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ConfigureBergquistsDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configureBergquistsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureBergquistsDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle key down events for the ConfigureImageScanningDataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configureImageScanningDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureImageScanningDataGridView);
             }
         }
     }

@@ -276,6 +276,7 @@
 	<ThermocyclingProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
 	<BergquistDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
 	<CartridgeDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
+	<DefaultThermocyclingProtocolName>Sample MW dPCR Protocol</DefaultThermocyclingProtocolName>
 	<DefaultPartitionType>Microwells</DefaultPartitionType>
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>

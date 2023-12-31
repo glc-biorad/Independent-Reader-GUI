@@ -20,6 +20,17 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        public void ClearSelectedCellsNotInEditMode(DataGridView dataGridView)
+        {
+            if (!dataGridView.CurrentCell.IsInEditMode && !dataGridView.CurrentCell.ReadOnly)
+            {
+                foreach (DataGridViewCell selectedCell in dataGridView.SelectedCells)
+                {
+                    selectedCell.Value = "";
+                }
+            }
+        }
+
         /// <summary>
         /// Obtain a row given the cell value in a particular column
         /// </summary>

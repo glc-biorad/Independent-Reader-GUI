@@ -637,6 +637,7 @@
             runAssayMetaDataGridView.RowTemplate.Height = 25;
             runAssayMetaDataGridView.Size = new Size(327, 103);
             runAssayMetaDataGridView.TabIndex = 10;
+            runAssayMetaDataGridView.KeyDown += runAssayMetaDataGridView_KeyDown;
             // 
             // runAssayMetaDataIDColumn
             // 
@@ -662,6 +663,7 @@
             runSampleMetaDataGridView.RowTemplate.Height = 25;
             runSampleMetaDataGridView.Size = new Size(327, 243);
             runSampleMetaDataGridView.TabIndex = 7;
+            runSampleMetaDataGridView.KeyDown += runSampleMetaDataGridView_KeyDown;
             // 
             // runSampleMetaDataIDColumn
             // 
@@ -689,6 +691,7 @@
             runImagingSetupDataGridView.RowTemplate.Height = 25;
             runImagingSetupDataGridView.Size = new Size(379, 554);
             runImagingSetupDataGridView.TabIndex = 6;
+            runImagingSetupDataGridView.KeyDown += runImagingSetupDataGridView_KeyDown;
             // 
             // runImagingSetupPropertyColumn
             // 
@@ -718,6 +721,7 @@
             runExperimentDataGridView.RowTemplate.Height = 25;
             runExperimentDataGridView.Size = new Size(384, 554);
             runExperimentDataGridView.TabIndex = 5;
+            runExperimentDataGridView.KeyDown += runExperimentDataGridView_KeyDown;
             // 
             // runExperimentDataPropertyColumn
             // 
@@ -1015,6 +1019,7 @@
             controlTECsDataGridView.RowTemplate.Height = 25;
             controlTECsDataGridView.Size = new Size(569, 466);
             controlTECsDataGridView.TabIndex = 6;
+            controlTECsDataGridView.KeyDown += controlTECsDataGridView_KeyDown;
             // 
             // controlTECsPropertyColumn
             // 
@@ -1111,6 +1116,7 @@
             controlMotorsDataGridView.RowTemplate.Height = 25;
             controlMotorsDataGridView.Size = new Size(525, 294);
             controlMotorsDataGridView.TabIndex = 1;
+            controlMotorsDataGridView.KeyDown += controlMotorsDataGridView_KeyDown;
             // 
             // controlMotorsMotorColumn
             // 
@@ -1620,6 +1626,7 @@
             imagingScanParametersDataGridView.RowTemplate.Height = 25;
             imagingScanParametersDataGridView.Size = new Size(417, 300);
             imagingScanParametersDataGridView.TabIndex = 11;
+            imagingScanParametersDataGridView.KeyDown += imagingScanParametersDataGridView_KeyDown;
             // 
             // imagingScanParametersPropertyColumn
             // 
@@ -2088,6 +2095,7 @@
             configureImageScanningDataGridView.RowTemplate.Height = 25;
             configureImageScanningDataGridView.Size = new Size(1100, 134);
             configureImageScanningDataGridView.TabIndex = 14;
+            configureImageScanningDataGridView.KeyDown += configureImageScanningDataGridView_KeyDown;
             // 
             // configureImageScanningHeaterColumn
             // 
@@ -2201,6 +2209,7 @@
             configureBergquistsDataGridView.RowTemplate.Height = 25;
             configureBergquistsDataGridView.Size = new Size(1100, 55);
             configureBergquistsDataGridView.TabIndex = 5;
+            configureBergquistsDataGridView.KeyDown += configureBergquistsDataGridView_KeyDown;
             // 
             // configureBergquistsNameColumn
             // 
@@ -2250,6 +2259,7 @@
             configureElastomerDataGridView.RowTemplate.Height = 25;
             configureElastomerDataGridView.Size = new Size(1102, 50);
             configureElastomerDataGridView.TabIndex = 3;
+            configureElastomerDataGridView.KeyDown += configureElastomerDataGridView_KeyDown;
             // 
             // configureElastomerNameColumn
             // 
@@ -2329,6 +2339,7 @@
             configureCartridgesDataGridView.RowTemplate.Height = 25;
             configureCartridgesDataGridView.Size = new Size(1100, 50);
             configureCartridgesDataGridView.TabIndex = 1;
+            configureCartridgesDataGridView.KeyDown += configureCartridgesDataGridView_KeyDown;
             // 
             // configureCartridgesNameColumn
             // 
