@@ -71,10 +71,10 @@ namespace Independent_Reader_GUI
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
             // NOTE: This section of code slows down initialization of the GUI
-            Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecA.CheckConnectionAsync());//.Wait();
+            Task.Run(async () => await tecB.CheckConnectionAsync());//.Wait();
+            Task.Run(async () => await tecC.CheckConnectionAsync());//.Wait();
+            Task.Run(async () => await tecD.CheckConnectionAsync());//.Wait();
 
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
@@ -91,16 +91,16 @@ namespace Independent_Reader_GUI
             // NOTE: This section of code slows down initialization of the GUI
             try
             {
-                Task.Run(async () => await xMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await yMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await zMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await trayABMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await trayCDMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampAMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampBMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampCMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampDMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await xMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await yMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await zMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await trayABMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await trayCDMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await clampAMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await clampBMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await clampCMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await clampDMotor.CheckConnectionAsync());//.Wait();
             }
             catch (Exception ex)
             {
