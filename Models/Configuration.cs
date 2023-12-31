@@ -135,6 +135,7 @@ namespace Independent_Reader_GUI.Models
         public string AssetsDataPath;
         public string ScanningDataPath;
         public string ReportLogoDataPath;
+        public string DefaultThermocyclingProtocolName;
 
         public Configuration()
         {
@@ -250,6 +251,7 @@ namespace Independent_Reader_GUI.Models
             EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
             EstimateAssayCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateAssayCaptureTimeSeconds").Value);
             EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);
+            DefaultThermocyclingProtocolName = rootNode.Element("DefaultThermocyclingProtocolName").Value;
         }
     }
 }
