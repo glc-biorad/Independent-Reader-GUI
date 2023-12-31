@@ -41,6 +41,10 @@ namespace Independent_Reader_GUI.Models
             Task.Run(async () => await CheckConnectionAsync()).Wait();
         }
 
+        /// <summary>
+        /// Check the connection of the TEC by testing a response
+        /// </summary>
+        /// <returns></returns>
         public async Task CheckConnectionAsync()
         {
             try
@@ -62,6 +66,10 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
+        /// <summary>
+        /// Get the TEC board address
+        /// </summary>
+        /// <returns>address of the TEC</returns>
         public async Task<int?> GetBoardAddressAsync()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
@@ -91,6 +99,10 @@ namespace Independent_Reader_GUI.Models
             return deviceAddress;
         }
 
+        /// <summary>
+        /// Get the Firmware version loaded onto the TEC board
+        /// </summary>
+        /// <returns>The firmware version as a string</returns>
         public async Task<string> GetVersionAsync()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
