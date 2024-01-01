@@ -59,6 +59,12 @@ namespace Independent_Reader_GUI.Models
             get { return Steps.Count; }
         }
 
+        /// <summary>
+        /// Get the ThermocyclingProtocolSteps between two step indeces, including the start and end index steps
+        /// </summary>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
+        /// <returns></returns>
         public List<ThermocyclingProtocolStep> GetStepsBetween(int startIndex, int endIndex)
         {
             List<ThermocyclingProtocolStep> betweenSteps = new List<ThermocyclingProtocolStep>();
