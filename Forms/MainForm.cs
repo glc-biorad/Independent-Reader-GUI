@@ -2134,5 +2134,31 @@ namespace Independent_Reader_GUI
                 dataGridViewManager.ClearSelectedCellsNotInEditMode(configureImageScanningDataGridView);
             }
         }
+
+        /// <summary>
+        /// Handles the click event for the ThermocyclingTECARunButton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void thermocyclingTECARunButton_Click(object sender, EventArgs e)
+        {
+            // Get the protocol name and protocol
+            string? protocolName = thermocyclingProtocolNameTextBox.Text;
+            ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
+            // Handle the click event
+            if (protocol != null)
+            {
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol);
+            }
+            else
+            {
+                MessageBox.Show($"Unable to run protocol, a protocol by the name '{protocolName}' could not be found", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void thermocyclingTECAKillButton_Click(object sender, EventArgs e)
+        {
+            tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
+        }
     }
 }

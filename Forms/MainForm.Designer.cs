@@ -1277,6 +1277,7 @@
             thermocyclingTECAKillButton.TabIndex = 12;
             thermocyclingTECAKillButton.Text = "Kill";
             thermocyclingTECAKillButton.UseVisualStyleBackColor = false;
+            thermocyclingTECAKillButton.Click += thermocyclingTECAKillButton_Click;
             // 
             // thermocyclingTECDRunButton
             // 
@@ -1325,6 +1326,7 @@
             thermocyclingTECARunButton.TabIndex = 8;
             thermocyclingTECARunButton.Text = "Run";
             thermocyclingTECARunButton.UseVisualStyleBackColor = false;
+            thermocyclingTECARunButton.Click += thermocyclingTECARunButton_Click;
             // 
             // thermocyclingProtocolStatusesDataGridView
             // 
