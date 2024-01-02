@@ -37,6 +37,15 @@ namespace Independent_Reader_GUI.Services
             tecCancellationTokenSources.Add(tecDRunCancellationTokenSource);
         }
 
+        /// <summary>
+        /// Run Task for a TEC controlled by the TEC Manager
+        /// </summary>
+        /// <param name="protocol">protocol to be run on the TEC</param>
+        /// <param name="tec">tec to run the prtocol</param>
+        /// <param name="dataGridView">DataGridView to be updated, showing protocol status</param>
+        /// <param name="configuration">Configuration for the instrument</param>
+        /// <param name="cancellationToken">Cancellation token for killing the run</param>
+        /// <returns></returns>
         public async Task Run(ThermocyclingProtocol protocol, TEC tec, DataGridView dataGridView, Configuration configuration, CancellationToken cancellationToken)
         {
             DataGridViewManager dataGridViewManager = new DataGridViewManager();
@@ -143,6 +152,15 @@ namespace Independent_Reader_GUI.Services
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete");
         }
 
+        /// <summary>
+        /// Handles the Run Click Event on the Thermocycling Tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="dataGridView"></param>
+        /// <param name="protocol"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public async Task HandleRunClickEvent(object sender, EventArgs e, DataGridView dataGridView, ThermocyclingProtocol protocol, Configuration configuration)
         {
             // Get the Name of the clicked Run button to get the TEC to use
@@ -172,6 +190,12 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        /// <summary>
+        /// Handles the Click of the Kill button on the Thermocycling tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <param name="dataGridView"></param>
         public void HandleKillClickEvent(object sender, EventArgs e, DataGridView dataGridView)
         {
             DataGridViewManager dataGridViewManager = new DataGridViewManager();

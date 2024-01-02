@@ -128,6 +128,8 @@
             controlMotorsHomeColumn = new DataGridViewTextBoxColumn();
             controlMotorsLabel = new Label();
             thermocyclingTabPage = new TabPage();
+            thermocyclingEstimatedTimeTextBox = new TextBox();
+            thermocyclingEstimatedTimeLabel = new Label();
             thermocyclingProtocolNameTextBox = new TextBox();
             thermocyclingPlottedProtocolLabel = new Label();
             thermocyclingAddGoToButton = new Button();
@@ -256,8 +258,6 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            thermocyclingEstimatedTimeLabel = new Label();
-            thermocyclingEstimatedTimeTextBox = new TextBox();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -1203,6 +1203,25 @@
             thermocyclingTabPage.Text = "Thermocycling";
             thermocyclingTabPage.UseVisualStyleBackColor = true;
             // 
+            // thermocyclingEstimatedTimeTextBox
+            // 
+            thermocyclingEstimatedTimeTextBox.Enabled = false;
+            thermocyclingEstimatedTimeTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeTextBox.Location = new Point(711, 48);
+            thermocyclingEstimatedTimeTextBox.Name = "thermocyclingEstimatedTimeTextBox";
+            thermocyclingEstimatedTimeTextBox.Size = new Size(110, 26);
+            thermocyclingEstimatedTimeTextBox.TabIndex = 21;
+            // 
+            // thermocyclingEstimatedTimeLabel
+            // 
+            thermocyclingEstimatedTimeLabel.AutoSize = true;
+            thermocyclingEstimatedTimeLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeLabel.Location = new Point(571, 51);
+            thermocyclingEstimatedTimeLabel.Name = "thermocyclingEstimatedTimeLabel";
+            thermocyclingEstimatedTimeLabel.Size = new Size(132, 19);
+            thermocyclingEstimatedTimeLabel.TabIndex = 20;
+            thermocyclingEstimatedTimeLabel.Text = "Estimated Time:";
+            // 
             // thermocyclingProtocolNameTextBox
             // 
             thermocyclingProtocolNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
@@ -1245,6 +1264,7 @@
             thermocyclingTECDKillButton.TabIndex = 15;
             thermocyclingTECDKillButton.Text = "Kill";
             thermocyclingTECDKillButton.UseVisualStyleBackColor = false;
+            thermocyclingTECDKillButton.Click += thermocyclingTECDKillButton_Click;
             // 
             // thermocyclingTECCKillButton
             // 
@@ -1257,6 +1277,7 @@
             thermocyclingTECCKillButton.TabIndex = 14;
             thermocyclingTECCKillButton.Text = "Kill";
             thermocyclingTECCKillButton.UseVisualStyleBackColor = false;
+            thermocyclingTECCKillButton.Click += thermocyclingTECCKillButton_Click;
             // 
             // thermocyclingTECBKillButton
             // 
@@ -1295,6 +1316,7 @@
             thermocyclingTECDRunButton.TabIndex = 11;
             thermocyclingTECDRunButton.Text = "Run";
             thermocyclingTECDRunButton.UseVisualStyleBackColor = false;
+            thermocyclingTECDRunButton.Click += thermocyclingTECDRunButton_Click;
             // 
             // thermocyclingTECCRunButton
             // 
@@ -1307,6 +1329,7 @@
             thermocyclingTECCRunButton.TabIndex = 10;
             thermocyclingTECCRunButton.Text = "Run";
             thermocyclingTECCRunButton.UseVisualStyleBackColor = false;
+            thermocyclingTECCRunButton.Click += thermocyclingTECCRunButton_Click;
             // 
             // thermocyclingTECBRunButton
             // 
@@ -2490,25 +2513,6 @@
             resetButton.TabIndex = 7;
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
-            // 
-            // thermocyclingEstimatedTimeLabel
-            // 
-            thermocyclingEstimatedTimeLabel.AutoSize = true;
-            thermocyclingEstimatedTimeLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            thermocyclingEstimatedTimeLabel.Location = new Point(571, 51);
-            thermocyclingEstimatedTimeLabel.Name = "thermocyclingEstimatedTimeLabel";
-            thermocyclingEstimatedTimeLabel.Size = new Size(132, 19);
-            thermocyclingEstimatedTimeLabel.TabIndex = 20;
-            thermocyclingEstimatedTimeLabel.Text = "Estimated Time:";
-            // 
-            // thermocyclingEstimatedTimeTextBox
-            // 
-            thermocyclingEstimatedTimeTextBox.Enabled = false;
-            thermocyclingEstimatedTimeTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingEstimatedTimeTextBox.Location = new Point(711, 48);
-            thermocyclingEstimatedTimeTextBox.Name = "thermocyclingEstimatedTimeTextBox";
-            thermocyclingEstimatedTimeTextBox.Size = new Size(110, 26);
-            thermocyclingEstimatedTimeTextBox.TabIndex = 21;
             // 
             // independentReaderForm
             // 
