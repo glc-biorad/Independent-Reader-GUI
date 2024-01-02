@@ -45,6 +45,10 @@ namespace Independent_Reader_GUI.Services
             {
                 // Set the protocol name in the data grid view for this tec
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol", protocol.Name);
+                // Get the amount of time the protocol is estimated to take
+                int estimatedProtocolTimeInSeconds = int.Parse(protocol.GetTimeInSeconds().ToString());
+                TimeSpan estimatedProtocolTimeSpan = TimeSpan.FromSeconds(estimatedProtocolTimeInSeconds);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Estimated Time Left", estimatedProtocolTimeSpan.ToString(@"hh\:mm\:ss"));
                 // TODO: Set the cell for the Protocol Running to MediumSeaGreen
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "Yes");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Running");
@@ -79,7 +83,6 @@ namespace Independent_Reader_GUI.Services
                         }
                         else if (stepType == ThermocyclingProtocolStepType.GoTo)
                         {
-                            int cycleIndex = 1;
                             // Get the step number to go to
                             int stepNumber = step.StepNumber;
                             // Get the cycle count
@@ -87,20 +90,22 @@ namespace Independent_Reader_GUI.Services
                             // Get the steps between this GoTo step and the Step Number the GoTo step needs
                             List<ThermocyclingProtocolStep> cycleSteps = protocol.GetStepsBetween(stepNumber, step.Index-1);
                             // Cycle 
-                            foreach (ThermocyclingProtocolStep cycleStep in cycleSteps)
+                            for (int i = 0; i < cycleCount; i++)
                             {
-                                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", $"{cycleIndex}/{cycleCount}");
-                                cycleIndex++; 
-                                if (cycleStep.TypeName == ThermocyclingProtocolStepType.Set)
+                                foreach (ThermocyclingProtocolStep cycleStep in cycleSteps)
                                 {
-                                    // Set the temperature
-                                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", cycleStep.Temperature.ToString());
-                                    // Get the step time and units
-                                    int stepTime = int.Parse(cycleStep.Time.ToString());
-                                    string stepTimeUnits = cycleStep.TimeUnits;
-                                    TimeUnit timeUnit = new TimeUnit();
-                                    int stepTimeInMilliseconds = timeUnit.ConvertTimeToMilliseconds(stepTime, stepTimeUnits);
-                                    await Task.Delay(stepTimeInMilliseconds, cancellationToken);
+                                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", $"{i+1}/{cycleCount}");
+                                    if (cycleStep.TypeName == ThermocyclingProtocolStepType.Set)
+                                    {
+                                        // Set the temperature
+                                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", cycleStep.Temperature.ToString());
+                                        // Get the step time and units
+                                        int stepTime = int.Parse(cycleStep.Time.ToString());
+                                        string stepTimeUnits = cycleStep.TimeUnits;
+                                        TimeUnit timeUnit = new TimeUnit();
+                                        int stepTimeInMilliseconds = timeUnit.ConvertTimeToMilliseconds(stepTime, stepTimeUnits);
+                                        await Task.Delay(stepTimeInMilliseconds, cancellationToken);
+                                    }
                                 }
                             }
                         } 
@@ -118,7 +123,7 @@ namespace Independent_Reader_GUI.Services
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Cancelled");
                 MessageBox.Show($"Run has been cancelled on {tec.Name}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 // TODO: Generate a report
-                //return;
+                return;
             }
             // TODO: Generate a report
             DateTime endDateTime = DateTime.Now;
@@ -179,12 +184,13 @@ namespace Independent_Reader_GUI.Services
                     : (button.Name == "thermocyclingTECCKillButton") ? 2
                     : (button.Name == "thermocyclingTECDKillButton") ? 3
                     : -1;
+                string tecName = "TEC " + button.Name[16].ToString();
                 // Cancel
                 if (tecCancellationTokenSources[_cts_idx] != null)
                 {
                     tecCancellationTokenSources[_cts_idx].Cancel();
                     // TODO: Set the Protocol Running cell background color to Yellow for a certain amount of time or indefinitely
-                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, "TEC A", "Protocol Running", "No");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No");
                     // TODO: Set the tec*ProtocolRunning bool variable to false
                 }
             }
