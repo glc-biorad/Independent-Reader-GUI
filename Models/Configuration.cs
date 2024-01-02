@@ -104,6 +104,7 @@ namespace Independent_Reader_GUI.Models
         public double DefaultGlassOffset = double.NaN;
         public int RunDataTimerInterval = int.MinValue;
         public int ControlTabTimerInterval = int.MinValue;
+        public int ThermocyclingTabTimerInterval = int.MinValue;
         public int EstimateFOVCaptureTimeSeconds = int.MinValue;
         public int EstimateAssayCaptureTimeSeconds = int.MinValue;
         public int EstimateSampleCaptureTimeSeconds = int.MinValue;
@@ -248,6 +249,7 @@ namespace Independent_Reader_GUI.Models
             DefaultGlassOffset = double.Parse(rootNode.Element("DefaultGlassOffset").Value);
             RunDataTimerInterval = int.Parse(rootNode.Element("RunDataTimerInterval").Value);
             ControlTabTimerInterval = int.Parse(rootNode.Element("ControlTabTimerInterval").Value);
+            ThermocyclingTabTimerInterval = int.Parse(rootNode.Element("ThermocyclingTabTimerInterval").Value);
             EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
             EstimateAssayCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateAssayCaptureTimeSeconds").Value);
             EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);

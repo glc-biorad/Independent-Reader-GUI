@@ -256,6 +256,8 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
+            thermocyclingEstimatedTimeLabel = new Label();
+            thermocyclingEstimatedTimeTextBox = new TextBox();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -1173,6 +1175,8 @@
             // 
             // thermocyclingTabPage
             // 
+            thermocyclingTabPage.Controls.Add(thermocyclingEstimatedTimeTextBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingEstimatedTimeLabel);
             thermocyclingTabPage.Controls.Add(thermocyclingProtocolNameTextBox);
             thermocyclingTabPage.Controls.Add(thermocyclingPlottedProtocolLabel);
             thermocyclingTabPage.Controls.Add(thermocyclingAddGoToButton);
@@ -1235,7 +1239,7 @@
             thermocyclingTECDKillButton.BackColor = Color.IndianRed;
             thermocyclingTECDKillButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECDKillButton.ForeColor = Color.White;
-            thermocyclingTECDKillButton.Location = new Point(1021, 399);
+            thermocyclingTECDKillButton.Location = new Point(1023, 495);
             thermocyclingTECDKillButton.Name = "thermocyclingTECDKillButton";
             thermocyclingTECDKillButton.Size = new Size(73, 36);
             thermocyclingTECDKillButton.TabIndex = 15;
@@ -1247,7 +1251,7 @@
             thermocyclingTECCKillButton.BackColor = Color.IndianRed;
             thermocyclingTECCKillButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECCKillButton.ForeColor = Color.White;
-            thermocyclingTECCKillButton.Location = new Point(927, 399);
+            thermocyclingTECCKillButton.Location = new Point(929, 495);
             thermocyclingTECCKillButton.Name = "thermocyclingTECCKillButton";
             thermocyclingTECCKillButton.Size = new Size(73, 36);
             thermocyclingTECCKillButton.TabIndex = 14;
@@ -1259,19 +1263,20 @@
             thermocyclingTECBKillButton.BackColor = Color.IndianRed;
             thermocyclingTECBKillButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECBKillButton.ForeColor = Color.White;
-            thermocyclingTECBKillButton.Location = new Point(824, 399);
+            thermocyclingTECBKillButton.Location = new Point(826, 495);
             thermocyclingTECBKillButton.Name = "thermocyclingTECBKillButton";
             thermocyclingTECBKillButton.Size = new Size(73, 36);
             thermocyclingTECBKillButton.TabIndex = 13;
             thermocyclingTECBKillButton.Text = "Kill";
             thermocyclingTECBKillButton.UseVisualStyleBackColor = false;
+            thermocyclingTECBKillButton.Click += thermocyclingTECBKillButton_Click;
             // 
             // thermocyclingTECAKillButton
             // 
             thermocyclingTECAKillButton.BackColor = Color.IndianRed;
             thermocyclingTECAKillButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECAKillButton.ForeColor = Color.White;
-            thermocyclingTECAKillButton.Location = new Point(720, 399);
+            thermocyclingTECAKillButton.Location = new Point(722, 495);
             thermocyclingTECAKillButton.Name = "thermocyclingTECAKillButton";
             thermocyclingTECAKillButton.Size = new Size(73, 36);
             thermocyclingTECAKillButton.TabIndex = 12;
@@ -1284,7 +1289,7 @@
             thermocyclingTECDRunButton.BackColor = SystemColors.Highlight;
             thermocyclingTECDRunButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECDRunButton.ForeColor = Color.White;
-            thermocyclingTECDRunButton.Location = new Point(1021, 357);
+            thermocyclingTECDRunButton.Location = new Point(1023, 453);
             thermocyclingTECDRunButton.Name = "thermocyclingTECDRunButton";
             thermocyclingTECDRunButton.Size = new Size(73, 36);
             thermocyclingTECDRunButton.TabIndex = 11;
@@ -1296,7 +1301,7 @@
             thermocyclingTECCRunButton.BackColor = SystemColors.Highlight;
             thermocyclingTECCRunButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECCRunButton.ForeColor = Color.White;
-            thermocyclingTECCRunButton.Location = new Point(927, 357);
+            thermocyclingTECCRunButton.Location = new Point(929, 453);
             thermocyclingTECCRunButton.Name = "thermocyclingTECCRunButton";
             thermocyclingTECCRunButton.Size = new Size(73, 36);
             thermocyclingTECCRunButton.TabIndex = 10;
@@ -1308,19 +1313,20 @@
             thermocyclingTECBRunButton.BackColor = SystemColors.Highlight;
             thermocyclingTECBRunButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECBRunButton.ForeColor = Color.White;
-            thermocyclingTECBRunButton.Location = new Point(824, 357);
+            thermocyclingTECBRunButton.Location = new Point(826, 453);
             thermocyclingTECBRunButton.Name = "thermocyclingTECBRunButton";
             thermocyclingTECBRunButton.Size = new Size(73, 36);
             thermocyclingTECBRunButton.TabIndex = 9;
             thermocyclingTECBRunButton.Text = "Run";
             thermocyclingTECBRunButton.UseVisualStyleBackColor = false;
+            thermocyclingTECBRunButton.Click += thermocyclingTECBRunButton_Click;
             // 
             // thermocyclingTECARunButton
             // 
             thermocyclingTECARunButton.BackColor = SystemColors.Highlight;
             thermocyclingTECARunButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             thermocyclingTECARunButton.ForeColor = Color.White;
-            thermocyclingTECARunButton.Location = new Point(720, 357);
+            thermocyclingTECARunButton.Location = new Point(722, 453);
             thermocyclingTECARunButton.Name = "thermocyclingTECARunButton";
             thermocyclingTECARunButton.Size = new Size(73, 36);
             thermocyclingTECARunButton.TabIndex = 8;
@@ -1334,12 +1340,12 @@
             thermocyclingProtocolStatusesDataGridView.AllowUserToDeleteRows = false;
             thermocyclingProtocolStatusesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             thermocyclingProtocolStatusesDataGridView.Columns.AddRange(new DataGridViewColumn[] { thermocyclingProtocolStatusesPropertyColumn, thermocyclingProtocolStatusesTECAColumn, thermocyclingProtocolStatusesTECBColumn, thermocyclingProtocolStatusesTECCColumn, thermocyclingProtocolStatusesTECDColumn });
-            thermocyclingProtocolStatusesDataGridView.Location = new Point(571, 61);
+            thermocyclingProtocolStatusesDataGridView.Location = new Point(571, 103);
             thermocyclingProtocolStatusesDataGridView.Name = "thermocyclingProtocolStatusesDataGridView";
             thermocyclingProtocolStatusesDataGridView.ReadOnly = true;
             thermocyclingProtocolStatusesDataGridView.RowHeadersVisible = false;
             thermocyclingProtocolStatusesDataGridView.RowTemplate.Height = 25;
-            thermocyclingProtocolStatusesDataGridView.Size = new Size(537, 290);
+            thermocyclingProtocolStatusesDataGridView.Size = new Size(537, 344);
             thermocyclingProtocolStatusesDataGridView.TabIndex = 7;
             // 
             // thermocyclingProtocolStatusesPropertyColumn
@@ -1377,7 +1383,7 @@
             // 
             thermocyclingProtocolStatusesLabel.AutoSize = true;
             thermocyclingProtocolStatusesLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingProtocolStatusesLabel.Location = new Point(571, 40);
+            thermocyclingProtocolStatusesLabel.Location = new Point(571, 82);
             thermocyclingProtocolStatusesLabel.Name = "thermocyclingProtocolStatusesLabel";
             thermocyclingProtocolStatusesLabel.Size = new Size(131, 18);
             thermocyclingProtocolStatusesLabel.TabIndex = 6;
@@ -2485,6 +2491,25 @@
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
             // 
+            // thermocyclingEstimatedTimeLabel
+            // 
+            thermocyclingEstimatedTimeLabel.AutoSize = true;
+            thermocyclingEstimatedTimeLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeLabel.Location = new Point(571, 51);
+            thermocyclingEstimatedTimeLabel.Name = "thermocyclingEstimatedTimeLabel";
+            thermocyclingEstimatedTimeLabel.Size = new Size(132, 19);
+            thermocyclingEstimatedTimeLabel.TabIndex = 20;
+            thermocyclingEstimatedTimeLabel.Text = "Estimated Time:";
+            // 
+            // thermocyclingEstimatedTimeTextBox
+            // 
+            thermocyclingEstimatedTimeTextBox.Enabled = false;
+            thermocyclingEstimatedTimeTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeTextBox.Location = new Point(711, 48);
+            thermocyclingEstimatedTimeTextBox.Name = "thermocyclingEstimatedTimeTextBox";
+            thermocyclingEstimatedTimeTextBox.Size = new Size(110, 26);
+            thermocyclingEstimatedTimeTextBox.TabIndex = 21;
+            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2759,5 +2784,7 @@
         private Label thermocyclingPlottedProtocolLabel;
         private TextBox thermocyclingProtocolNameTextBox;
         private RadioButton homeAPIConnectedRadioButton;
+        private TextBox thermocyclingEstimatedTimeTextBox;
+        private Label thermocyclingEstimatedTimeLabel;
     }
 }
