@@ -23,10 +23,7 @@ namespace Independent_Reader_GUI
         private DataGridViewManager dataGridViewManager = new DataGridViewManager();
         private TimerManager runExperimentDataTimerManager;
         private TimerManager controlTabTimerManager;
-        private TimerManager tecAThermocyclingStatusTimerManager;
-        private TimerManager tecBThermocyclingStatusTimerManager;
-        private TimerManager tecCThermocyclingStatusTimerManager;
-        private TimerManager tecDThermocyclingStatusTimerManager;
+        private TimerManager thermocyclingStatusTimerManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
@@ -149,8 +146,8 @@ namespace Independent_Reader_GUI
             runExperimentDataTimerManager.Start();
             controlTabTimerManager = new TimerManager(interval: configuration.ControlTabTimerInterval, tickEventHandler: controlTab_TickEventHandler);
             controlTabTimerManager.Start();
-            tecAThermocyclingStatusTimerManager = new TimerManager(interval: configuration.ThermocyclingTabTimerInterval, tickEventHandler: thermocyclingTab_TickEventHandler);
-            tecAThermocyclingStatusTimerManager.Start();
+            thermocyclingStatusTimerManager = new TimerManager(interval: configuration.ThermocyclingTabTimerInterval, tickEventHandler: thermocyclingTab_TickEventHandler);
+            thermocyclingStatusTimerManager.Start();
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
@@ -1299,18 +1296,46 @@ namespace Independent_Reader_GUI
 
         public async void thermocyclingTab_TickEventHandler(object sender, EventArgs e)
         {
-            TimeSpan dt = TimeSpan.FromSeconds(configuration.ThermocyclingTabTimerInterval/1000); // time tick in milliseconds
+            TimeSpan dt = TimeSpan.FromSeconds(configuration.ThermocyclingTabTimerInterval / 1000); // time tick in milliseconds
             // Reduce all time left on a protocol running for each TEC by dt * 1000;
             var tecATimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
             var tecBTimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
             var tecCTimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
             var tecDTimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
+            // TEC A
             if (TimeSpan.TryParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out TimeSpan timeSpan))
             {
                 if (TimeSpan.ParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
-                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, 
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
                         tecA.Name, "Estimated Time Left", (TimeSpan.Parse(tecATimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                }
+            }
+            // TEC B
+            if (TimeSpan.TryParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            {
+                if (TimeSpan.ParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
+                {
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
+                        tecB.Name, "Estimated Time Left", (TimeSpan.Parse(tecBTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                }
+            }
+            // TEC C
+            if (TimeSpan.TryParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            {
+                if (TimeSpan.ParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
+                {
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
+                        tecC.Name, "Estimated Time Left", (TimeSpan.Parse(tecCTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                }
+            }
+            // TEC D
+            if (TimeSpan.TryParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            {
+                if (TimeSpan.ParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
+                {
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
+                        tecD.Name, "Estimated Time Left", (TimeSpan.Parse(tecDTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
                 }
             }
         }
@@ -1471,7 +1496,7 @@ namespace Independent_Reader_GUI
         {
             runExperimentDataTimerManager.Stop();
             controlTabTimerManager.Stop();
-            tecAThermocyclingStatusTimerManager.Stop();
+            thermocyclingStatusTimerManager.Stop();
             cameraManager.Disconnect();
             apiManager.Disponse();
         }
@@ -2209,6 +2234,50 @@ namespace Independent_Reader_GUI
         }
 
         private void thermocyclingTECBKillButton_Click(object sender, EventArgs e)
+        {
+            tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
+        }
+
+        private async void thermocyclingTECCRunButton_Click(object sender, EventArgs e)
+        {
+            // Get the protocol name and protocol
+            string? protocolName = thermocyclingProtocolNameTextBox.Text;
+            ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
+            bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Handle the click event
+            if (protocol != null && protocolNameExists)
+            {
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+            }
+            else
+            {
+                MessageBox.Show($"Unable to run protocol, a protocol by the name '{protocolName}' could not be found", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void thermocyclingTECCKillButton_Click(object sender, EventArgs e)
+        {
+            tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
+        }
+
+        private async void thermocyclingTECDRunButton_Click(object sender, EventArgs e)
+        {
+            // Get the protocol name and protocol
+            string? protocolName = thermocyclingProtocolNameTextBox.Text;
+            ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
+            bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Handle the click event
+            if (protocol != null && protocolNameExists)
+            {
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+            }
+            else
+            {
+                MessageBox.Show($"Unable to run protocol, a protocol by the name '{protocolName}' could not be found", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void thermocyclingTECDKillButton_Click(object sender, EventArgs e)
         {
             tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
         }
