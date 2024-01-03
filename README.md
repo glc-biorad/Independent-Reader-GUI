@@ -56,7 +56,9 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 
 ## Troubleshooting
 ### Spinnaker SDK BadImage Error
-Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
+- Spinnaker SDK did not work unless Desktop Development for C++ was included from the Visual Studio Installer. I attempted this from a hint given by ChatGPT-4 "The Spinnaker SDK may depend on the Visual C++ Redistributable for Visual Studio 2015 (as suggested by the 'v140' in the DLL name). "
+- If installing the Desktop Development for C++ via the Visual Studio Installer does not work download the [Visual C++ Redistributable for Visual Studio 2022 for x64](https://download.visualstudio.microsoft.com/download/pr/571ad766-28d1-4028-9063-0fa32401e78f/5D3D8C6779750F92F3726C70E92F0F8BF92D3AE2ABD43BA28C6306466DE8A144/VC_redist.x64.exe). If this link does not work, just search for Visual C++ Redistributable for Visual Studio 2022.
+
 
 ## License
 
