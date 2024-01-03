@@ -23,6 +23,8 @@ namespace Independent_Reader_GUI
         private DataGridViewManager dataGridViewManager = new DataGridViewManager();
         private TimerManager runExperimentDataTimerManager;
         private TimerManager controlTabTimerManager;
+        private TimerManager mainFormFastTimerManager;
+        private TimerManager mainFormSlowTimerManager;
         private TimerManager thermocyclingStatusTimerManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
@@ -69,15 +71,15 @@ namespace Independent_Reader_GUI
             // Connect to the FLIR Camera
             cameraManager.Connect();
             // Connect to the TECs
-            tecA = new TEC(id: configuration.TECAAddress, name: "TEC A", apiManager: apiManager);
-            tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager);
-            tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager);
-            tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager);
+            tecA = new TEC(id: configuration.TECAAddress, name: "TEC A", apiManager: apiManager, configuration: configuration);
+            tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager, configuration: configuration);
+            tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager, configuration: configuration);
+            tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager, configuration: configuration);
             // NOTE: This section of code slows down initialization of the GUI if .Wait() is included
-            Task.Run(async () => await tecA.CheckConnectionAsync());//.Wait();
-            Task.Run(async () => await tecB.CheckConnectionAsync());//.Wait();
-            Task.Run(async () => await tecC.CheckConnectionAsync());//.Wait();
-            Task.Run(async () => await tecD.CheckConnectionAsync());//.Wait();
+            Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
+            Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
 
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
             // Connect to the Motors
@@ -94,16 +96,16 @@ namespace Independent_Reader_GUI
             // NOTE: This section of code slows down initialization of the GUI with the .Wait() used
             try
             {
-                Task.Run(async () => await xMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await yMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await zMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await trayABMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await trayCDMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await clampAMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await clampBMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await clampCMotor.CheckConnectionAsync());//.Wait();
-                Task.Run(async () => await clampDMotor.CheckConnectionAsync());//.Wait();
+                Task.Run(async () => await xMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await yMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await zMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await trayABMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await trayCDMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampAMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampBMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampCMotor.CheckConnectionAsync()).Wait();
+                Task.Run(async () => await clampDMotor.CheckConnectionAsync()).Wait();
             }
             catch (Exception ex)
             {
@@ -148,6 +150,10 @@ namespace Independent_Reader_GUI
             controlTabTimerManager.Start();
             thermocyclingStatusTimerManager = new TimerManager(interval: configuration.ThermocyclingTabTimerInterval, tickEventHandler: thermocyclingTab_TickEventHandler);
             thermocyclingStatusTimerManager.Start();
+            mainFormFastTimerManager = new TimerManager(interval: configuration.MainFormFastTimerInterval, tickEventHandler: mainFormFast_TickEventHandler);
+            mainFormFastTimerManager.Start();
+            mainFormSlowTimerManager = new TimerManager(interval: configuration.MainFormSlowTimerInterval, tickEventHandler: mainFormSlow_TickEventHandler);
+            mainFormSlowTimerManager.Start();
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
@@ -192,6 +198,15 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecA.Connected, "Connected", "Not Connected", "State", tecA.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecC.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecD.Name);
+            // Thermocycling Tab
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecA.Connected, "Connected", "Not Connected", "State", tecA.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecC.Connected, "Connected", "Not Connected", "State", tecC.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecD.Name);
             #endregion
 
             // Subscribe to CellClick events
@@ -687,7 +702,7 @@ namespace Independent_Reader_GUI
         private void AddThermocyclingProtocolStatusesDefaultData()
         {
             TECsData thermocyclingProtocolStatusesData = new TECsData();
-            thermocyclingProtocolStatusesDataGridView.Rows.Add("Status", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
+            thermocyclingProtocolStatusesDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             thermocyclingProtocolStatusesDataGridView.Rows.Add("Protocol", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
             thermocyclingProtocolStatusesDataGridView.Rows.Add("Protocol Running", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
             thermocyclingProtocolStatusesDataGridView.Rows.Add("Estimated Time Left", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
@@ -1290,8 +1305,73 @@ namespace Independent_Reader_GUI
                 dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
                 dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
                 // TODO: Check the TECs
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Actual Object Temp (\u00B0C)", tecA.ActualObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Actual Object Temp (\u00B0C)", tecB.ActualObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Actual Object Temp (\u00B0C)", tecC.ActualObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Actual Object Temp (\u00B0C)", tecD.ActualObjectTemperature);
+                //
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Target Object Temp (\u00B0C)", tecA.TargetObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Target Object Temp (\u00B0C)", tecB.TargetObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Target Object Temp (\u00B0C)", tecC.TargetObjectTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Target Object Temp (\u00B0C)", tecD.TargetObjectTemperature);
+                //
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Sink Temp (\u00B0C)", tecA.ActualSinkTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Sink Temp (\u00B0C)", tecB.ActualSinkTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Sink Temp (\u00B0C)", tecC.ActualSinkTemperature);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Sink Temp (\u00B0C)", tecD.ActualSinkTemperature);
+                //
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Actual Fan Speed (rpm)", tecA.ActualFanSpeed);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Actual Fan Speed (rpm)", tecB.ActualFanSpeed);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Actual Fan Speed (rpm)", tecC.ActualFanSpeed);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Actual Fan Speed (rpm)", tecD.ActualFanSpeed);
                 // TODO: Check the LEDs
             }
+        }
+        
+        public async void mainFormFast_TickEventHandler(object sender, EventArgs e)
+        {
+            // Check the TECs data every tick
+            if (tecA.Connected)
+            {
+                await tecA.GetObjectTemperature();
+                await tecA.GetSinkTemperature();
+                //await tecA.GetTargetObjectTemperature();
+                //await tecA.GetActualOutputCurrent();
+                //await tecA.GetActualOutputVoltage();
+                //await tecA.GetRelativeCoolingPower();
+                await tecA.GetActualFanSpeed();
+                //await tecA.GetCurrentErrorThreshold();
+                //await tecA.GetVoltageErrorThreshold();
+            }
+            if (tecB.Connected)
+            {
+                await tecB.GetObjectTemperature();
+                await tecB.GetSinkTemperature();
+                //await tecB.GetTargetObjectTemperature();
+                //await tecB.GetActualOutputCurrent();
+                //await tecB.GetActualOutputVoltage();
+                //await tecB.GetRelativeCoolingPower();
+                await tecB.GetActualFanSpeed();
+                //await tecB.GetCurrentErrorThreshold();
+                //await tecB.GetVoltageErrorThreshold();
+            }
+            if (tecC.Connected)
+            {
+                await tecC.GetObjectTemperature();
+            }
+            if (tecD.Connected)
+            {
+                await tecD.GetObjectTemperature();
+            }
+        }
+
+        public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
+        {
+            // Check the TECs are connected still
+            await tecA.CheckConnectionAsync();
+            await tecB.CheckConnectionAsync();
+            await tecC.CheckConnectionAsync();
+            await tecD.CheckConnectionAsync();
         }
 
         public async void thermocyclingTab_TickEventHandler(object sender, EventArgs e)
@@ -1497,6 +1577,8 @@ namespace Independent_Reader_GUI
             runExperimentDataTimerManager.Stop();
             controlTabTimerManager.Stop();
             thermocyclingStatusTimerManager.Stop();
+            mainFormFastTimerManager.Stop();
+            mainFormSlowTimerManager.Stop();
             cameraManager.Disconnect();
             apiManager.Disponse();
         }
@@ -1516,24 +1598,18 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void controlTECASetTempButton_Click(object sender, EventArgs e)
+        private void controlTECAUpdateButton_Click(object sender, EventArgs e)
         {
-            if (tecA.Connected)
+            // TODO: Implement code to handle setting the temperature of the TEC
+            // FIXME: So that this cannot work if a protocol is currently running on this tec
+            double temp;
+            var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+            if (!double.TryParse(cellValue, out _))
             {
-                // TODO: Implement code to handle setting the temperature of the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                double temp;
-                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName("TEC A", "New Object Temp (\u00B0C)", controlTECsDataGridView);
-                if (!double.TryParse(cellValue, out _))
-                {
-                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                tecA.SetTemp();
+                MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            else
-            {
-                MessageBox.Show("Cannot set TEC A's temperature, TEC A is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            temp = double.Parse(cellValue);
+            tecA.SetObjectTemperature(temp);
         }
 
         /// <summary>
@@ -1541,13 +1617,20 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void controlTECBSetTempButton_Click(object sender, EventArgs e)
+        private void controlTECBUpdateButton_Click(object sender, EventArgs e)
         {
             if (tecB.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
                 // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecB.SetTemp();
+                double temp;
+                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                if (!double.TryParse(cellValue, out _))
+                {
+                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                temp = double.Parse(cellValue);
+                tecB.SetObjectTemperature(temp);
             }
             else
             {
@@ -1560,13 +1643,20 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void controlTECCSetTempButton_Click(object sender, EventArgs e)
+        private void controlTECCUpdateButton_Click(object sender, EventArgs e)
         {
             if (tecC.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
                 // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecC.SetTemp();
+                double temp;
+                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                if (!double.TryParse(cellValue, out _))
+                {
+                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                temp = double.Parse(cellValue);
+                tecC.SetObjectTemperature(temp);
             }
             else
             {
@@ -1579,13 +1669,20 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void controlTECDSetTempButton_Click(object sender, EventArgs e)
+        private void controlTECDUpdateButton_Click(object sender, EventArgs e)
         {
             if (tecD.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
                 // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecD.SetTemp();
+                double temp;
+                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                if (!double.TryParse(cellValue, out _))
+                {
+                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                temp = double.Parse(cellValue);
+                tecD.SetObjectTemperature(temp);
             }
             else
             {

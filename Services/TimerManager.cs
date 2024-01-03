@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage a Timer
+    /// </summary>
     internal class TimerManager
     {
         private int interval;

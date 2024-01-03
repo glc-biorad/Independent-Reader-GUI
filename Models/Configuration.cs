@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace Independent_Reader_GUI.Models
 {
+    /// <summary>
+    /// Model to represent the Configuration of the Reader 
+    /// </summary>
     internal class Configuration
     {
         // FIXME: Replace this with a variable taken from a config file
@@ -15,6 +18,7 @@ namespace Independent_Reader_GUI.Models
         public string ConfigurationDataPath;
         public string InstrumentName = string.Empty;
         public string InstrumentID = string.Empty;
+        public int TECWaitTimeoutInSeconds = int.MinValue;
         public int Cy5ID = int.MinValue;
         public int FAMID = int.MinValue;
         public int HEXID = int.MinValue;
@@ -104,6 +108,8 @@ namespace Independent_Reader_GUI.Models
         public double DefaultGlassOffset = double.NaN;
         public int RunDataTimerInterval = int.MinValue;
         public int ControlTabTimerInterval = int.MinValue;
+        public int MainFormFastTimerInterval = int.MinValue;
+        public int MainFormSlowTimerInterval = int.MinValue;
         public int ThermocyclingTabTimerInterval = int.MinValue;
         public int EstimateFOVCaptureTimeSeconds = int.MinValue;
         public int EstimateAssayCaptureTimeSeconds = int.MinValue;
@@ -249,11 +255,14 @@ namespace Independent_Reader_GUI.Models
             DefaultGlassOffset = double.Parse(rootNode.Element("DefaultGlassOffset").Value);
             RunDataTimerInterval = int.Parse(rootNode.Element("RunDataTimerInterval").Value);
             ControlTabTimerInterval = int.Parse(rootNode.Element("ControlTabTimerInterval").Value);
+            MainFormFastTimerInterval = int.Parse(rootNode.Element("MainFormFastTimerInterval").Value);
+            MainFormSlowTimerInterval = int.Parse(rootNode.Element("MainFormSlowTimerInterval").Value);
             ThermocyclingTabTimerInterval = int.Parse(rootNode.Element("ThermocyclingTabTimerInterval").Value);
             EstimateFOVCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateFOVCaptureTimeSeconds").Value);
             EstimateAssayCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateAssayCaptureTimeSeconds").Value);
             EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);
             DefaultThermocyclingProtocolName = rootNode.Element("DefaultThermocyclingProtocolName").Value;
+            TECWaitTimeoutInSeconds = int.Parse(rootNode.Element("TECWaitTimeoutInSeconds").Value);
         }
     }
 }

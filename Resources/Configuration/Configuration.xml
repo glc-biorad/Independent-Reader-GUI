@@ -283,10 +283,13 @@
 	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
 	<DefaultGlassOffset>12.3</DefaultGlassOffset>
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
-	<ControlTabTimerInterval>20000</ControlTabTimerInterval>
+	<ControlTabTimerInterval>5000</ControlTabTimerInterval>
+	<MainFormFastTimerInterval>2000</MainFormFastTimerInterval>
+	<MainFormSlowTimerInterval>300000</MainFormSlowTimerInterval>
 	<ThermocyclingTabTimerInterval>1000</ThermocyclingTabTimerInterval>
 	<EstimateFOVCaptureTimeSeconds>7</EstimateFOVCaptureTimeSeconds>
 	<EstimateSampleCaptureTimeSeconds>60</EstimateSampleCaptureTimeSeconds>
 	<EstimateAssayCaptureTimeSeconds>20</EstimateAssayCaptureTimeSeconds>
+	<TECWaitTimeoutInSeconds>5</TECWaitTimeoutInSeconds>
 
 </Configuration>

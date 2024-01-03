@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage the Motor instances
+    /// </summary>
     internal class MotorsManager
     {
         private List<Motor> motors = new List<Motor>();

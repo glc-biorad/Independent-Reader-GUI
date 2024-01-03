@@ -11,6 +11,9 @@ using iText.Kernel.XMP.Impl;
 
 namespace Independent_Reader_GUI.Services
 { 
+    /// <summary>
+    /// Service to manage a Thermocycling Protocol
+    /// </summary>
     internal class ThermocyclingProtocolManager
     {
         Configuration configuration;

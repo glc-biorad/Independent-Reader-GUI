@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage a Report
+    /// </summary>
     internal class ReportManager
     {
         private string filePath;

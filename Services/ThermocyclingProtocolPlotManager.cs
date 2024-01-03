@@ -13,6 +13,9 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage a Thermocycling Protocol Plot
+    /// </summary>
     internal class ThermocyclingProtocolPlotManager
     {
         private PlotModel plotModel;
