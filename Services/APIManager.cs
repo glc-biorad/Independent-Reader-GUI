@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage the API
+    /// </summary>
     internal class APIManager
     {
         private HttpClient client;

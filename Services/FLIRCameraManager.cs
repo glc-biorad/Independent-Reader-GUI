@@ -8,6 +8,9 @@ using SpinnakerNET.GenApi;
 
 namespace Independent_Reader_GUI.Services
 {
+    /// <summary>
+    /// Service to manage the FLIR Camera
+    /// </summary>
     internal class FLIRCameraManager
     {
         private bool connected;

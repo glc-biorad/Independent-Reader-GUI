@@ -967,7 +967,7 @@
             controlTECDUpdateButton.TabIndex = 10;
             controlTECDUpdateButton.Text = "Update";
             controlTECDUpdateButton.UseVisualStyleBackColor = false;
-            controlTECDUpdateButton.Click += controlTECDSetTempButton_Click;
+            controlTECDUpdateButton.Click += controlTECDUpdateButton_Click;
             // 
             // controlTECCUpdateButton
             // 
@@ -980,7 +980,7 @@
             controlTECCUpdateButton.TabIndex = 9;
             controlTECCUpdateButton.Text = "Update";
             controlTECCUpdateButton.UseVisualStyleBackColor = false;
-            controlTECCUpdateButton.Click += controlTECCSetTempButton_Click;
+            controlTECCUpdateButton.Click += controlTECCUpdateButton_Click;
             // 
             // controlTECBUpdateButton
             // 
@@ -993,7 +993,7 @@
             controlTECBUpdateButton.TabIndex = 8;
             controlTECBUpdateButton.Text = "Update";
             controlTECBUpdateButton.UseVisualStyleBackColor = false;
-            controlTECBUpdateButton.Click += controlTECBSetTempButton_Click;
+            controlTECBUpdateButton.Click += controlTECBUpdateButton_Click;
             // 
             // controlTECAUpdateButton
             // 
@@ -1006,7 +1006,7 @@
             controlTECAUpdateButton.TabIndex = 7;
             controlTECAUpdateButton.Text = "Update";
             controlTECAUpdateButton.UseVisualStyleBackColor = false;
-            controlTECAUpdateButton.Click += controlTECASetTempButton_Click;
+            controlTECAUpdateButton.Click += controlTECAUpdateButton_Click;
             // 
             // controlTECsDataGridView
             // 
