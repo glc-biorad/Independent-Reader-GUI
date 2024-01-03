@@ -80,6 +80,8 @@ namespace Independent_Reader_GUI.Services
                         if (stepType == ThermocyclingProtocolStepType.Set)
                         {
                             // Set the temperature
+                            tec.SetObjectTemperature(step.Temperature);
+                            // TODO: Ensure that the temperature is actually changed
                             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString());
                             // Get the step time and units
                             int stepTime = int.Parse(step.Time.ToString());
@@ -91,6 +93,8 @@ namespace Independent_Reader_GUI.Services
                         else if (stepType == ThermocyclingProtocolStepType.Hold)
                         {
                             // Set the temperature
+                            tec.SetObjectTemperature(step.Temperature);
+                            // TODO: Ensure that the temperature is actually changed
                             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString());
                         }
                         else if (stepType == ThermocyclingProtocolStepType.GoTo)
@@ -110,6 +114,8 @@ namespace Independent_Reader_GUI.Services
                                     if (cycleStep.TypeName == ThermocyclingProtocolStepType.Set)
                                     {
                                         // Set the temperature
+                                        tec.SetObjectTemperature(cycleStep.Temperature);
+                                        // TODO: Ensure that the temperature is actually changed
                                         dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", cycleStep.Temperature.ToString());
                                         // Get the step time and units
                                         int stepTime = int.Parse(cycleStep.Time.ToString());
