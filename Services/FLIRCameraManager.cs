@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using SpinnakerNET;
@@ -18,9 +20,11 @@ namespace Independent_Reader_GUI.Services
         private ManagedSystem? managedSystem = null;
         private ManagedCameraList cameraList = new ManagedCameraList();
         private IManagedCamera? camera = null;
+        private PictureBox pictureBox;
 
-        public FLIRCameraManager()
+        public FLIRCameraManager(PictureBox pictureBox)
         {
+            this.pictureBox = pictureBox;
             managedSystem = new ManagedSystem();
             cameraList = managedSystem.GetCameras();
         }
@@ -64,8 +68,33 @@ namespace Independent_Reader_GUI.Services
         {
             if (connected)
             {
-                // TODO: Add code to capture an image
-                MessageBox.Show("Capture image code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                try
+                {
+                    // FIXME: This section of code does not result in an image filling in the ImagingPictureBox
+                    camera.BeginAcquisition();
+                    using (IManagedImage rawImage = camera.GetNextImage())
+                    {
+                        if (rawImage.IsIncomplete)
+                        {
+                            throw new Exception("Image incomplete during image capture");
+                        }
+
+                        // Convert the raw image to BitmapSource
+                        IManagedImageProcessor processor = new ManagedImageProcessor();
+                        using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
+                        {
+                            Bitmap bitmap = convertedImage.bitmap;
+                            //BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, PixelFormat.Format8bppIndexed);
+                            //Marshal.Copy(convertedImage.DataPtr, bmpData.Scan0, 0, convertedImage.DataSize);
+                            //bitmap.UnlockBits(bmpData);
+                            pictureBox.Image = bitmap;
+                        }
+                    }
+                }
+                finally
+                {
+                    camera.EndAcquisition();
+                }
             }
             else
             {

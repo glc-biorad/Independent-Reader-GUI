@@ -9,6 +9,7 @@ using OxyPlot.Annotations;
 using OxyPlot.Series;
 using SpinnakerNET;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
@@ -37,7 +38,7 @@ namespace Independent_Reader_GUI
         private BergquistOptions bergquistOptions;
         private ScanningOptions scanningOptions;
         private ScanningOption defaultScanningOption;
-        private FLIRCameraManager cameraManager = new FLIRCameraManager();
+        private FLIRCameraManager cameraManager;
         private string runExperimentProtocolName = string.Empty;
         private double runExperimentProtocolTime = 0.0;
         private TEC tecA;
@@ -69,15 +70,19 @@ namespace Independent_Reader_GUI
                 homeAPIConnectedRadioButton.BackColor = Color.Red;
             }
             // Connect to the FLIR Camera
+            cameraManager = new FLIRCameraManager(imagingPictureBox);
             cameraManager.Connect();
             // Connect to the TECs
             tecA = new TEC(id: configuration.TECAAddress, name: "TEC A", apiManager: apiManager, configuration: configuration);
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager, configuration: configuration);
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager, configuration: configuration);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager, configuration: configuration);
-
+            // Setup the TEC Manager
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
+            // Intialize the TEC Parameters
             Task.Run(async () => await tecManager.InitializeTECParameters()).Wait();
+            // Start the TEC Manager Command Queue Processing
+            Task.Run(async () => await tecManager.ProcessCommandQueues());
             // Connect to the Motors
             xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
             yMotor = new Motor(address: configuration.yMotorAddress, name: "y", apiManager: apiManager);
@@ -105,7 +110,7 @@ namespace Independent_Reader_GUI
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Could not connect to all motors");
+                Debug.WriteLine($"MainForm : independentReaderForm -> {ex.Message}");
             }
             motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
 
@@ -681,7 +686,6 @@ namespace Independent_Reader_GUI
                 tecC.SinkLowerErrorThreshold,
                 tecD.SinkLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)",
                 configuration.TECAFanOnTemp,
@@ -693,12 +697,14 @@ namespace Independent_Reader_GUI
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2] = dataGridViewComboBoxCellFanEnabledB;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3] = dataGridViewComboBoxCellFanEnabledC;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4] = dataGridViewComboBoxCellFanEnabledD;
-            controlTECsDataGridView.Rows.Add("Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Current (A)", tecA.ActualOutputCurrent, tecB.ActualOutputCurrent, tecC.ActualOutputCurrent, tecD.ActualOutputCurrent);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
-            controlTECsDataGridView.Rows.Add("Max Current (A)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
-            controlTECsDataGridView.Rows.Add("Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Max Current (A)", tecA.CurrentErrorThreshold, tecB.CurrentErrorThreshold, tecC.CurrentErrorThreshold, tecD.CurrentErrorThreshold);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
-            controlTECsDataGridView.Rows.Add("Max Voltage (V)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Voltage (V)", tecA.ActualOutputVoltage, tecB.ActualOutputVoltage, tecC.ActualOutputVoltage, tecD.ActualOutputVoltage);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
+            controlTECsDataGridView.Rows.Add("Max Voltage (V)", tecA.VoltageErrorThreshold, tecB.VoltageErrorThreshold, tecC.VoltageErrorThreshold, tecD.VoltageErrorThreshold);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
         }
 
         /// <summary>
@@ -1329,6 +1335,16 @@ namespace Independent_Reader_GUI
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Actual Fan Speed (rpm)", tecB.ActualFanSpeed);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Actual Fan Speed (rpm)", tecC.ActualFanSpeed);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Actual Fan Speed (rpm)", tecD.ActualFanSpeed);
+                //
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Current (A)", tecA.ActualOutputCurrent);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Current (A)", tecB.ActualOutputCurrent);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Current (A)", tecC.ActualOutputCurrent);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Current (A)", tecD.ActualOutputCurrent);
+                //
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Voltage (V)", tecA.ActualOutputVoltage);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Voltage (V)", tecB.ActualOutputVoltage);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Voltage (V)", tecC.ActualOutputVoltage);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Voltage (V)", tecD.ActualOutputVoltage);
                 // TODO: Check the LEDs
             }
         }
@@ -1338,23 +1354,51 @@ namespace Independent_Reader_GUI
             // Check the TECs data every tick
             if (tecA.Connected)
             {
-                await tecA.GetObjectTemperature();
-                await tecA.GetSinkTemperature();
-                await tecA.GetTargetObjectTemperature();
-                //await tecA.GetActualOutputCurrent();
-                //await tecA.GetActualOutputVoltage();
-                //await tecA.GetRelativeCoolingPower();
-                await tecA.GetActualFanSpeed();
+                // Setup the GetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC =  tecA };
+                tecManager.EnqueueCommand(getObjectTemperatureCommand);
+                // Setup the GetSinkTemperature command and add it to the TECsManager Queue
+                TECCommand getSinkTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkTemperature, TEC = tecA };
+                tecManager.EnqueueCommand(getSinkTemperatureCommand);
+                // Setup the GetTargetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand getTargetObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetTargetObjectTemperature, TEC = tecA };
+                tecManager.EnqueueCommand(getTargetObjectTemperatureCommand);
+                // Setup the GetActualFanSpeed command and add it to the TECsManager Queue
+                TECCommand getActualFanSpeedCommand = new TECCommand { Type = TECCommand.CommandType.GetActualFanSpeed, TEC = tecA };
+                tecManager.EnqueueCommand(getActualFanSpeedCommand);
+                // Setup the GetActualOutputCurrent command and add it to the TECsManager Queue
+                TECCommand getActualOutputCurrentCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputCurrent, TEC = tecA };
+                tecManager.EnqueueCommand(getActualOutputCurrentCommand);
+                // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
+                TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tecA };
+                tecManager.EnqueueCommand(getActualOutputVoltageCommand);
             }
             if (tecB.Connected)
             {
-                await tecB.GetObjectTemperature();
-                await tecB.GetSinkTemperature();
-                await tecB.GetTargetObjectTemperature();
+                // Setup the GetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC = tecB };
+                tecManager.EnqueueCommand(getObjectTemperatureCommand);
+                // Setup the GetSinkTemperature command and add it to the TECsManager Queue
+                TECCommand getSinkTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkTemperature, TEC = tecB };
+                tecManager.EnqueueCommand(getSinkTemperatureCommand);
+                // Setup the GetTargetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand getTargetObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetTargetObjectTemperature, TEC = tecB };
+                tecManager.EnqueueCommand(getTargetObjectTemperatureCommand);
+                // Setup the GetActualFanSpeed command and add it to the TECsManager Queue
+                TECCommand getActualFanSpeedCommand = new TECCommand { Type = TECCommand.CommandType.GetActualFanSpeed, TEC = tecB };
+                tecManager.EnqueueCommand(getActualFanSpeedCommand);
+                // Setup the GetActualOutputCurrent command and add it to the TECsManager Queue
+                TECCommand getActualOutputCurrentCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputCurrent, TEC = tecB };
+                tecManager.EnqueueCommand(getActualOutputCurrentCommand);
+                // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
+                TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tecB };
+                tecManager.EnqueueCommand(getActualOutputVoltageCommand);
+                //await tecB.GetObjectTemperature();
+                //await tecB.GetSinkTemperature();
+                //await tecB.GetTargetObjectTemperature();
                 //await tecB.GetActualOutputCurrent();
                 //await tecB.GetActualOutputVoltage();
                 //await tecB.GetRelativeCoolingPower();
-                await tecB.GetActualFanSpeed();
             }
             if (tecC.Connected)
             {
@@ -1381,10 +1425,14 @@ namespace Independent_Reader_GUI
         public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
         {
             // Check the TECs are connected still
-            await tecA.CheckConnectionAsync();
-            await tecB.CheckConnectionAsync();
-            await tecC.CheckConnectionAsync();
-            await tecD.CheckConnectionAsync();
+            TECCommand tecACheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecA };
+            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            TECCommand tecBCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecB };
+            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            TECCommand tecCCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecC };
+            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            TECCommand tecDCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecD };
+            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
         }
 
         public async void thermocyclingTab_TickEventHandler(object sender, EventArgs e)
@@ -1592,6 +1640,8 @@ namespace Independent_Reader_GUI
             thermocyclingStatusTimerManager.Stop();
             mainFormFastTimerManager.Stop();
             mainFormSlowTimerManager.Stop();
+            tecManager.CloseCommandQueueProcessing();
+            tecManager.ClosePriorityCommandQueueProcessing();
             cameraManager.Disconnect();
             apiManager.Disponse();
         }
@@ -1622,7 +1672,9 @@ namespace Independent_Reader_GUI
                 MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             temp = double.Parse(cellValue);
-            tecA.SetObjectTemperature(temp);
+            // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+            TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecA, Parameter = temp };
+            tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
         }
 
         /// <summary>
@@ -1643,7 +1695,9 @@ namespace Independent_Reader_GUI
                     MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 temp = double.Parse(cellValue);
-                tecB.SetObjectTemperature(temp);
+                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecB, Parameter = temp };
+                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
             }
             else
             {
@@ -1669,7 +1723,9 @@ namespace Independent_Reader_GUI
                     MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 temp = double.Parse(cellValue);
-                tecC.SetObjectTemperature(temp);
+                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecC, Parameter = temp };
+                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
             }
             else
             {
@@ -1695,7 +1751,9 @@ namespace Independent_Reader_GUI
                     MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 temp = double.Parse(cellValue);
-                tecD.SetObjectTemperature(temp);
+                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecD, Parameter = temp };
+                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
             }
             else
             {
