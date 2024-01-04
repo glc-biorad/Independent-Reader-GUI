@@ -40,6 +40,73 @@ namespace Independent_Reader_GUI.Services
             tecCancellationTokenSources.Add(tecDRunCancellationTokenSource);
         }
 
+        public async Task InitializeTECParameters()
+        {
+            // Check the connection of each TEC
+            await TECA.CheckConnectionAsync();
+            await TECB.CheckConnectionAsync();
+            await TECC.CheckConnectionAsync();
+            await TECD.CheckConnectionAsync();
+
+            // Obtain all internal parameters
+            if (TECA.Connected)
+            {
+                await TECA.GetObjectTemperature();
+                await TECA.GetSinkTemperature();
+                await TECA.GetTargetObjectTemperature();
+                await TECA.GetCurrentErrorThreshold();
+                await TECA.GetVoltageErrorThreshold();
+                await TECA.GetObjectUpperErrorThreshold();
+                await TECA.GetObjectLowerErrorThreshold();
+                await TECA.GetSinkUpperErrorThreshold();
+                await TECA.GetSinkLowerErrorThreshold();
+                await TECA.GetTemperatureIsStable();
+                await TECA.GetTemperatureControl();
+            }
+            if (TECB.Connected)
+            {
+                await TECB.GetObjectTemperature();
+                await TECB.GetSinkTemperature();
+                await TECB.GetTargetObjectTemperature();
+                await TECB.GetCurrentErrorThreshold();
+                await TECB.GetVoltageErrorThreshold();
+                await TECB.GetObjectUpperErrorThreshold();
+                await TECB.GetObjectLowerErrorThreshold();
+                await TECB.GetSinkUpperErrorThreshold();
+                await TECB.GetSinkLowerErrorThreshold();
+                await TECB.GetTemperatureIsStable();
+                await TECB.GetTemperatureControl();
+            }
+            if (TECC.Connected)
+            {
+                await TECC.GetObjectTemperature();
+                await TECC.GetSinkTemperature();
+                await TECC.GetTargetObjectTemperature();
+                await TECC.GetCurrentErrorThreshold();
+                await TECC.GetVoltageErrorThreshold();
+                await TECC.GetObjectUpperErrorThreshold();
+                await TECC.GetObjectLowerErrorThreshold();
+                await TECC.GetSinkUpperErrorThreshold();
+                await TECC.GetSinkLowerErrorThreshold();
+                await TECC.GetTemperatureIsStable();
+                await TECC.GetTemperatureControl();
+            }
+            if (TECD.Connected)
+            {
+                await TECD.GetObjectTemperature();
+                await TECD.GetSinkTemperature();
+                await TECD.GetTargetObjectTemperature();
+                await TECD.GetCurrentErrorThreshold();
+                await TECD.GetVoltageErrorThreshold();
+                await TECD.GetObjectUpperErrorThreshold();
+                await TECD.GetObjectLowerErrorThreshold();
+                await TECD.GetSinkUpperErrorThreshold();
+                await TECD.GetSinkLowerErrorThreshold();
+                await TECD.GetTemperatureIsStable();
+                await TECD.GetTemperatureControl();
+            }
+        }
+
         /// <summary>
         /// Run Task for a TEC controlled by the TEC Manager
         /// </summary>
