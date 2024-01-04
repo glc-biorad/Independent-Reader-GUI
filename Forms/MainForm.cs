@@ -75,13 +75,9 @@ namespace Independent_Reader_GUI
             tecB = new TEC(id: configuration.TECBAddress, name: "TEC B", apiManager: apiManager, configuration: configuration);
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager, configuration: configuration);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager, configuration: configuration);
-            // NOTE: This section of code slows down initialization of the GUI if .Wait() is included
-            Task.Run(async () => await tecA.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecB.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecC.CheckConnectionAsync()).Wait();
-            Task.Run(async () => await tecD.CheckConnectionAsync()).Wait();
 
             tecManager = new TECManager(tecA, tecB, tecC, tecD);
+            Task.Run(async () => await tecManager.InitializeTECParameters()).Wait();
             // Connect to the Motors
             xMotor = new Motor(address: configuration.xMotorAddress, name: "x", apiManager: apiManager);
             yMotor = new Motor(address: configuration.yMotorAddress, name: "y", apiManager: apiManager);
@@ -624,18 +620,18 @@ namespace Independent_Reader_GUI
             DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledB = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledC = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellTempEnabledD = new DataGridViewComboBoxCell();
-            dataGridViewComboBoxCellTempEnabledA.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellTempEnabledB.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellTempEnabledC.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellTempEnabledD.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellTempEnabledA.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellTempEnabledB.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellTempEnabledC.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellTempEnabledD.Items.AddRange(new object[] { "On", "Off" });
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledA = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledB = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledC = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledD = new DataGridViewComboBoxCell();
-            dataGridViewComboBoxCellFanEnabledA.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellFanEnabledB.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellFanEnabledC.Items.AddRange(new object[] { "Yes", "No" });
-            dataGridViewComboBoxCellFanEnabledD.Items.AddRange(new object[] { "Yes", "No" });
+            dataGridViewComboBoxCellFanEnabledA.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellFanEnabledB.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellFanEnabledC.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellFanEnabledD.Items.AddRange(new object[] { "On", "Off" });
             controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
@@ -644,38 +640,47 @@ namespace Independent_Reader_GUI
             controlTECsDataGridView.Rows.Add("Version", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("New Object Temp (\u00B0C)");
-            controlTECsDataGridView.Rows.Add("Actual Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1].Value = tecA.TargetObjectTemperature;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2].Value = tecB.TargetObjectTemperature;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3].Value = tecC.TargetObjectTemperature;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4].Value = tecD.TargetObjectTemperature;
+            controlTECsDataGridView.Rows.Add("Actual Object Temp (\u00B0C)", tecA.ActualObjectTemperature, tecB.ActualObjectTemperature, tecC.ActualObjectTemperature, tecD.ActualObjectTemperature);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
-            controlTECsDataGridView.Rows.Add("Target Object Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
+            controlTECsDataGridView.Rows.Add("Target Object Temp (\u00B0C)", tecA.TargetObjectTemperature, tecB.TargetObjectTemperature, tecC.TargetObjectTemperature, tecD.TargetObjectTemperature);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Temp Enabled");
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1] = dataGridViewComboBoxCellTempEnabledA;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1].Value = tecA.TemperatureControlled;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2] = dataGridViewComboBoxCellTempEnabledB;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2].Value = tecB.TemperatureControlled; ;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3] = dataGridViewComboBoxCellTempEnabledC;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3].Value = tecC.TemperatureControlled;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4] = dataGridViewComboBoxCellTempEnabledD;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4].Value = tecD.TemperatureControlled;
             controlTECsDataGridView.Rows.Add("Object Upper Error Threshold (\u00B0C)",
-                configuration.TECAObjectUpperErrorThreshold,
-                configuration.TECBObjectUpperErrorThreshold,
-                configuration.TECCObjectUpperErrorThreshold,
-                configuration.TECDObjectUpperErrorThreshold);
+                tecA.ObjectUpperErrorThreshold,
+                tecB.ObjectUpperErrorThreshold,
+                tecC.ObjectUpperErrorThreshold,
+                tecD.ObjectUpperErrorThreshold);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Object Lower Error Threshold (\u00B0C)",
-                configuration.TECAObjectLowerErrorThreshold,
-                configuration.TECBObjectLowerErrorThreshold,
-                configuration.TECCObjectLowerErrorThreshold,
-                configuration.TECDObjectLowerErrorThreshold);
+                tecA.ObjectLowerErrorThreshold,
+                tecB.ObjectLowerErrorThreshold,
+                tecC.ObjectLowerErrorThreshold,
+                tecD.ObjectLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Sink Temp (\u00B0C)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Sink Upper Error Threshold (°C)",
-                configuration.TECASinkUpperErrorThreshold,
-                configuration.TECBSinkUpperErrorThreshold,
-                configuration.TECCSinkUpperErrorThreshold,
-                configuration.TECDSinkUpperErrorThreshold);
+                tecA.SinkUpperErrorThreshold,
+                tecB.SinkUpperErrorThreshold,
+                tecC.SinkUpperErrorThreshold,
+                tecD.SinkUpperErrorThreshold);
             controlTECsDataGridView.Rows.Add("Sink Lower Error Threshold (°C)",
-                configuration.TECASinkLowerErrorThreshold,
-                configuration.TECBSinkLowerErrorThreshold,
-                configuration.TECCSinkLowerErrorThreshold,
-                configuration.TECDSinkLowerErrorThreshold);
+                tecA.SinkLowerErrorThreshold,
+                tecB.SinkLowerErrorThreshold,
+                tecC.SinkLowerErrorThreshold,
+                tecD.SinkLowerErrorThreshold);
+            controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)",
@@ -1335,33 +1340,41 @@ namespace Independent_Reader_GUI
             {
                 await tecA.GetObjectTemperature();
                 await tecA.GetSinkTemperature();
-                //await tecA.GetTargetObjectTemperature();
+                await tecA.GetTargetObjectTemperature();
                 //await tecA.GetActualOutputCurrent();
                 //await tecA.GetActualOutputVoltage();
                 //await tecA.GetRelativeCoolingPower();
                 await tecA.GetActualFanSpeed();
-                //await tecA.GetCurrentErrorThreshold();
-                //await tecA.GetVoltageErrorThreshold();
             }
             if (tecB.Connected)
             {
                 await tecB.GetObjectTemperature();
                 await tecB.GetSinkTemperature();
-                //await tecB.GetTargetObjectTemperature();
+                await tecB.GetTargetObjectTemperature();
                 //await tecB.GetActualOutputCurrent();
                 //await tecB.GetActualOutputVoltage();
                 //await tecB.GetRelativeCoolingPower();
                 await tecB.GetActualFanSpeed();
-                //await tecB.GetCurrentErrorThreshold();
-                //await tecB.GetVoltageErrorThreshold();
             }
             if (tecC.Connected)
             {
                 await tecC.GetObjectTemperature();
+                await tecC.GetSinkTemperature();
+                await tecC.GetTargetObjectTemperature();
+                //await tecC.GetActualOutputCurrent();
+                //await tecC.GetActualOutputVoltage();
+                //await tecC.GetRelativeCoolingPower();
+                await tecC.GetActualFanSpeed();
             }
             if (tecD.Connected)
             {
                 await tecD.GetObjectTemperature();
+                await tecD.GetSinkTemperature();
+                await tecD.GetTargetObjectTemperature();
+                //await tecD.GetActualOutputCurrent();
+                //await tecD.GetActualOutputVoltage();
+                //await tecD.GetRelativeCoolingPower();
+                await tecD.GetActualFanSpeed();
             }
         }
 

@@ -25,6 +25,14 @@ namespace Independent_Reader_GUI.Models
         private string currentErrorThreshold = "?";
         private string voltageErrorThreshold = "?";
         private string deviceStatus = "?";
+        private string temperatureControlled = "Off";
+        private string fanControlled = "Off";
+        private string objectUpperErrorThreshold = "?";
+        private string objectLowerErrorThreshold = "?";
+        private string sinkUpperErrorThreshold = "?";
+        private string sinkLowerErrorThreshold = "?";
+        private string temperatureIsStable = "?";
+        private int timeout;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {
@@ -32,6 +40,7 @@ namespace Independent_Reader_GUI.Models
             this.configuration = configuration;
             this.id = id;
             this.name = name;
+            timeout = configuration.TECWaitTimeoutInSeconds;
         }
 
         public int ID
@@ -97,6 +106,36 @@ namespace Independent_Reader_GUI.Models
         public string DeviceStatus
         {
             get { return deviceStatus; }
+        }
+
+        public string ObjectUpperErrorThreshold
+        {
+            get { return objectUpperErrorThreshold;  }
+        }
+
+        public string ObjectLowerErrorThreshold
+        {
+            get { return objectLowerErrorThreshold; }
+        }
+
+        public string SinkUpperErrorThreshold
+        {
+            get { return sinkUpperErrorThreshold; }
+        }
+
+        public string SinkLowerErrorThreshold
+        {
+            get { return sinkLowerErrorThreshold; }
+        }
+
+        public string TemperatureIsStable
+        {
+            get { return temperatureIsStable; }
+        }
+
+        public string TemperatureControlled
+        {
+            get { return temperatureControlled; }
         }
 
         public void CheckConnection()
@@ -173,7 +212,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/firmware-version/?heater=Heater%20{name.Last()}");
-                await Task.Delay(5);
+                await Task.Delay(100);
             }
             catch (Exception ex)
             {
@@ -204,46 +243,64 @@ namespace Independent_Reader_GUI.Models
             MessageBox.Show("Code to reset the TEC has not been implmented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /// <summary>
+        /// Set the timeout for reattempting failed set or get requests
+        /// </summary>
+        /// <param name="timeout">Timeout in seconds</param>
+        public void SetTimeout(int timeout)
+        {
+            this.timeout = timeout;
+        }
+
+        /// <summary>
+        /// Set Object Temperature of the TEC
+        /// </summary>
+        /// <param name="temperature">Temperature to set the TEC to</param>
+        /// <param name="attemptTimeout">Timeout to reattempt failed set requests</param>
+        /// <returns></returns>
         public async Task SetObjectTemperature(double temperature)
         {
-            // Check the motor is connected
-            await CheckConnectionAsync();
-            await Task.Delay(500);
-            if (connected)
+            // Assume motor is connected
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
-                if (true)
-                {
-                    // Generate a API Motor Request
-                    APITECRequest apiTECRequest = new APITECRequest(name: name, value: temperature);
-                    // Send the request to the API
-                    await apiManager.PostAsync<APITECRequest, APIResponse>(
-                        $"http://127.0.0.1:8000/tec/object-temperature/?heater=Heater%20{name.Last()}&setpoint={temperature}",
-                        apiTECRequest);
-                    await Task.Delay(5);
-                }
+                // Generate a API Motor Request
+                APITECRequest apiTECRequest = new APITECRequest(name: name, value: temperature);
+                // Send the request to the API
+                await apiManager.PostAsync<APITECRequest, APIResponse>(
+                    $"http://127.0.0.1:8000/tec/object-temperature/?heater=Heater%20{name.Last()}&setpoint={temperature}",
+                    apiTECRequest);
+                await Task.Delay(200);
             }
+            stopwatch.Stop();            
             targetObjectTemperature = temperature.ToString();
         }
 
-        public async Task GetObjectTemperature()
+        public async Task<int> GetObjectTemperature()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
             APIResponse data = new APIResponse();
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            int error = -1;
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-temperature/?heater=Heater%20{name.Last()}");
                     await Task.Delay(500);
                     resp = data.Response?.Replace("\r", "");
-
+                    error = 0;
                 }
                 catch (Exception ex)
                 {
                     data = new APIResponse();
+
                 }
             }
             stopwatch.Stop();
@@ -265,6 +322,7 @@ namespace Independent_Reader_GUI.Models
                 value = "?";
             }
             actualObjectTemperature = value;
+            return error;
         }
 
         /// <summary>
@@ -278,7 +336,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -319,7 +377,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -360,7 +418,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -401,7 +459,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -442,7 +500,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -483,7 +541,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -565,7 +623,7 @@ namespace Independent_Reader_GUI.Models
             string resp = "None";
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < configuration.TECWaitTimeoutInSeconds)
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
             {
                 try
                 {
@@ -597,6 +655,276 @@ namespace Independent_Reader_GUI.Models
                 value = "?";
             }
             voltageErrorThreshold = value;
+        }
+
+        public async Task GetObjectUpperErrorThreshold()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-upper-error-threshold/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            objectUpperErrorThreshold = value;
+        }
+
+        public async Task GetObjectLowerErrorThreshold()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-lower-error-threshold/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            objectLowerErrorThreshold = value;
+        }
+
+        public async Task GetSinkUpperErrorThreshold()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/sink-upper-error-threshold/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            sinkUpperErrorThreshold = value;
+        }
+
+        public async Task GetSinkLowerErrorThreshold()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/sink-lower-error-threshold/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            sinkLowerErrorThreshold = value;
+        }
+
+        public async Task GetTemperatureIsStable()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/temperature-is-stable/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            temperatureIsStable = value;
+        }
+
+        public async Task GetTemperatureControl()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/temperature-control/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(500);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            temperatureControlled = value;
+        }
+
+        public async Task SetTemperatureControl(int state)
+        {
+            // Assume tec is connected
+            // Convert the state (0 or 1) to the status (Off or On)
+            string status = (state == 0) ? "Off" : "On";
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                // Generate a API Motor Request
+                APITECRequest apiTECRequest = new APITECRequest(name: name, value: state);
+                // Send the request to the API
+                await apiManager.PostAsync<APITECRequest, APIResponse>(
+                    $"http://127.0.0.1:8000/tec/temperature-control/?heater=Heater%20{name.Last()}&status={status}",
+                    apiTECRequest);
+                await Task.Delay(200);
+            }
+            stopwatch.Stop();
+            temperatureControlled = status;
         }
     }
 }
