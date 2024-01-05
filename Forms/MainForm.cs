@@ -1651,9 +1651,9 @@ namespace Independent_Reader_GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void imagingCaptureImageButton_Click(object sender, EventArgs e)
+        private async void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
-            cameraManager.CaptureImage();
+            await cameraManager.CaptureImageAsync();
         }
 
         /// <summary>
