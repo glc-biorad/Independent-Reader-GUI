@@ -902,13 +902,14 @@ namespace Independent_Reader_GUI
             {
                 // Turn on or off the LED
                 string ledName = controlLEDsDataGridView.Columns[e.ColumnIndex].HeaderText;
-                LED led = new LED(ledName, configuration, false);
+                LED led = new LED(ledName, configuration, apiManager);
                 var valueSelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (valueSelected.Equals("On"))
                 {
                     try
                     {
-                        led.On();
+                        int intensity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(ledName, "Intensity (%)", controlLEDsDataGridView));
+                        led.On(intensity);
                     }
                     catch (LEDNotConnectedException ex)
                     {

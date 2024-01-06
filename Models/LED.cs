@@ -1,8 +1,11 @@
 ﻿using Independent_Reader_GUI.Exceptions;
+using Independent_Reader_GUI.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Independent_Reader_GUI.Models
@@ -12,18 +15,26 @@ namespace Independent_Reader_GUI.Models
         private string name = string.Empty;
         private int id = int.MinValue;
         public string IO = string.Empty;
-        public bool Connected;
+        public bool connected;
         public int Intensity = int.MinValue;
         public int Exposure = int.MinValue;
         private Configuration configuration;
+        private APIManager apiManager;
+        // FIXME: Replace with a timeout from the configuration file;
+        private int timeout = 10;
 
-        public LED(string name, Configuration configuration, bool connected)
+        public LED(string name, Configuration configuration, APIManager apiManager)
         {
             // TODO: pass an object of the LED board to this class for a connection
-            this.Connected = connected;
+            this.apiManager = apiManager;
             this.configuration = configuration;
             this.name = name;
             SetIDFromName();
+        }
+
+        public bool Connected
+        {
+            get { return connected; }
         }
 
         private void SetIDFromName()
@@ -58,31 +69,126 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
-        public void On()
+        /// <summary>
+        /// Check the connection of the LED board by testing a response
+        /// </summary>
+        /// <returns></returns>
+        public async Task CheckConnectionAsync()
         {
-            if (Connected)
+            try
             {
-                // TODO: Implenet code to turn on the LEDs
-                MessageBox.Show("Code to turn on the LEDs has not yet been implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var responseValue = await GetVersionAsync();
+                await Task.Delay(50);
+                if (responseValue != null && responseValue != "?")
+                {
+                    connected = true;
+                }
+                else
+                {
+                    Debug.WriteLine($"{name}: CheckConnectionAsync -> response = {responseValue}");
+                    connected = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{name}: CheckConnectionAsync -> {ex.Message}");
+                connected = false;
+            }
+        }
+
+        /// <summary>
+        /// Get the Firmware version loaded onto the LED board
+        /// </summary>
+        /// <returns>The firmware version as a string</returns>
+        public async Task<string> GetVersionAsync()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data;
+            try
+            {
+                data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/led/version/");
+                await Task.Delay(50);
+            }
+            catch (Exception ex)
+            {
+                data = new APIResponse();
+            }
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the Version from the response
+            string version;
+            version = response;
+            if (version == string.Empty)
+            {
+                version = "?";
+            }
+            return version;
+        }
+
+        public async void On(int intensity)
+        {
+            if (connected)
+            {
+                // TODO: Replace the endpoint with a private const from the configuration XML data file
+                APIResponse data = new APIResponse();
+                object? resp = null;
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                while (resp == null && stopwatch.Elapsed.TotalSeconds < timeout)
+                {
+                    // Generate a API LED Request
+                    APILEDRequest apiLEDRequest = new APILEDRequest(id: id, value: intensity);
+                    // Send the request to the API
+                    resp = await apiManager.PostAsync<APILEDRequest, APIResponse>(
+                        $"http://127.0.0.1:8000/led/on/?channel={id}&intensity={intensity}",
+                        apiLEDRequest);
+                    await Task.Delay(50);
+                }
+                stopwatch.Stop();
+                this.Intensity = intensity;
+                this.IO = "On";
             }
             else
             {
                 MessageBox.Show("Cannot turn on " + name + ", LEDs are not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                throw new LEDNotConnectedException();
+                //throw new LEDNotConnectedException();
             }
         }
 
-        public void Off()
+        public async void Off()
         {
-            if (Connected)
+            if (connected)
             {
-                // TODO: Implenet code to turn off the LEDs
-                MessageBox.Show("Code to turn off the LEDs has not yet been implemented", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // TODO: Replace the endpoint with a private const from the configuration XML data file
+                APIResponse data = new APIResponse();
+                object? resp = null;
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                while (resp == null && stopwatch.Elapsed.TotalSeconds < timeout)
+                {
+                    // Generate a API LED Request
+                    APILEDRequest apiLEDRequest = new APILEDRequest(id: id, value: null);
+                    // Send the request to the API
+                    resp = await apiManager.PostAsync<APILEDRequest, APIResponse>(
+                        $"http://127.0.0.1:8000/led/off/?channel={id}",
+                        apiLEDRequest);
+                    await Task.Delay(50);
+                }
+                stopwatch.Stop();
+                this.Intensity = 0;
+                this.IO = "Off";
             }
             else
             {
-                //MessageBox.Show("Cannot turn off " + name + ", LEDs are not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                throw new LEDNotConnectedException();
+                MessageBox.Show("Cannot turn off " + name + ", LEDs are not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //throw new LEDNotConnectedException();
             }
         }
 
