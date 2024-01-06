@@ -8,9 +8,9 @@
 		<ID>1</ID>
 		<LEDs>
 			<Cy5ID>1</Cy5ID>
-			<FAMID>2</FAMID>
+			<FAMID>4</FAMID>
 			<HEXID>3</HEXID>
-			<AttoID>4</AttoID>
+			<AttoID>2</AttoID>
 			<AlexaID>5</AlexaID>
 			<Cy5.5ID>6</Cy5.5ID>
 			<Cy5Intensity>20</Cy5Intensity>

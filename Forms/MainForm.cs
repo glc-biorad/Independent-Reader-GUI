@@ -55,6 +55,13 @@ namespace Independent_Reader_GUI
         private Motor clampBMotor;
         private Motor clampCMotor;
         private Motor clampDMotor;
+        private LED Cy5;
+        private LED FAM;
+        private LED HEX;
+        private LED Atto;
+        private LED Alexa;
+        private LED Cy5p5;
+        private LEDManager ledManager;
 
         /// <summary>
         /// Initialization of the Form
@@ -113,6 +120,19 @@ namespace Independent_Reader_GUI
                 Debug.WriteLine($"MainForm : independentReaderForm -> {ex.Message}");
             }
             motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
+
+            //
+            // Setup the LEDs, their Manager, and start processing the LED command queue
+            //
+            Cy5 = new LED("Cy5", configuration, apiManager);
+            FAM = new LED("FAM", configuration, apiManager);
+            HEX = new LED("HEX", configuration, apiManager);
+            Atto = new LED("Atto", configuration, apiManager);
+            Alexa = new LED("Alexa", configuration, apiManager);
+            Cy5p5 = new LED("Cy5.5", configuration, apiManager);
+            ledManager = new LEDManager(Cy5, FAM, HEX, Atto, Alexa, Cy5p5);
+            Task.Run(async () => await ledManager.InitializeLEDParameters());
+            Task.Run(async () => await ledManager.ProcessCommandQueue());
 
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
@@ -188,6 +208,12 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecC.Connected, "Connected", "Not Connected", 0, 3);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecD.Connected, "Connected", "Not Connected", 0, 4);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             // Control Tab
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
@@ -203,6 +229,12 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecC.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecD.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             // Thermocycling Tab
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecA.Connected, "Connected", "Not Connected", "State", tecA.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
@@ -262,50 +294,10 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeLEDsDefaultData()
         {
-            LEDsData homeLEDsState = new LEDsData
-            {
-                PropertyName = "State",
-                ValueCy5 = "N",
-                ValueFAM = "N",
-                ValueHEX = "N",
-                ValueAtto = "N",
-                ValueAlexa = "N",
-                ValueCy5p5 = "N",
-            };
-            LEDsData homeLEDsIO = new LEDsData
-            {
-                PropertyName = "IO",
-                ValueCy5 = "Off",
-                ValueFAM = "Off",
-                ValueHEX = "Off",
-                ValueAtto = "Off",
-                ValueAlexa = "Off",
-                ValueCy5p5 = "Off",
-            };
-            LEDsData homeLEDsExposure = new LEDsData
-            {
-                PropertyName = "Exposure (ms)",
-                ValueCy5 = "300000",
-                ValueFAM = "600000",
-                ValueHEX = "500000",
-                ValueAtto = "200000",
-                ValueAlexa = "400000",
-                ValueCy5p5 = "600000",
-            };
-            LEDsData homeLEDsIntensity = new LEDsData
-            {
-                PropertyName = "Intensity (%)",
-                ValueCy5 = "0",
-                ValueFAM = "0",
-                ValueHEX = "0",
-                ValueAtto = "0",
-                ValueAlexa = "0",
-                ValueCy5p5 = "0",
-            };
-            homeLEDsDataGridView.Rows.Add(homeLEDsState.PropertyName, homeLEDsState.ValueCy5, homeLEDsState.ValueFAM, homeLEDsState.ValueHEX, homeLEDsState.ValueAtto, homeLEDsState.ValueAlexa, homeLEDsState.ValueCy5p5);
-            homeLEDsDataGridView.Rows.Add(homeLEDsIO.PropertyName, homeLEDsIO.ValueCy5, homeLEDsIO.ValueFAM, homeLEDsIO.ValueHEX, homeLEDsIO.ValueAtto, homeLEDsIO.ValueAlexa, homeLEDsIO.ValueCy5p5);
-            homeLEDsDataGridView.Rows.Add(homeLEDsExposure.PropertyName, homeLEDsExposure.ValueCy5, homeLEDsExposure.ValueFAM, homeLEDsExposure.ValueHEX, homeLEDsExposure.ValueAtto, homeLEDsExposure.ValueAlexa, homeLEDsExposure.ValueCy5p5);
-            homeLEDsDataGridView.Rows.Add(homeLEDsIntensity.PropertyName, homeLEDsIntensity.ValueCy5, homeLEDsIntensity.ValueFAM, homeLEDsIntensity.ValueHEX, homeLEDsIntensity.ValueAtto, homeLEDsIntensity.ValueAlexa, homeLEDsIntensity.ValueCy5p5);
+            homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
+            homeLEDsDataGridView.Rows.Add("IO", "?", "?", "?", "?", "?", "?");
+            homeLEDsDataGridView.Rows.Add("Exposure (ms)", "?", "?", "?", "?", "?", "?");
+            homeLEDsDataGridView.Rows.Add("Intensity (%)", "?", "?", "?", "?", "?", "?");
         }
 
         /// <summary>
@@ -598,7 +590,7 @@ namespace Independent_Reader_GUI
         private void AddControlLEDsDefaultData()
         {
             LEDsData controlLEDsData = new LEDsData();
-            controlLEDsDataGridView.Rows.Add("State", "N", "N", "N", "N", "N", "N");
+            controlLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             controlLEDsDataGridView.Rows.Add("IO");
             controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[1] = controlLEDsData.IOCy5ComboBoxCell;
             controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[2] = controlLEDsData.IOFAMComboBoxCell;
@@ -894,7 +886,7 @@ namespace Independent_Reader_GUI
             //}
         }
 
-        private void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private async void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             // Check if the IO cell values change
             var propertySelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[0].Value;
@@ -902,14 +894,15 @@ namespace Independent_Reader_GUI
             {
                 // Turn on or off the LED
                 string ledName = controlLEDsDataGridView.Columns[e.ColumnIndex].HeaderText;
-                LED led = new LED(ledName, configuration, apiManager);
+                LED led = ledManager.GetLEDFromName(ledName);
                 var valueSelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 if (valueSelected.Equals("On"))
                 {
                     try
                     {
                         int intensity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(ledName, "Intensity (%)", controlLEDsDataGridView));
-                        led.On(intensity);
+                        LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Parameter = intensity, LED = led };
+                        ledManager.EnqueueCommand(ledOnCommand);
                     }
                     catch (LEDNotConnectedException ex)
                     {
@@ -921,7 +914,8 @@ namespace Independent_Reader_GUI
                 {
                     try
                     {
-                        led.Off();
+                        LEDCommand ledOffCommand = new LEDCommand() { Type = LEDCommand.CommandType.Off, LED = led };
+                        ledManager.EnqueueCommand(ledOffCommand);
                     }
                     catch (LEDNotConnectedException ex)
                     {
@@ -1636,14 +1630,19 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private void IndependentReaderGUI_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Stop the TimerManagers
             runExperimentDataTimerManager.Stop();
             controlTabTimerManager.Stop();
             thermocyclingStatusTimerManager.Stop();
             mainFormFastTimerManager.Stop();
             mainFormSlowTimerManager.Stop();
+            // Stop the Processing of Command Queues for the Manager services
             tecManager.CloseCommandQueueProcessing();
             tecManager.ClosePriorityCommandQueueProcessing();
+            ledManager.CloseCommandQueueProcessing();
+            // Disconnect the Camera
             cameraManager.Disconnect();
+            // Clean up the API Manager service
             apiManager.Disponse();
         }
 

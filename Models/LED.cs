@@ -37,6 +37,22 @@ namespace Independent_Reader_GUI.Models
             get { return connected; }
         }
 
+        /// <summary>
+        /// Get the connection string for a DataGridView 
+        /// </summary>
+        /// <returns>"C" for Connected and "N" for Not Connected</returns>
+        public string GetState()
+        {
+            if (connected)
+            {
+                return "C";
+            }
+            else
+            {
+                return "N";
+            }
+        }
+
         private void SetIDFromName()
         {
             if (name.Equals("Cy5"))
@@ -132,7 +148,7 @@ namespace Independent_Reader_GUI.Models
             return version;
         }
 
-        public async void On(int intensity)
+        public async Task On(int intensity)
         {
             if (connected)
             {
@@ -162,7 +178,7 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
-        public async void Off()
+        public async Task Off()
         {
             if (connected)
             {
