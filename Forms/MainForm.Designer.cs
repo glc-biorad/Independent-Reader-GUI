@@ -1776,6 +1776,7 @@
             imagingPictureBox.Size = new Size(671, 365);
             imagingPictureBox.TabIndex = 0;
             imagingPictureBox.TabStop = false;
+            imagingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             // 
             // settingsTabPage
             // 

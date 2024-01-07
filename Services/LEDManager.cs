@@ -34,6 +34,12 @@ namespace Independent_Reader_GUI.Services
 
         public async Task InitializeLEDParameters()
         {
+            // Check the connection of the LED board
+            await CheckLEDBoardConnectionAsync();
+        }
+
+        public async Task CheckLEDBoardConnectionAsync()
+        {
             // Check the connection of the LED board (only check one since they all share the same board)
             await Cy5.CheckConnectionAsync();
             if (Cy5.Connected)

@@ -8,11 +8,11 @@
 		<ID>1</ID>
 		<LEDs>
 			<Cy5ID>1</Cy5ID>
-			<FAMID>4</FAMID>
-			<HEXID>3</HEXID>
-			<AttoID>2</AttoID>
-			<AlexaID>5</AlexaID>
-			<Cy5.5ID>6</Cy5.5ID>
+			<FAMID>6</FAMID>
+			<HEXID>4</HEXID>
+			<AttoID>5</AttoID>
+			<AlexaID>2</AlexaID>
+			<Cy5.5ID>3</Cy5.5ID>
 			<Cy5Intensity>20</Cy5Intensity>
 			<FAMIntensity>20</FAMIntensity>
 			<HEXIntensity>20</HEXIntensity>
@@ -21,13 +21,22 @@
 			<Cy5.5Intensity>20</Cy5.5Intensity>
 		</LEDs>
 		<FilterWheel>
-			<Cy5Position></Cy5Position>
-			<FAMPosition></FAMPosition>
-			<HEXPosition></HEXPosition>
-			<AttoPosition></AttoPosition>
-			<AlexaPosition></AlexaPosition>
-			<Cy5.5Position></Cy5.5Position>
+			<Cy5Position>47000</Cy5Position>
+			<FAMPosition>21000</FAMPosition>
+			<HEXPosition>30000</HEXPosition>
+			<AttoPosition>37000</AttoPosition>
+			<AlexaPosition>13000</AlexaPosition>
+			<Cy5.5Position>4000</Cy5.5Position>
 		</FilterWheel>
+		<Camera>
+			<ExposureUnits>Microseconds</ExposureUnits>
+			<Cy5Exposure>1000</Cy5Exposure>
+			<FAMExposure>600000</FAMExposure>
+			<HEXExposure>600000</HEXExposure>
+			<AttoExposure>1000</AttoExposure>
+			<AlexaExposure>1000</AlexaExposure>
+			<Cy5.5Exposure>1000</Cy5.5Exposure>
+		</Camera>
 		<Motors>
 			<x>
 				<Address>1</Address>
@@ -285,7 +294,7 @@
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
 	<ControlTabTimerInterval>5000</ControlTabTimerInterval>
 	<MainFormFastTimerInterval>3000</MainFormFastTimerInterval>
-	<MainFormSlowTimerInterval>300000</MainFormSlowTimerInterval>
+	<MainFormSlowTimerInterval>20000</MainFormSlowTimerInterval>
 	<ThermocyclingTabTimerInterval>1000</ThermocyclingTabTimerInterval>
 	<EstimateFOVCaptureTimeSeconds>7</EstimateFOVCaptureTimeSeconds>
 	<EstimateSampleCaptureTimeSeconds>60</EstimateSampleCaptureTimeSeconds>
