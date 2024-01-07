@@ -94,7 +94,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 var responseValue = await GetVersionAsync();
-                await Task.Delay(50);
+                await Task.Delay(100);
                 if (responseValue != null && responseValue != "?")
                 {
                     connected = true;

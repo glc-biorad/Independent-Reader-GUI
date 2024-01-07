@@ -227,34 +227,82 @@ namespace Independent_Reader_GUI.Services
             await Task.Delay(100);
         }
 
-        public void StartStream()
+        public async Task<int> StartStreamAsync()
         {
             if (connected)
             {
                 streaming = true;
-                // TODO: Add code for streaming to the Imaging Pixture Box
-                MessageBox.Show("Streaming code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                try
+                {
+                    // Retrieve enumeration node from nodemap
+                    IEnum iAcquisitionMode = nodeMap.GetNode<IEnum>("AcquisitionMode");
+                    if (iAcquisitionMode == null || !iAcquisitionMode.IsWritable || !iAcquisitionMode.IsReadable)
+                    {
+                        MessageBox.Show("Unable to stream because the retrieval of the AcquisitionMode node failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        streaming = false;
+                        return -1;
+                    }
+                    // Retrieve entry node from enumeration node
+                    IEnumEntry iAcquisitionModeContinuous = iAcquisitionMode.GetEntryByName("Continuous");
+                    if (iAcquisitionModeContinuous == null || !iAcquisitionModeContinuous.IsReadable)
+                    {
+                        MessageBox.Show("Unable to stream because the retrieval of the AcquisitionModeContinuous node entry failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        streaming = false;
+                        return -1;
+                    }
+                    // Set acquisition mode to continuous
+                    iAcquisitionMode.Value = iAcquisitionModeContinuous.Symbolic;
+                    // Begin acquiring images
+                    camera.BeginAcquisition();
+                    // Create an ImageProcessor instance for post processing images
+                    // NOTE: This can be a private instance for the class since it is also used in CaptureImage
+                    IManagedImageProcessor processor = new ManagedImageProcessor();
+                    // Set the default image processor color processing method
+                    processor.SetColorProcessing(ColorProcessingAlgorithm.HQ_LINEAR);
+                    while (streaming)
+                    {
+                        // Retrieve the next recieved image
+                        using (IManagedImage rawImage = camera.GetNextImage(1000))
+                        {
+                            // Ensure image completion
+                            if (rawImage.IsIncomplete)
+                            {
+                                Debug.WriteLine($"Raw Image from FLIR Camera is incomplete with image status {rawImage.ImageStatus}");
+                            }
+                            else
+                            {
+                                using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
+                                {
+                                    pictureBox.Image = convertedImage.bitmap;
+                                    await Task.Delay(100);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (SpinnakerException ex)
+                {
+                    MessageBox.Show($"Unable to stream due to {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    streaming = false;
+                    camera.EndAcquisition();
+                    return -1;
+                }
             }
             else
             {
                 streaming = false;
                 MessageBox.Show("Cannot start stream, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return -1;
             }
+            return 0;
         }
 
-        public async Task StartStreamAsync()
-        {
-            StartStream();
-            await Task.Delay(1);
-        }
-
-        public void StopStream()
+        public async Task StopStreamAsync()
         {
             if (connected)
             {
                 streaming = false;
-                // TODO: Add code for stopping a stream
-                MessageBox.Show("Streaming code has not been implemented yet", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                camera.EndAcquisition();
             }
             else
             {

@@ -31,6 +31,18 @@ namespace Independent_Reader_GUI.Models
         public int AttoIntensity = int.MinValue;
         public int AlexaIntensity = int.MinValue;
         public int Cy5p5Intensity = int.MinValue;
+        public int Cy5Position = int.MinValue;
+        public int FAMPosition = int.MinValue;
+        public int HEXPosition = int.MinValue;
+        public int AttoPosition = int.MinValue;
+        public int AlexaPosition = int.MinValue;
+        public int Cy5p5Position = int.MinValue;
+        public int Cy5Exposure = int.MinValue;
+        public int FAMExposure = int.MinValue;
+        public int HEXExposure = int.MinValue;
+        public int AttoExposure = int.MinValue;
+        public int AlexaExposure = int.MinValue;
+        public int Cy5p5Exposure = int.MinValue;
         public int Cy5FilterWheelPosition = int.MinValue;
         public int FAMFilterWheelPosition = int.MinValue;
         public int HEXFilterWheelPosition = int.MinValue;
@@ -177,6 +189,20 @@ namespace Independent_Reader_GUI.Models
             Cy5p5Intensity = int.Parse(ledsNode.Element("Cy5.5Intensity").Value);
             // Read in the isntrument configuration for the Filter Wheel
             var filterWheelNode = instrumentNode.Element("FilterWheel");
+            Cy5Position = int.Parse(filterWheelNode.Element("Cy5Position").Value);
+            FAMPosition = int.Parse(filterWheelNode.Element("FAMPosition").Value);
+            HEXPosition = int.Parse(filterWheelNode.Element("HEXPosition").Value);
+            AttoPosition = int.Parse(filterWheelNode.Element("AttoPosition").Value);
+            AlexaPosition = int.Parse(filterWheelNode.Element("AlexaPosition").Value);
+            Cy5p5Position = int.Parse(filterWheelNode.Element("Cy5.5Position").Value);
+            // Read in the instrument configuration for the Camera
+            var cameraNode = instrumentNode.Element("Camera");
+            Cy5Exposure = int.Parse(cameraNode.Element("Cy5Exposure").Value);
+            FAMExposure = int.Parse(cameraNode.Element("FAMExposure").Value);
+            HEXExposure = int.Parse(cameraNode.Element("HEXExposure").Value);
+            AttoExposure = int.Parse(cameraNode.Element("AttoExposure").Value);
+            AlexaExposure = int.Parse(cameraNode.Element("AlexaExposure").Value);
+            Cy5p5Exposure = int.Parse(cameraNode.Element("Cy5.5Exposure").Value);
             // Read in the instrument configuration for the Motors
             var motorsNode = instrumentNode.Element("Motors");
             var xMotorNode = motorsNode.Element("x");

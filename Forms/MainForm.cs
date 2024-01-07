@@ -1280,15 +1280,15 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void imagingStreamButton_Click(object sender, EventArgs e)
+        private async void imagingStreamButton_Click(object sender, EventArgs e)
         {
             if (cameraManager.Streaming)
             {
-                cameraManager.StopStream();
+                await cameraManager.StopStreamAsync();
             }
             else
             {
-                cameraManager.StartStream();
+                await cameraManager.StartStreamAsync();
             }
         }
 
@@ -1340,7 +1340,13 @@ namespace Independent_Reader_GUI
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Voltage (V)", tecB.ActualOutputVoltage);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Voltage (V)", tecC.ActualOutputVoltage);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Voltage (V)", tecD.ActualOutputVoltage);
-                // TODO: Check the LEDs
+                // Check the LEDs
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             }
         }
         
@@ -1428,6 +1434,8 @@ namespace Independent_Reader_GUI
             tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
             TECCommand tecDCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecD };
             tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            // Check the LEDs are connected still
+            await ledManager.CheckLEDBoardConnectionAsync();
         }
 
         public async void thermocyclingTab_TickEventHandler(object sender, EventArgs e)
