@@ -101,25 +101,9 @@ namespace Independent_Reader_GUI
             clampBMotor = new Motor(address: configuration.ClampBMotorAddress, name: "Clamp B", apiManager: apiManager);
             clampCMotor = new Motor(address: configuration.ClampCMotorAddress, name: "Clamp C", apiManager: apiManager);
             clampDMotor = new Motor(address: configuration.ClampDMotorAddress, name: "Clamp D", apiManager: apiManager);
-            // NOTE: This section of code slows down initialization of the GUI with the .Wait() used
-            try
-            {
-                Task.Run(async () => await xMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await yMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await zMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await filterWheelMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await trayABMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await trayCDMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampAMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampBMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampCMotor.CheckConnectionAsync()).Wait();
-                Task.Run(async () => await clampDMotor.CheckConnectionAsync()).Wait();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"MainForm : independentReaderForm -> {ex.Message}");
-            }
             motorManager = new MotorsManager(xMotor, yMotor, zMotor, filterWheelMotor, trayABMotor, trayCDMotor, clampAMotor, clampBMotor, clampCMotor, clampDMotor);
+            Task.Run(async () => await motorManager.InitializeMotorParameters()).Wait();
+            Task.Run(async () => await motorManager.ProcessCommandQueues());
 
             //
             // Setup the LEDs, their Manager, and start processing the LED command queue
@@ -131,7 +115,7 @@ namespace Independent_Reader_GUI
             Alexa = new LED("Alexa", configuration, apiManager);
             Cy5p5 = new LED("Cy5.5", configuration, apiManager);
             ledManager = new LEDManager(Cy5, FAM, HEX, Atto, Alexa, Cy5p5);
-            Task.Run(async () => await ledManager.InitializeLEDParameters());
+            Task.Run(async () => await ledManager.InitializeLEDParameters()).Wait();
             Task.Run(async () => await ledManager.ProcessCommandQueue());
 
             // Initialize
@@ -193,21 +177,6 @@ namespace Independent_Reader_GUI
             // Set initial colors for connected modules
             // TODO: Put this region of code in a function to be called every N seconds
             #region
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecA.Connected, "Connected", "Not Connected", 0, 1);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecB.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecC.Connected, "Connected", "Not Connected", 0, 3);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeTECsDataGridView, tecD.Connected, "Connected", "Not Connected", 0, 4);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
@@ -215,31 +184,12 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             // Control Tab
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecA.Connected, "Connected", "Not Connected", "State", tecA.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecC.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecD.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
-            // Thermocycling Tab
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecA.Connected, "Connected", "Not Connected", "State", tecA.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecB.Connected, "Connected", "Not Connected", "State", tecB.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecC.Connected, "Connected", "Not Connected", "State", tecC.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tecD.Connected, "Connected", "Not Connected", "State", tecD.Name);
             #endregion
 
             // Subscribe to CellClick events
@@ -1280,18 +1230,7 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private async void imagingStreamButton_Click(object sender, EventArgs e)
-        {
-            if (cameraManager.Streaming)
-            {
-                await cameraManager.StopStreamAsync();
-            }
-            else
-            {
-                await cameraManager.StartStreamAsync();
-            }
-        }
-
+        // TODO: This function should not exist, the FastTick handling will handle everything on the Control Tab
         public async void controlTab_TickEventHandler(object sender, EventArgs e)
         {
             // FIXME: If I turn off the instrument and turn it back on the instrument does not show being connected again 
@@ -1299,47 +1238,7 @@ namespace Independent_Reader_GUI
             // Check if the APIManger is connect (if not API server could be down)
             if (apiManager != null)
             {
-                // Check the motors
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, xMotor.Connected, "Connected", "Not Connected", 0, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, yMotor.Connected, "Connected", "Not Connected", 1, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, zMotor.Connected, "Connected", "Not Connected", 2, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, filterWheelMotor.Connected, "Connected", "Not Connected", 3, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayABMotor.Connected, "Connected", "Not Connected", 4, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, trayCDMotor.Connected, "Connected", "Not Connected", 5, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampAMotor.Connected, "Connected", "Not Connected", 6, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampBMotor.Connected, "Connected", "Not Connected", 7, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampCMotor.Connected, "Connected", "Not Connected", 8, 2);
-                dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(controlMotorsDataGridView, clampDMotor.Connected, "Connected", "Not Connected", 9, 2);
-                // TODO: Check the TECs
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Actual Object Temp (\u00B0C)", tecA.ActualObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Actual Object Temp (\u00B0C)", tecB.ActualObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Actual Object Temp (\u00B0C)", tecC.ActualObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Actual Object Temp (\u00B0C)", tecD.ActualObjectTemperature);
-                //
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Target Object Temp (\u00B0C)", tecA.TargetObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Target Object Temp (\u00B0C)", tecB.TargetObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Target Object Temp (\u00B0C)", tecC.TargetObjectTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Target Object Temp (\u00B0C)", tecD.TargetObjectTemperature);
-                //
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Sink Temp (\u00B0C)", tecA.ActualSinkTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Sink Temp (\u00B0C)", tecB.ActualSinkTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Sink Temp (\u00B0C)", tecC.ActualSinkTemperature);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Sink Temp (\u00B0C)", tecD.ActualSinkTemperature);
-                //
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Actual Fan Speed (rpm)", tecA.ActualFanSpeed);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Actual Fan Speed (rpm)", tecB.ActualFanSpeed);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Actual Fan Speed (rpm)", tecC.ActualFanSpeed);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Actual Fan Speed (rpm)", tecD.ActualFanSpeed);
-                //
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Current (A)", tecA.ActualOutputCurrent);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Current (A)", tecB.ActualOutputCurrent);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Current (A)", tecC.ActualOutputCurrent);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Current (A)", tecD.ActualOutputCurrent);
-                //
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecA.Name, "Voltage (V)", tecA.ActualOutputVoltage);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecB.Name, "Voltage (V)", tecB.ActualOutputVoltage);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecC.Name, "Voltage (V)", tecC.ActualOutputVoltage);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tecD.Name, "Voltage (V)", tecD.ActualOutputVoltage);
+                // TODO: Remove these actions from this function
                 // Check the LEDs
                 dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
@@ -1349,91 +1248,28 @@ namespace Independent_Reader_GUI
                 dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             }
         }
-        
+
         public async void mainFormFast_TickEventHandler(object sender, EventArgs e)
         {
-            // Check the TECs data every tick
-            if (tecA.Connected)
-            {
-                // Setup the GetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC =  tecA };
-                tecManager.EnqueueCommand(getObjectTemperatureCommand);
-                // Setup the GetSinkTemperature command and add it to the TECsManager Queue
-                TECCommand getSinkTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkTemperature, TEC = tecA };
-                tecManager.EnqueueCommand(getSinkTemperatureCommand);
-                // Setup the GetTargetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand getTargetObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetTargetObjectTemperature, TEC = tecA };
-                tecManager.EnqueueCommand(getTargetObjectTemperatureCommand);
-                // Setup the GetActualFanSpeed command and add it to the TECsManager Queue
-                TECCommand getActualFanSpeedCommand = new TECCommand { Type = TECCommand.CommandType.GetActualFanSpeed, TEC = tecA };
-                tecManager.EnqueueCommand(getActualFanSpeedCommand);
-                // Setup the GetActualOutputCurrent command and add it to the TECsManager Queue
-                TECCommand getActualOutputCurrentCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputCurrent, TEC = tecA };
-                tecManager.EnqueueCommand(getActualOutputCurrentCommand);
-                // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
-                TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tecA };
-                tecManager.EnqueueCommand(getActualOutputVoltageCommand);
-            }
-            if (tecB.Connected)
-            {
-                // Setup the GetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC = tecB };
-                tecManager.EnqueueCommand(getObjectTemperatureCommand);
-                // Setup the GetSinkTemperature command and add it to the TECsManager Queue
-                TECCommand getSinkTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkTemperature, TEC = tecB };
-                tecManager.EnqueueCommand(getSinkTemperatureCommand);
-                // Setup the GetTargetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand getTargetObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetTargetObjectTemperature, TEC = tecB };
-                tecManager.EnqueueCommand(getTargetObjectTemperatureCommand);
-                // Setup the GetActualFanSpeed command and add it to the TECsManager Queue
-                TECCommand getActualFanSpeedCommand = new TECCommand { Type = TECCommand.CommandType.GetActualFanSpeed, TEC = tecB };
-                tecManager.EnqueueCommand(getActualFanSpeedCommand);
-                // Setup the GetActualOutputCurrent command and add it to the TECsManager Queue
-                TECCommand getActualOutputCurrentCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputCurrent, TEC = tecB };
-                tecManager.EnqueueCommand(getActualOutputCurrentCommand);
-                // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
-                TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tecB };
-                tecManager.EnqueueCommand(getActualOutputVoltageCommand);
-                //await tecB.GetObjectTemperature();
-                //await tecB.GetSinkTemperature();
-                //await tecB.GetTargetObjectTemperature();
-                //await tecB.GetActualOutputCurrent();
-                //await tecB.GetActualOutputVoltage();
-                //await tecB.GetRelativeCoolingPower();
-            }
-            if (tecC.Connected)
-            {
-                await tecC.GetObjectTemperature();
-                await tecC.GetSinkTemperature();
-                await tecC.GetTargetObjectTemperature();
-                //await tecC.GetActualOutputCurrent();
-                //await tecC.GetActualOutputVoltage();
-                //await tecC.GetRelativeCoolingPower();
-                await tecC.GetActualFanSpeed();
-            }
-            if (tecD.Connected)
-            {
-                await tecD.GetObjectTemperature();
-                await tecD.GetSinkTemperature();
-                await tecD.GetTargetObjectTemperature();
-                //await tecD.GetActualOutputCurrent();
-                //await tecD.GetActualOutputVoltage();
-                //await tecD.GetRelativeCoolingPower();
-                await tecD.GetActualFanSpeed();
-            }
+            // Check the Camera is connected every fast tick
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            // Check the Motors data every fast tick
+            motorManager.HandleFastTickEvent(dataGridViewManager, homeMotorsDataGridView, controlMotorsDataGridView);
+            // Check the TECs data every fast tick
+            tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
         }
 
         public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
         {
             // Check the TECs are connected still
             TECCommand tecACheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecA };
-            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            tecManager.EnqueueCommand(tecACheckConnectionCommand);
             TECCommand tecBCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecB };
-            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            tecManager.EnqueueCommand(tecACheckConnectionCommand);
             TECCommand tecCCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecC };
-            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            tecManager.EnqueueCommand(tecACheckConnectionCommand);
             TECCommand tecDCheckConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tecD };
-            tecManager.EnqueuePriorityCommand(tecACheckConnectionCommand);
+            tecManager.EnqueueCommand(tecACheckConnectionCommand);
             // Check the LEDs are connected still
             await ledManager.CheckLEDBoardConnectionAsync();
         }
@@ -1648,6 +1484,8 @@ namespace Independent_Reader_GUI
             tecManager.CloseCommandQueueProcessing();
             tecManager.ClosePriorityCommandQueueProcessing();
             ledManager.CloseCommandQueueProcessing();
+            motorManager.CloseCommandQueueProcessing();
+            motorManager.ClosePriorityCommandQueueProcessing();
             // Disconnect the Camera
             cameraManager.Disconnect();
             // Clean up the API Manager service
@@ -2456,6 +2294,16 @@ namespace Independent_Reader_GUI
         private void thermocyclingTECDKillButton_Click(object sender, EventArgs e)
         {
             tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
+        }
+
+        private async void imagingTabPage_Enter(object sender, EventArgs e)
+        {
+            await cameraManager.StartStreamAsync();
+        }
+
+        private async void imagingTabPage_Leave(object sender, EventArgs e)
+        {
+            await cameraManager.StopStreamAsync();
         }
     }
 }

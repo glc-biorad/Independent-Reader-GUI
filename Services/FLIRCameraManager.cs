@@ -223,8 +223,8 @@ namespace Independent_Reader_GUI.Services
 
         public async Task CaptureImageAsync()
         {
-            CaptureImage();
-            await Task.Delay(100);
+            //CaptureImage();
+            //await Task.Delay(100);
         }
 
         public async Task<int> StartStreamAsync()
@@ -261,22 +261,29 @@ namespace Independent_Reader_GUI.Services
                     processor.SetColorProcessing(ColorProcessingAlgorithm.HQ_LINEAR);
                     while (streaming)
                     {
-                        // Retrieve the next recieved image
-                        using (IManagedImage rawImage = camera.GetNextImage(1000))
+                        try
                         {
-                            // Ensure image completion
-                            if (rawImage.IsIncomplete)
+                            // Retrieve the next recieved image
+                            using (IManagedImage rawImage = camera.GetNextImage(1000))
                             {
-                                Debug.WriteLine($"Raw Image from FLIR Camera is incomplete with image status {rawImage.ImageStatus}");
-                            }
-                            else
-                            {
-                                using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
+                                // Ensure image completion
+                                if (rawImage.IsIncomplete)
                                 {
-                                    pictureBox.Image = convertedImage.bitmap;
-                                    await Task.Delay(100);
+                                    Debug.WriteLine($"Raw Image from FLIR Camera is incomplete with image status {rawImage.ImageStatus}");
+                                }
+                                else
+                                {
+                                    using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
+                                    {
+                                        pictureBox.Image = convertedImage.bitmap;
+                                        await Task.Delay(100);
+                                    }
                                 }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"WARNING: FLIR Camera streaming issue {ex.Message}, attempting to continue streaming.");
                         }
                     }
                 }

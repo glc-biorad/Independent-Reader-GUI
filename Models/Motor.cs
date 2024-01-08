@@ -18,6 +18,8 @@ namespace Independent_Reader_GUI.Models
         public string Version = string.Empty;
         private bool connected = false;
         private bool homed = false;
+        private int position = int.MinValue;
+        private int speed = int.MinValue;
         private TimeSpan waitTimeSpan;
         private const int checkInTimeInMilliseconds = 200;
 
@@ -32,8 +34,8 @@ namespace Independent_Reader_GUI.Models
         public async Task MoveAsync(int positionInMicrosteps, int speedInMicrostepsPerSecond)
         {
             // Check the motor is connected
-            await CheckConnectionAsync();
-            await Task.Delay(5);
+            //await CheckConnectionAsync();
+            //await Task.Delay(5);
             if (connected)
             {
                 //if (homed)
@@ -45,13 +47,14 @@ namespace Independent_Reader_GUI.Models
                     await apiManager.PostAsync<APIMotorRequest, APIResponse>(
                         $"http://127.0.0.1:8000/reader/axis/move/{address}?position=-{apiMotorRequest.postion}&velocity={apiMotorRequest.velocity}", 
                         apiMotorRequest);
-                    await Task.Delay(5);
+                    await Task.Delay(100);
                     Stopwatch stopwatch = Stopwatch.StartNew();
                     while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                     {
                         // Check in every so often
                         await Task.Delay(checkInTimeInMilliseconds);
                     }
+                    position = positionInMicrosteps;
                 }
             }
         }
@@ -59,21 +62,21 @@ namespace Independent_Reader_GUI.Models
         public async Task HomeAsync()
         {
             // Check the motor is connected
-            await CheckConnectionAsync();
-            await Task.Delay(5);
+            //await CheckConnectionAsync();
+            //await Task.Delay(5);
             if (connected)
             {
                 // Generate a API Motor Request
                 APIMotorRequest apiMotorRequest = new APIMotorRequest(id: address);
                 // Send the request to the API
                 await apiManager.PostAsync<APIMotorRequest, APIResponse>($"http://127.0.0.1:8000/reader/axis/home/{address}", apiMotorRequest);
-                await Task.Delay(5);
+                await Task.Delay(100);
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 while (!homed && (stopwatch.Elapsed < waitTimeSpan))
                 {
                     // TODO: Check if the motor has been homed
                     var position = await GetPositionAsync();
-                    await Task.Delay(5);
+                    await Task.Delay(100);
                     if (position != null)
                     {
                         if (position == 0)
@@ -103,7 +106,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
-                await Task.Delay(5);
+                await Task.Delay(200);
                 return data.Response;
             }
             catch (Exception ex)
@@ -112,11 +115,11 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
-        public async Task<int?> GetPositionAsync()
+        public async Task<int> GetPositionAsync()
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
             var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/position/{address}");
-            await Task.Delay(5);
+            await Task.Delay(200);
             // TODO: Check the submodule id and the module id
             // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
             #region
@@ -127,7 +130,7 @@ namespace Independent_Reader_GUI.Models
             string? response = data.Response?.Replace("\r", "");
             #endregion
             // Obtain the position from the response
-            int? position;
+            int position;
             try
             {
                 position = int.Parse(response.Split(",").Last());
@@ -138,7 +141,13 @@ namespace Independent_Reader_GUI.Models
                 position = int.MinValue;
                 //MessageBox.Show($"Get position for {name} motor was unsuccessful", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this.position = position;
             return position;
+        }
+
+        public int Position
+        {
+            get { return position;  }
         }
 
         public void CheckConnection()
@@ -150,7 +159,7 @@ namespace Independent_Reader_GUI.Models
         {
             // TODO: Implement code for checking if the motor is connected (check version from the API and check for successful response)
             var responseValue = await GetPositionAsync();
-            await Task.Delay(5);
+            await Task.Delay(200);
             if (responseValue != null)
             {
                 connected = true;
@@ -161,7 +170,7 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
-        public bool CheckIfHomingComplete()
+        public async Task<bool> CheckIfHomingComplete()
         {
             bool homingCompleted = false;
             // TODO: Implement code to check if homing is completed

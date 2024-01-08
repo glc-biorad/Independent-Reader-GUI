@@ -180,7 +180,6 @@
             imagingDxLabel = new Label();
             imagingCaptureImageButton = new Button();
             imagingCameraViewLabel = new Label();
-            imagingStreamButton = new Button();
             imagingPictureBox = new PictureBox();
             settingsTabPage = new TabPage();
             settingsTECsDataGridView = new DataGridView();
@@ -1507,7 +1506,6 @@
             imagingTabPage.Controls.Add(imagingDxLabel);
             imagingTabPage.Controls.Add(imagingCaptureImageButton);
             imagingTabPage.Controls.Add(imagingCameraViewLabel);
-            imagingTabPage.Controls.Add(imagingStreamButton);
             imagingTabPage.Controls.Add(imagingPictureBox);
             imagingTabPage.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             imagingTabPage.Location = new Point(4, 24);
@@ -1516,6 +1514,8 @@
             imagingTabPage.TabIndex = 4;
             imagingTabPage.Text = "Imaging";
             imagingTabPage.UseVisualStyleBackColor = true;
+            imagingTabPage.Enter += imagingTabPage_Enter;
+            imagingTabPage.Leave += imagingTabPage_Leave;
             // 
             // imagingLEDsDataGridView
             // 
@@ -1738,9 +1738,9 @@
             imagingCaptureImageButton.BackColor = SystemColors.Highlight;
             imagingCaptureImageButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             imagingCaptureImageButton.ForeColor = Color.White;
-            imagingCaptureImageButton.Location = new Point(123, 398);
+            imagingCaptureImageButton.Location = new Point(8, 398);
             imagingCaptureImageButton.Name = "imagingCaptureImageButton";
-            imagingCaptureImageButton.Size = new Size(125, 36);
+            imagingCaptureImageButton.Size = new Size(250, 36);
             imagingCaptureImageButton.TabIndex = 3;
             imagingCaptureImageButton.Text = "Capture Image";
             imagingCaptureImageButton.UseVisualStyleBackColor = false;
@@ -1756,27 +1756,14 @@
             imagingCameraViewLabel.TabIndex = 2;
             imagingCameraViewLabel.Text = "Camera View";
             // 
-            // imagingStreamButton
-            // 
-            imagingStreamButton.BackColor = SystemColors.Highlight;
-            imagingStreamButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingStreamButton.ForeColor = Color.White;
-            imagingStreamButton.Location = new Point(8, 398);
-            imagingStreamButton.Name = "imagingStreamButton";
-            imagingStreamButton.Size = new Size(109, 36);
-            imagingStreamButton.TabIndex = 1;
-            imagingStreamButton.Text = "Stream";
-            imagingStreamButton.UseVisualStyleBackColor = false;
-            imagingStreamButton.Click += imagingStreamButton_Click;
-            // 
             // imagingPictureBox
             // 
             imagingPictureBox.Location = new Point(8, 28);
             imagingPictureBox.Name = "imagingPictureBox";
             imagingPictureBox.Size = new Size(671, 365);
+            imagingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             imagingPictureBox.TabIndex = 0;
             imagingPictureBox.TabStop = false;
-            imagingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             // 
             // settingsTabPage
             // 
@@ -2656,7 +2643,6 @@
         private Button thermocyclingTECARunButton;
         private Button thermocyclingAddGoToButton;
         private PictureBox imagingPictureBox;
-        private Button imagingStreamButton;
         private Button imagingCaptureImageButton;
         private Label imagingCameraViewLabel;
         private Label imagingDxLabel;
