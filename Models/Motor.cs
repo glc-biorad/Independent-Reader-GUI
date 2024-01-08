@@ -59,6 +59,31 @@ namespace Independent_Reader_GUI.Models
             }
         }
 
+        public async Task MoveRelativeAsync(int distanceInMicrosteps, int speedInMicrostepsPerSecond)
+        {
+            if (connected)
+            {
+                //if (homed)
+                if (true)
+                {
+                    // Generate a API Motor Request
+                    APIMotorRequest apiMotorRequest = new APIMotorRequest(id: address, distance: distanceInMicrosteps, velocity: speedInMicrostepsPerSecond);
+                    // Send the request to the API
+                    await apiManager.PostAsync<APIMotorRequest, APIResponse>(
+                        $"http://127.0.0.1:8000/reader/axis/jog/{address}?distance={apiMotorRequest.distance}&velocity={apiMotorRequest.velocity}",
+                        apiMotorRequest);
+                    await Task.Delay(100);
+                    Stopwatch stopwatch = Stopwatch.StartNew();
+                    while (!homed && (stopwatch.Elapsed < waitTimeSpan))
+                    {
+                        // Check in every so often
+                        await Task.Delay(checkInTimeInMilliseconds);
+                    }
+                    position += distanceInMicrosteps;
+                }
+            }
+        }
+
         public async Task HomeAsync()
         {
             // Check the motor is connected

@@ -31,12 +31,6 @@ namespace Independent_Reader_GUI.Models
         public int AttoIntensity = int.MinValue;
         public int AlexaIntensity = int.MinValue;
         public int Cy5p5Intensity = int.MinValue;
-        public int Cy5Position = int.MinValue;
-        public int FAMPosition = int.MinValue;
-        public int HEXPosition = int.MinValue;
-        public int AttoPosition = int.MinValue;
-        public int AlexaPosition = int.MinValue;
-        public int Cy5p5Position = int.MinValue;
         public int Cy5Exposure = int.MinValue;
         public int FAMExposure = int.MinValue;
         public int HEXExposure = int.MinValue;
@@ -156,6 +150,9 @@ namespace Independent_Reader_GUI.Models
         public string ReportLogoDataPath;
         public string DefaultThermocyclingProtocolName;
         public string DefaultLocalImageDataPath;
+        public int DefaultDx = int.MinValue;
+        public int DefaultDy = int.MinValue;
+        public int DefaultDz = int.MinValue;
 
         public Configuration()
         {
@@ -190,12 +187,12 @@ namespace Independent_Reader_GUI.Models
             Cy5p5Intensity = int.Parse(ledsNode.Element("Cy5.5Intensity").Value);
             // Read in the isntrument configuration for the Filter Wheel
             var filterWheelNode = instrumentNode.Element("FilterWheel");
-            Cy5Position = int.Parse(filterWheelNode.Element("Cy5Position").Value);
-            FAMPosition = int.Parse(filterWheelNode.Element("FAMPosition").Value);
-            HEXPosition = int.Parse(filterWheelNode.Element("HEXPosition").Value);
-            AttoPosition = int.Parse(filterWheelNode.Element("AttoPosition").Value);
-            AlexaPosition = int.Parse(filterWheelNode.Element("AlexaPosition").Value);
-            Cy5p5Position = int.Parse(filterWheelNode.Element("Cy5.5Position").Value);
+            Cy5FilterWheelPosition = int.Parse(filterWheelNode.Element("Cy5Position").Value);
+            FAMFilterWheelPosition = int.Parse(filterWheelNode.Element("FAMPosition").Value);
+            HEXFilterWheelPosition = int.Parse(filterWheelNode.Element("HEXPosition").Value);
+            AttoFilterWheelPosition = int.Parse(filterWheelNode.Element("AttoPosition").Value);
+            AlexaFilterWheelPosition = int.Parse(filterWheelNode.Element("AlexaPosition").Value);
+            Cy5p5FilterWheelPosition = int.Parse(filterWheelNode.Element("Cy5.5Position").Value);
             // Read in the instrument configuration for the Camera
             var cameraNode = instrumentNode.Element("Camera");
             Cy5Exposure = int.Parse(cameraNode.Element("Cy5Exposure").Value);
@@ -209,12 +206,15 @@ namespace Independent_Reader_GUI.Models
             var xMotorNode = motorsNode.Element("x");
             xMotorAddress = int.Parse(xMotorNode.Element("Address").Value);
             xMotorDefaultSpeed = int.Parse(xMotorNode.Element("DefaultSpeed").Value);
+            DefaultDx = int.Parse(xMotorNode.Element("DefaultDx").Value);
             var yMotorNode = motorsNode.Element("y");
             yMotorAddress = int.Parse(yMotorNode.Element("Address").Value);
             yMotorDefaultSpeed = int.Parse(yMotorNode.Element("DefaultSpeed").Value);
+            DefaultDy = int.Parse(yMotorNode.Element("DefaultDy").Value);
             var zMotorNode = motorsNode.Element("z");
             zMotorAddress = int.Parse(zMotorNode.Element("Address").Value);
             zMotorDefaultSpeed = int.Parse(zMotorNode.Element("DefaultSpeed").Value);
+            DefaultDz = int.Parse(zMotorNode.Element("DefaultDz").Value);
             var filterWheelMotorNode = motorsNode.Element("FilterWheel");
             FilterWheelMotorAddress = int.Parse(filterWheelMotorNode.Element("Address").Value);
             FilterWheelMotorDefaultSpeed = int.Parse(filterWheelMotorNode.Element("DefaultSpeed").Value);

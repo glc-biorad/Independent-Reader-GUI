@@ -22,7 +22,7 @@ namespace Independent_Reader_GUI.Services
             this.configuration = configuration;
         }
 
-        public int SaveImage(PictureBox pictureBox)
+        public async Task<int> SaveImage(PictureBox pictureBox)
         {
             try
             {

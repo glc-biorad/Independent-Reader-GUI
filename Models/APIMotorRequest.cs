@@ -10,9 +10,10 @@ namespace Independent_Reader_GUI.Models
     {
         public int id {  get; set; }
         public int? postion { get; set; }
+        public int? distance {  get; set; }
         public int? velocity { get; set; }
 
-        public APIMotorRequest(int id, int? postion = null, int? velocity = null)
+        public APIMotorRequest(int id, int? postion = null, int? velocity = null, int? distance = null)
         {
             this.id = id;
             if (postion != null)
@@ -28,6 +29,7 @@ namespace Independent_Reader_GUI.Models
                 }
             }
             this.velocity = velocity;
+            this.distance = distance;
         }
     }
 }

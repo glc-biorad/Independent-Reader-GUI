@@ -21,6 +21,7 @@
 			<Cy5.5Intensity>20</Cy5.5Intensity>
 		</LEDs>
 		<FilterWheel>
+			<PositionUnits>Microsteps</PositionUnits>
 			<Cy5Position>47000</Cy5Position>
 			<FAMPosition>21000</FAMPosition>
 			<HEXPosition>30000</HEXPosition>
@@ -45,6 +46,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultDx>37000</DefaultDx>
 			</x>
 			<y>
 				<Address>2</Address>
@@ -53,6 +55,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultDy>5000</DefaultDy>
 			</y>
 			<z>
 				<Address>3</Address>
@@ -61,6 +64,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultDz>10000</DefaultDz>
 			</z>
 			<FilterWheel>
 				<Address>4</Address>

@@ -5,7 +5,7 @@
 		<ThermalCoefficient>3.8</ThermalCoefficient>
 		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
 		<ShoreHardness>71</ShoreHardness>
-		<Thickness>2</Thickness>
+		<Thickness>2.0</Thickness>
 		<ThicknessUnits>mm</ThicknessUnits>
 	</Bergquist>
 	<Bergquist>
@@ -13,7 +13,7 @@
 		<ThermalCoefficient>2.2</ThermalCoefficient>
 		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
 		<ShoreHardness>34</ShoreHardness>
-		<Thickness>2</Thickness>
+		<Thickness>2.0</Thickness>
 		<ThicknessUnits>mm</ThicknessUnits>
 	</Bergquist>
 	<Bergquist>
@@ -21,7 +21,15 @@
 		<ThermalCoefficient>1.9</ThermalCoefficient>
 		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
 		<ShoreHardness>32</ShoreHardness>
-		<Thickness>2</Thickness>
+		<Thickness>2.0</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+	</Bergquist>
+	<Bergquist>
+		<Name>None</Name>
+		<ThermalCoefficient>0.0</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>0</ShoreHardness>
+		<Thickness>0.0</Thickness>
 		<ThicknessUnits>mm</ThicknessUnits>
 	</Bergquist>
 </Bergquists>

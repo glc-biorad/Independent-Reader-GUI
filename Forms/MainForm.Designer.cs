@@ -28,18 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             homeTabPage = new TabPage();
             homeAPIConnectedRadioButton = new RadioButton();
@@ -155,6 +153,7 @@
             thermocyclingAddStepButton = new Button();
             thermocyclingPlotView = new OxyPlot.WindowsForms.PlotView();
             imagingTabPage = new TabPage();
+            imagingBrightFieldButton = new Button();
             imagingLEDsDataGridView = new DataGridView();
             imagingLEDsPropertyColumn = new DataGridViewTextBoxColumn();
             imagingLEDsCy5Column = new DataGridViewTextBoxColumn();
@@ -257,7 +256,6 @@
             userLabel = new Label();
             logoutButton = new Button();
             resetButton = new Button();
-            imagingBrightFieldButton = new Button();
             tabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
@@ -304,6 +302,7 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1124, 612);
             tabControl.TabIndex = 0;
+            tabControl.KeyDown += tabControl_KeyDown;
             // 
             // homeTabPage
             // 
@@ -351,8 +350,8 @@
             homeTECsDataGridView.Name = "homeTECsDataGridView";
             homeTECsDataGridView.ReadOnly = true;
             homeTECsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle15.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeTECsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle21.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeTECsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
             homeTECsDataGridView.RowTemplate.Height = 25;
             homeTECsDataGridView.Size = new Size(545, 402);
             homeTECsDataGridView.TabIndex = 7;
@@ -409,8 +408,8 @@
             homeLEDsDataGridView.Name = "homeLEDsDataGridView";
             homeLEDsDataGridView.ReadOnly = true;
             homeLEDsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle16.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeLEDsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle22.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeLEDsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle22;
             homeLEDsDataGridView.RowTemplate.Height = 25;
             homeLEDsDataGridView.Size = new Size(513, 138);
             homeLEDsDataGridView.TabIndex = 5;
@@ -485,8 +484,8 @@
             homeCameraDataGridView.Name = "homeCameraDataGridView";
             homeCameraDataGridView.ReadOnly = true;
             homeCameraDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle17.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeCameraDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle23.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeCameraDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle23;
             homeCameraDataGridView.RowTemplate.Height = 25;
             homeCameraDataGridView.Size = new Size(269, 59);
             homeCameraDataGridView.TabIndex = 3;
@@ -528,8 +527,8 @@
             homeMotorsDataGridView.ReadOnly = true;
             homeMotorsDataGridView.RowHeadersVisible = false;
             homeMotorsDataGridView.RowHeadersWidth = 10;
-            dataGridViewCellStyle18.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            homeMotorsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle24.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            homeMotorsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.Font = new Font("Arial", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             homeMotorsDataGridView.RowTemplate.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             homeMotorsDataGridView.RowTemplate.Height = 25;
@@ -1519,20 +1518,25 @@
             imagingTabPage.Enter += imagingTabPage_Enter;
             imagingTabPage.Leave += imagingTabPage_Leave;
             // 
+            // imagingBrightFieldButton
+            // 
+            imagingBrightFieldButton.BackColor = SystemColors.Highlight;
+            imagingBrightFieldButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingBrightFieldButton.ForeColor = Color.White;
+            imagingBrightFieldButton.Location = new Point(8, 398);
+            imagingBrightFieldButton.Name = "imagingBrightFieldButton";
+            imagingBrightFieldButton.Size = new Size(104, 36);
+            imagingBrightFieldButton.TabIndex = 18;
+            imagingBrightFieldButton.Text = "Bright Field";
+            imagingBrightFieldButton.UseVisualStyleBackColor = false;
+            imagingBrightFieldButton.Click += imagingBrightFieldButton_Click;
+            // 
             // imagingLEDsDataGridView
             // 
             imagingLEDsDataGridView.AllowUserToAddRows = false;
             imagingLEDsDataGridView.AllowUserToDeleteRows = false;
             imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = SystemColors.Window;
-            dataGridViewCellStyle13.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle13.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle13.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.False;
-            imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
             imagingLEDsDataGridView.Location = new Point(264, 419);
             imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
             imagingLEDsDataGridView.RowHeadersVisible = false;
@@ -1645,14 +1649,6 @@
             imagingScanParametersDataGridView.AllowUserToDeleteRows = false;
             imagingScanParametersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             imagingScanParametersDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingScanParametersPropertyColumn, imagingScanParametersValueColumn });
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = SystemColors.Window;
-            dataGridViewCellStyle14.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle14.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.False;
-            imagingScanParametersDataGridView.DefaultCellStyle = dataGridViewCellStyle14;
             imagingScanParametersDataGridView.Location = new Point(692, 28);
             imagingScanParametersDataGridView.Name = "imagingScanParametersDataGridView";
             imagingScanParametersDataGridView.RowHeadersVisible = false;
@@ -1687,31 +1683,31 @@
             // imagingDzTextBox
             // 
             imagingDzTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingDzTextBox.Location = new Point(92, 529);
+            imagingDzTextBox.Location = new Point(72, 539);
             imagingDzTextBox.Name = "imagingDzTextBox";
-            imagingDzTextBox.Size = new Size(135, 21);
+            imagingDzTextBox.Size = new Size(142, 21);
             imagingDzTextBox.TabIndex = 9;
             // 
             // imagingDyTextBox
             // 
             imagingDyTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingDyTextBox.Location = new Point(92, 493);
+            imagingDyTextBox.Location = new Point(72, 496);
             imagingDyTextBox.Name = "imagingDyTextBox";
-            imagingDyTextBox.Size = new Size(135, 21);
+            imagingDyTextBox.Size = new Size(142, 21);
             imagingDyTextBox.TabIndex = 8;
             // 
             // imagingDxTextBox
             // 
             imagingDxTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingDxTextBox.Location = new Point(92, 460);
+            imagingDxTextBox.Location = new Point(72, 450);
             imagingDxTextBox.Name = "imagingDxTextBox";
-            imagingDxTextBox.Size = new Size(135, 21);
+            imagingDxTextBox.Size = new Size(142, 21);
             imagingDxTextBox.TabIndex = 7;
             // 
             // imagingDzLabel
             // 
             imagingDzLabel.AutoSize = true;
-            imagingDzLabel.Location = new Point(62, 532);
+            imagingDzLabel.Location = new Point(42, 542);
             imagingDzLabel.Name = "imagingDzLabel";
             imagingDzLabel.Size = new Size(24, 18);
             imagingDzLabel.TabIndex = 6;
@@ -1720,7 +1716,7 @@
             // imagingDyLabel
             // 
             imagingDyLabel.AutoSize = true;
-            imagingDyLabel.Location = new Point(62, 496);
+            imagingDyLabel.Location = new Point(42, 499);
             imagingDyLabel.Name = "imagingDyLabel";
             imagingDyLabel.Size = new Size(24, 18);
             imagingDyLabel.TabIndex = 5;
@@ -1729,7 +1725,7 @@
             // imagingDxLabel
             // 
             imagingDxLabel.AutoSize = true;
-            imagingDxLabel.Location = new Point(62, 463);
+            imagingDxLabel.Location = new Point(42, 453);
             imagingDxLabel.Name = "imagingDxLabel";
             imagingDxLabel.Size = new Size(24, 18);
             imagingDxLabel.TabIndex = 4;
@@ -2111,8 +2107,8 @@
             configureImageScanningDataGridView.Location = new Point(8, 365);
             configureImageScanningDataGridView.Name = "configureImageScanningDataGridView";
             configureImageScanningDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle19.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle25.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
             configureImageScanningDataGridView.RowTemplate.Height = 25;
             configureImageScanningDataGridView.Size = new Size(1100, 134);
             configureImageScanningDataGridView.TabIndex = 14;
@@ -2225,8 +2221,8 @@
             configureBergquistsDataGridView.Location = new Point(8, 254);
             configureBergquistsDataGridView.Name = "configureBergquistsDataGridView";
             configureBergquistsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle20.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle26.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle26;
             configureBergquistsDataGridView.RowTemplate.Height = 25;
             configureBergquistsDataGridView.Size = new Size(1100, 55);
             configureBergquistsDataGridView.TabIndex = 5;
@@ -2275,8 +2271,8 @@
             configureElastomerDataGridView.Location = new Point(6, 145);
             configureElastomerDataGridView.Name = "configureElastomerDataGridView";
             configureElastomerDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle21.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle27.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle27;
             configureElastomerDataGridView.RowTemplate.Height = 25;
             configureElastomerDataGridView.Size = new Size(1102, 50);
             configureElastomerDataGridView.TabIndex = 3;
@@ -2336,27 +2332,27 @@
             configureCartridgesDataGridView.AllowUserToResizeRows = false;
             configureCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             configureCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { configureCartridgesNameColumn, configureCartridgesPartitionTypeColumn, configureCartridgesSamplesColumn, configureCartridgesAssaysColumn, configureCartridgesLengthColumn, configureCartridgesWidthColumn, configureCartridgesHeightColumn });
-            dataGridViewCellStyle22.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = SystemColors.Window;
-            dataGridViewCellStyle22.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle22.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle22.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = DataGridViewTriState.False;
-            configureCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle28.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle28.BackColor = SystemColors.Window;
+            dataGridViewCellStyle28.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle28.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle28.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = DataGridViewTriState.False;
+            configureCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle28;
             configureCartridgesDataGridView.Location = new Point(8, 29);
             configureCartridgesDataGridView.Name = "configureCartridgesDataGridView";
-            dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = SystemColors.Control;
-            dataGridViewCellStyle23.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle23.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle23.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = DataGridViewTriState.True;
-            configureCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle29.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle29.BackColor = SystemColors.Control;
+            dataGridViewCellStyle29.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle29.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle29.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle29.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle29.WrapMode = DataGridViewTriState.True;
+            configureCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
             configureCartridgesDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle24.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            configureCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle30.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            configureCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
             configureCartridgesDataGridView.RowTemplate.Height = 25;
             configureCartridgesDataGridView.Size = new Size(1100, 50);
             configureCartridgesDataGridView.TabIndex = 1;
@@ -2503,19 +2499,6 @@
             resetButton.TabIndex = 7;
             resetButton.Text = "Reset";
             resetButton.UseVisualStyleBackColor = false;
-            // 
-            // imagingBrightFieldButton
-            // 
-            imagingBrightFieldButton.BackColor = SystemColors.Highlight;
-            imagingBrightFieldButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingBrightFieldButton.ForeColor = Color.White;
-            imagingBrightFieldButton.Location = new Point(8, 398);
-            imagingBrightFieldButton.Name = "imagingBrightFieldButton";
-            imagingBrightFieldButton.Size = new Size(104, 36);
-            imagingBrightFieldButton.TabIndex = 18;
-            imagingBrightFieldButton.Text = "Bright Field";
-            imagingBrightFieldButton.UseVisualStyleBackColor = false;
-            imagingBrightFieldButton.Click += imagingBrightFieldButton_Click;
             // 
             // independentReaderForm
             // 

@@ -15,6 +15,20 @@
 			<RotationalOffset>0</RotationalOffset>
 			<Units>μS</Units>
 		</Configuration>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>None</Elastomer>
+			<Bergquist>None</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
+			<X0>718500</X0>
+			<Y0>11758</Y0>
+			<Z0>308000</Z0>
+			<FOVdX>72500</FOVdX>
+			<dY>23000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
 	</A>
 	<B>
 		<Configuration>
@@ -28,6 +42,20 @@
 			<Z0>325000</Z0>
 			<FOVdX>23000</FOVdX>
 			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>None</Elastomer>
+			<Bergquist>None</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
+			<X0>718500</X0>
+			<Y0>11758</Y0>
+			<Z0>308000</Z0>
+			<FOVdX>72500</FOVdX>
+			<dY>23000</dY>
 			<RotationalOffset>0</RotationalOffset>
 			<Units>μS</Units>
 		</Configuration>
@@ -47,6 +75,20 @@
 			<RotationalOffset>0</RotationalOffset>
 			<Units>μS</Units>
 		</Configuration>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>None</Elastomer>
+			<Bergquist>None</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
+			<X0>718500</X0>
+			<Y0>11758</Y0>
+			<Z0>308000</Z0>
+			<FOVdX>72500</FOVdX>
+			<dY>23000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
 	</C>
 	<D>
 		<Configuration>
@@ -60,6 +102,20 @@
 			<Z0>325000</Z0>
 			<FOVdX>23000</FOVdX>
 			<dY>37000</dY>
+			<RotationalOffset>0</RotationalOffset>
+			<Units>μS</Units>
+		</Configuration>
+		<Configuration>
+			<Cartridge>M2M</Cartridge>
+			<Elastomer>None</Elastomer>
+			<Bergquist>None</Bergquist>
+			<GlassOffset>12.3</GlassOffset>
+			<GlassOffsetUnits>mm</GlassOffsetUnits>
+			<X0>718500</X0>
+			<Y0>11758</Y0>
+			<Z0>308000</Z0>
+			<FOVdX>72500</FOVdX>
+			<dY>23000</dY>
 			<RotationalOffset>0</RotationalOffset>
 			<Units>μS</Units>
 		</Configuration>
