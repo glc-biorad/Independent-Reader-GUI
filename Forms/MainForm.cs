@@ -27,6 +27,7 @@ namespace Independent_Reader_GUI
         private TimerManager mainFormFastTimerManager;
         private TimerManager mainFormSlowTimerManager;
         private TimerManager thermocyclingStatusTimerManager;
+        private PictureBoxManager pictureBoxManager;
         private string defaultProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
@@ -120,6 +121,7 @@ namespace Independent_Reader_GUI
 
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
+            pictureBoxManager = new PictureBoxManager(configuration);
             cartridgeOptions = new CartridgeOptions(configuration);
             elastomerOptions = new ElastomerOptions(configuration);
             bergquistOptions = new BergquistOptions(configuration);
@@ -851,7 +853,7 @@ namespace Independent_Reader_GUI
                     try
                     {
                         int intensity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(ledName, "Intensity (%)", controlLEDsDataGridView));
-                        LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Parameter = intensity, LED = led };
+                        LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
                         ledManager.EnqueueCommand(ledOnCommand);
                     }
                     catch (LEDNotConnectedException ex)
@@ -1499,7 +1501,8 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private async void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
-            await cameraManager.CaptureImageAsync();
+            // Save the current image in the Imaging Picture Box to a file
+            pictureBoxManager.SaveImage(imagingPictureBox);
         }
 
         /// <summary>
@@ -2304,6 +2307,18 @@ namespace Independent_Reader_GUI
         private async void imagingTabPage_Leave(object sender, EventArgs e)
         {
             await cameraManager.StopStreamAsync();
+        }
+
+        private void imagingBrightFieldButton_Click(object sender, EventArgs e)
+        {
+            // Set the position of the filter wheel to the FAM Filter position
+            MotorCommand moveFilterWheelCommand = new MotorCommand { Type = MotorCommand.CommandType.MoveAsync,
+                Motor = filterWheelMotor, PositionParameter = configuration.FAMFilterWheelPosition, SpeedParameter = configuration.FilterWheelMotorDefaultSpeed };
+            motorManager.EnqueuePriorityCommand(moveFilterWheelCommand);
+            // TODO: Turn off the other LEDs
+            // Turn on the HEX LED
+            LEDCommand turnOnLEDCommand = new LEDCommand { Type = LEDCommand.CommandType.On, Intensity = configuration.HEXIntensity, LED = HEX };
+            ledManager.EnqueueCommand(turnOnLEDCommand);
         }
     }
 }

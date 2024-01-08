@@ -20,7 +20,7 @@ namespace Independent_Reader_GUI.Models
         }
 
         public CommandType Type { get; set; }
-        public object Parameter { get; set; }
+        public int Intensity { get; set; }
         public LED LED { get; set; }
     }
 }

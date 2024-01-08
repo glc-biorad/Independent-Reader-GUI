@@ -282,6 +282,7 @@
 	</acd-biorad>
 	<InstrumentName>Independent Reader</InstrumentName>
 	<InstrumentID>1</InstrumentID>
+	<DefaultLocalImageDataPath>&BASEPATH;Independent-Reader-GUI\ReaderImages</DefaultLocalImageDataPath>
 	<ThermocyclingProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
 	<BergquistDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
 	<CartridgeDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>

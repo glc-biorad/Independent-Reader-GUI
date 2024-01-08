@@ -155,6 +155,7 @@ namespace Independent_Reader_GUI.Models
         public string ScanningDataPath;
         public string ReportLogoDataPath;
         public string DefaultThermocyclingProtocolName;
+        public string DefaultLocalImageDataPath;
 
         public Configuration()
         {
@@ -289,6 +290,7 @@ namespace Independent_Reader_GUI.Models
             EstimateSampleCaptureTimeSeconds = int.Parse(rootNode.Element("EstimateSampleCaptureTimeSeconds").Value);
             DefaultThermocyclingProtocolName = rootNode.Element("DefaultThermocyclingProtocolName").Value;
             TECWaitTimeoutInSeconds = int.Parse(rootNode.Element("TECWaitTimeoutInSeconds").Value);
+            DefaultLocalImageDataPath = rootNode.Element("DefaultLocalImageDataPath").Value;
         }
     }
 }

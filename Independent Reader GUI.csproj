@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="Libraries\" />
+    <Folder Include="ReaderImages\" />
   </ItemGroup>
 
   <ItemGroup>
