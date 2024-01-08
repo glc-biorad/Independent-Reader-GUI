@@ -96,6 +96,9 @@ namespace Independent_Reader_GUI.Services
                                 case MotorCommand.CommandType.MoveAsync:
                                     await command.Motor.MoveAsync(command.PositionParameter, command.SpeedParameter);
                                     break;
+                                case MotorCommand.CommandType.MoveRelativeAsync:
+                                    await command.Motor.MoveRelativeAsync(command.DistanceParameter, command.SpeedParameter);
+                                    break;
                                 case MotorCommand.CommandType.HomeAsync:
                                     await command.Motor.HomeAsync();
                                     break;
@@ -132,6 +135,9 @@ namespace Independent_Reader_GUI.Services
                             {
                                 case MotorCommand.CommandType.MoveAsync:
                                     await command.Motor.MoveAsync(command.PositionParameter, command.SpeedParameter);
+                                    break;
+                                case MotorCommand.CommandType.MoveRelativeAsync:
+                                    await command.Motor.MoveRelativeAsync(command.DistanceParameter, command.SpeedParameter);
                                     break;
                                 case MotorCommand.CommandType.HomeAsync:
                                     await command.Motor.HomeAsync();

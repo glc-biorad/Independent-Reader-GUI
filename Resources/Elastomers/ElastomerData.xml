@@ -24,4 +24,16 @@
     <Mold>3DPLV1.0</Mold>
     <PreparedBy>FF</PreparedBy>
   </Elastomer>
+  <Elastomer>
+	<Name>None</Name>
+	<ThermalCoefficient>0.0</ThermalCoefficient>
+	<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+	<ShoreHardness>0</ShoreHardness>
+	<Thickness>0.0</Thickness>
+	<ThicknessUnits>mm</ThicknessUnits>
+	<Color>NA</Color>
+	<Film>No</Film>
+	<Mold>NA</Mold>
+	<PreparedBy>NA</PreparedBy>
+  </Elastomer>	
 </Elastomers>

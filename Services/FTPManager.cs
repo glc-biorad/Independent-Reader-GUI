@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Renci.SshNet;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,10 +11,21 @@ namespace Independent_Reader_GUI.Services
 {
     internal class FTPManager
     {
+        private string host;
+        private string username;
+        private string password;
+
+        public FTPManager(string host, string username, string password)
+        {
+            this.host = host;
+            this.username = username;
+            this.password = password;
+        }
+
         public async Task<int> UploadFile(string localFilePath, string ftpURL)
         {
-            string userName = "u112958";
-            string password = "biorad2023";
+            string userName = "moldx";
+            string password = "cdg2023";
 
             // Setup the FTP Web Request for this FTP
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ftpURL);
@@ -49,6 +61,32 @@ namespace Independent_Reader_GUI.Services
         public async Task<int> DownloadFile(string ftpURL, string localFilePath)
         {
             return 0;
+        }
+
+        public async Task<int> UploadFileAsync(string localFilePath, string remotePath)
+        {
+            // Setup the Secure File Transfer Protocol Client
+            using (SftpClient sftp = new SftpClient(host, username, password))
+            {
+                try
+                {
+                    sftp.Connect();
+                    using (var fileStream = File.OpenRead(localFilePath))
+                    {
+                        sftp.UploadFile(fileStream, remotePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Unable to upload {localFilePath} to {remotePath} due to {ex.Message}");
+                    return -1;
+                }
+                finally
+                {
+                    sftp.Disconnect();
+                }
+            }
+                return 0;
         }
     }
 }

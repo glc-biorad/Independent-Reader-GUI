@@ -29,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.2.5" />
     <PackageReference Include="OxyPlot.WindowsForms" Version="2.1.2" />
+    <PackageReference Include="SSH.NET" Version="2023.0.1" />
   </ItemGroup>
 
   <ItemGroup>

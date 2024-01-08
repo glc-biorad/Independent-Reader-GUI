@@ -3,7 +3,9 @@ using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Tsp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -60,8 +62,11 @@ namespace Independent_Reader_GUI.Services
             }
             catch (HttpRequestException ex)
             {
+                Debug.WriteLine($"Error getting data to {endpoint} due to {ex.Message}");
                 throw new ApplicationException($"Error getting data from {endpoint}", ex);
+                //await GetAsync<TResponse>(endpoint);
             }
+            return default(TResponse);
         }
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest content)
@@ -77,8 +82,9 @@ namespace Independent_Reader_GUI.Services
             }
             catch (HttpRequestException ex)
             {
+                Debug.WriteLine($"Error positng data to {endpoint} due to {ex.Message}");
                 throw new ApplicationException($"Error positng data to {endpoint}", ex);
-                //MessageBox.Show("Could not post request to the API", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //await PostAsync<TRequest, TResponse>(endpoint, content);
             }
         }
 

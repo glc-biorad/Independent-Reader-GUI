@@ -680,6 +680,10 @@ namespace Independent_Reader_GUI
 
         private void AddImagingScanParametersDefaultData()
         {
+            // Add the Default Dx, Dy, and Dz values
+            imagingDxTextBox.Text = configuration.DefaultDx.ToString();
+            imagingDyTextBox.Text = configuration.DefaultDy.ToString();
+            imagingDzTextBox.Text = configuration.DefaultDz.ToString();
             ScanParameterData scanParameterData = new ScanParameterData();
             imagingScanParametersDataGridView.Rows.Add("Heater");
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
@@ -1502,7 +1506,7 @@ namespace Independent_Reader_GUI
         private async void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
             // Save the current image in the Imaging Picture Box to a file
-            pictureBoxManager.SaveImage(imagingPictureBox);
+            await pictureBoxManager.SaveImage(imagingPictureBox);
         }
 
         /// <summary>
@@ -2312,13 +2316,108 @@ namespace Independent_Reader_GUI
         private void imagingBrightFieldButton_Click(object sender, EventArgs e)
         {
             // Set the position of the filter wheel to the FAM Filter position
-            MotorCommand moveFilterWheelCommand = new MotorCommand { Type = MotorCommand.CommandType.MoveAsync,
-                Motor = filterWheelMotor, PositionParameter = configuration.FAMFilterWheelPosition, SpeedParameter = configuration.FilterWheelMotorDefaultSpeed };
+            MotorCommand moveFilterWheelCommand = new MotorCommand
+            {
+                Type = MotorCommand.CommandType.MoveAsync,
+                Motor = filterWheelMotor,
+                PositionParameter = configuration.FAMFilterWheelPosition,
+                SpeedParameter = configuration.FilterWheelMotorDefaultSpeed
+            };
             motorManager.EnqueuePriorityCommand(moveFilterWheelCommand);
             // TODO: Turn off the other LEDs
             // Turn on the HEX LED
             LEDCommand turnOnLEDCommand = new LEDCommand { Type = LEDCommand.CommandType.On, Intensity = configuration.HEXIntensity, LED = HEX };
             ledManager.EnqueueCommand(turnOnLEDCommand);
+        }
+
+        private void tabControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 
+            // Imaging Tab
+            //
+            if (this.tabControl.SelectedTab == imagingTabPage)
+            {
+                if (e.KeyCode == Keys.Up)
+                {
+                    if (int.TryParse(imagingDyTextBox.Text, out int value))
+                    {
+                        MotorCommand upCommand = new MotorCommand { Type = MotorCommand.CommandType.MoveRelativeAsync, 
+                            Motor = yMotor,
+                            DistanceParameter = -value, SpeedParameter = configuration.xMotorDefaultSpeed };
+                        motorManager.EnqueuePriorityCommand(upCommand);
+                    }
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    if (int.TryParse(imagingDyTextBox.Text, out int value))
+                    {
+                        MotorCommand downCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
+                            Motor = yMotor,
+                            DistanceParameter = value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
+                        motorManager.EnqueuePriorityCommand(downCommand);
+                    }
+                }
+                else if (e.KeyCode == Keys.Left)
+                {
+                    if (int.TryParse(imagingDxTextBox.Text, out int value))
+                    {
+                        MotorCommand leftCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
+                            Motor = xMotor,
+                            DistanceParameter = -value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
+                        motorManager.EnqueuePriorityCommand(leftCommand);
+                    }
+                }
+                else if (e.KeyCode == Keys.Right)
+                {
+                    if (int.TryParse(imagingDxTextBox.Text, out int value))
+                    {
+                        MotorCommand rightCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
+                            Motor = xMotor,
+                            DistanceParameter = value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
+                        motorManager.EnqueuePriorityCommand(rightCommand);
+                    }
+                }
+                else if (e.KeyCode == Keys.PageDown)
+                {
+                    if (int.TryParse(imagingDzTextBox.Text, out int value))
+                    {
+                        MotorCommand pageDownCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
+                            Motor = zMotor,
+                            DistanceParameter = value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
+                        motorManager.EnqueuePriorityCommand(pageDownCommand);
+                    }
+                }
+                else if (e.KeyCode == Keys.PageUp)
+                {
+                    if (int.TryParse(imagingDzTextBox.Text, out int value))
+                    {
+                        MotorCommand pageUpCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
+                            Motor = zMotor,
+                            DistanceParameter = -value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
+                        motorManager.EnqueuePriorityCommand(pageUpCommand);
+                    }
+                }
+            }
         }
     }
 }
