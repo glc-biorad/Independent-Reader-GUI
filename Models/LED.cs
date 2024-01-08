@@ -123,7 +123,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/led/version/");
-                await Task.Delay(50);
+                await Task.Delay(200);
             }
             catch (Exception ex)
             {

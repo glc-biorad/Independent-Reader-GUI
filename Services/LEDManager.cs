@@ -97,7 +97,7 @@ namespace Independent_Reader_GUI.Services
                             await command.LED.GetVersionAsync();
                             break;
                         case LEDCommand.CommandType.On:
-                            await command.LED.On(int.Parse(command.Parameter.ToString()));
+                            await command.LED.On(command.Intensity);
                             break;
                         case LEDCommand.CommandType.Off:
                             await command.LED.Off();
