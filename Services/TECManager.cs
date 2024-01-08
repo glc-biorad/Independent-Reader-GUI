@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using OxyPlot;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -92,123 +93,141 @@ namespace Independent_Reader_GUI.Services
                 {
                     if (commandQueue.TryDequeue(out TECCommand command))
                     {
-                        switch (command.Type)
+                        try
                         {
-                            case TECCommand.CommandType.CheckConnectionAsync:
-                                await command.TEC.CheckConnectionAsync();
-                                break;
-                            case TECCommand.CommandType.GetObjectTemperature:
-                                await command.TEC.GetObjectTemperature();
-                                break;
-                            case TECCommand.CommandType.SetObjectTemperature:
-                                await command.TEC.SetObjectTemperature(double.Parse(command.Parameter.ToString()));
-                                break;
-                            case TECCommand.CommandType.GetSinkTemperature:
-                                await command.TEC.GetSinkTemperature();
-                                break;
-                            case TECCommand.CommandType.GetTargetObjectTemperature:
-                                await command.TEC.GetTargetObjectTemperature();
-                                break;
-                            case TECCommand.CommandType.GetActualOutputCurrent:
-                                await command.TEC.GetActualOutputCurrent();
-                                break;
-                            case TECCommand.CommandType.GetActualOutputVoltage:
-                                await command.TEC.GetActualOutputVoltage();
-                                break;
-                            case TECCommand.CommandType.GetRelativeCoolingPower:
-                                await command.TEC.GetRelativeCoolingPower();
-                                break;
-                            case TECCommand.CommandType.GetActualFanSpeed:
-                                await command.TEC.GetActualFanSpeed();
-                                break;
-                            case TECCommand.CommandType.GetCurrentErrorThreshold:
-                                await command.TEC.GetCurrentErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetVoltageErrorThreshold:
-                                await command.TEC.GetVoltageErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetObjectUpperErrorThreshold:
-                                await command.TEC.GetObjectUpperErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetObjectLowerErrorThreshold:
-                                await command.TEC.GetObjectLowerErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetSinkUpperErrorThreshold:
-                                await command.TEC.GetSinkUpperErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetSinkLowerErrorThreshold:
-                                await command.TEC.GetSinkLowerErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetTemperatureIsStable:
-                                await command.TEC.GetTemperatureIsStable();
-                                break;
-                            case TECCommand.CommandType.GetTemperatureControl:
-                                await command.TEC.GetTemperatureControl();
-                                break;
+                            switch (command.Type)
+                            {
+                                case TECCommand.CommandType.CheckConnectionAsync:
+                                    await command.TEC.CheckConnectionAsync();
+                                    break;
+                                case TECCommand.CommandType.GetObjectTemperature:
+                                    await command.TEC.GetObjectTemperature();
+                                    break;
+                                case TECCommand.CommandType.SetObjectTemperature:
+                                    await command.TEC.SetObjectTemperature(double.Parse(command.Parameter.ToString()));
+                                    break;
+                                case TECCommand.CommandType.GetSinkTemperature:
+                                    await command.TEC.GetSinkTemperature();
+                                    break;
+                                case TECCommand.CommandType.GetTargetObjectTemperature:
+                                    await command.TEC.GetTargetObjectTemperature();
+                                    break;
+                                case TECCommand.CommandType.GetActualOutputCurrent:
+                                    await command.TEC.GetActualOutputCurrent();
+                                    break;
+                                case TECCommand.CommandType.GetActualOutputVoltage:
+                                    await command.TEC.GetActualOutputVoltage();
+                                    break;
+                                case TECCommand.CommandType.GetRelativeCoolingPower:
+                                    await command.TEC.GetRelativeCoolingPower();
+                                    break;
+                                case TECCommand.CommandType.GetActualFanSpeed:
+                                    await command.TEC.GetActualFanSpeed();
+                                    break;
+                                case TECCommand.CommandType.GetCurrentErrorThreshold:
+                                    await command.TEC.GetCurrentErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetVoltageErrorThreshold:
+                                    await command.TEC.GetVoltageErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetObjectUpperErrorThreshold:
+                                    await command.TEC.GetObjectUpperErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetObjectLowerErrorThreshold:
+                                    await command.TEC.GetObjectLowerErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetSinkUpperErrorThreshold:
+                                    await command.TEC.GetSinkUpperErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetSinkLowerErrorThreshold:
+                                    await command.TEC.GetSinkLowerErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetTemperatureIsStable:
+                                    await command.TEC.GetTemperatureIsStable();
+                                    break;
+                                case TECCommand.CommandType.GetTemperatureControl:
+                                    await command.TEC.GetTemperatureControl();
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Unable to handle {command.TEC.Name} command due to {ex.Message}");
+                            // Note: Might need to requeue this command as a priority command
+                            EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(50);
+                    await Task.Delay(200);
                 }
                 else
                 {
                     if (priorityCommandQueue.TryDequeue(out TECCommand command))
                     {
-                        switch (command.Type)
+                        try
                         {
-                            case TECCommand.CommandType.CheckConnectionAsync:
-                                await command.TEC.CheckConnectionAsync();
-                                break;
-                            case TECCommand.CommandType.GetObjectTemperature:
-                                await command.TEC.GetObjectTemperature();
-                                break;
-                            case TECCommand.CommandType.SetObjectTemperature:
-                                await command.TEC.SetObjectTemperature(double.Parse(command.Parameter.ToString()));
-                                break;
-                            case TECCommand.CommandType.GetSinkTemperature:
-                                await command.TEC.GetSinkTemperature();
-                                break;
-                            case TECCommand.CommandType.GetTargetObjectTemperature:
-                                await command.TEC.GetTargetObjectTemperature();
-                                break;
-                            case TECCommand.CommandType.GetActualOutputCurrent:
-                                await command.TEC.GetActualOutputCurrent();
-                                break;
-                            case TECCommand.CommandType.GetActualOutputVoltage:
-                                await command.TEC.GetActualOutputVoltage();
-                                break;
-                            case TECCommand.CommandType.GetRelativeCoolingPower:
-                                await command.TEC.GetRelativeCoolingPower();
-                                break;
-                            case TECCommand.CommandType.GetActualFanSpeed:
-                                await command.TEC.GetActualFanSpeed();
-                                break;
-                            case TECCommand.CommandType.GetCurrentErrorThreshold:
-                                await command.TEC.GetCurrentErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetVoltageErrorThreshold:
-                                await command.TEC.GetVoltageErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetObjectUpperErrorThreshold:
-                                await command.TEC.GetObjectUpperErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetObjectLowerErrorThreshold:
-                                await command.TEC.GetObjectLowerErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetSinkUpperErrorThreshold:
-                                await command.TEC.GetSinkUpperErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetSinkLowerErrorThreshold:
-                                await command.TEC.GetSinkLowerErrorThreshold();
-                                break;
-                            case TECCommand.CommandType.GetTemperatureIsStable:
-                                await command.TEC.GetTemperatureIsStable();
-                                break;
-                            case TECCommand.CommandType.GetTemperatureControl:
-                                await command.TEC.GetTemperatureControl();
-                                break;
+                            switch (command.Type)
+                            {
+                                case TECCommand.CommandType.CheckConnectionAsync:
+                                    await command.TEC.CheckConnectionAsync();
+                                    break;
+                                case TECCommand.CommandType.GetObjectTemperature:
+                                    await command.TEC.GetObjectTemperature();
+                                    break;
+                                case TECCommand.CommandType.SetObjectTemperature:
+                                    await command.TEC.SetObjectTemperature(double.Parse(command.Parameter.ToString()));
+                                    break;
+                                case TECCommand.CommandType.GetSinkTemperature:
+                                    await command.TEC.GetSinkTemperature();
+                                    break;
+                                case TECCommand.CommandType.GetTargetObjectTemperature:
+                                    await command.TEC.GetTargetObjectTemperature();
+                                    break;
+                                case TECCommand.CommandType.GetActualOutputCurrent:
+                                    await command.TEC.GetActualOutputCurrent();
+                                    break;
+                                case TECCommand.CommandType.GetActualOutputVoltage:
+                                    await command.TEC.GetActualOutputVoltage();
+                                    break;
+                                case TECCommand.CommandType.GetRelativeCoolingPower:
+                                    await command.TEC.GetRelativeCoolingPower();
+                                    break;
+                                case TECCommand.CommandType.GetActualFanSpeed:
+                                    await command.TEC.GetActualFanSpeed();
+                                    break;
+                                case TECCommand.CommandType.GetCurrentErrorThreshold:
+                                    await command.TEC.GetCurrentErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetVoltageErrorThreshold:
+                                    await command.TEC.GetVoltageErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetObjectUpperErrorThreshold:
+                                    await command.TEC.GetObjectUpperErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetObjectLowerErrorThreshold:
+                                    await command.TEC.GetObjectLowerErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetSinkUpperErrorThreshold:
+                                    await command.TEC.GetSinkUpperErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetSinkLowerErrorThreshold:
+                                    await command.TEC.GetSinkLowerErrorThreshold();
+                                    break;
+                                case TECCommand.CommandType.GetTemperatureIsStable:
+                                    await command.TEC.GetTemperatureIsStable();
+                                    break;
+                                case TECCommand.CommandType.GetTemperatureControl:
+                                    await command.TEC.GetTemperatureControl();
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Unable to handle {command.TEC.Name} priority command due to {ex.Message}");
+                            // Note: Might need to requeue this command as a priority command
+                            EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(50);
+                    await Task.Delay(200);
                 }
             }
         }
@@ -518,6 +537,127 @@ namespace Independent_Reader_GUI.Services
                     // TODO: Set the tec*ProtocolRunning bool variable to false
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle the Fast Tick Events (attributes to be checked and updated each Fast Tick)
+        /// </summary>
+        /// <param name="dataGridViewManager"></param>
+        /// <param name="homeTECsDataGridView"></param>
+        /// <param name="controlTECsDataGridView"></param>
+        public void HandleFastTickEvent(DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView)
+        {
+            // TECA
+            if (TECA.Connected)
+            {
+                HandleTECFastTickEvent(TECA, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            }
+            // TECB
+            if (TECB.Connected)
+            {
+                HandleTECFastTickEvent(TECB, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            }
+            // TECC
+            if (TECC.Connected)
+            {
+                HandleTECFastTickEvent(TECC, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            }
+            // TECD
+            if (TECD.Connected)
+            {
+                HandleTECFastTickEvent(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle a single TEC's Fast Tick Event
+        /// </summary>
+        /// <param name="tec"></param>
+        /// <param name="dataGridViewManager"></param>
+        /// <param name="homeTECsDataGridView"></param>
+        /// <param name="controlTECsDataGridView"></param>
+        private void HandleTECFastTickEvent(TEC tec, DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView)
+        {
+            //
+            // Setup and Send TEC Commands
+            //
+            // Setup the CheckConnection command and add it to the TECsManager Queue
+            TECCommand checkConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tec };
+            EnqueueCommand(checkConnectionCommand);
+            // Setup the GetObjectTemperature command and add it to the TECsManager Queue
+            TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC = tec };
+            EnqueueCommand(getObjectTemperatureCommand);
+            // Setup the GetSinkTemperature command and add it to the TECsManager Queue
+            TECCommand getSinkTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkTemperature, TEC = tec };
+            EnqueueCommand(getSinkTemperatureCommand);
+            // Setup the GetTargetObjectTemperature command and add it to the TECsManager Queue
+            TECCommand getTargetObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetTargetObjectTemperature, TEC = tec };
+            EnqueueCommand(getTargetObjectTemperatureCommand);
+            // Setup the GetActualFanSpeed command and add it to the TECsManager Queue
+            TECCommand getActualFanSpeedCommand = new TECCommand { Type = TECCommand.CommandType.GetActualFanSpeed, TEC = tec };
+            EnqueueCommand(getActualFanSpeedCommand);
+            // Setup the GetActualOutputCurrent command and add it to the TECsManager Queue
+            TECCommand getActualOutputCurrentCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputCurrent, TEC = tec };
+            EnqueueCommand(getActualOutputCurrentCommand);
+            // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
+            TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tec };
+            EnqueueCommand(getActualOutputVoltageCommand);
+            //
+            // Set the DataGridValues for the TEC
+            //
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            if (double.TryParse(tec.ActualObjectTemperature, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
+                    "Actual Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Actual Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                    "Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+            }
+            if (double.TryParse(tec.ActualSinkTemperature, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+            }
+            if (double.TryParse(tec.TargetObjectTemperature, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Target Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+            }
+            if (double.TryParse(tec.ActualFanSpeed, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+            }
+            if (double.TryParse(tec.ActualOutputCurrent, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)));
+            }
+            if (double.TryParse(tec.ActualOutputVoltage, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
+            }            
         }
     }
 }
