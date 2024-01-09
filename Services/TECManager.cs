@@ -34,6 +34,7 @@ namespace Independent_Reader_GUI.Services
         private ConcurrentQueue<TECCommand> commandQueue = new ConcurrentQueue<TECCommand>();
         private ConcurrentQueue<TECCommand> priorityCommandQueue = new ConcurrentQueue<TECCommand>();
         private CancellationTokenSource commandQueueCancellationTokenSource = new CancellationTokenSource();
+        private int msDelay = 5;
 
         public TECManager(TEC tecA, TEC tecB, TEC tecC, TEC tecD)
         {
@@ -157,7 +158,7 @@ namespace Independent_Reader_GUI.Services
                             EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(msDelay);
                 }
                 else
                 {
@@ -227,7 +228,7 @@ namespace Independent_Reader_GUI.Services
                             EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(msDelay);
                 }
             }
         }

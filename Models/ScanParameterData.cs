@@ -18,6 +18,7 @@ namespace Independent_Reader_GUI.Models
         public int? Y0 = null;
         public int? Z0 = null;
         public int? FOVdX = null;
+        public int? SampledX = null;
         public int? dY = null;
         public int? RotationalOffset = null;
 
