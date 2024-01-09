@@ -18,6 +18,7 @@ namespace Independent_Reader_GUI.Services
         ConcurrentQueue<MotorCommand> commandQueue = new ConcurrentQueue<MotorCommand>();
         ConcurrentQueue<MotorCommand> priorityCommandQueue = new ConcurrentQueue<MotorCommand>();
         private CancellationTokenSource commandQueueCancellationTokenSource = new CancellationTokenSource();
+        private int msDelay = 5;
 
         public MotorsManager(Motor x, Motor y, Motor z, Motor filterWheel, Motor trayAB, Motor trayCD, Motor clampA, Motor clampB, Motor clampC, Motor clampD) 
         {
@@ -33,13 +34,22 @@ namespace Independent_Reader_GUI.Services
             motors.Add(clampD);
         }
 
+        public int GetCommandsInPriorityQueue()
+        {
+            return priorityCommandQueue.Count;
+        }
+
+        public int GetCommadnsInQueue()
+        {
+            return commandQueue.Count;
+        }
+
         public async Task InitializeMotorParameters()
         {
             foreach (Motor motor in motors)
             {
                 MotorCommand checkConnectionCommand = new MotorCommand() { Type = MotorCommand.CommandType.CheckConnectionAsync, Motor = motor };
                 EnqueuePriorityCommand(checkConnectionCommand);
-                Debug.WriteLine($"Motor Connection: {motor.Connected}");
             }
         }
 
@@ -123,7 +133,7 @@ namespace Independent_Reader_GUI.Services
                             EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(msDelay);
                 }
                 else
                 {
@@ -163,7 +173,7 @@ namespace Independent_Reader_GUI.Services
                             EnqueuePriorityCommand(command);
                         }
                     }
-                    await Task.Delay(200);
+                    await Task.Delay(msDelay);
                 }
             }
         }

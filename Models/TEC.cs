@@ -33,6 +33,7 @@ namespace Independent_Reader_GUI.Models
         private string sinkLowerErrorThreshold = "?";
         private string temperatureIsStable = "?";
         private int timeout;
+        private int msDelay = 50;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {
@@ -152,7 +153,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 var responseValue = await GetBoardAddressAsync();
-                await Task.Delay(50);
+                await Task.Delay(msDelay);
                 if (responseValue != null && responseValue != 0)
                 {
                     connected = true;
@@ -178,7 +179,7 @@ namespace Independent_Reader_GUI.Models
         {
             // TODO: Replace the endpoint with a private const from the configuration XML data file
             var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/device-address/?heater=Heater%20{name.Last()}");
-            await Task.Delay(50);
+            await Task.Delay(msDelay);
             // TODO: Check the submodule id and the module id
             // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
             #region
@@ -215,7 +216,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/firmware-version/?heater=Heater%20{name.Last()}");
-                await Task.Delay(50);
+                await Task.Delay(msDelay);
             }
             catch (Exception ex)
             {
@@ -277,7 +278,7 @@ namespace Independent_Reader_GUI.Models
                 resp = await apiManager.PostAsync<APITECRequest, APIResponse>(
                     $"http://127.0.0.1:8000/tec/object-temperature/?heater=Heater%20{name.Last()}&setpoint={temperature}",
                     apiTECRequest);
-                await Task.Delay(50);
+                await Task.Delay(msDelay);
             }
             stopwatch.Stop();            
             targetObjectTemperature = temperature.ToString();
@@ -296,7 +297,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-temperature/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
                     error = 0;
                 }
@@ -344,7 +345,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/sink-temperature/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -385,7 +386,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/target-object-temperature/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -426,7 +427,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/actual-output-current/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -467,7 +468,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/actual-output-voltage/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -508,7 +509,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/relative-cooling-power/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -549,7 +550,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/actual-fan-speed/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -590,7 +591,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/current-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
                     Debug.WriteLine(data.Response?.Replace("\r", ""));
                 }
@@ -632,7 +633,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/voltage-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -673,7 +674,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-upper-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -714,7 +715,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/object-lower-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -755,7 +756,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/sink-upper-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -796,7 +797,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/sink-lower-error-threshold/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -837,7 +838,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/temperature-is-stable/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
 
                 }
@@ -878,7 +879,7 @@ namespace Independent_Reader_GUI.Models
                 try
                 {
                     data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/temperature-control/?heater=Heater%20{name.Last()}");
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                     resp = data.Response?.Replace("\r", "");
                 }
                 catch (Exception ex)
@@ -924,7 +925,7 @@ namespace Independent_Reader_GUI.Models
                 await apiManager.PostAsync<APITECRequest, APIResponse>(
                     $"http://127.0.0.1:8000/tec/temperature-control/?heater=Heater%20{name.Last()}&status={status}",
                     apiTECRequest);
-                await Task.Delay(50);
+                await Task.Delay(msDelay);
             }
             stopwatch.Stop();
             temperatureControlled = status;

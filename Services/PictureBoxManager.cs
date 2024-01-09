@@ -22,7 +22,7 @@ namespace Independent_Reader_GUI.Services
             this.configuration = configuration;
         }
 
-        public async Task<int> SaveImage(PictureBox pictureBox)
+        public async Task<int> SaveImageWithSaveFileDialog(PictureBox pictureBox)
         {
             try
             {
@@ -60,6 +60,35 @@ namespace Independent_Reader_GUI.Services
                             }
                             return 0;
                         }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Unable to capture image, it appears to be a null image", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return -1;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to capture image due to {ex.Message}");
+                return -1;
+            }
+        }
+
+        public async Task<int> SaveImage(PictureBox pictureBox, string savePath)
+        {
+            try
+            {
+                if (pictureBox != null)
+                {
+                    // Clone the image 
+                    using (var clonedImage = new Bitmap(pictureBox.Image))
+                    {
+                        // Set the file extension
+                        ImageFormat format = ImageFormat.Tiff;
+                        // Save the image
+                        clonedImage.Save(savePath, format);
+                        return 0;
                     }
                 }
                 else

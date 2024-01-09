@@ -18,6 +18,7 @@ namespace Independent_Reader_GUI.Services
     internal class APIManager
     {
         private HttpClient client;
+        private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
         private bool connected;
 
         public APIManager()
@@ -51,6 +52,7 @@ namespace Independent_Reader_GUI.Services
 
         public async Task<TResponse> GetAsync<TResponse>(string endpoint)
         {
+            await semaphoreSlim.WaitAsync();
             try
             {
                 // Get the response from the client based on the endpoint in the API
@@ -62,15 +64,21 @@ namespace Independent_Reader_GUI.Services
             }
             catch (HttpRequestException ex)
             {
-                Debug.WriteLine($"Error getting data to {endpoint} due to {ex.Message}");
+                Debug.WriteLine($"Error getting data from {endpoint} due to {ex.Message}");
+                //await GetAsync<TResponse>(endpoint);
                 throw new ApplicationException($"Error getting data from {endpoint}", ex);
                 //await GetAsync<TResponse>(endpoint);
+            }
+            finally
+            {
+                semaphoreSlim.Release();
             }
             return default(TResponse);
         }
 
         public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest content)
         {
+            await semaphoreSlim.WaitAsync();
             try
             {
                 string jsonContent = JsonSerializer.Serialize(content);
@@ -84,7 +92,10 @@ namespace Independent_Reader_GUI.Services
             {
                 Debug.WriteLine($"Error positng data to {endpoint} due to {ex.Message}");
                 throw new ApplicationException($"Error positng data to {endpoint}", ex);
-                //await PostAsync<TRequest, TResponse>(endpoint, content);
+            }
+            finally
+            {
+                semaphoreSlim.Release();
             }
         }
 

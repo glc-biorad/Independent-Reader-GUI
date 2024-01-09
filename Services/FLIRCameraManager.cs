@@ -25,7 +25,7 @@ namespace Independent_Reader_GUI.Services
         private PictureBox pictureBox;
         private INodeMap nodeMapTLDevice;
         private INodeMap nodeMap;
-
+        private Bitmap currentImageBitmap; 
         public FLIRCameraManager(PictureBox pictureBox)
         {
             this.pictureBox = pictureBox;
@@ -221,10 +221,14 @@ namespace Independent_Reader_GUI.Services
             return 0;
         }
 
-        public async Task CaptureImageAsync()
+        public async Task CaptureImageAsync(string path)
         {
-            //CaptureImage();
-            //await Task.Delay(100);
+            // Clone the image 
+            using (var currentImage = currentImageBitmap)
+            {
+                // Save the image
+                currentImage.Save(path);
+            }
         }
 
         public async Task<int> StartStreamAsync()
@@ -276,6 +280,7 @@ namespace Independent_Reader_GUI.Services
                                     using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
                                     {
                                         pictureBox.Image = convertedImage.bitmap;
+                                        currentImageBitmap = convertedImage.bitmap;
                                         await Task.Delay(100);
                                     }
                                 }

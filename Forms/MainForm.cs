@@ -22,6 +22,7 @@ namespace Independent_Reader_GUI
         private Configuration configuration = new Configuration();
         private readonly APIManager apiManager = new APIManager();
         private DataGridViewManager dataGridViewManager = new DataGridViewManager();
+        private ScanManager scanManager;
         private TimerManager runExperimentDataTimerManager;
         private TimerManager controlTabTimerManager;
         private TimerManager mainFormFastTimerManager;
@@ -127,6 +128,7 @@ namespace Independent_Reader_GUI
             bergquistOptions = new BergquistOptions(configuration);
             scanningOptions = new ScanningOptions(configuration, consumablesImageScanningDataGridView);
             defaultScanningOption = scanningOptions.GetScanningOptionData("A", configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
+            scanManager = new ScanManager(configuration, motorManager, cameraManager, ledManager);
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -200,6 +202,7 @@ namespace Independent_Reader_GUI
             // Subscribe to value changed events
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
             this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
+            this.imagingScanParametersDataGridView.CellValueChanged += new DataGridViewCellEventHandler(imagingScanParametersDataGridView_CellValueChanged);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -473,6 +476,7 @@ namespace Independent_Reader_GUI
             runImagingSetupDataGridView.Rows.Add("Y0 (\u03BCS)", defaultScanningOption.Y0);
             runImagingSetupDataGridView.Rows.Add("Z0 (\u03BCS)", defaultScanningOption.Z0);
             runImagingSetupDataGridView.Rows.Add("FOV dX (\u03BCS)", defaultScanningOption.FOVdX);
+            runImagingSetupDataGridView.Rows.Add("Sample dX (\u03BCS)", defaultScanningOption.SampledX);
             runImagingSetupDataGridView.Rows.Add("dY (\u03BCS)", defaultScanningOption.dY);
             runImagingSetupDataGridView.Rows.Add("Rotational Offset (\u00B0)", defaultScanningOption.RotationalOffset);
             runImagingSetupDataGridView.Rows.Add("Use Autofocus");
@@ -706,6 +710,7 @@ namespace Independent_Reader_GUI
             imagingScanParametersDataGridView.Rows.Add("y0 (\u03BCS)", defaultScanningOption.Y0);
             imagingScanParametersDataGridView.Rows.Add("z0 (\u03BCS)", defaultScanningOption.Z0);
             imagingScanParametersDataGridView.Rows.Add("FOV dX (\u03BCS)", defaultScanningOption.FOVdX);
+            imagingScanParametersDataGridView.Rows.Add("Sample dX (\u03BCS)", defaultScanningOption.SampledX);
             imagingScanParametersDataGridView.Rows.Add("dY (\u03BCS)", defaultScanningOption.dY);
             imagingScanParametersDataGridView.Rows.Add("Rotational Offset (\u00B0)", defaultScanningOption.RotationalOffset);
         }
@@ -714,14 +719,26 @@ namespace Independent_Reader_GUI
         {
             LEDsData ledsData = new LEDsData();
             imagingLEDsDataGridView.Rows.Add("Use");
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.UseCy5ComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.UseFAMComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.UseHEXComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.UseAttoComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.UseAlexaComboBoxCell;
-            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.UseCy5p5ComboBoxCell;
-            imagingLEDsDataGridView.Rows.Add("Intensity (%)", null, null, null, null, null, null);
-            imagingLEDsDataGridView.Rows.Add("Exposure (ms)", null, null, null, null, null, null);
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1] = ledsData.UseBrightFieldComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[1].Value = "Yes";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2] = ledsData.UseCy5ComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[2].Value = "No";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3] = ledsData.UseFAMComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[3].Value = "No";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4] = ledsData.UseHEXComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[4].Value = "No";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5] = ledsData.UseAttoComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[5].Value = "No";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6] = ledsData.UseAlexaComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6].Value = "No";
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[7] = ledsData.UseCy5p5ComboBoxCell;
+            imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[7].Value = "No";
+            imagingLEDsDataGridView.Rows.Add("Intensity (%)", 
+                configuration.HEXIntensity, // Bright Field
+                configuration.Cy5Intensity, configuration.FAMIntensity, configuration.HEXIntensity, configuration.AttoIntensity, configuration.AlexaIntensity, configuration.Cy5p5Intensity);
+            imagingLEDsDataGridView.Rows.Add("Exposure (ms)",
+                configuration.HEXExposure, // Bright Field
+                configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure, configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
         }
 
         /// <summary>
@@ -878,8 +895,42 @@ namespace Independent_Reader_GUI
             }
         }
 
+        public void imagingScanParametersDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            // Get the Heater, Elastomer, Bergquist, Cartridge, and Glass Offset to determine the Scan Parameters
+            string heaterName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Heater", imagingScanParametersDataGridView);
+            string elastomerName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Elastomer", imagingScanParametersDataGridView);
+            string bergquistName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Bergquist", imagingScanParametersDataGridView);
+            string cartridgeName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Cartridge", imagingScanParametersDataGridView);
+            double glassOffset = double.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Glass Offset (mm)", imagingScanParametersDataGridView));
+            // Get the Scan parameters based on this combination
+            ScanningOption scanParameters = scanningOptions.GetScanningOptionData(heaterName, cartridgeName, glassOffset, elastomerName, bergquistName);
+            // Set the Values in the DataGridView base on the results
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "x0 (\u03BCS)", scanParameters.X0.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "y0 (\u03BCS)", scanParameters.Y0.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "z0 (\u03BCS)", scanParameters.Z0.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "FOV dX (\u03BCS)", scanParameters.FOVdX.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Sample dX (\u03BCS)", scanParameters.SampledX.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "dY (\u03BCS)", scanParameters.dY.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Rotational Offset (\u00B0)", scanParameters.RotationalOffset.ToString());
+            // Set the Sample and Assay name rows but first clear the previous ones if there are any
+            dataGridViewManager.RemoveRowsByNameWhichContains(imagingScanParametersDataGridView, "Name");
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeName);
+            int numberOfSamples = cartridge.NumberofSampleChambers;
+            int numberOfAssays = cartridge.NumberofAssayChambers;
+            for (int i = 0; i < numberOfSamples; i++)
+            {
+                imagingScanParametersDataGridView.Rows.Add($"Sample {i+1} Name", $"Sample {i+1}");
+            }
+            for (int i = 0; i < numberOfAssays; i++)
+            {
+                imagingScanParametersDataGridView.Rows.Add($"Assay {i + 1} Name", $"Assay {i + 1}");
+            }
+        }
+
         private void runExperimentDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            // All cells of interest that will change are in column 1
             if (e.ColumnIndex == 1)
             {
                 var propertySelected = runExperimentDataGridView.Rows[e.RowIndex].Cells[0].Value;
@@ -1490,7 +1541,7 @@ namespace Independent_Reader_GUI
         private async void imagingCaptureImageButton_Click(object sender, EventArgs e)
         {
             // Save the current image in the Imaging Picture Box to a file
-            await pictureBoxManager.SaveImage(imagingPictureBox);
+            await pictureBoxManager.SaveImageWithSaveFileDialog(imagingPictureBox);
         }
 
         /// <summary>
@@ -2429,6 +2480,69 @@ namespace Independent_Reader_GUI
             {
                 consumablesGlassOffsetComboBox.ForeColor = Color.Red;
             }
+        }
+
+        private async void imagingScanButton_Click(object sender, EventArgs e)
+        {
+            // Get the scanning parameters
+            string heaterLetter = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Heater", imagingScanParametersDataGridView);
+            int x0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "x0 (\u03BCS)", imagingScanParametersDataGridView));
+            int y0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "y0 (\u03BCS)", imagingScanParametersDataGridView));
+            int z0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "z0 (\u03BCS)", imagingScanParametersDataGridView));
+            int fovdx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "FOV dX (\u03BCS)", imagingScanParametersDataGridView));
+            int sampledx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Sample dX (\u03BCS)", imagingScanParametersDataGridView));
+            int dy = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "dY (\u03BCS)", imagingScanParametersDataGridView));
+            int rotationalOffset = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Rotational Offset (\u00B0)", imagingScanParametersDataGridView));
+            // Determine the Channels to image in with their associated parameters (intensity, exposure)
+            bool imageBrightField = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Intensity (%)", imagingLEDsDataGridView));
+            int exposureBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageCy5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityCy5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureCy5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageFAM = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityFAM = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureFAM = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageHEX = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityHEX = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureHEX = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageAtto = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityAtto = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureAtto = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageAlexa = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityAlexa = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureAlexa = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            bool imageCy5p5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
+            int intensityCy5p5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Intensity (%)", imagingLEDsDataGridView));
+            int exposureCy5p5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            // Determine which parts of the chip to image
+            Samples sampleNames = new Samples();
+            Assays assayNames = new Assays();
+            List<DataGridViewRow> sampleAndAssayRows = dataGridViewManager.GetRowsByNameWhichContain(imagingScanParametersDataGridView, "Name");
+            foreach (DataGridViewRow row in sampleAndAssayRows)
+            {
+                if (row.Cells[0].Value.ToString().Contains("Sample"))
+                {
+                    sampleNames.Add(row.Cells[1].Value.ToString());
+                }
+                else if (row.Cells[0].Value.ToString().Contains("Assay"))
+                {
+                    assayNames.Add(row.Cells[1].Value.ToString());
+                }
+            }
+            // Setup the Scan Parameters to use
+            ScanParameters scanParameters = new ScanParameters(heaterLetter,
+                x0, y0, z0, fovdx, sampledx, dy, rotationalOffset,
+                imageBrightField, intensityBrightField, exposureBrightField, 
+                imageCy5, intensityCy5, exposureCy5,
+                imageFAM, intensityFAM, exposureFAM,
+                imageHEX, intensityHEX, exposureHEX,
+                imageAtto, intensityAtto, exposureAtto,
+                imageAlexa, intensityAlexa, exposureAlexa,
+                imageCy5p5, intensityCy5p5, exposureCy5p5,
+                sampleNames, assayNames);
+            // Scan
+            await scanManager.Scan(scanParameters);
         }
     }
 }

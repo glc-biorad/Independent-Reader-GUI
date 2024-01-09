@@ -200,6 +200,7 @@ namespace Independent_Reader_GUI.Resources
                     node.Element("Y0").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "y0 (\u03BCS)", rowIndex);
                     node.Element("Z0").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "z0 (\u03BCS)", rowIndex);
                     node.Element("FOVdX").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "FOV dX (\u03BCS)", rowIndex);
+                    node.Element("SampledX").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "Sample dX (\u03BCS)", rowIndex);
                     node.Element("dY").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "dY (\u03BCS)", rowIndex);
                     node.Element("RotationalOffset").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "Rotational Offset (\u00B0)", rowIndex);
                     rowIndex++;
@@ -240,6 +241,9 @@ namespace Independent_Reader_GUI.Resources
                     int fovdx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "FOV dX (\u03BCS)", rowIndex));
                     XElement fovdxNode = new XElement("FOVdX", fovdx);
                     configurationNode.Add(fovdxNode);
+                    int sampledx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "Sample dX (\u03BCS)", rowIndex));
+                    XElement sampledxNode = new XElement("SampledX", sampledx);
+                    configurationNode.Add(sampledxNode);
                     int dy = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "dY (\u03BCS)", rowIndex));
                     XElement dYNode = new XElement("dY", dy);
                     configurationNode.Add(dYNode);
@@ -311,6 +315,7 @@ namespace Independent_Reader_GUI.Resources
                             scanningOption.Y0 = int.Parse(configurationNode.Element("Y0").Value);
                             scanningOption.Z0 = int.Parse(configurationNode.Element("Z0").Value);
                             scanningOption.FOVdX = int.Parse(configurationNode.Element("FOVdX").Value);
+                            scanningOption.SampledX = int.Parse(configurationNode.Element("SampledX").Value);
                             scanningOption.dY = int.Parse(configurationNode.Element("dY").Value);
                             scanningOption.RotationalOffset = int.Parse(configurationNode.Element("RotationalOffset").Value);
                             return;
@@ -335,6 +340,7 @@ namespace Independent_Reader_GUI.Resources
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.Y0.ToString(), rowIndex, "y0 (\u03BCS)");
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.Z0.ToString(), rowIndex, "z0 (\u03BCS)");
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.FOVdX.ToString(), rowIndex, "FOV dX (\u03BCS)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.SampledX.ToString(), rowIndex, "Sample dX (\u03BCS)");
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.dY.ToString(), rowIndex, "dY (\u03BCS)");
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView, scanningOption.RotationalOffset.ToString(), rowIndex, "Rotational Offset (\u00B0)");
         }

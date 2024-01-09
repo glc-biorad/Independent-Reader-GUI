@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Independent_Reader_GUI.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,40 @@ namespace Independent_Reader_GUI.Services
                 {
                     selectedCell.Value = "";
                 }
+            }
+        }
+
+        /// <summary>
+        /// Remove a row by the row's name
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="rowName"></param>
+        public void RemoveRowByName(DataGridView dataGridView, string rowName)
+        {
+            var row = GetRowFromName(dataGridView, rowName);
+            dataGridView.Rows.Remove(row);
+        }
+
+        public List<DataGridViewRow> GetRowsByNameWhichContain(DataGridView dataGridView, string flag)
+        {
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Cells[0].Value.ToString().Contains(flag))
+                {
+                    rows.Add(row);
+                }
+            }
+            return rows;
+        }
+
+        public void RemoveRowsByNameWhichContains(DataGridView dataGridView, string flag)
+        {
+            // Get the rows to delete
+            var rows = GetRowsByNameWhichContain(dataGridView, flag);
+            foreach (DataGridViewRow row in rows)
+            {
+                dataGridView.Rows.Remove(row);
             }
         }
 
@@ -241,26 +277,34 @@ namespace Independent_Reader_GUI.Services
         /// <returns></returns>
         public string GetColumnCellValueByColumnAndRowName(string headerText, string rowText, DataGridView dataGridView)
         {
-            // Get the column index by the header text
-            int columnIndex = -1;
-            int rowIndex = -1;
-            foreach (DataGridViewColumn column in dataGridView.Columns)
+            try
             {
-                if (column.HeaderText == headerText)
+                // Get the column index by the header text
+                int columnIndex = -1;
+                int rowIndex = -1;
+                foreach (DataGridViewColumn column in dataGridView.Columns)
                 {
-                    columnIndex = column.Index;
+                    if (column.HeaderText == headerText)
+                    {
+                        columnIndex = column.Index;
+                    }
                 }
+                // Get the row index by the row text
+                foreach (DataGridViewRow row in dataGridView.Rows)
+                {
+                    if (row.Cells[0].Value == rowText)
+                    {
+                        rowIndex = row.Index;
+                    }
+                }
+                // Get the cell value
+                return dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
             }
-            // Get the row index by the row text
-            foreach (DataGridViewRow row in dataGridView.Rows)
+            catch (Exception ex)
             {
-                if (row.Cells[0].Value == rowText)
-                {
-                    rowIndex = row.Index;
-                }
+                Debug.WriteLine($"Error, was unable to find a cell value for column ({headerText}) and row ({rowText}) in {dataGridView.Name}");
+                throw new Exception(ex.Message);
             }
-            // Get the cell value
-            return dataGridView.Rows[rowIndex].Cells[columnIndex].Value.ToString();
         }
 
         /// <summary>

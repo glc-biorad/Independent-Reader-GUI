@@ -22,7 +22,7 @@ namespace Independent_Reader_GUI.Models
         private APIManager apiManager;
         // FIXME: Replace with a timeout from the configuration file;
         private int timeout = 10;
-
+        private int msDelay = 50;
         public LED(string name, Configuration configuration, APIManager apiManager)
         {
             // TODO: pass an object of the LED board to this class for a connection
@@ -94,7 +94,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 var responseValue = await GetVersionAsync();
-                await Task.Delay(100);
+                await Task.Delay(msDelay);
                 if (responseValue != null && responseValue != "?")
                 {
                     connected = true;
@@ -123,7 +123,7 @@ namespace Independent_Reader_GUI.Models
             try
             {
                 data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/led/version/");
-                await Task.Delay(200);
+                await Task.Delay(msDelay);
             }
             catch (Exception ex)
             {
@@ -165,7 +165,7 @@ namespace Independent_Reader_GUI.Models
                     resp = await apiManager.PostAsync<APILEDRequest, APIResponse>(
                         $"http://127.0.0.1:8000/led/on/?channel={id}&intensity={intensity}",
                         apiLEDRequest);
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                 }
                 stopwatch.Stop();
                 this.Intensity = intensity;
@@ -195,7 +195,7 @@ namespace Independent_Reader_GUI.Models
                     resp = await apiManager.PostAsync<APILEDRequest, APIResponse>(
                         $"http://127.0.0.1:8000/led/off/?channel={id}",
                         apiLEDRequest);
-                    await Task.Delay(50);
+                    await Task.Delay(msDelay);
                 }
                 stopwatch.Stop();
                 this.Intensity = 0;
