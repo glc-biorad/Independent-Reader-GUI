@@ -5,10 +5,8 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 
 ## To-Do
 ### Home Tab
-- Check motor positions every N seconds to update the Home tab (use MotorManagers class)
-- At Form loading check if the LEDs are connected (setup LED queries and commands via the BRADx-API code repo)
-- Check the Actual Temperature of the object and sink for all TECs using the TECsManager class every N seconds
-- At Form loading load in the TECs DataGridView values of interest
+- At Form loading check if the LEDs are connected
+- Update the Camera IO every N seconds (streaming, capturing, idle, etc)
 ### Run Tab
 - Update X0, Y0, Z0, FOV dX, and dY based on the Cartridge, Elastomer, Bergquist, and Glass Offset. If this combonation is not found in the ScanningData XML file, add it on the onset of the run
 - Update Bergquist and Elastomer Thickness TextBox values based on changes with the Elastomer and Bergquist ComboBox selections
@@ -32,7 +30,15 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 ### Control Tab
 - Change the Home column of the Control tab's Motor DataGridView to a ComboBox so that users can set it to "Homed" or "Not Homed" when the GUI is opened, then update the Home tab
 - Link the ComboBox States and Intensity TextBox in the LEDs DataGridView with the BRADx-API
-- 
+### Imaging Tab
+- Add scanning functionality
+- Add kill scanning functionality
+- Add handlers for when the cartridge, heater, glass offset, erlastomer, and or bergquist change for the scanning parameters
+- Updaet the LEDs DataGridView for scanning
+### Settings Tab
+### Configure Tab
+- Add update fucntionality to the scanning parameters
+- Better handle changes to the scanning parameters 
 
 ## Technology Used
 - C#
