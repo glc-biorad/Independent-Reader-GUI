@@ -1,9 +1,9 @@
 # Independent Reader GUI
 
 ## Overview
-Independent Reader GUI is a tool for utilizing the full functionality of the Independent Reader Module. It allows user to view all running submodule metrological data and connective status, control submodules, create/edit dPCR thermocycling protocols on 4 individual thermocycling heaters, run protocols on these heaters, image dPCR cartridges, perform full workflow runs (image, thermocycle, image, etc.), and set default settings/configurations for the instrument.
+Independent Reader GUI is a tool for utilizing the full functionality of the Independent Reader Module. It allows user to view all running submodule metrological data and submodule status, control submodules, create/edit dPCR thermocycling protocols on 4 individual thermocycling TEC heaters, run protocols on these heaters simultaniously or interwoven, image dPCR cartridges (before, during, and/or after dPCR), perform full workflow runs (image, thermocycle, image, etc.), set default settings/configurations for the instrument, and update/create data entries for new cartridges, elastomer, bergquists, and/or cartridge scanning parameters. The intent is to provide a single use application for all possible needs for all types of users (admin, FSE, scientist, lab tech, etc). 
 
-## To-Do
+## To-Do (Future Updates and Features)
 ### Home Tab
 - At Form loading check if the LEDs are connected
 - Update the Camera IO every N seconds (streaming, capturing, idle, etc)
@@ -58,6 +58,50 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 2. Open the solution in Visual Studio and build the project
 
 ## Usage
+### Start Up
+#### Instrument 
+1. Ensure the instrument is powered.
+2. Connect the TEC RS485-to-USB into the computer (allows communication with the TECs)
+3. Connect the FLIR Camera USB into the computer (allows for communication with the Reader Camera)
+4. Connect the Chassis Board USB into the computer (allows for communication with the Chassis Board Bus Controller)
+#### API
+1. Start the [API Server](https://github.com/glc-biorad/BRADx-API)
+   -  Clone the BRADx-API repo (C:\Users\u112958\source\repos\)
+   -  Navigate to the BRADx-API directory ($ cd BRADx-API\BRADx-API)
+   -  Execute the start_server.py script (starts the FastAPI local server and allows access to the SwaggerUI at 127.0.0.1:800\docs)
+#### Independent Reader GUI Application 
+1. Open the GUI
+### Functionality
+#### Home Tab
+##### Overview
+This tab lays out all submodule attributes, these include connectivity statuses, submodule IO, current positions for motors, firmware versions loaded on the submodules, etc. Everything on this tab is ReadOnly with respect to the user. The purpose of this tab is to show the user the current status for all submodules in a single page with clear indication if a submodule is disconnected.
+##### Features
+- Motors
+  - Status (Connected or Not Connected)
+  - Version (Firmware Version loaded onto the motor board)
+  - IO (Moving, Idle, Homing, etc.)
+  - Current Position (μS)
+  - Set Speed (μS/s)
+  - Homed (Yes or No)
+- TECs
+  - Status (Connected or Not Connected)
+  - Version (Firmware Version loaded onto the motor board)
+  - IO (Ramping Up, Ramping Down, Idle, Error, etc.)
+  - Actual Object Temperature (°C)
+  - Target Object Temperature (°C)
+  - Actual Sink Temperature (°C)
+  - Fan Speed (rpm)
+- Camera
+  - Status (Connected or Not Connected)
+  - IO (Streaming, Imaging, Idle, etc.)
+- LEDs
+#### Run Tab
+#### Control Tab
+#### Thermocycling Tab
+#### Imaging Tab
+#### Settings Tab
+#### Consumables Tab
+#### Metrology Tab
 
 ## Features
 
