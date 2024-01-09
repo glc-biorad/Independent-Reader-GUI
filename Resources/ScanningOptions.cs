@@ -1,4 +1,5 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Exceptions;
+using Independent_Reader_GUI.Models;
 using Independent_Reader_GUI.Services;
 using Org.BouncyCastle.Asn1.BC;
 using System;
@@ -65,6 +66,98 @@ namespace Independent_Reader_GUI.Resources
         }
 
         /// <summary>
+        /// Check if a Combination of Elastomer, Cartridge, Glass Offset, and Bergquist exist in the XML data for Scanning
+        /// </summary>
+        /// <param name="cartridgeName"></param>
+        /// <param name="glassOffset"></param>
+        /// <param name="elastomerName"></param>
+        /// <param name="bergquistName"></param>
+        /// <returns></returns>
+        private bool CombinationExists(string cartridgeName, double glassOffset, string elastomerName, string bergquistName)
+        {
+            // Set the combination
+            List<string> combination = new List<string>
+            {
+                cartridgeName,
+                glassOffset.ToString(),
+                elastomerName,
+                bergquistName,
+            };
+            // Set the list of nodes to check
+            List<XElement> nodes = new List<XElement>
+            {
+                aNode,
+                bNode,
+                cNode,
+                dNode,
+            };
+            // Check the nodes for this combination
+            foreach (XElement node in nodes)
+            {
+                foreach (XElement configurationNode in node.Elements())
+                {
+                    List<string> nodeCombination = new List<string>
+                {
+                    configurationNode.Element("Cartridge").Value.ToString(),
+                    configurationNode.Element("GlassOffset").Value.ToString(),
+                    configurationNode.Element("Elastomer").Value.ToString(),
+                    configurationNode.Element("Bergquist").Value.ToString(),
+                };
+                    if (nodeCombination.Equals(combination))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private List<XElement> GetTECXElementsFromCombination(string cartridgeName, double glassOffset, string elastomerName, string bergquistName)
+        {
+            // Set the combination
+            List<string> combination = new List<string>
+            {
+                cartridgeName,
+                glassOffset.ToString(),
+                elastomerName,
+                bergquistName,
+            };
+            // Set the list of nodes to check
+            List<XElement> nodes = new List<XElement>
+            {
+                aNode,
+                bNode,
+                cNode,
+                dNode,
+            };
+            // Setup the return 
+            List<XElement> tecXElements = new List<XElement>();
+            // Check the nodes for this combination
+            foreach (XElement node in nodes)
+            {
+                foreach (XElement configurationNode in node.Elements())
+                {
+                    List<string> nodeCombination = new List<string>
+                {
+                    configurationNode.Element("Cartridge").Value.ToString(),
+                    configurationNode.Element("GlassOffset").Value.ToString(),
+                    configurationNode.Element("Elastomer").Value.ToString(),
+                    configurationNode.Element("Bergquist").Value.ToString(),
+                };
+                    if (nodeCombination.Equals(combination))
+                    {
+                        tecXElements.Add(configurationNode);
+                    }
+                }
+            }
+            if (tecXElements.Count != 4)
+            {
+                throw new UnexpectedResultException($"Unexpected result, anticipated 4 entries for Scanning Data but found {tecXElements.Count}");
+            }
+            return tecXElements;
+        }
+
+        /// <summary>
         /// Read in the Scanning Data for a particular combination 
         /// </summary>
         /// <param name="cartridge">Cartridge name used during imaging</param>
@@ -84,6 +177,97 @@ namespace Independent_Reader_GUI.Resources
             SetDataGridViewRowFromScanningOption(dataGridView, scanningOptionTECB, 1);
             SetDataGridViewRowFromScanningOption(dataGridView, scanningOptionTECC, 2);
             SetDataGridViewRowFromScanningOption(dataGridView, scanningOptionTECD, 3);
+        }
+
+        public void WriteInScanningData(DataGridViewManager dataGridViewManager, DataGridView dataGridView, 
+            string cartridgeName, double glassOffset, string elastomerName, string bergquistName)
+        {
+            // Load the XDocument for updating or writing
+            XDocument scanningXDocument = XDocument.Load(configuration.ScanningDataPath);
+            // Get the TEC nodes
+            IEnumerable<XElement> tecXElements = scanningXDocument.Root?.Elements();
+            // Check if this combination already exists in the XML file
+            if (CombinationExists(cartridgeName, glassOffset, elastomerName, bergquistName))
+            {
+                // Update the XML
+                // Get the TEC Configuration XElements to update
+                List<XElement> nodes = GetTECXElementsFromCombination(cartridgeName, glassOffset, elastomerName, bergquistName);
+                // Iterate through these nodes and update
+                int rowIndex = 0;
+                foreach (var node in nodes)
+                {
+                    node.Element("X0").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "x0 (\u03BCS)", rowIndex);
+                    node.Element("Y0").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "y0 (\u03BCS)", rowIndex);
+                    node.Element("Z0").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "z0 (\u03BCS)", rowIndex);
+                    node.Element("FOVdX").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "FOV dX (\u03BCS)", rowIndex);
+                    node.Element("dY").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "dY (\u03BCS)", rowIndex);
+                    node.Element("RotationalOffset").Value = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "Rotational Offset (\u00B0)", rowIndex);
+                    rowIndex++;
+                }
+                scanningXDocument.Save(configuration.ScanningDataPath);
+            }
+            else
+            {
+                // Write the data
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                // Write a new configuration for each TEC
+                int rowIndex = 0;
+                foreach (var tecXElement in tecXElements)
+                {
+                    // Setup the configuration node for this TEC XElement
+                    XElement configurationNode = new XElement("Configuration");
+                    tecXElement.Add(configurationNode);
+                    // Add the data to the Configuration node
+                    XElement cartridgeNode = new XElement("Cartridge", cartridgeName);
+                    configurationNode.Add(cartridgeNode);
+                    XElement elastomerNode = new XElement("Elastomer", elastomerName);
+                    configurationNode.Add(elastomerNode);
+                    XElement bergquistNode = new XElement("Bergquist", bergquistName);
+                    configurationNode.Add(bergquistNode);
+                    XElement glassOffsetNode = new XElement("GlassOffset", glassOffset.ToString());
+                    configurationNode.Add(glassOffsetNode);
+                    XElement glassOffsetUnitsNode = new XElement("GlassOffsetUnits", SpatialUnits.Millimeter);
+                    configurationNode.Add(glassOffsetUnitsNode);
+                    int x0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "x0 (\u03BCS)", rowIndex));
+                    XElement x0Node = new XElement("X0", x0);
+                    configurationNode.Add(x0Node);
+                    int y0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "y0 (\u03BCS)", rowIndex));
+                    XElement y0Node = new XElement("Y0", y0);
+                    configurationNode.Add(y0Node);
+                    int z0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "z0 (\u03BCS)", rowIndex));
+                    XElement z0Node = new XElement("Z0", z0);
+                    configurationNode.Add(z0Node);
+                    int fovdx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "FOV dX (\u03BCS)", rowIndex));
+                    XElement fovdxNode = new XElement("FOVdX", fovdx);
+                    configurationNode.Add(fovdxNode);
+                    int dy = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "dY (\u03BCS)", rowIndex));
+                    XElement dYNode = new XElement("dY", dy);
+                    configurationNode.Add(dYNode);
+                    int rotationalOffset = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView, "Rotational Offset (\u00B0)", rowIndex));
+                    XElement rotationalOffsetNode = new XElement("RotationalOffset", rotationalOffset);
+                    configurationNode.Add(rotationalOffsetNode);
+                    XElement unitsNode = new XElement("Units", SpatialUnits.Microsteps);
+                    configurationNode.Add(unitsNode);
+                    rowIndex++;
+                }
+                scanningXDocument.Save(configuration.ScanningDataPath);
+            }
+        }
+
+        public List<double> GetGlassOffsets()
+        {
+            // Setup the return
+            List<double> glassOffsets = new List<double>();
+            // Iterate through a TEC Node adding anything unique
+            foreach (var configurationNode in aNode.Elements())
+            {
+                double glassOffset = double.Parse(configurationNode.Element("GlassOffset").Value);
+                if (!glassOffsets.Contains(glassOffset))
+                {
+                    glassOffsets.Add(glassOffset);
+                }
+            }
+            return glassOffsets;
         }
 
         /// <summary>

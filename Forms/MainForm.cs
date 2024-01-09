@@ -125,7 +125,7 @@ namespace Independent_Reader_GUI
             cartridgeOptions = new CartridgeOptions(configuration);
             elastomerOptions = new ElastomerOptions(configuration);
             bergquistOptions = new BergquistOptions(configuration);
-            scanningOptions = new ScanningOptions(configuration, configureImageScanningDataGridView);
+            scanningOptions = new ScanningOptions(configuration, consumablesImageScanningDataGridView);
             defaultScanningOption = scanningOptions.GetScanningOptionData("A", configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
 
             // Obtain default data paths
@@ -819,27 +819,11 @@ namespace Independent_Reader_GUI
             }
 
             // Setup the Glass Offset ComboBox
-            foreach (var glassOffsetOption in scanningOptions.GlassOffsets)
+            foreach (var glassOffsetOption in scanningOptions.GetGlassOffsets())
             {
-                configureGlassOffsetComboBox.Items.Add(glassOffsetOption.ToString());
+                consumablesGlassOffsetComboBox.Items.Add(glassOffsetOption.ToString());
             }
-            configureGlassOffsetComboBox.SelectedItem = configuration.DefaultGlassOffset;
-            //foreach (DataGridViewRow row in runImagingSetupDataGridView.Rows)
-            //{
-            //    if (!row.IsNewRow) // check to skip the new row template
-            //    {
-            //        var cellValue = row.Cells[0].Value; // Obtain the cell value in the first column
-            //        if (cellValue != null)
-            //        {
-            //            DataGridViewComboBoxFormatter ComboBoxFormater = new DataGridViewComboBoxFormatter();
-            //            var comboBoxCell = ComboBoxFormater.GetCellValueComboBox(cellValue.ToString());
-            //            if (comboBoxCell != null)
-            //            {
-            //                row.Cells[1] = comboBoxCell;
-            //            }
-            //        }
-            //    }
-            //}
+            consumablesGlassOffsetComboBox.SelectedItem = configuration.DefaultGlassOffset;
         }
 
         private async void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -971,8 +955,8 @@ namespace Independent_Reader_GUI
             // Obtain single use data
             SingleUseDataLoad();
 
-            // Load in Configure Combo Boxes
-            LoadConfigureComboBoxInitialData();
+            // Load in consumables Combo Boxes
+            LoadconsumablesComboBoxInitialData();
         }
 
         private async void SingleUseDataLoad()
@@ -1014,32 +998,32 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void LoadConfigureComboBoxInitialData()
+        private void LoadconsumablesComboBoxInitialData()
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(LoadConfigureComboBoxInitialData));
+                this.Invoke(new Action(LoadconsumablesComboBoxInitialData));
             }
             else
             {
                 List<Cartridge> cartridgeOptionsList = cartridgeOptions.Options;
                 foreach (var option in cartridgeOptionsList)
                 {
-                    configureCartridgeComboBox.Items.Add(option.Name);
+                    consumablesCartridgeComboBox.Items.Add(option.Name);
                 }
-                configureCartridgeComboBox.SelectedItem = cartridgeOptionsList.First().Name;
+                consumablesCartridgeComboBox.SelectedItem = cartridgeOptionsList.First().Name;
                 List<Elastomer> elastomerOptionsList = elastomerOptions.Options;
                 foreach (var option in elastomerOptionsList)
                 {
-                    configureElastomerComboBox.Items.Add(option.Name);
+                    consumablesElastomerComboBox.Items.Add(option.Name);
                 }
-                configureElastomerComboBox.SelectedItem = elastomerOptionsList.First().Name;
+                consumablesElastomerComboBox.SelectedItem = elastomerOptionsList.First().Name;
                 List<Bergquist> bergquistOptionsList = bergquistOptions.Options;
                 foreach (var option in bergquistOptionsList)
                 {
-                    configureBergquistComboBox.Items.Add(option.Name);
+                    consumablesBergquistComboBox.Items.Add(option.Name);
                 }
-                configureBergquistComboBox.SelectedItem = bergquistOptionsList.First().Name;
+                consumablesBergquistComboBox.SelectedItem = bergquistOptionsList.First().Name;
             }
         }
 
@@ -1780,62 +1764,62 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void configureCartridgeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void consumablesCartridgeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Update the cartridge options to get the most update to date results
             cartridgeOptions.Update();
             // FIXME: This needs to be resolved, this region of code causes issues (Stackoverflow)
             // Reload in the data to the comboboxcell
-            //configureCartridgeComboBox.Items.Clear();
+            //consumablesCartridgeComboBox.Items.Clear();
             //foreach (var option in cartridgeOptions.Options)
             //{
-            //    configureCartridgeComboBox.Items.Add(option.Name);
+            //    consumablesCartridgeComboBox.Items.Add(option.Name);
             //}
-            //configureCartridgeComboBox.SelectedItem = cartridgeOptions.Options.First().Name;
+            //consumablesCartridgeComboBox.SelectedItem = cartridgeOptions.Options.First().Name;
             // Get the Cartridge Name
-            string cartridgeName = configureCartridgeComboBox.SelectedItem.ToString();
+            string cartridgeName = consumablesCartridgeComboBox.SelectedItem.ToString();
             // Get the Cartridge instance from the name
             Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeName);
-            // Fill in the DataGridView for the cartridge on the Configure Tab
-            configureCartridgesDataGridView.Rows.Clear();
-            configureCartridgesDataGridView.Rows.Add();
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Name, rowIndex: 0, columnName: "Name");
+            // Fill in the DataGridView for the cartridge on the consumables Tab
+            consumablesCartridgesDataGridView.Rows.Clear();
+            consumablesCartridgesDataGridView.Rows.Add();
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.Name, rowIndex: 0, columnName: "Name");
             // FIXME: Make the Partition Type column cell a DataGridViewComboBox
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.PartitionType, rowIndex: 0, columnName: "Partition Type");
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.NumberofSampleChambers.ToString(), rowIndex: 0, columnName: "Number of Samples");
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.NumberofAssayChambers.ToString(), rowIndex: 0, columnName: "Number of Assays");
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Length.ToString(), rowIndex: 0, columnName: "Length (mm)");
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Width.ToString(), rowIndex: 0, columnName: "Width (mm)");
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: configureCartridgesDataGridView, cellValue: cartridge.Height.ToString(), rowIndex: 0, columnName: "Height (mm)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.PartitionType, rowIndex: 0, columnName: "Partition Type");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.NumberofSampleChambers.ToString(), rowIndex: 0, columnName: "Number of Samples");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.NumberofAssayChambers.ToString(), rowIndex: 0, columnName: "Number of Assays");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.Length.ToString(), rowIndex: 0, columnName: "Length (mm)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.Width.ToString(), rowIndex: 0, columnName: "Width (mm)");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(dataGridView: consumablesCartridgesDataGridView, cellValue: cartridge.Height.ToString(), rowIndex: 0, columnName: "Height (mm)");
         }
 
-        private void configureSaveNewCartridgeButton_Click(object sender, EventArgs e)
+        private void consumablesSaveNewCartridgeButton_Click(object sender, EventArgs e)
         {
             // Ensure all cells are filled with appropriate inputs
-            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
-            string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+            string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
             int numberOfSampleChambers;
-            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
+            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
             {
                 MessageBox.Show("Cannot have a non-integer value for the number of samples in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
             }
             int numberOfAssayChambers;
-            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
+            if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
             {
                 MessageBox.Show("Cannot have a non-integer value for the number of assays in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
             }
             double length;
-            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
             {
                 MessageBox.Show("Cannot have a non-real value for the length of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
             }
             double width;
-            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
             {
                 MessageBox.Show("Cannot have a non-real value for the width of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
             }
             double height;
-            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
+            if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
             {
                 MessageBox.Show("Cannot have a non-real value for the height of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
             }
@@ -1868,10 +1852,10 @@ namespace Independent_Reader_GUI
             cartridgeOptions.SaveNewCartridge(cartridge);
         }
 
-        private void configureDeleteCartridgeButton_Click(object sender, EventArgs e)
+        private void consumablesDeleteCartridgeButton_Click(object sender, EventArgs e)
         {
             // Get the name of cartridge to be deleted
-            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Name");
             if (name != null)
             {
                 // Delete the cartridge from the XML data
@@ -1879,36 +1863,47 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void configureUpdateCartridgeDataButton_Click(object sender, EventArgs e)
+        private void consumablesUpdateImageScanningButton_Click(object sender, EventArgs e)
+        {
+            // Get the name of the Cartridge, Elastomer, Bergquist and the Glass Offset
+            string cartridgeName = consumablesCartridgeComboBox.SelectedItem.ToString();
+            string elastomerName = consumablesElastomerComboBox.SelectedItem.ToString();
+            string bergquistName = consumablesBergquistComboBox.SelectedItem.ToString();
+            double glassOffset = double.Parse(consumablesGlassOffsetComboBox.Text.ToString());
+            // TODO: Update this to use the Scanning Data Model class to upload or write
+            scanningOptions.WriteInScanningData(dataGridViewManager, consumablesImageScanningDataGridView, cartridgeName, glassOffset, elastomerName, bergquistName);
+        }
+
+        private void consumablesUpdateCartridgeDataButton_Click(object sender, EventArgs e)
         {
             // Get the name of the cartridge to be updated
-            string? oldName = configureCartridgeComboBox.SelectedItem.ToString();
+            string? oldName = consumablesCartridgeComboBox.SelectedItem.ToString();
             if (oldName != null)
             {
-                string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Name");
-                string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
+                string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Name");
+                string? partitionType = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Partition Type");
                 int numberOfSampleChambers;
-                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
+                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Number of Samples"), out numberOfSampleChambers))
                 {
                     MessageBox.Show("Cannot have a non-integer value for the number of samples in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
                 int numberOfAssayChambers;
-                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
+                if (!int.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Number of Assays"), out numberOfAssayChambers))
                 {
                     MessageBox.Show("Cannot have a non-integer value for the number of assays in a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
                 double length;
-                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Length (mm)"), out length))
                 {
                     MessageBox.Show("Cannot have a non-real value for the length of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
                 double width;
-                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Width (mm)"), out width))
                 {
                     MessageBox.Show("Cannot have a non-real value for the width of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
                 double height;
-                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: configureCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
+                if (!double.TryParse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(dataGridView: consumablesCartridgesDataGridView, rowIndex: 0, columnName: "Height (mm)"), out height))
                 {
                     MessageBox.Show("Cannot have a non-real value for the height of a cartridge.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
@@ -1943,39 +1938,39 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void configureElastomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void consumablesElastomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Update the elastomer options to get the most up to date options
             elastomerOptions.Update();
             // TODO: update the combo box options
             // Get the elastomer from the name
-            string? name = configureElastomerComboBox.SelectedItem.ToString();
+            string? name = consumablesElastomerComboBox.SelectedItem.ToString();
             if (name != string.Empty)
             {
                 Elastomer? elastomer = elastomerOptions.GetElastomerFromName(name);
                 if (elastomer != null)
                 {
-                    configureElastomerDataGridView.Rows.Clear();
-                    configureElastomerDataGridView.Rows.Add();
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Name, 0, "Name");
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Thickness.ToString(), 0, "Thickness (mm)");
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.ThermalCoefficient.ToString(), 0, "Thermal Coefficient (W/m K)");
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.ShoreHardness.ToString(), 0, "Shore Hardness");
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Mold.ToString(), 0, "Mold");
-                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(configureElastomerDataGridView, elastomer.Film.ToString(), 0, "Film");
+                    consumablesElastomerDataGridView.Rows.Clear();
+                    consumablesElastomerDataGridView.Rows.Add();
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.Name, 0, "Name");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.Thickness.ToString(), 0, "Thickness (mm)");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.ThermalCoefficient.ToString(), 0, "Thermal Coefficient (W/m K)");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.ShoreHardness.ToString(), 0, "Shore Hardness");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.Mold.ToString(), 0, "Mold");
+                    dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(consumablesElastomerDataGridView, elastomer.Film.ToString(), 0, "Film");
                 }
             }
         }
 
-        private void configureSaveNewElastomerButton_Click(object sender, EventArgs e)
+        private void consumablesSaveNewElastomerButton_Click(object sender, EventArgs e)
         {
             // Update the elastomer options to get the most up to date options
-            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Name", 0);
-            string? thickness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Thickness (mm)", 0);
-            string? thermalCoefficient = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Thermal Coefficient (W/m K)", 0);
-            string? shoreHardness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Shore Hardness", 0);
-            string? mold = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Mold", 0);
-            string? film = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Film", 0);
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Name", 0);
+            string? thickness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Thickness (mm)", 0);
+            string? thermalCoefficient = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Thermal Coefficient (W/m K)", 0);
+            string? shoreHardness = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Shore Hardness", 0);
+            string? mold = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Mold", 0);
+            string? film = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Film", 0);
             string?[] properties = { name, thickness, thermalCoefficient, shoreHardness, mold, film };
             if (properties.Contains(string.Empty) || properties.Contains(null))
             {
@@ -2023,10 +2018,10 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void configureDeleteElastomerButton_Click(object sender, EventArgs e)
+        private void consumablesDeleteElastomerButton_Click(object sender, EventArgs e)
         {
             // Get the name of the elastomer to be deleted
-            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(configureElastomerDataGridView, "Name", 0);
+            string? name = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(consumablesElastomerDataGridView, "Name", 0);
             if (name != null)
             {
                 // Delete the elastomer from the XML data
@@ -2034,36 +2029,36 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void configureUpdateElastomerData_Click(object sender, EventArgs e)
+        private void consumablesUpdateElastomerData_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Code to update the Elastomer data has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void configureBergquistDataButton_Click(object sender, EventArgs e)
+        private void consumablesBergquistDataButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Code to update the Bergquist data has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void configureSaveNewBergquistButton_Click(object sender, EventArgs e)
+        private void consumablesSaveNewBergquistButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Code to save a new Bergquist has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void configureDeleteBergquistButton_Click(object sender, EventArgs e)
+        private void consumablesDeleteBergquistButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Code to delete a Bergquist has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void configureGlassOffsetComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void consumablesGlassOffsetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Clear the Configure tab's Image Scanning data grid view
-            configureImageScanningDataGridView.Rows.Clear();
+            // Clear the consumables tab's Image Scanning data grid view
+            consumablesImageScanningDataGridView.Rows.Clear();
             // Make sure value is valid
-            if (double.TryParse(configureGlassOffsetComboBox.SelectedItem.ToString(), out _))
+            if (double.TryParse(consumablesGlassOffsetComboBox.SelectedItem.ToString(), out _))
             {
-                scanningOptions.ReadInScanningData(dataGridView: configureImageScanningDataGridView,
-                    cartridgeName: configureCartridgeComboBox.SelectedItem.ToString(), glassOffset: double.Parse(configureGlassOffsetComboBox.SelectedItem.ToString()),
-                    elastomerName: configureElastomerComboBox.SelectedItem.ToString(), configureBergquistComboBox.SelectedItem.ToString());
+                scanningOptions.ReadInScanningData(dataGridView: consumablesImageScanningDataGridView,
+                    cartridgeName: consumablesCartridgeComboBox.SelectedItem.ToString(), glassOffset: double.Parse(consumablesGlassOffsetComboBox.SelectedItem.ToString()),
+                    elastomerName: consumablesElastomerComboBox.SelectedItem.ToString(), consumablesBergquistComboBox.SelectedItem.ToString());
             }
         }
 
@@ -2159,54 +2154,54 @@ namespace Independent_Reader_GUI
         }
 
         /// <summary>
-        /// Handle key down events ConfigureCartridgeDataGridView
+        /// Handle key down events consumablesCartridgeDataGridView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void configureCartridgesDataGridView_KeyDown(object sender, KeyEventArgs e)
+        private void consumablesCartridgesDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Back)
             {
-                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureCartridgesDataGridView);
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(consumablesCartridgesDataGridView);
             }
         }
 
         /// <summary>
-        /// Handle key down events for the ConfigureElastomerDataGridView
+        /// Handle key down events for the consumablesElastomerDataGridView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void configureElastomerDataGridView_KeyDown(object sender, KeyEventArgs e)
+        private void consumablesElastomerDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Back)
             {
-                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureElastomerDataGridView);
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(consumablesElastomerDataGridView);
             }
         }
 
         /// <summary>
-        /// Handle key down events for the ConfigureBergquistsDataGridView
+        /// Handle key down events for the consumablesBergquistsDataGridView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void configureBergquistsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        private void consumablesBergquistsDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Back)
             {
-                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureBergquistsDataGridView);
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(consumablesBergquistsDataGridView);
             }
         }
 
         /// <summary>
-        /// Handle key down events for the ConfigureImageScanningDataGridView
+        /// Handle key down events for the consumablesImageScanningDataGridView
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void configureImageScanningDataGridView_KeyDown(object sender, KeyEventArgs e)
+        private void consumablesImageScanningDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Back)
             {
-                dataGridViewManager.ClearSelectedCellsNotInEditMode(configureImageScanningDataGridView);
+                dataGridViewManager.ClearSelectedCellsNotInEditMode(consumablesImageScanningDataGridView);
             }
         }
 
@@ -2341,9 +2336,13 @@ namespace Independent_Reader_GUI
                 {
                     if (int.TryParse(imagingDyTextBox.Text, out int value))
                     {
-                        MotorCommand upCommand = new MotorCommand { Type = MotorCommand.CommandType.MoveRelativeAsync, 
+                        MotorCommand upCommand = new MotorCommand
+                        {
+                            Type = MotorCommand.CommandType.MoveRelativeAsync,
                             Motor = yMotor,
-                            DistanceParameter = -value, SpeedParameter = configuration.xMotorDefaultSpeed };
+                            DistanceParameter = -value,
+                            SpeedParameter = configuration.xMotorDefaultSpeed
+                        };
                         motorManager.EnqueuePriorityCommand(upCommand);
                     }
                 }
@@ -2417,6 +2416,18 @@ namespace Independent_Reader_GUI
                         motorManager.EnqueuePriorityCommand(pageUpCommand);
                     }
                 }
+            }
+        }
+
+        private void consumablesGlassOffsetComboBox_TextUpdate(object sender, EventArgs e)
+        {
+            if (double.TryParse(consumablesGlassOffsetComboBox.Text, out double value))
+            {
+                consumablesGlassOffsetComboBox.ForeColor = Color.Black;
+            }
+            else
+            {
+                consumablesGlassOffsetComboBox.ForeColor = Color.Red;
             }
         }
     }
