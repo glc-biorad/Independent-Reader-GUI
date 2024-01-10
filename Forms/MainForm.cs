@@ -740,7 +740,7 @@ namespace Independent_Reader_GUI
                 configuration.HEXIntensity, // Bright Field
                 configuration.Cy5Intensity, configuration.FAMIntensity, configuration.HEXIntensity, configuration.AttoIntensity, configuration.AlexaIntensity, configuration.Cy5p5Intensity);
             imagingLEDsDataGridView.Rows.Add("Exposure (ms)",
-                configuration.HEXExposure, // Bright Field
+                5000, // Bright Field
                 configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure, configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
         }
 
@@ -1531,6 +1531,7 @@ namespace Independent_Reader_GUI
             motorManager.CloseCommandQueueProcessing();
             motorManager.ClosePriorityCommandQueueProcessing();
             // Disconnect the Camera
+            cameraManager.StopStreamAsync().Wait();
             cameraManager.Disconnect();
             // Clean up the API Manager service
             apiManager.Disponse();
@@ -2359,7 +2360,7 @@ namespace Independent_Reader_GUI
 
         private async void imagingTabPage_Leave(object sender, EventArgs e)
         {
-            await cameraManager.StopStreamAsync();
+            //await cameraManager.StopStreamAsync();
         }
 
         private void imagingBrightFieldButton_Click(object sender, EventArgs e)
@@ -2535,11 +2536,12 @@ namespace Independent_Reader_GUI
                 }
             }
             // Setup the Scan Parameters to use
-            ScanParameters scanParameters = new ScanParameters(experimentName,
-                heaterLetter,
-                x0, y0, z0, fovdx, sampledx, dy, rotationalOffset,
-                imageBrightField, intensityBrightField, exposureBrightField,
-                imageCy5, intensityCy5, exposureCy5,
+            ScanParameters scanParameters = new ScanParameters(
+                experimentName: experimentName,
+                heaterLetter: heaterLetter,
+                x0: x0, y0: y0, z0: z0, fOVdX: fovdx, sampledX: sampledx, dY: dy, rotationalOffset: rotationalOffset,
+                imageBrightField: imageBrightField, brightFieldIntensity: intensityBrightField, brightFieldExposure: exposureBrightField,
+                imageCy5: imageCy5, cy5Intensity: intensityCy5, cy5Exposure: exposureCy5,
                 imageFAM, intensityFAM, exposureFAM,
                 imageHEX, intensityHEX, exposureHEX,
                 imageAtto, intensityAtto, exposureAtto,

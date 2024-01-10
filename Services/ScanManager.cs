@@ -110,12 +110,9 @@ namespace Independent_Reader_GUI.Services
                                 motorsManager.EnqueuePriorityCommand(getYCommand);
                                 int x = Math.Abs(motorsManager.GetMotorByName("x").Position);
                                 int y = Math.Abs(motorsManager.GetMotorByName("y").Position);
-                                //Debug.WriteLine($"Moving x,y to {xPos},{yPos} for {sampleName}, {assayName}, FOV {fovIdx+1}");
                                 while ((x < xPos - positionCutoff || x > xPos + positionCutoff) || (y < yPos - positionCutoff || y > yPos + positionCutoff))
                                 {
                                     await Task.Delay(msDelay);
-                                    //motorsManager.EnqueuePriorityCommand(getXCommand);
-                                    //motorsManager.EnqueuePriorityCommand(getYCommand);
                                     x = Math.Abs(motorsManager.GetMotorByName("x").Position);
                                     y = Math.Abs(motorsManager.GetMotorByName("y").Position);
                                 }
@@ -219,7 +216,8 @@ namespace Independent_Reader_GUI.Services
             // Capture the image
             Directory.CreateDirectory(imageFilePath);
             // Set Exposure in Microseconds
-            cameraManager.SetExposureTime(exposure);
+            Debug.WriteLine($"Saving Image to: {imageFilePath}\\{imageFileName}");
+            await cameraManager.SetExposureTime(exposure);
             await cameraManager.CaptureImageAsync($"{imageFilePath}\\{imageFileName}");
         }
     }

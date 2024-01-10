@@ -26,7 +26,7 @@
       <Y0>11758</Y0>
       <Z0>308000</Z0>
       <FOVdX>72500</FOVdX>
-	  <SampledX>145000</SampledX>
+      <SampledX>145000</SampledX>
       <dY>23000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -46,6 +46,36 @@
       <RotationalOffset>3</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>63.5</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>719000</X0>
+      <Y0>13258</Y0>
+      <Z0>309000</Z0>
+      <FOVdX>72500</FOVdX>
+      <SampledX>252000</SampledX>
+      <dY>23000</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+      <Bergquist>Laird TFlex HD300</Bergquist>
+      <GlassOffset>8.64</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>752300</X0>
+      <Y0>11258</Y0>
+      <Z0>309000</Z0>
+      <FOVdX>72500</FOVdX>
+      <SampledX>252000</SampledX>
+      <dY>23000</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
   </A>
   <B>
     <Configuration>
@@ -58,7 +88,7 @@
       <Y0>10000</Y0>
       <Z0>325000</Z0>
       <FOVdX>23000</FOVdX>
-	  <SampledX>145000</SampledX>
+      <SampledX>145000</SampledX>
       <dY>37000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -73,7 +103,7 @@
       <Y0>11758</Y0>
       <Z0>308000</Z0>
       <FOVdX>72500</FOVdX>
-	  <SampledX>145000</SampledX>
+      <SampledX>145000</SampledX>
       <dY>23000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -88,7 +118,37 @@
       <Y0>0</Y0>
       <Z0>0</Z0>
       <FOVdX>0</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>63.5</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+      <Bergquist>Laird TFlex HD300</Bergquist>
+      <GlassOffset>8.64</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
       <dY>0</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -105,7 +165,7 @@
       <Y0>10000</Y0>
       <Z0>325000</Z0>
       <FOVdX>23000</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
       <dY>37000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -120,7 +180,7 @@
       <Y0>11758</Y0>
       <Z0>308000</Z0>
       <FOVdX>72500</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
       <dY>23000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -135,7 +195,37 @@
       <Y0>0</Y0>
       <Z0>0</Z0>
       <FOVdX>0</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>63.5</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+      <Bergquist>Laird TFlex HD300</Bergquist>
+      <GlassOffset>8.64</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
       <dY>0</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -152,7 +242,7 @@
       <Y0>10000</Y0>
       <Z0>325000</Z0>
       <FOVdX>23000</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
       <dY>37000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -167,7 +257,7 @@
       <Y0>11758</Y0>
       <Z0>308000</Z0>
       <FOVdX>72500</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
       <dY>23000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
@@ -182,7 +272,37 @@
       <Y0>0</Y0>
       <Z0>0</Z0>
       <FOVdX>0</FOVdX>
-	  <SampledX>0</SampledX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>63.5</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>M2M</Cartridge>
+      <Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
+      <Bergquist>Laird TFlex HD300</Bergquist>
+      <GlassOffset>8.64</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
       <dY>0</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>

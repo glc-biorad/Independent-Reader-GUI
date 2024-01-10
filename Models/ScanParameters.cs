@@ -58,9 +58,9 @@ namespace Independent_Reader_GUI.Models
             this.x0 = x0; this.y0 = y0; this.z0 = z0;
             this.FOVdX = fOVdX; this.SampledX = sampledX; this.dY = dY;
             this.ImageBrightField = imageBrightField; this.BrightFieldIntensity = brightFieldIntensity; this.BrightFieldExposure = brightFieldExposure;
-            this.ImageCy5 = imageBrightField; this.BrightFieldIntensity = brightFieldIntensity; this.BrightFieldExposure = brightFieldExposure;
-            this.ImageFAM = imageBrightField; this.BrightFieldIntensity = brightFieldIntensity; this.BrightFieldExposure = brightFieldExposure;
-            this.ImageHEX = imageBrightField; this.BrightFieldIntensity = brightFieldIntensity; this.BrightFieldExposure = brightFieldExposure;
+            this.ImageCy5 = imageCy5; this.Cy5Intensity = cy5Intensity; this.Cy5Exposure = cy5Exposure;
+            this.ImageFAM = imageFAM; this.FAMIntensity = famIntensity; this.FAMExposure = famExposure;
+            this.ImageHEX = imageHEX; this.HEXIntensity = hexIntensity; this.HEXExposure = hexExposure;
             this.ImageAtto = imageAtto; this.AttoIntensity = attoIntensity; this.AttoExposure = attoExposure;
             this.ImageAlexa = imageAlexa; this.AlexaIntensity = alexaIntensity; this.AlexaExposure = alexaExposure;
             this.ImageCy5p5 = imageCy5p5; this.Cy5p5Intensity = cy5p5Intensity; this.Cy5p5Exposure = cy5p5Exposure;
