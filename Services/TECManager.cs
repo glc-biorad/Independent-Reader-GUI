@@ -604,12 +604,17 @@ namespace Independent_Reader_GUI.Services
             // Setup the GetActualOutputVoltage command and add it to the TECsManager Queue
             TECCommand getActualOutputVoltageCommand = new TECCommand { Type = TECCommand.CommandType.GetActualOutputVoltage, TEC = tec };
             EnqueueCommand(getActualOutputVoltageCommand);
+            // Setup the Temperature enabled command and add it to the TECsManager Queue
+            TECCommand checkTemperatureControl = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = tec };
+            EnqueueCommand(checkTemperatureControl);
             //
             // Set the DataGridValues for the TEC
             //
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             if (double.TryParse(tec.ActualObjectTemperature, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 

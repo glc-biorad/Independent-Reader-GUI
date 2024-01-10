@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Bergquists>
 	<Bergquist>
+		<Name>Laird TFlex HD300</Name>
+		<ThermalCoefficient>2.7</ThermalCoefficient>
+		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>
+		<ShoreHardness>38</ShoreHardness>
+		<Thickness>2.0</Thickness>
+		<ThicknessUnits>mm</ThicknessUnits>
+	</Bergquist>
+	<Bergquist>
 		<Name>SoftFlex (E038)</Name>
 		<ThermalCoefficient>3.8</ThermalCoefficient>
 		<ThermalCoefficientUnits>W/mK</ThermalCoefficientUnits>

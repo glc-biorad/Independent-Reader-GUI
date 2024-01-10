@@ -25,7 +25,10 @@ namespace Independent_Reader_GUI.Services
         private PictureBox pictureBox;
         private INodeMap nodeMapTLDevice;
         private INodeMap nodeMap;
-        private Bitmap currentImageBitmap; 
+        private Bitmap currentImageBitmap;
+        private int exposure = 12; // minimum allowed
+        private AutoFocusManager autoFocusManager = new AutoFocusManager();
+
         public FLIRCameraManager(PictureBox pictureBox)
         {
             this.pictureBox = pictureBox;
@@ -74,108 +77,12 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
-        public int CaptureImage()
-        {
-            //
-            // FIXME: This function needs to also check if streaming is already occuring, if that is the case then take a image of the screen
-            //          because right now it begins acquisition and everything
-            //
-            if (connected)
-            {
-                try
-                {
-                    // Set acquisition mode to single frame
-                    IEnum iAcquisitionMode = nodeMap.GetNode<IEnum>("AcquisitionMode");
-                    if (iAcquisitionMode == null || !iAcquisitionMode.IsWritable || !iAcquisitionMode.IsReadable)
-                    {
-                        MessageBox.Show("Unable to capture an image because the retrieval of the AcquisitionMode node failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        camera.EndAcquisition();
-                        return -1;
-                    }
-                    IEnumEntry iAcquisitionModeSingleFrame = iAcquisitionMode.GetEntryByName("SingleFrame");
-                    if (iAcquisitionModeSingleFrame == null || !iAcquisitionModeSingleFrame.IsReadable)
-                    {
-                        MessageBox.Show("Unable to capture an image because the retrieval of the SingleFrame enum entry failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        camera.EndAcquisition();
-                        return -1;
-                    }
-                    // Set symbolic from entry node as new value for enumeration node
-                    iAcquisitionMode.Value = iAcquisitionModeSingleFrame.Symbolic;
-                    // Start image aquisition and end it when no more images are needed
-                    camera.BeginAcquisition();
-                    // Create ImageProcessor instance for post processing images
-                    IManagedImageProcessor processor = new ManagedImageProcessor();
-                    // Set the default image processor color processing method
-                    //
-                    // *** NOTES ***
-                    // By default, if no specific color processing algorithm is set, the image
-                    // processor will default to NEAREST_NEIGHBOR method.
-                    //
-                    processor.SetColorProcessing(ColorProcessingAlgorithm.HQ_LINEAR);
-                    //
-                    // Retrieve the next image
-                    //
-                    // *** NOTES ***
-                    // Capturing an image houses images on the camera buffer.
-                    // Trying to capture an image that does not exist will
-                    // hang the camera.
-                    //
-                    // Using-statements help ensure that images are released.
-                    // If too many images remain unreleased, the buffer will
-                    // fill, causing the camera to hang. Images can also be
-                    // released manually by calling Release().
-                    //
-                    using (IManagedImage rawImage = camera.GetNextImage(1000))
-                    {
-                        // Ensure image completion
-                        if (rawImage.IsIncomplete)
-                        {
-                            MessageBox.Show($"Unable to capture image due to the image being incomplete with an image state {rawImage.ImageStatus}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            camera.EndAcquisition();
-                            return -1;
-                        }
-                        else
-                        {
-                            uint width = rawImage.Width;
-                            uint height = rawImage.Height;
-                            // Convert the image to mono 8
-                            using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
-                            {
-                                // Create a unique filename
-                                // FIXME: Change where images are saved based on a location picked by the user
-                                string filename = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\test.jpg";
-                                // Save the image
-                                convertedImage.Save(filename);
-                                var bitmap = convertedImage.bitmap;
-                                //BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-                                pictureBox.Image = convertedImage.bitmap;
-                                //pictureBox.Image = Image.FromFile(filename);
-                                //bitmap.UnlockBits(bmpData);
-                                rawImage.Dispose();
-                                convertedImage.Dispose();
-                            }
-                        }
-                    }
-                }
-                catch (SpinnakerException ex)
-                {
-                    MessageBox.Show($"Unable to capture the image due to {ex.Message}", "Error",  MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    camera.EndAcquisition();
-                    return -1;
-                }
-                // End acquisition so the device can properly clean up
-                MessageBox.Show("Capture Ok");
-                camera.EndAcquisition();
-            }
-            else
-            {
-                MessageBox.Show("Cannot capture image, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return -1;
-            }
-            return 0;
-        }
-
-        public int SetExposureTime(double exposureTimeInMicroseconds)
+        /// <summary>
+        /// Set the exposure during imaging
+        /// </summary>
+        /// <param name="exposureTimeInMicroseconds"></param>
+        /// <returns></returns>
+        public async Task<int> SetExposureTime(double exposureTimeInMicroseconds)
         {
             try
             {
@@ -210,7 +117,15 @@ namespace Independent_Reader_GUI.Services
                 }
                 else
                 {
-                    iExposureTime.Value = exposureTimeInMicroseconds;
+                    try
+                    {
+                        iExposureTime.Value = exposureTimeInMicroseconds;
+                        exposure = int.Parse(exposureTimeInMicroseconds.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        iExposureTime.Value = exposure;
+                    }
                 }
             }
             catch (SpinnakerException ex)
@@ -279,8 +194,16 @@ namespace Independent_Reader_GUI.Services
                                 {
                                     using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
                                     {
-                                        pictureBox.Image = convertedImage.bitmap;
-                                        currentImageBitmap = convertedImage.bitmap;
+                                        currentImageBitmap = await autoFocusManager.SharpenImage(convertedImage.bitmap);
+                                        //currentImageBitmap = convertedImage.bitmap;
+                                        try
+                                        {                                            
+                                            pictureBox.Image = currentImageBitmap;
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            currentImageBitmap = currentImageBitmap;
+                                        }                                        
                                         await Task.Delay(100);
                                     }
                                 }
@@ -307,6 +230,11 @@ namespace Independent_Reader_GUI.Services
                 return -1;
             }
             return 0;
+        }
+
+        public Bitmap CurrentImage
+        {
+            get { return currentImageBitmap; }
         }
 
         public async Task StopStreamAsync()

@@ -41,7 +41,7 @@
 		<Motors>
 			<x>
 				<Address>1</Address>
-				<DefaultSpeed>100000</DefaultSpeed>
+				<DefaultSpeed>300000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
@@ -50,7 +50,7 @@
 			</x>
 			<y>
 				<Address>2</Address>
-				<DefaultSpeed>1000000</DefaultSpeed>
+				<DefaultSpeed>2000000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
@@ -59,7 +59,7 @@
 			</y>
 			<z>
 				<Address>3</Address>
-				<DefaultSpeed>100000</DefaultSpeed>
+				<DefaultSpeed>300000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
@@ -68,7 +68,7 @@
 			</z>
 			<FilterWheel>
 				<Address>4</Address>
-				<DefaultSpeed>80000</DefaultSpeed>
+				<DefaultSpeed>100000</DefaultSpeed>
 				<Acceleration></Acceleration>
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
@@ -294,7 +294,7 @@
 	<DefaultPartitionType>Microwells</DefaultPartitionType>
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
-	<DefaultBergquist>COH-1019LVC</DefaultBergquist>
+	<DefaultBergquist>Laird TFlex HD300</DefaultBergquist>
 	<DefaultGlassOffset>12.3</DefaultGlassOffset>
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
 	<ControlTabTimerInterval>5000</ControlTabTimerInterval>
