@@ -48,6 +48,7 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 - Desktop Developer for C++ on Visual Studio
 - iText7 7.25 for PDF report generation
 - SSH.NET for uploading via SSH
+- AForge 2.2.5 for Sharpening Images
 
 ## Getting Started
 ### Prerequists
@@ -122,3 +123,4 @@ This tab lays out all submodule attributes, these include connectivity statuses,
 - [Bonsai.Spinnaker](https://github.com/bonsai-rx/spinnaker)
 - [iText7](https://github.com/itext/itext7-dotnet)
 - [SSH.NET](https://github.com/sshnet/SSH.NET)
+- [AForge](https://github.com/cureos/aforge)
