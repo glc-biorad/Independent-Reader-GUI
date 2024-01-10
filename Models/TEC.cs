@@ -34,6 +34,7 @@ namespace Independent_Reader_GUI.Models
         private string temperatureIsStable = "?";
         private int timeout;
         private int msDelay = 50;
+        private double previousObjectTemperature = double.MinValue;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {
@@ -137,6 +138,11 @@ namespace Independent_Reader_GUI.Models
         public string TemperatureControlled
         {
             get { return temperatureControlled; }
+        }
+
+        public double PreviousObjectTemperature
+        {
+            get { return previousObjectTemperature; }
         }
 
         public void CheckConnection()
@@ -324,6 +330,15 @@ namespace Independent_Reader_GUI.Models
             if (value == string.Empty)
             {
                 value = "?";
+            }
+            // Set the previous temperature
+            try
+            {
+                previousObjectTemperature = double.Parse(actualObjectTemperature);
+            }
+            catch
+            {
+                previousObjectTemperature = double.MinValue;
             }
             actualObjectTemperature = value;
             return error;

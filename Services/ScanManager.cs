@@ -1,4 +1,5 @@
 ﻿using Independent_Reader_GUI.Models;
+using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,7 +34,7 @@ namespace Independent_Reader_GUI.Services
         public async Task Scan(ScanParameters scanParameters)
         {
             // TODO: Create an experiment folder
-            string experimentName = "TestExperiment";
+            string experimentName = scanParameters.ExperimentName;
             string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";
             Directory.CreateDirectory($"{dir}\\{experimentName}");
             // TODO: Create a heater folder inside the experiment folder (heaterB for example)
@@ -127,30 +128,99 @@ namespace Independent_Reader_GUI.Services
                                     intensity = scanParameters.BrightFieldIntensity;
                                     exposure = scanParameters.BrightFieldExposure;
                                     filterWheelPos = configuration.FAMFilterWheelPosition;
-                                    // Move the Filter Wheel
-                                    MotorCommand filterWheelMoveCommand = new MotorCommand
-                                    {
-                                        Type = MotorCommand.CommandType.MoveAsync,
-                                        Motor = motorsManager.GetMotorByName("Filter Wheel"),
-                                        PositionParameter = filterWheelPos,
-                                        SpeedParameter = configuration.FilterWheelMotorDefaultSpeed,
-                                    };
-                                    motorsManager.EnqueuePriorityCommand(filterWheelMoveCommand);
-                                    int _ = -1 * await motorsManager.GetMotorByName("Filter Wheel").GetPositionAsync();
-                                    while (_ != filterWheelPos)
-                                    {
-                                        await Task.Delay(msDelay);
-                                        _ = -1 * await motorsManager.GetMotorByName("Filter Wheel").GetPositionAsync();
-                                    }
-                                    // Capture the image
-                                    Directory.CreateDirectory($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx+1}");
-                                    await cameraManager.CaptureImageAsync($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}\\bf_{exposure}.tiff");
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"bf_{exposure}.tiff", 
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageCy5)
+                                {
+                                    intensity = scanParameters.Cy5Intensity;
+                                    exposure = scanParameters.Cy5Exposure;
+                                    filterWheelPos = configuration.Cy5FilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"cy5_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageFAM)
+                                {
+                                    intensity = scanParameters.FAMIntensity;
+                                    exposure = scanParameters.FAMExposure;
+                                    filterWheelPos = configuration.FAMFilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"fam_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageHEX)
+                                {
+                                    intensity = scanParameters.HEXIntensity;
+                                    exposure = scanParameters.HEXExposure;
+                                    filterWheelPos = configuration.HEXFilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"hex_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageAtto)
+                                {
+                                    intensity = scanParameters.AttoIntensity;
+                                    exposure = scanParameters.AttoExposure;
+                                    filterWheelPos = configuration.AttoFilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"Atto_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageAlexa)
+                                {
+                                    intensity = scanParameters.AlexaIntensity;
+                                    exposure = scanParameters.AlexaExposure;
+                                    filterWheelPos = configuration.AlexaFilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"alexa_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
+                                }
+                                if (scanParameters.ImageCy5p5)
+                                {
+                                    intensity = scanParameters.Cy5p5Intensity;
+                                    exposure = scanParameters.Cy5p5Exposure;
+                                    filterWheelPos = configuration.Cy5p5FilterWheelPosition;
+                                    // Image
+                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"cy55_{exposure}.tiff",
+                                        intensity, exposure, filterWheelPos);
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        public async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition)
+        {
+            // Move the Filter Wheel
+            MotorCommand filterWheelMoveCommand = new MotorCommand
+            {
+                Type = MotorCommand.CommandType.MoveAsync,
+                Motor = motorsManager.GetMotorByName("Filter Wheel"),
+                PositionParameter = filterWheelPosition,
+                SpeedParameter = configuration.FilterWheelMotorDefaultSpeed,
+            };
+            motorsManager.EnqueuePriorityCommand(filterWheelMoveCommand);
+            MotorCommand getFilterWheelCommand = new MotorCommand
+            {
+                Type = MotorCommand.CommandType.GetPositionAsync,
+                Motor = motorsManager.GetMotorByName("Filter Wheel"),
+            };
+            motorsManager.EnqueuePriorityCommand(getFilterWheelCommand);
+            int _ = Math.Abs(motorsManager.GetMotorByName("Filter Wheel").Position);
+            while (_ != filterWheelPosition)
+            {
+                await Task.Delay(msDelay);
+                _ = Math.Abs(motorsManager.GetMotorByName("Filter Wheel").Position);
+            }
+            // Capture the image
+            Directory.CreateDirectory(imageFilePath);
+            // Set Exposure in Microseconds
+            cameraManager.SetExposureTime(exposure);
+            await cameraManager.CaptureImageAsync($"{imageFilePath}\\{imageFileName}");
         }
     }
 }

@@ -26,6 +26,39 @@ namespace Independent_Reader_GUI.Services
         }
 
         /// <summary>
+        /// Set the background color of a cell provided the column and row names
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="color"></param>
+        /// <param name="columnName"></param>
+        /// <param name="rowName"></param>
+        public void SetCellBackColorByColumnAndRowNames(DataGridView dataGridView, Color color, string columnName, string rowName)
+        {
+            int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+            int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+            dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = color;
+        }
+
+        /// <summary>
+        /// Get the row given its name
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="rowName"></param>
+        /// <returns></returns>
+        public DataGridViewRow? GetRowByRowName(DataGridView dataGridView, string rowName)
+        {
+            int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+            try
+            {
+                return dataGridView.Rows[rowIndex];
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Clear the selected cells of their values when they are not in EditMode and are not ReadOnly
         /// </summary>
         /// <param name="dataGridView"></param>

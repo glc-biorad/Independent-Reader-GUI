@@ -8,6 +8,7 @@ namespace Independent_Reader_GUI.Models
 {
     internal class ScanParameters
     {
+        public string ExperimentName;
         public string HeaterLetter;
         public int x0;
         public int y0;
@@ -40,7 +41,8 @@ namespace Independent_Reader_GUI.Models
         public Samples SampleNames = new Samples();
         public Assays AssayNames = new Assays();
 
-        public ScanParameters(string heaterLetter,
+        public ScanParameters(string experimentName,
+            string heaterLetter,
             int x0, int y0, int z0, int fOVdX, int sampledX, int dY, double rotationalOffset, 
             bool imageBrightField, int brightFieldIntensity, int brightFieldExposure,
             bool imageCy5, int cy5Intensity, int cy5Exposure,
@@ -51,6 +53,7 @@ namespace Independent_Reader_GUI.Models
             bool imageCy5p5, int cy5p5Intensity, int cy5p5Exposure,
             Samples sampleNames, Assays assayNames)
         {
+            this.ExperimentName = experimentName;
             this.HeaterLetter = heaterLetter;
             this.x0 = x0; this.y0 = y0; this.z0 = z0;
             this.FOVdX = fOVdX; this.SampledX = sampledX; this.dY = dY;

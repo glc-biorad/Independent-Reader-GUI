@@ -35,6 +35,7 @@ namespace Independent_Reader_GUI.Services
         private ConcurrentQueue<TECCommand> priorityCommandQueue = new ConcurrentQueue<TECCommand>();
         private CancellationTokenSource commandQueueCancellationTokenSource = new CancellationTokenSource();
         private int msDelay = 5;
+        private double tempReachedCutoff = 0.5;
 
         public TECManager(TEC tecA, TEC tecB, TEC tecC, TEC tecD)
         {
@@ -658,7 +659,34 @@ namespace Independent_Reader_GUI.Services
                     "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
                     "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
-            }            
+            }         
+            if (double.TryParse(tec.ActualObjectTemperature, out double actualTemp) && double.TryParse(tec.TargetObjectTemperature, out double targetTemp))
+            {
+                if (Math.Abs(tec.PreviousObjectTemperature - double.Parse(tec.ActualObjectTemperature)) < tempReachedCutoff)
+                {
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                        "IO", "Idle");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.White, tec.Name, "IO");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                        "IO", "Idle");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.White, tec.Name, "IO");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                        "IO", "Idle");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.White, tec.Name, "IO");
+                }
+                else
+                {
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                        "IO", "Ramping");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                        "IO", "Ramping");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                        "IO", "Ramping");
+                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                }
+            }
         }
     }
 }

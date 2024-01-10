@@ -23,6 +23,7 @@ namespace Independent_Reader_GUI
         private readonly APIManager apiManager = new APIManager();
         private DataGridViewManager dataGridViewManager = new DataGridViewManager();
         private ScanManager scanManager;
+        private EmailManager emailManager;
         private TimerManager runExperimentDataTimerManager;
         private TimerManager controlTabTimerManager;
         private TimerManager mainFormFastTimerManager;
@@ -129,6 +130,7 @@ namespace Independent_Reader_GUI
             scanningOptions = new ScanningOptions(configuration, consumablesImageScanningDataGridView);
             defaultScanningOption = scanningOptions.GetScanningOptionData("A", configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
             scanManager = new ScanManager(configuration, motorManager, cameraManager, ledManager);
+            emailManager = new EmailManager();
 
             // Obtain default data paths
             defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
@@ -689,6 +691,7 @@ namespace Independent_Reader_GUI
             imagingDyTextBox.Text = configuration.DefaultDy.ToString();
             imagingDzTextBox.Text = configuration.DefaultDz.ToString();
             ScanParameterData scanParameterData = new ScanParameterData();
+            imagingScanParametersDataGridView.Rows.Add("Experiment", "");
             imagingScanParametersDataGridView.Rows.Add("Heater");
             imagingScanParametersDataGridView.Rows[imagingScanParametersDataGridView.Rows.Count - 1].Cells[1] = scanParameterData.Heater;
             // FIXME: Use the configuration file to set this default value for the heater
@@ -733,7 +736,7 @@ namespace Independent_Reader_GUI
             imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[6].Value = "No";
             imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[7] = ledsData.UseCy5p5ComboBoxCell;
             imagingLEDsDataGridView.Rows[imagingLEDsDataGridView.Rows.Count - 1].Cells[7].Value = "No";
-            imagingLEDsDataGridView.Rows.Add("Intensity (%)", 
+            imagingLEDsDataGridView.Rows.Add("Intensity (%)",
                 configuration.HEXIntensity, // Bright Field
                 configuration.Cy5Intensity, configuration.FAMIntensity, configuration.HEXIntensity, configuration.AttoIntensity, configuration.AlexaIntensity, configuration.Cy5p5Intensity);
             imagingLEDsDataGridView.Rows.Add("Exposure (ms)",
@@ -920,7 +923,7 @@ namespace Independent_Reader_GUI
             int numberOfAssays = cartridge.NumberofAssayChambers;
             for (int i = 0; i < numberOfSamples; i++)
             {
-                imagingScanParametersDataGridView.Rows.Add($"Sample {i+1} Name", $"Sample {i+1}");
+                imagingScanParametersDataGridView.Rows.Add($"Sample {i + 1} Name", $"Sample {i + 1}");
             }
             for (int i = 0; i < numberOfAssays; i++)
             {
@@ -2485,6 +2488,7 @@ namespace Independent_Reader_GUI
         private async void imagingScanButton_Click(object sender, EventArgs e)
         {
             // Get the scanning parameters
+            string experimentName = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Experiment", imagingScanParametersDataGridView);
             string heaterLetter = dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Heater", imagingScanParametersDataGridView);
             int x0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "x0 (\u03BCS)", imagingScanParametersDataGridView));
             int y0 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "y0 (\u03BCS)", imagingScanParametersDataGridView));
@@ -2531,9 +2535,10 @@ namespace Independent_Reader_GUI
                 }
             }
             // Setup the Scan Parameters to use
-            ScanParameters scanParameters = new ScanParameters(heaterLetter,
+            ScanParameters scanParameters = new ScanParameters(experimentName,
+                heaterLetter,
                 x0, y0, z0, fovdx, sampledx, dy, rotationalOffset,
-                imageBrightField, intensityBrightField, exposureBrightField, 
+                imageBrightField, intensityBrightField, exposureBrightField,
                 imageCy5, intensityCy5, exposureCy5,
                 imageFAM, intensityFAM, exposureFAM,
                 imageHEX, intensityHEX, exposureHEX,
@@ -2543,6 +2548,11 @@ namespace Independent_Reader_GUI
                 sampleNames, assayNames);
             // Scan
             await scanManager.Scan(scanParameters);
+        }
+
+        private void imagingKillButon_Click(object sender, EventArgs e)
+        {
+            emailManager.SendEmail("gabriel.lopez.candales@gmail.com");
         }
     }
 }
