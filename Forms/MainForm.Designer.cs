@@ -1625,6 +1625,7 @@
             imagingKillButon.TabIndex = 13;
             imagingKillButon.Text = "Kill";
             imagingKillButon.UseVisualStyleBackColor = false;
+            imagingKillButon.Click += imagingKillButon_Click;
             // 
             // imagingScanButton
             // 
