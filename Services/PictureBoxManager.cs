@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Independent_Reader_GUI.Models;
 using Configuration = Independent_Reader_GUI.Models.Configuration;
+using Independent_Reader_GUI.Utilities;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -16,10 +17,67 @@ namespace Independent_Reader_GUI.Services
     {
 
         private Configuration configuration;
+        public bool MouseDrawing = false;
+        private Point mouseStartPoint; 
+        private Point mouseEndPoint;
+        public Bitmap lineBitmap;
+        public Bitmap temporaryLineBitmap;
 
         public PictureBoxManager(Configuration configuration)
         {
             this.configuration = configuration;
+        }
+
+        public void SetMouseStartPoint(Point startPoint)
+        {
+            this.mouseStartPoint = startPoint;
+        }
+        public void SetMouseEndPoint(Point endPoint)
+        {
+            this.mouseEndPoint = endPoint;
+        }
+
+        public void DrawLine(PictureBox pictureBox)
+        {
+            using (Graphics g = Graphics.FromImage(lineBitmap))
+            {
+                g.DrawLine(Pens.Red, mouseStartPoint, mouseEndPoint);
+            }
+            pictureBox.Invalidate(); // Refresh the picture box
+        }
+
+        public void DrawTemporaryLine(PictureBox pictureBox)
+        {
+            using (Font boldFont = new Font("Arial", 12, FontStyle.Bold))
+            {
+                using (Graphics g = Graphics.FromImage(temporaryLineBitmap))
+                {
+                    // Clear the temporary bitmap
+                    g.Clear(Color.Transparent);
+                    // Draw the current state of the original bitmap
+                    g.DrawImage(lineBitmap, 0, 0);
+                    // Draw user line
+                    g.DrawLine(Pens.Red, mouseStartPoint, mouseEndPoint);
+                    // Draw the horizontal line from the start point
+                    g.DrawLine(Pens.Blue, mouseStartPoint, new Point(lineBitmap.Width, mouseStartPoint.Y));
+                    // Display the angle
+                    AngleTool angleTool = new AngleTool();
+                    double rotationalOffsetAngle = angleTool.CalculateAngleBetweenTwoLinesGivenEndPoints(mouseStartPoint, mouseStartPoint,
+                        mouseEndPoint, new Point(lineBitmap.Width, mouseStartPoint.Y));
+                    Debug.WriteLine($"Line: {rotationalOffsetAngle}");
+                    // Draw the angle
+                    g.DrawString($"{rotationalOffsetAngle:0.00}\u00B0", boldFont, Brushes.LimeGreen, new PointF(mouseStartPoint.X, mouseStartPoint.Y));
+                }
+                // Update the picture box
+                pictureBox.Image = temporaryLineBitmap;
+            }           
+        }
+
+        public void InitializeLineBitmap(PictureBox pictureBox)
+        {
+            lineBitmap = new Bitmap(pictureBox.Image, pictureBox.Width, pictureBox.Height);
+            temporaryLineBitmap = new Bitmap(pictureBox.Image, pictureBox.Width, pictureBox.Height);
+            pictureBox.Image = lineBitmap;
         }
 
         public async Task<int> SaveImageWithSaveFileDialog(PictureBox pictureBox)

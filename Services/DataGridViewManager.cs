@@ -40,6 +40,27 @@ namespace Independent_Reader_GUI.Services
         }
 
         /// <summary>
+        /// Set the cell fore color provided an outcome and the column/row index
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="outcome"></param>
+        /// <param name="successColor"></param>
+        /// <param name="failColor"></param>
+        /// <param name="columnIndex"></param>
+        /// <param name="rowIndex"></param>
+        public void SetCellForeColorByColumnAndRowIndexBasedOnOutcome(DataGridView dataGridView, bool outcome, Color successColor, Color failColor, int columnIndex, int rowIndex)
+        {
+            if (outcome)
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.ForeColor = successColor;
+            }
+            else
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.ForeColor = failColor;
+            }
+        }
+
+        /// <summary>
         /// Get the row given its name
         /// </summary>
         /// <param name="dataGridView"></param>

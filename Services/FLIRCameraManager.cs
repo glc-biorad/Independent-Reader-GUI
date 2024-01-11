@@ -19,6 +19,7 @@ namespace Independent_Reader_GUI.Services
     {
         private bool connected;
         private bool streaming;
+        public bool Scanning;
         private ManagedSystem? managedSystem = null;
         private ManagedCameraList cameraList = new ManagedCameraList();
         private IManagedCamera? camera = null;
@@ -28,6 +29,7 @@ namespace Independent_Reader_GUI.Services
         private Bitmap currentImageBitmap;
         private int exposure = 12; // minimum allowed
         private AutoFocusManager autoFocusManager = new AutoFocusManager();
+        private BitmapManager bitmapManager = new BitmapManager();
 
         public FLIRCameraManager(PictureBox pictureBox)
         {
@@ -174,7 +176,6 @@ namespace Independent_Reader_GUI.Services
                     // Begin acquiring images
                     camera.BeginAcquisition();
                     // Create an ImageProcessor instance for post processing images
-                    // NOTE: This can be a private instance for the class since it is also used in CaptureImage
                     IManagedImageProcessor processor = new ManagedImageProcessor();
                     // Set the default image processor color processing method
                     processor.SetColorProcessing(ColorProcessingAlgorithm.HQ_LINEAR);
@@ -194,8 +195,9 @@ namespace Independent_Reader_GUI.Services
                                 {
                                     using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
                                     {
-                                        currentImageBitmap = await autoFocusManager.SharpenImage(convertedImage.bitmap);
-                                        //currentImageBitmap = convertedImage.bitmap;
+                                        //currentImageBitmap = await autoFocusManager.SharpenImage(convertedImage.bitmap);
+                                        currentImageBitmap = convertedImage.bitmap;
+                                        //Debug.WriteLine($"Blurriness Metric: {bitmapManager.CalculateFocusMetric(currentImageBitmap)}");
                                         try
                                         {                                            
                                             pictureBox.Image = currentImageBitmap;
