@@ -33,6 +33,8 @@ namespace Independent_Reader_GUI.Services
         /// <returns></returns>
         public async Task Scan(ScanParameters scanParameters)
         {
+            // Set the camera to IO scanning
+            cameraManager.Scanning = true;
             // TODO: Create an experiment folder
             string experimentName = scanParameters.ExperimentName;
             string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";
@@ -120,13 +122,14 @@ namespace Independent_Reader_GUI.Services
                                 int intensity;
                                 int exposure;
                                 int filterWheelPos;
+                                string imagePath = $"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}";
                                 if (scanParameters.ImageBrightField)
                                 {
                                     intensity = scanParameters.BrightFieldIntensity;
                                     exposure = scanParameters.BrightFieldExposure;
                                     filterWheelPos = configuration.FAMFilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"bf_{exposure}.tiff", 
+                                    await TakeImage(imagePath, $"bf_{assayName}_{exposure}.tiff", 
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageCy5)
@@ -135,7 +138,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.Cy5Exposure;
                                     filterWheelPos = configuration.Cy5FilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"cy5_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"cy5_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageFAM)
@@ -144,7 +147,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.FAMExposure;
                                     filterWheelPos = configuration.FAMFilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"fam_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"fam_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageHEX)
@@ -153,7 +156,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.HEXExposure;
                                     filterWheelPos = configuration.HEXFilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"hex_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"hex_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageAtto)
@@ -162,7 +165,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.AttoExposure;
                                     filterWheelPos = configuration.AttoFilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"Atto_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"Atto_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageAlexa)
@@ -171,7 +174,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.AlexaExposure;
                                     filterWheelPos = configuration.AlexaFilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"alexa_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"alexa_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                                 if (scanParameters.ImageCy5p5)
@@ -180,7 +183,7 @@ namespace Independent_Reader_GUI.Services
                                     exposure = scanParameters.Cy5p5Exposure;
                                     filterWheelPos = configuration.Cy5p5FilterWheelPosition;
                                     // Image
-                                    await TakeImage($"{dir}\\{experimentName}\\heater{heaterLetter}\\chamber{sampleIdx + 1}\\FOV{fovIdx + 1}", $"cy55_{exposure}.tiff",
+                                    await TakeImage(imagePath, $"cy55_{assayName}_{exposure}.tiff",
                                         intensity, exposure, filterWheelPos);
                                 }
                             }
@@ -188,6 +191,7 @@ namespace Independent_Reader_GUI.Services
                     }
                 }
             }
+            cameraManager.Scanning = false;
         }
 
         public async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition)

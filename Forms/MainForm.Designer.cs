@@ -1775,6 +1775,9 @@
             imagingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             imagingPictureBox.TabIndex = 0;
             imagingPictureBox.TabStop = false;
+            imagingPictureBox.MouseDown += imagingPictureBox_MouseDown;
+            imagingPictureBox.MouseMove += imagingPictureBox_MouseMove;
+            imagingPictureBox.MouseUp += imagingPictureBox_MouseUp;
             // 
             // settingsTabPage
             // 

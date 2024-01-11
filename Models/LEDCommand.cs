@@ -17,6 +17,7 @@ namespace Independent_Reader_GUI.Models
             GetVersionAsync,
             On,
             Off,
+            GetIntensity,
         }
 
         public CommandType Type { get; set; }

@@ -1,7 +1,9 @@
 ﻿using Independent_Reader_GUI.Exceptions;
 using Independent_Reader_GUI.Services;
+using SpinnakerNET.GenApi;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -146,6 +148,46 @@ namespace Independent_Reader_GUI.Models
                 version = "?";
             }
             return version;
+        }
+
+        public async Task<int> GetIntensity()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data;
+            try
+            {
+                data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/led/status/?channel={id}");
+                await Task.Delay(msDelay);
+            }
+            catch (Exception ex)
+            {
+                data = new APIResponse();
+            }
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the Version from the response
+            string value;
+            int intensity;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+                intensity = 0;
+                this.Intensity = intensity;
+            }
+            else
+            {
+                intensity = int.Parse(value);
+                this.Intensity = intensity;
+            }
+            return intensity;
         }
 
         public async Task On(int intensity)

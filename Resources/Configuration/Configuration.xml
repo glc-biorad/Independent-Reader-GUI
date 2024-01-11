@@ -46,7 +46,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
-				<DefaultDx>37000</DefaultDx>
+				<DefaultDx>1000</DefaultDx>
 			</x>
 			<y>
 				<Address>2</Address>
@@ -55,7 +55,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
-				<DefaultDy>5000</DefaultDy>
+				<DefaultDy>500</DefaultDy>
 			</y>
 			<z>
 				<Address>3</Address>
@@ -64,7 +64,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
-				<DefaultDz>10000</DefaultDz>
+				<DefaultDz>1000</DefaultDz>
 			</z>
 			<FilterWheel>
 				<Address>4</Address>
@@ -295,7 +295,7 @@
 	<DefaultCartridge>M2M</DefaultCartridge>
 	<DefaultElastomer>FFBE 3Di2bV1.0M NPF</DefaultElastomer>
 	<DefaultBergquist>Laird TFlex HD300</DefaultBergquist>
-	<DefaultGlassOffset>12.3</DefaultGlassOffset>
+	<DefaultGlassOffset>8.64</DefaultGlassOffset>
 	<RunDataTimerInterval>1000</RunDataTimerInterval>
 	<ControlTabTimerInterval>5000</ControlTabTimerInterval>
 	<MainFormFastTimerInterval>3000</MainFormFastTimerInterval>

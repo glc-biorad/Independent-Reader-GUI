@@ -252,9 +252,10 @@ namespace Independent_Reader_GUI
         private void AddHomeLEDsDefaultData()
         {
             homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
-            homeLEDsDataGridView.Rows.Add("IO", "?", "?", "?", "?", "?", "?");
-            homeLEDsDataGridView.Rows.Add("Exposure (ms)", "?", "?", "?", "?", "?", "?");
-            homeLEDsDataGridView.Rows.Add("Intensity (%)", "?", "?", "?", "?", "?", "?");
+            homeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
+            homeLEDsDataGridView.Rows.Add("Exposure (ms)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure, 
+                configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
+            homeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
         }
 
         /// <summary>
@@ -550,19 +551,19 @@ namespace Independent_Reader_GUI
             LEDsData controlLEDsData = new LEDsData();
             controlLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             controlLEDsDataGridView.Rows.Add("IO");
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[1] = controlLEDsData.IOCy5ComboBoxCell;
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[2] = controlLEDsData.IOFAMComboBoxCell;
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[3] = controlLEDsData.IOHEXComboBoxCell;
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[4] = controlLEDsData.IOAttoComboBoxCell;
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[5] = controlLEDsData.IOAlexaComboBoxCell;
-            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[6] = controlLEDsData.IOCy5p5ComboBoxCell;
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[1].Value = Cy5.Intensity > 0 ? "On" : "Off";
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[2].Value = FAM.Intensity > 0 ? "On" : "Off";
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[3].Value = HEX.Intensity > 0 ? "On" : "Off";
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[4].Value = Atto.Intensity > 0 ? "On" : "Off";
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[5].Value = Alexa.Intensity > 0 ? "On" : "Off";
+            controlLEDsDataGridView.Rows[controlLEDsDataGridView.Rows.Count - 1].Cells[6].Value = Cy5p5.Intensity > 0 ? "On" : "Off";
             controlLEDsDataGridView.Rows.Add("Intensity (%)",
-                configuration.Cy5Intensity,
-                configuration.FAMIntensity,
-                configuration.HEXIntensity,
-                configuration.AttoIntensity,
-                configuration.AttoIntensity,
-                configuration.Cy5p5Intensity);
+                Cy5.Intensity,
+                FAM.Intensity,
+                HEX.Intensity,
+                Atto.Intensity,
+                Alexa.Intensity,
+                Cy5p5.Intensity);
         }
 
         /// <summary>
@@ -848,40 +849,34 @@ namespace Independent_Reader_GUI
 
         private async void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            // Check if the IO cell values change
+            // Get the selected property
             var propertySelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[0].Value;
-            if (propertySelected.Equals("IO"))
+            // Check if the intensity value changed
+            if (propertySelected.Equals("Intensity (%)"))
             {
                 // Turn on or off the LED
                 string ledName = controlLEDsDataGridView.Columns[e.ColumnIndex].HeaderText;
                 LED led = ledManager.GetLEDFromName(ledName);
-                var valueSelected = controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (valueSelected.Equals("On"))
+                try
                 {
-                    try
-                    {
-                        int intensity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(ledName, "Intensity (%)", controlLEDsDataGridView));
-                        LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
-                        ledManager.EnqueueCommand(ledOnCommand);
-                    }
-                    catch (LEDNotConnectedException ex)
-                    {
-                        //controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "Off";
-                        return;
-                    }
-                }
-                else if (valueSelected.Equals("Off"))
-                {
-                    try
+                    int intensity = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(ledName, "Intensity (%)", controlLEDsDataGridView));
+                    if (intensity == 0)
                     {
                         LEDCommand ledOffCommand = new LEDCommand() { Type = LEDCommand.CommandType.Off, LED = led };
                         ledManager.EnqueueCommand(ledOffCommand);
+                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "Off");
                     }
-                    catch (LEDNotConnectedException ex)
+                    else
                     {
-                        //controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "?";
-                        return;
+                        LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
+                        ledManager.EnqueueCommand(ledOnCommand);
+                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "On");
                     }
+                }
+                catch (LEDNotConnectedException ex)
+                {
+                    //controlLEDsDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "Off";
+                    return;
                 }
             }
         }
@@ -916,18 +911,36 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Sample dX (\u03BCS)", scanParameters.SampledX.ToString());
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "dY (\u03BCS)", scanParameters.dY.ToString());
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Rotational Offset (\u00B0)", scanParameters.RotationalOffset.ToString());
-            // Set the Sample and Assay name rows but first clear the previous ones if there are any
-            dataGridViewManager.RemoveRowsByNameWhichContains(imagingScanParametersDataGridView, "Name");
-            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeName);
-            int numberOfSamples = cartridge.NumberofSampleChambers;
-            int numberOfAssays = cartridge.NumberofAssayChambers;
-            for (int i = 0; i < numberOfSamples; i++)
+            // Get the row we are changing
+            DataGridViewRow row = imagingScanParametersDataGridView.Rows[e.RowIndex];
+            // TODO: Update this to only trigger if the cartridge changes (will trigger if I reselect the same cartridge?)
+            if (row.Cells[0].Value == "Cartridge")
             {
-                imagingScanParametersDataGridView.Rows.Add($"Sample {i + 1} Name", $"Sample {i + 1}");
+                // Set the Sample and Assay name rows but first clear the previous ones if there are any
+                dataGridViewManager.RemoveRowsByNameWhichContains(imagingScanParametersDataGridView, "Name");
+                Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(cartridgeName);
+                int numberOfSamples = cartridge.NumberofSampleChambers;
+                int numberOfAssays = cartridge.NumberofAssayChambers;
+                for (int i = 0; i < numberOfSamples; i++)
+                {
+                    imagingScanParametersDataGridView.Rows.Add($"Sample {i + 1} Name", $"Sample {i + 1}");
+                }
+                for (int i = 0; i < numberOfAssays; i++)
+                {
+                    imagingScanParametersDataGridView.Rows.Add($"Assay {i + 1} Name", $"Assay {i + 1}");
+                }
             }
-            for (int i = 0; i < numberOfAssays; i++)
+            else if (imagingScanParametersDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString().Contains("(\u03BCS)"))
             {
-                imagingScanParametersDataGridView.Rows.Add($"Assay {i + 1} Name", $"Assay {i + 1}");
+                dataGridViewManager.SetCellForeColorByColumnAndRowIndexBasedOnOutcome(dataGridView: imagingScanParametersDataGridView,
+                    outcome: int.TryParse(row.Cells[e.ColumnIndex].Value.ToString(), out _),
+                    successColor: Color.Black, failColor: Color.Red, columnIndex: e.ColumnIndex, rowIndex: e.RowIndex);
+            }
+            else if (imagingScanParametersDataGridView.Rows[e.RowIndex].Cells[0].Value.ToString().Contains("(\u00B0)"))
+            {
+                dataGridViewManager.SetCellForeColorByColumnAndRowIndexBasedOnOutcome(dataGridView: imagingScanParametersDataGridView,
+                    outcome: int.TryParse(row.Cells[e.ColumnIndex].Value.ToString(), out _),
+                    successColor: Color.Black, failColor: Color.Red, columnIndex: e.ColumnIndex, rowIndex: e.RowIndex);
             }
         }
 
@@ -1011,6 +1024,9 @@ namespace Independent_Reader_GUI
 
             // Load in consumables Combo Boxes
             LoadconsumablesComboBoxInitialData();
+
+            // Start streaming
+            await cameraManager.StartStreamAsync();
         }
 
         private async void SingleUseDataLoad()
@@ -1301,6 +1317,8 @@ namespace Independent_Reader_GUI
             motorManager.HandleFastTickEvent(dataGridViewManager, homeMotorsDataGridView, controlMotorsDataGridView);
             // Check the TECs data every fast tick
             tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            // TODO: Check the LEDs data every fast tick
+            //ledManager.HandleFastTickEvent(dataGridViewManager, homeLEDsDataGridView, controlLEDsDataGridView);
         }
 
         public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
@@ -2355,7 +2373,7 @@ namespace Independent_Reader_GUI
 
         private async void imagingTabPage_Enter(object sender, EventArgs e)
         {
-            await cameraManager.StartStreamAsync();
+            //await cameraManager.StartStreamAsync();
         }
 
         private async void imagingTabPage_Leave(object sender, EventArgs e)
@@ -2528,11 +2546,25 @@ namespace Independent_Reader_GUI
             {
                 if (row.Cells[0].Value.ToString().Contains("Sample"))
                 {
-                    sampleNames.Add(row.Cells[1].Value.ToString());
+                    try
+                    {
+                        sampleNames.Add(row.Cells[1].Value.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        sampleNames.Add("");
+                    }
                 }
                 else if (row.Cells[0].Value.ToString().Contains("Assay"))
                 {
-                    assayNames.Add(row.Cells[1].Value.ToString());
+                    try
+                    {
+                        assayNames.Add(row.Cells[1].Value.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        assayNames.Add("");
+                    }
                 }
             }
             // Setup the Scan Parameters to use
@@ -2555,6 +2587,46 @@ namespace Independent_Reader_GUI
         private void imagingKillButon_Click(object sender, EventArgs e)
         {
             emailManager.SendEmail("gabriel.lopez.candales@gmail.com");
+        }
+
+        private async void imagingPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Stop Streaming as long as we are not mid scan
+                if (!cameraManager.Scanning)
+                {
+                    //pictureBoxManager.lineBitmap = cameraManager.CurrentImage;
+                    // Stop streaming
+                    await cameraManager.StopStreamAsync();
+                    imagingPictureBox.Image = cameraManager.CurrentImage;
+                    // Initializet linebitmap
+                    pictureBoxManager.InitializeLineBitmap(imagingPictureBox);
+                    pictureBoxManager.MouseDrawing = true;
+                    pictureBoxManager.SetMouseStartPoint(e.Location);
+                }
+
+            }
+        }
+
+        private void imagingPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (pictureBoxManager.MouseDrawing)
+            {
+                pictureBoxManager.SetMouseEndPoint(e.Location);
+                pictureBoxManager.DrawTemporaryLine(imagingPictureBox);
+            }
+        }
+
+        private async void imagingPictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (pictureBoxManager.MouseDrawing)
+            {
+                pictureBoxManager.MouseDrawing = false;
+                pictureBoxManager.DrawLine(imagingPictureBox);
+                // Start the stream again
+                await cameraManager.StartStreamAsync();
+            }
         }
     }
 }
