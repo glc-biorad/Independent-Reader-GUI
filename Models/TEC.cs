@@ -247,10 +247,25 @@ namespace Independent_Reader_GUI.Models
             return firmwareVersion;
         }
 
-        public void Reset()
+        public async Task ResetAsync()
         {
-            // TODO: Implement code to reset the TEC
-            MessageBox.Show("Code to reset the TEC has not been implmented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Assume motor is connected
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            object? resp = null;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == null && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                // Generate a API Motor Request
+                APITECRequest apiTECRequest = new APITECRequest(name: name);
+                // Send the request to the API
+                resp = await apiManager.PostAsync<APITECRequest, APIResponse>(
+                    $"http://127.0.0.1:8000/tec/meerstetter/reset/?heater=Heater%20{name.Last()}",
+                    apiTECRequest);
+                await Task.Delay(msDelay);
+            }
+            stopwatch.Stop();
         }
 
         /// <summary>

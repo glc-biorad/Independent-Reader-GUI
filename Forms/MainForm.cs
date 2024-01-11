@@ -1680,9 +1680,9 @@ namespace Independent_Reader_GUI
         {
             if (tecA.Connected)
             {
-                // TODO: Implement code to handle resetting the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecA.Reset();
+                // Setup the Reset command and add it to the queue
+                TECCommand resetCommand = new TECCommand { Type = TECCommand.CommandType.ResetAsync, TEC = tecA };
+                tecManager.EnqueuePriorityCommand(resetCommand);
             }
             else
             {
@@ -1699,9 +1699,9 @@ namespace Independent_Reader_GUI
         {
             if (tecB.Connected)
             {
-                // TODO: Implement code to handle resetting the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecB.Reset();
+                // Setup the Reset command and add it to the queue
+                TECCommand resetCommand = new TECCommand { Type = TECCommand.CommandType.ResetAsync, TEC = tecA };
+                tecManager.EnqueuePriorityCommand(resetCommand);
             }
             else
             {
@@ -1717,9 +1717,9 @@ namespace Independent_Reader_GUI
         {
             if (tecC.Connected)
             {
-                // TODO: Implement code to handle resetting the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecC.Reset();
+                // Setup the Reset command and add it to the queue
+                TECCommand resetCommand = new TECCommand { Type = TECCommand.CommandType.ResetAsync, TEC = tecA };
+                tecManager.EnqueuePriorityCommand(resetCommand);
             }
             else
             {
@@ -1736,9 +1736,9 @@ namespace Independent_Reader_GUI
         {
             if (tecD.Connected)
             {
-                // TODO: Implement code to handle resetting the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                tecD.Reset();
+                // Setup the Reset command and add it to the queue
+                TECCommand resetCommand = new TECCommand { Type = TECCommand.CommandType.ResetAsync, TEC = tecA };
+                tecManager.EnqueuePriorityCommand(resetCommand);
             }
             else
             {

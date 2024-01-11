@@ -150,6 +150,9 @@ namespace Independent_Reader_GUI.Services
                                 case TECCommand.CommandType.GetTemperatureControl:
                                     await command.TEC.GetTemperatureControl();
                                     break;
+                                case TECCommand.CommandType.ResetAsync:
+                                    await command.TEC.ResetAsync();
+                                    break;
                             }
                         }
                         catch (Exception ex)
@@ -219,6 +222,9 @@ namespace Independent_Reader_GUI.Services
                                     break;
                                 case TECCommand.CommandType.GetTemperatureControl:
                                     await command.TEC.GetTemperatureControl();
+                                    break;
+                                case TECCommand.CommandType.ResetAsync:
+                                    await command.TEC.ResetAsync();
                                     break;
                             }
                         }
