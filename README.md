@@ -5,8 +5,10 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 
 ## To-Do (Future Updates and Features)
 ### Home Tab
-- At Form loading check if the LEDs are connected
+- At Form loading check if the LEDs are connected via the ?led command
 - Update the Camera IO every N seconds (streaming, capturing, idle, etc)
+- Move the Expodure from LEDs to Camera (camera should show what the current exposure is set to)
+- Figure out a way to determine if the unit has been homed or not yet
 ### Run Tab
 - Update X0, Y0, Z0, FOV dX, and dY based on the Cartridge, Elastomer, Bergquist, and Glass Offset. If this combonation is not found in the ScanningData XML file, add it on the onset of the run
 - Update Bergquist and Elastomer Thickness TextBox values based on changes with the Elastomer and Bergquist ComboBox selections
