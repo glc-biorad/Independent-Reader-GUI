@@ -5,10 +5,11 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 
 ## To-Do (Future Updates and Features)
 ### Home Tab
-- At Form loading check if the LEDs are connected via the ?led command
-- Update the Camera IO every N seconds (streaming, capturing, idle, etc)
-- Move the Expodure from LEDs to Camera (camera should show what the current exposure is set to)
+- Add current camera exposure to the Camera DataGridView
+- Add a DataGridView to show relay value states 
 - Figure out a way to determine if the unit has been homed or not yet
+- Add a column to the Motor DataGridView to show the IO (Moving, Homing, Idle, Error)
+- Recheck the version for motors if the loaded value doesnt have the form v#.#.#
 ### Run Tab
 - Update X0, Y0, Z0, FOV dX, and dY based on the Cartridge, Elastomer, Bergquist, and Glass Offset. If this combonation is not found in the ScanningData XML file, add it on the onset of the run
 - Update Bergquist and Elastomer Thickness TextBox values based on changes with the Elastomer and Bergquist ComboBox selections
@@ -30,16 +31,21 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
   - Generate the postrun report
   - Email the user the postrun report
 ### Control Tab
+- Add current camera exposure to the Camera DataGridView and enable users to change it
+- Add a DataGridView to show relay value states and allow users to turn them on and off (add a check status to API so we can warn user if the mechanical switch is pulled)
+- Figure out a way to determine if the unit has been homed or not yet
+- Add a column to the Motor DataGridView to show the IO (Moving, Homing, Idle, Error)
+- Recheck the version for motors if the loaded value doesnt have the form v#.#.#
 - Change the Home column of the Control tab's Motor DataGridView to a ComboBox so that users can set it to "Homed" or "Not Homed" when the GUI is opened, then update the Home tab
 - Link the ComboBox States and Intensity TextBox in the LEDs DataGridView with the BRADx-API
 ### Imaging Tab
-- Add scanning functionality
 - Add kill scanning functionality
-- Add handlers for when the cartridge, heater, glass offset, erlastomer, and or bergquist change for the scanning parameters
-- Updaet the LEDs DataGridView for scanning
+- Add handlers for when the cartridge, heater, glass offset, elastomer, and or bergquist change for the scanning parameters
+- Update the LEDs DataGridView for scanning
 ### Settings Tab
+- Add setting DataGridViews for each submodule
 ### Configure Tab
-- Add update fucntionality to the scanning parameters
+- Fix update fucntionality to the scanning parameters
 - Better handle changes to the scanning parameters 
 
 ## Technology Used
