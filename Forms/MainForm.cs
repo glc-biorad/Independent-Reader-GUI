@@ -253,7 +253,7 @@ namespace Independent_Reader_GUI
         {
             homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             homeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
-            homeLEDsDataGridView.Rows.Add("Exposure (ms)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure, 
+            homeLEDsDataGridView.Rows.Add("Exposure (ms)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
                 configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
             homeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
         }
@@ -2405,7 +2405,7 @@ namespace Independent_Reader_GUI
             // 
             // Imaging Tab
             //
-            if (this.tabControl.SelectedTab == imagingTabPage)
+            if (this.readerTabControl.SelectedTab == imagingTabPage)
             {
                 if (e.KeyCode == Keys.Up)
                 {
