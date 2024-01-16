@@ -31,12 +31,12 @@
 		</FilterWheel>
 		<Camera>
 			<ExposureUnits>Microseconds</ExposureUnits>
-			<Cy5Exposure>1000</Cy5Exposure>
-			<FAMExposure>600000</FAMExposure>
-			<HEXExposure>600000</HEXExposure>
-			<AttoExposure>1000</AttoExposure>
-			<AlexaExposure>1000</AlexaExposure>
-			<Cy5.5Exposure>1000</Cy5.5Exposure>
+			<Cy5Exposure>999999</Cy5Exposure>
+			<FAMExposure>400000</FAMExposure>
+			<HEXExposure>999999</HEXExposure>
+			<AttoExposure>999999</AttoExposure>
+			<AlexaExposure>200000</AlexaExposure>
+			<Cy5.5Exposure>999999</Cy5.5Exposure>
 		</Camera>
 		<Motors>
 			<x>

@@ -153,6 +153,18 @@ namespace Independent_Reader_GUI.Services
                                 case TECCommand.CommandType.ResetAsync:
                                     await command.TEC.ResetAsync();
                                     break;
+                                case TECCommand.CommandType.GetFanControl:
+                                    await command.TEC.GetFanControl();
+                                    break;
+                                case TECCommand.CommandType.SetFanControl:
+                                    await command.TEC.SetFanControl(command.Parameter.ToString());
+                                    break;
+                                case TECCommand.CommandType.GetFanTargetTemperature:
+                                    await command.TEC.GetFanTargetTemperature();
+                                    break;
+                                case TECCommand.CommandType.SetFanTargetTemperature:
+                                    await command.TEC.SetFanTargetTemperature(double.Parse(command.Parameter.ToString()));
+                                    break;
                             }
                         }
                         catch (Exception ex)
@@ -226,6 +238,18 @@ namespace Independent_Reader_GUI.Services
                                 case TECCommand.CommandType.ResetAsync:
                                     await command.TEC.ResetAsync();
                                     break;
+                                case TECCommand.CommandType.GetFanControl:
+                                    await command.TEC.GetFanControl();
+                                    break;
+                                case TECCommand.CommandType.SetFanControl:
+                                    await command.TEC.SetFanControl(command.Parameter.ToString());
+                                    break;
+                                case TECCommand.CommandType.GetFanTargetTemperature:
+                                    await command.TEC.GetFanTargetTemperature();
+                                    break;
+                                case TECCommand.CommandType.SetFanTargetTemperature:
+                                    await command.TEC.SetFanTargetTemperature(double.Parse(command.Parameter.ToString()));
+                                    break;
                             }
                         }
                         catch (Exception ex)
@@ -277,6 +301,14 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(tecAGetTemperatureIsStableCommand);
                 TECCommand tecAGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECA };
                 EnqueuePriorityCommand(tecAGetTemperatureControlCommand);
+                TECCommand tecAGetFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECA };
+                EnqueuePriorityCommand(tecAGetFanControlCommand);
+                TECCommand tecAGetFanTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECA };
+                EnqueuePriorityCommand(tecAGetFanTemperatureCommand);
+                TECCommand getFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECA };
+                EnqueuePriorityCommand(getFanControlCommand);
+                TECCommand getTargetFanTempCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECA };
+                EnqueuePriorityCommand(getTargetFanTempCommand);
             }
             if (TECB.Connected)
             {
@@ -302,6 +334,14 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(tecBGetTemperatureIsStableCommand);
                 TECCommand tecBGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECB };
                 EnqueuePriorityCommand(tecBGetTemperatureControlCommand);
+                TECCommand tecBGetFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECB };
+                EnqueuePriorityCommand(tecBGetFanControlCommand);
+                TECCommand tecBGetFanTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(tecBGetFanTemperatureCommand);
+                TECCommand getFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECB };
+                EnqueuePriorityCommand(getFanControlCommand);
+                TECCommand getTargetFanTempCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(getTargetFanTempCommand);
             }
             if (TECC.Connected)
             {
@@ -325,8 +365,16 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(tecCGetSinkLowerErrorThresholdCommand);
                 TECCommand tecCGetTemperatureIsStableCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureIsStable, TEC = TECC };
                 EnqueuePriorityCommand(tecCGetTemperatureIsStableCommand);
-                TECCommand tecCGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECC };
+                TECCommand tecCGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECB };
                 EnqueuePriorityCommand(tecCGetTemperatureControlCommand);
+                TECCommand tecCGetFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECC };
+                EnqueuePriorityCommand(tecCGetFanControlCommand);
+                TECCommand tecCGetFanTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(tecCGetFanTemperatureCommand);
+                TECCommand getFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECB };
+                EnqueuePriorityCommand(getFanControlCommand);
+                TECCommand getTargetFanTempCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(getTargetFanTempCommand);
             }
             if (TECD.Connected)
             {
@@ -350,8 +398,16 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(tecDGetSinkLowerErrorThresholdCommand);
                 TECCommand tecDGgetTemperatureIsStableCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureIsStable, TEC = TECD };
                 EnqueuePriorityCommand(tecDGgetTemperatureIsStableCommand);
-                TECCommand tecDGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECD };
+                TECCommand tecDGetTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = TECB };
                 EnqueuePriorityCommand(tecDGetTemperatureControlCommand);
+                TECCommand tecDGetFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECD };
+                EnqueuePriorityCommand(tecDGetFanControlCommand);
+                TECCommand tecDGetFanTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(tecDGetFanTemperatureCommand);
+                TECCommand getFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = TECB };
+                EnqueuePriorityCommand(getFanControlCommand);
+                TECCommand getTargetFanTempCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
+                EnqueuePriorityCommand(getTargetFanTempCommand);
             }
         }
 
@@ -368,6 +424,7 @@ namespace Independent_Reader_GUI.Services
         {
             DataGridViewManager dataGridViewManager = new DataGridViewManager();
             DateTime startDateTime = DateTime.Now;
+            tec.RunningProtocol = true;
             try
             {
                 // Set the protocol name in the data grid view for this tec
@@ -458,9 +515,12 @@ namespace Independent_Reader_GUI.Services
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Cancelled");
                 MessageBox.Show($"Run has been cancelled on {tec.Name}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tec.RunningProtocol = false;
                 // TODO: Generate a report
                 return;
             }
+            // Set the Running Protocol parameter for the TEC
+            tec.RunningProtocol = false;
             // TODO: Generate a report
             DateTime endDateTime = DateTime.Now;
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No");
@@ -540,10 +600,42 @@ namespace Independent_Reader_GUI.Services
                 if (tecCancellationTokenSources[_cts_idx] != null)
                 {
                     tecCancellationTokenSources[_cts_idx].Cancel();
+                    // Set the Running Protocol Parameter for the TEC
+                    TEC tec = GetTECFromName(tecName);
+                    tec.RunningProtocol = false;
                     // TODO: Set the Protocol Running cell background color to Yellow for a certain amount of time or indefinitely
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No");
                     // TODO: Set the tec*ProtocolRunning bool variable to false
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get the TEC instance from the name
+        /// </summary>
+        /// <param name="name">Name of the TEC</param>
+        /// <returns></returns>
+        public TEC? GetTECFromName(string name)
+        {
+            if (TECA.Name == name)
+            {
+                return TECA;
+            }
+            else if (TECB.Name == name)
+            {
+                return TECB;
+            }
+            else if (TECC.Name == name)
+            {
+                return TECC;
+            }
+            else if (TECD.Name == name)
+            {
+                return TECD;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -613,6 +705,26 @@ namespace Independent_Reader_GUI.Services
             // Setup the Temperature enabled command and add it to the TECsManager Queue
             TECCommand checkTemperatureControl = new TECCommand { Type = TECCommand.CommandType.GetTemperatureControl, TEC = tec };
             EnqueueCommand(checkTemperatureControl);
+            // Setup the Fan Enabled command and add it to the TECsManager Queue
+            TECCommand getFanControlCommand = new TECCommand { Type = TECCommand.CommandType.GetFanControl, TEC = tec };
+            EnqueueCommand(getFanControlCommand);
+            // Setup the Fan Target Temperature command and add it to the TECsManager Queue
+            TECCommand getTargetFanTempCommand = new TECCommand {  Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = tec };
+            EnqueueCommand(getTargetFanTempCommand);
+            // Setup Command to get the Current Error Threshold and Voltage Error Threshold
+            TECCommand getCurrentErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetCurrentErrorThreshold, TEC = tec };
+            EnqueueCommand(getCurrentErrorThresholdCommand);
+            TECCommand getVoltageErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetVoltageErrorThreshold, TEC = tec };
+            EnqueueCommand(getVoltageErrorThresholdCommand);
+            // Setup Commands for the Object and Sink upper and lower thresholds
+            TECCommand getObjectUpperErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectUpperErrorThreshold, TEC = tec };
+            EnqueueCommand(getObjectUpperErrorThresholdCommand);
+            TECCommand getObjectLowerErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectLowerErrorThreshold, TEC = tec };
+            EnqueueCommand(getObjectLowerErrorThresholdCommand);
+            TECCommand getSinkUpperErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkUpperErrorThreshold, TEC = tec };
+            EnqueueCommand(getSinkUpperErrorThresholdCommand);
+            TECCommand getSinkLowerErrorThresholdCommand = new TECCommand { Type = TECCommand.CommandType.GetSinkLowerErrorThreshold, TEC = tec };
+            EnqueueCommand(getSinkLowerErrorThresholdCommand);
             //
             // Set the DataGridValues for the TEC
             //
@@ -621,6 +733,11 @@ namespace Independent_Reader_GUI.Services
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.FanControlled == "Enabled", "Enabled", "Disabled", "Fan Control", tec.Name);
+            if (tec.FanControlChanged())
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.FanControlled == "Enabled", "Enabled", "Disabled", "Fan Control", tec.Name);
+            }
             if (double.TryParse(tec.ActualObjectTemperature, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
@@ -701,16 +818,43 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.CurrentErrorThreshold, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Max Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.CurrentErrorThreshold)));
+                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Max Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.CurrentErrorThreshold)));
+                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))));
             }
             if (double.TryParse(tec.VoltageErrorThreshold, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Max Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.VoltageErrorThreshold)));
+                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Max Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.VoltageErrorThreshold)));
+                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))));
+            }
+            if (double.TryParse(tec.FanTargetTemperature, out double fanTargetTemp))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
+                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp));
+            }
+            if (double.TryParse(tec.ObjectUpperErrorThreshold, out double objectUpperErrorThreshold))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Object Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectUpperErrorThreshold));
+            }
+            if (double.TryParse(tec.ObjectLowerErrorThreshold, out double objectLowerErrorThreshold))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Object Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectLowerErrorThreshold));
+            }
+            if (double.TryParse(tec.SinkUpperErrorThreshold, out double sinkUpperErrorThreshold))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Sink Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkUpperErrorThreshold));
+            }
+            if (double.TryParse(tec.SinkLowerErrorThreshold, out double sinkLowerErrorThreshold))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Sink Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkLowerErrorThreshold));
             }
         }
     }

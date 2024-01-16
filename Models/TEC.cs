@@ -26,15 +26,18 @@ namespace Independent_Reader_GUI.Models
         private string voltageErrorThreshold = "?";
         private string deviceStatus = "?";
         private string temperatureControlled = "Off";
-        private string fanControlled = "Off";
+        private string fanControlled = "Disabled";
         private string objectUpperErrorThreshold = "?";
         private string objectLowerErrorThreshold = "?";
         private string sinkUpperErrorThreshold = "?";
         private string sinkLowerErrorThreshold = "?";
         private string temperatureIsStable = "?";
+        private string fanTargetTemperature = "?";
         private int timeout;
         private int msDelay = 50;
         private double previousObjectTemperature = double.MinValue;
+        private string previousFanControl = "Disabled";
+        public bool RunningProtocol = false;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {
@@ -143,6 +146,32 @@ namespace Independent_Reader_GUI.Models
         public double PreviousObjectTemperature
         {
             get { return previousObjectTemperature; }
+        }
+
+        public string FanControlled
+        {
+            get { return fanControlled; }
+        }
+
+        public string FanTargetTemperature
+        {
+            get { return fanTargetTemperature; }
+        }
+
+        /// <summary>
+        /// Determine if the Fan Control has changed.
+        /// </summary>
+        /// <returns></returns>
+        public bool FanControlChanged()
+        {
+            if (fanControlled != previousFanControl)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void CheckConnection()
@@ -357,6 +386,146 @@ namespace Independent_Reader_GUI.Models
             }
             actualObjectTemperature = value;
             return error;
+        }
+
+        public async Task SetFanTargetTemperature(double temperature)
+        {
+            // Assume motor is connected
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            object? resp = null;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == null && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                // Generate a API Motor Request
+                APITECRequest apiTECRequest = new APITECRequest(name: name, value: temperature);
+                // Send the request to the API
+                resp = await apiManager.PostAsync<APITECRequest, APIResponse>(
+                    $"http://127.0.0.1:8000/tec/target-fan-temperature/?heater=Heater%20{name.Last()}&setpoint={temperature}",
+                    apiTECRequest);
+                await Task.Delay(msDelay);
+            }
+            stopwatch.Stop();
+            fanTargetTemperature = temperature.ToString();
+        }
+
+        public async Task<int> GetFanTargetTemperature()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int error = -1;
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/target-fan-temperature/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(msDelay);
+                    resp = data.Response?.Replace("\r", "");
+                    error = 0;
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+
+                }
+            }
+            stopwatch.Stop();
+
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            fanTargetTemperature = value;
+            return error;
+        }
+
+        public async Task SetFanControl(string status)
+        {
+            // Assume motor is connected
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            object? resp = null;
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == null && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                // Generate a API Motor Request
+                APITECRequest apiTECRequest = new APITECRequest(name: name, strValue: status);
+                // Send the request to the API
+                resp = await apiManager.PostAsync<APITECRequest, APIResponse>(
+                    $"http://127.0.0.1:8000/tec/fan-control/?heater=Heater%20{name.Last()}&status={status}",
+                    apiTECRequest);
+                await Task.Delay(msDelay);
+            }
+            stopwatch.Stop();
+            previousFanControl = fanControlled;
+            fanControlled = status;
+        }
+
+        public async Task GetFanControl()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/fan-control/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(msDelay);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;           
+            if (value == "0")
+            {
+                value = "Disabled";
+            }
+            else if (value == "1")
+            {
+                value = "Enabled";
+            }
+            else
+            {
+                value = "?";
+            }
+            previousFanControl = fanControlled;
+            fanControlled = value;
         }
 
         /// <summary>
