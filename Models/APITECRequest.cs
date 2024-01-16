@@ -11,12 +11,18 @@ namespace Independent_Reader_GUI.Models
         private string name { get; set; }
         private double? value { get; set; }
 
-        public APITECRequest(string name, double? value = null)
+        private string? strValue { get; set; }
+
+        public APITECRequest(string name, double? value = null, string? strValue = null)
         {
             this.name = name;
             if (value != null)
             {
                 this.value = value;
+            }
+            if (strValue != null)
+            {
+                this.strValue = strValue;
             }
         }
     }

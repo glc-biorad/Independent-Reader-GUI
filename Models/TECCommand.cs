@@ -34,6 +34,10 @@ namespace Independent_Reader_GUI.Models
             GetTemperatureIsStable,
             GetTemperatureControl,
             SetTemperatureControl,
+            GetFanControl,
+            SetFanControl,
+            GetFanTargetTemperature,
+            SetFanTargetTemperature,
         }
 
         public CommandType Type { get; set; }

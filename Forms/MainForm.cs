@@ -253,7 +253,7 @@ namespace Independent_Reader_GUI
         {
             homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             homeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
-            homeLEDsDataGridView.Rows.Add("Exposure (ms)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
+            homeLEDsDataGridView.Rows.Add("Exposure (\u03BCs)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
                 configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
             homeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
         }
@@ -327,22 +327,6 @@ namespace Independent_Reader_GUI
                 ValueTECC = "?",
                 ValueTECD = "?",
             };
-            TECsData homeTECsFanOnTemp = new TECsData
-            {
-                PropertyName = "Fan on Temp (\u00B0C)",
-                ValueTECA = "30.0",
-                ValueTECB = "30.0",
-                ValueTECC = "30.0",
-                ValueTECD = "30.0",
-            };
-            TECsData homeTECsFanOffTemp = new TECsData
-            {
-                PropertyName = "Fan off Temp (\u00B0C)",
-                ValueTECA = "30.0",
-                ValueTECB = "30.0",
-                ValueTECC = "30.0",
-                ValueTECD = "30.0",
-            };
             TECsData homeTECsCurrent = new TECsData
             {
                 PropertyName = "Current (A)",
@@ -385,8 +369,8 @@ namespace Independent_Reader_GUI
             homeTECsDataGridView.Rows.Add(homeTECsSinkTemp.PropertyName, homeTECsSinkTemp.ValueTECA, homeTECsSinkTemp.ValueTECB, homeTECsSinkTemp.ValueTECC, homeTECsSinkTemp.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsSinkTempMax.PropertyName, homeTECsSinkTempMax.ValueTECA, homeTECsSinkTempMax.ValueTECB, homeTECsSinkTempMax.ValueTECC, homeTECsSinkTempMax.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsFanRPM.PropertyName, homeTECsFanRPM.ValueTECA, homeTECsFanRPM.ValueTECB, homeTECsFanRPM.ValueTECC, homeTECsFanRPM.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsFanOnTemp.PropertyName, homeTECsFanOnTemp.ValueTECA, homeTECsFanOnTemp.ValueTECB, homeTECsFanOnTemp.ValueTECC, homeTECsFanOnTemp.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsFanOffTemp.PropertyName, homeTECsFanOffTemp.ValueTECA, homeTECsFanOffTemp.ValueTECB, homeTECsFanOffTemp.ValueTECC, homeTECsFanOffTemp.ValueTECD);
+            homeTECsDataGridView.Rows.Add("Fan Control", "Disabled", "Disabled", "Disabled", "Disabled");
+            homeTECsDataGridView.Rows.Add("Fan On Temp (\u00B0C)", "?", "?", "?", "?");
             homeTECsDataGridView.Rows.Add(homeTECsCurrent.PropertyName, homeTECsCurrent.ValueTECA, homeTECsCurrent.ValueTECB, homeTECsCurrent.ValueTECC, homeTECsCurrent.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsMaxCurrent.PropertyName, tecA.CurrentErrorThreshold, tecB.CurrentErrorThreshold, tecC.CurrentErrorThreshold, tecD.CurrentErrorThreshold);
             homeTECsDataGridView.Rows.Add(homeTECsVoltage.PropertyName, homeTECsVoltage.ValueTECA, homeTECsVoltage.ValueTECB, homeTECsVoltage.ValueTECC, homeTECsVoltage.ValueTECD);
@@ -584,10 +568,10 @@ namespace Independent_Reader_GUI
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledB = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledC = new DataGridViewComboBoxCell();
             DataGridViewComboBoxCell dataGridViewComboBoxCellFanEnabledD = new DataGridViewComboBoxCell();
-            dataGridViewComboBoxCellFanEnabledA.Items.AddRange(new object[] { "On", "Off" });
-            dataGridViewComboBoxCellFanEnabledB.Items.AddRange(new object[] { "On", "Off" });
-            dataGridViewComboBoxCellFanEnabledC.Items.AddRange(new object[] { "On", "Off" });
-            dataGridViewComboBoxCellFanEnabledD.Items.AddRange(new object[] { "On", "Off" });
+            dataGridViewComboBoxCellFanEnabledA.Items.AddRange(new object[] { "Enabled", "Disabled" });
+            dataGridViewComboBoxCellFanEnabledB.Items.AddRange(new object[] { "Enabled", "Disabled" });
+            dataGridViewComboBoxCellFanEnabledC.Items.AddRange(new object[] { "Enabled", "Disabled" });
+            dataGridViewComboBoxCellFanEnabledD.Items.AddRange(new object[] { "Enabled", "Disabled" });
             controlTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("IO", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
@@ -638,16 +622,20 @@ namespace Independent_Reader_GUI
                 tecD.SinkLowerErrorThreshold);
             controlTECsDataGridView.Rows.Add("Actual Fan Speed (rpm)", controlTECsData.ValueTECA, controlTECsData.ValueTECB, controlTECsData.ValueTECC, controlTECsData.ValueTECD);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
-            controlTECsDataGridView.Rows.Add("Fan on Temp (\u00B0C)",
+            controlTECsDataGridView.Rows.Add("Fan On Temp (\u00B0C)",
                 configuration.TECAFanOnTemp,
                 configuration.TECBFanOnTemp,
                 configuration.TECCFanOnTemp,
                 configuration.TECDFanOnTemp);
-            controlTECsDataGridView.Rows.Add("Fan Control Enabled");
+            controlTECsDataGridView.Rows.Add("Fan Control");
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1] = dataGridViewComboBoxCellFanEnabledA;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[1].Value = tecA.FanControlled;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2] = dataGridViewComboBoxCellFanEnabledB;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[2].Value = tecB.FanControlled;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3] = dataGridViewComboBoxCellFanEnabledC;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[3].Value = tecC.FanControlled;
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4] = dataGridViewComboBoxCellFanEnabledD;
+            controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].Cells[4].Value = tecD.FanControlled;
             controlTECsDataGridView.Rows.Add("Current (A)", tecA.ActualOutputCurrent, tecB.ActualOutputCurrent, tecC.ActualOutputCurrent, tecD.ActualOutputCurrent);
             controlTECsDataGridView.Rows[controlTECsDataGridView.Rows.Count - 1].ReadOnly = true;
             controlTECsDataGridView.Rows.Add("Max Current (A)", tecA.CurrentErrorThreshold, tecB.CurrentErrorThreshold, tecC.CurrentErrorThreshold, tecD.CurrentErrorThreshold);
@@ -740,7 +728,7 @@ namespace Independent_Reader_GUI
             imagingLEDsDataGridView.Rows.Add("Intensity (%)",
                 configuration.HEXIntensity, // Bright Field
                 configuration.Cy5Intensity, configuration.FAMIntensity, configuration.HEXIntensity, configuration.AttoIntensity, configuration.AlexaIntensity, configuration.Cy5p5Intensity);
-            imagingLEDsDataGridView.Rows.Add("Exposure (ms)",
+            imagingLEDsDataGridView.Rows.Add("Exposure (\u03BCs)",
                 5000, // Bright Field
                 configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure, configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
         }
@@ -1575,18 +1563,34 @@ namespace Independent_Reader_GUI
         /// <param name="e"></param>
         private void controlTECAUpdateButton_Click(object sender, EventArgs e)
         {
-            // TODO: Implement code to handle setting the temperature of the TEC
-            // FIXME: So that this cannot work if a protocol is currently running on this tec
-            double temp;
-            var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
-            if (!double.TryParse(cellValue, out _))
+            if (tecA.RunningProtocol)
             {
-                MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Unable to update TEC A, a protocol is currently being run on it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            temp = double.Parse(cellValue);
-            // Setup the SetObjectTemperature command and add it to the TECsManager Queue
-            TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecA, Parameter = temp };
-            tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+            else
+            {
+                // Check if the temperature or fan control was set
+                var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "Temp Enabled", controlTECsDataGridView);
+                TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecA };
+                tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
+                var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "Fan Control", controlTECsDataGridView);
+                TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecA };
+                tecManager.EnqueuePriorityCommand(setFanControlCommand);
+                // Check if the target temperature is set
+                double temp;
+                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                if (!double.TryParse(cellValue, out _))
+                {
+                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    temp = double.Parse(cellValue);
+                    // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                    TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecA, Parameter = temp };
+                    tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                }                              
+            }            
         }
 
         /// <summary>
@@ -1599,17 +1603,34 @@ namespace Independent_Reader_GUI
             if (tecB.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                double temp;
-                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
-                if (!double.TryParse(cellValue, out _))
+                if (tecB.RunningProtocol)
                 {
-                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Unable to update TEC B, a protocol is currently being run on it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                temp = double.Parse(cellValue);
-                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecB, Parameter = temp };
-                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                else
+                {
+                    // Check if the temperature or fan control was set
+                    var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "Temp Enabled", controlTECsDataGridView);
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecB };
+                    tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
+                    var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "Fan Control", controlTECsDataGridView);
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecB };
+                    tecManager.EnqueuePriorityCommand(setFanControlCommand);
+                    // Check if the target temperature is set
+                    double temp;
+                    var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                    if (!double.TryParse(cellValue, out _))
+                    {
+                        MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        temp = double.Parse(cellValue);
+                        // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                        TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecB, Parameter = temp };
+                        tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                    }
+                }                
             }
             else
             {
@@ -1627,17 +1648,34 @@ namespace Independent_Reader_GUI
             if (tecC.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                double temp;
-                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
-                if (!double.TryParse(cellValue, out _))
+                if (tecC.RunningProtocol)
                 {
-                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Unable to update TEC C, a protocol is currently being run on it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                temp = double.Parse(cellValue);
-                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecC, Parameter = temp };
-                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                else
+                {
+                    // Check if the temperature or fan control was set
+                    var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Temp Enabled", controlTECsDataGridView);
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecC };
+                    tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
+                    var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Fan Control", controlTECsDataGridView);
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecC };
+                    tecManager.EnqueuePriorityCommand(setFanControlCommand);
+                    // Check if the target temperature is set
+                    double temp;
+                    var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                    if (!double.TryParse(cellValue, out _))
+                    {
+                        MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        temp = double.Parse(cellValue);
+                        // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                        TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecC, Parameter = temp };
+                        tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                    }
+                }               
             }
             else
             {
@@ -1655,17 +1693,34 @@ namespace Independent_Reader_GUI
             if (tecD.Connected)
             {
                 // TODO: Implement code to handle setting the temperature of the TEC
-                // FIXME: So that this cannot work if a protocol is currently running on this tec
-                double temp;
-                var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
-                if (!double.TryParse(cellValue, out _))
+                if (tecD.RunningProtocol)
                 {
-                    MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Unable to update TEC D, a protocol is currently being run on it", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                temp = double.Parse(cellValue);
-                // Setup the SetObjectTemperature command and add it to the TECsManager Queue
-                TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecD, Parameter = temp };
-                tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                else
+                {
+                    // Check if the temperature or fan control was set
+                    var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Temp Enabled", controlTECsDataGridView);
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecD };
+                    tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
+                    var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Fan Control", controlTECsDataGridView);
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecD };
+                    tecManager.EnqueuePriorityCommand(setFanControlCommand);
+                    // Check if the target temperature is set
+                    double temp;
+                    var cellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "New Object Temp (\u00B0C)", controlTECsDataGridView);
+                    if (!double.TryParse(cellValue, out _))
+                    {
+                        MessageBox.Show("New Object Temp (\u00B0C) must be a number", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        temp = double.Parse(cellValue);
+                        // Setup the SetObjectTemperature command and add it to the TECsManager Queue
+                        TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecD, Parameter = temp };
+                        tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
+                    }
+                }                
             }
             else
             {
@@ -2521,25 +2576,25 @@ namespace Independent_Reader_GUI
             // Determine the Channels to image in with their associated parameters (intensity, exposure)
             bool imageBrightField = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Intensity (%)", imagingLEDsDataGridView));
-            int exposureBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageCy5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityCy5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureCy5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureCy5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageFAM = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityFAM = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureFAM = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureFAM = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(FAM.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageHEX = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityHEX = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureHEX = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureHEX = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(HEX.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageAtto = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityAtto = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureAtto = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureAtto = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Atto.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageAlexa = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityAlexa = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureAlexa = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureAlexa = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Alexa.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             bool imageCy5p5 = (dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityCy5p5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Intensity (%)", imagingLEDsDataGridView));
-            int exposureCy5p5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Exposure (ms)", imagingLEDsDataGridView));
+            int exposureCy5p5 = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName(Cy5p5.Name, "Exposure (\u03BCs)", imagingLEDsDataGridView));
             // Determine which parts of the chip to image
             Samples sampleNames = new Samples();
             Assays assayNames = new Assays();

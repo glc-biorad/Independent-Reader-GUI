@@ -1163,6 +1163,7 @@
             runRunButton.TabIndex = 4;
             runRunButton.Text = "Run";
             runRunButton.UseVisualStyleBackColor = false;
+            runRunButton.Click += runRunButton_Click;
             // 
             // runAssayMetaDataLabel
             // 
@@ -1252,6 +1253,7 @@
             controlTECDResetButton.TabIndex = 16;
             controlTECDResetButton.Text = "Reset";
             controlTECDResetButton.UseVisualStyleBackColor = false;
+            controlTECDResetButton.Click += controlTECDResetButton_Click;
             // 
             // controlTECCResetButton
             // 
@@ -1264,6 +1266,7 @@
             controlTECCResetButton.TabIndex = 15;
             controlTECCResetButton.Text = "Reset";
             controlTECCResetButton.UseVisualStyleBackColor = false;
+            controlTECCResetButton.Click += controlTECCResetButton_Click;
             // 
             // controlTECBResetButton
             // 
@@ -1276,6 +1279,7 @@
             controlTECBResetButton.TabIndex = 14;
             controlTECBResetButton.Text = "Reset";
             controlTECBResetButton.UseVisualStyleBackColor = false;
+            controlTECBResetButton.Click += controlTECBResetButton_Click;
             // 
             // controlTECAResetButton
             // 
@@ -1288,6 +1292,7 @@
             controlTECAResetButton.TabIndex = 13;
             controlTECAResetButton.Text = "Reset";
             controlTECAResetButton.UseVisualStyleBackColor = false;
+            controlTECAResetButton.Click += controlTECAResetButton_Click;
             // 
             // controlLEDsDataGridView
             // 
@@ -1374,6 +1379,7 @@
             controlTECDUpdateButton.TabIndex = 10;
             controlTECDUpdateButton.Text = "Update";
             controlTECDUpdateButton.UseVisualStyleBackColor = false;
+            controlTECDUpdateButton.Click += controlTECDUpdateButton_Click;
             // 
             // controlTECCUpdateButton
             // 
@@ -1386,6 +1392,7 @@
             controlTECCUpdateButton.TabIndex = 9;
             controlTECCUpdateButton.Text = "Update";
             controlTECCUpdateButton.UseVisualStyleBackColor = false;
+            controlTECCUpdateButton.Click += controlTECCUpdateButton_Click;
             // 
             // controlTECBUpdateButton
             // 
@@ -1398,6 +1405,7 @@
             controlTECBUpdateButton.TabIndex = 8;
             controlTECBUpdateButton.Text = "Update";
             controlTECBUpdateButton.UseVisualStyleBackColor = false;
+            controlTECBUpdateButton.Click += controlTECBUpdateButton_Click;
             // 
             // controlTECAUpdateButton
             // 
@@ -1410,6 +1418,7 @@
             controlTECAUpdateButton.TabIndex = 7;
             controlTECAUpdateButton.Text = "Update";
             controlTECAUpdateButton.UseVisualStyleBackColor = false;
+            controlTECAUpdateButton.Click += controlTECAUpdateButton_Click;
             // 
             // controlTECsDataGridView
             // 
@@ -1479,6 +1488,7 @@
             controlHomeButton.TabIndex = 4;
             controlHomeButton.Text = "Home";
             controlHomeButton.UseVisualStyleBackColor = false;
+            controlHomeButton.Click += controlHomeButton_Click;
             // 
             // controlMoveButton
             // 
@@ -1491,6 +1501,7 @@
             controlMoveButton.TabIndex = 3;
             controlMoveButton.Text = "Move";
             controlMoveButton.UseVisualStyleBackColor = false;
+            controlMoveButton.Click += controlMoveButton_Click;
             // 
             // controlMotorsComboBox
             // 
@@ -1650,6 +1661,7 @@
             thermocyclingAddGoToButton.TabIndex = 16;
             thermocyclingAddGoToButton.Text = "Add GoTo";
             thermocyclingAddGoToButton.UseVisualStyleBackColor = false;
+            thermocyclingAddGoToButton.Click += thermocyclingAddGoToButton_Click;
             // 
             // thermocyclingTECDKillButton
             // 
@@ -1813,6 +1825,7 @@
             thermocyclingLoadProtocolButton.TabIndex = 5;
             thermocyclingLoadProtocolButton.Text = "Load Protocol";
             thermocyclingLoadProtocolButton.UseVisualStyleBackColor = false;
+            thermocyclingLoadProtocolButton.Click += thermocyclingLoadProtocolButton_Click;
             // 
             // thermocyclingRemoveStepButton
             // 
@@ -1837,6 +1850,7 @@
             thermocyclingEditStepButton.TabIndex = 3;
             thermocyclingEditStepButton.Text = "Edit Step";
             thermocyclingEditStepButton.UseVisualStyleBackColor = false;
+            thermocyclingEditStepButton.Click += thermocyclingEditStepButton_Click;
             // 
             // thermocyclingSaveProtocolButton
             // 
@@ -1849,6 +1863,7 @@
             thermocyclingSaveProtocolButton.TabIndex = 2;
             thermocyclingSaveProtocolButton.Text = "Save Protocol";
             thermocyclingSaveProtocolButton.UseVisualStyleBackColor = false;
+            thermocyclingSaveProtocolButton.Click += thermocyclingSaveProtocolButton_Click;
             // 
             // thermocyclingAddStepButton
             // 
@@ -1861,6 +1876,7 @@
             thermocyclingAddStepButton.TabIndex = 1;
             thermocyclingAddStepButton.Text = "Add Step";
             thermocyclingAddStepButton.UseVisualStyleBackColor = false;
+            thermocyclingAddStepButton.Click += thermocyclingAddStepButton_Click;
             // 
             // thermocyclingPlotView
             // 
@@ -1911,6 +1927,7 @@
             imagingBrightFieldButton.TabIndex = 18;
             imagingBrightFieldButton.Text = "Bright Field";
             imagingBrightFieldButton.UseVisualStyleBackColor = false;
+            imagingBrightFieldButton.Click += imagingBrightFieldButton_Click;
             // 
             // imagingLEDsDataGridView
             // 
@@ -1996,6 +2013,7 @@
             imagingKillButon.TabIndex = 13;
             imagingKillButon.Text = "Kill";
             imagingKillButon.UseVisualStyleBackColor = false;
+            imagingKillButon.Click += imagingKillButon_Click;
             // 
             // imagingScanButton
             // 
@@ -2008,6 +2026,7 @@
             imagingScanButton.TabIndex = 12;
             imagingScanButton.Text = "Scan";
             imagingScanButton.UseVisualStyleBackColor = false;
+            imagingScanButton.Click += imagingScanButton_Click;
             // 
             // imagingScanParametersDataGridView
             // 
@@ -2115,6 +2134,7 @@
             imagingCaptureImageButton.TabIndex = 3;
             imagingCaptureImageButton.Text = "Capture Image";
             imagingCaptureImageButton.UseVisualStyleBackColor = false;
+            imagingCaptureImageButton.Click += imagingCaptureImageButton_Click;
             // 
             // imagingCameraViewLabel
             // 
@@ -2298,6 +2318,7 @@
             consumablesGlassOffsetComboBox.Name = "consumablesGlassOffsetComboBox";
             consumablesGlassOffsetComboBox.Size = new Size(142, 26);
             consumablesGlassOffsetComboBox.TabIndex = 31;
+            consumablesGlassOffsetComboBox.SelectedIndexChanged += consumablesGlassOffsetComboBox_SelectedIndexChanged;
             // 
             // consumablesGlassOffsetLabel
             // 
@@ -2320,6 +2341,7 @@
             consumablesDeleteBergquistButton.TabIndex = 29;
             consumablesDeleteBergquistButton.Text = "Delete Bergquist";
             consumablesDeleteBergquistButton.UseVisualStyleBackColor = false;
+            consumablesDeleteBergquistButton.Click += consumablesDeleteBergquistButton_Click;
             // 
             // consumablesDeleteElastomerButton
             // 
@@ -2332,6 +2354,7 @@
             consumablesDeleteElastomerButton.TabIndex = 28;
             consumablesDeleteElastomerButton.Text = "Delete Elastomer";
             consumablesDeleteElastomerButton.UseVisualStyleBackColor = false;
+            consumablesDeleteElastomerButton.Click += consumablesDeleteElastomerButton_Click;
             // 
             // consumablesSaveNewBergquistButton
             // 
@@ -2344,6 +2367,7 @@
             consumablesSaveNewBergquistButton.TabIndex = 27;
             consumablesSaveNewBergquistButton.Text = "Save New Bergquist";
             consumablesSaveNewBergquistButton.UseVisualStyleBackColor = false;
+            consumablesSaveNewBergquistButton.Click += consumablesSaveNewBergquistButton_Click;
             // 
             // consumablesSaveNewElastomerButton
             // 
@@ -2356,6 +2380,7 @@
             consumablesSaveNewElastomerButton.TabIndex = 26;
             consumablesSaveNewElastomerButton.Text = "Save New Elastomer";
             consumablesSaveNewElastomerButton.UseVisualStyleBackColor = false;
+            consumablesSaveNewElastomerButton.Click += consumablesSaveNewElastomerButton_Click;
             // 
             // consumablesDeleteCartridgeButton
             // 
@@ -2368,6 +2393,7 @@
             consumablesDeleteCartridgeButton.TabIndex = 25;
             consumablesDeleteCartridgeButton.Text = "Delete Cartridge";
             consumablesDeleteCartridgeButton.UseVisualStyleBackColor = false;
+            consumablesDeleteCartridgeButton.Click += consumablesDeleteCartridgeButton_Click;
             // 
             // consumablesSaveNewCartridgeButton
             // 
@@ -2380,6 +2406,7 @@
             consumablesSaveNewCartridgeButton.TabIndex = 24;
             consumablesSaveNewCartridgeButton.Text = "Save New Cartridge";
             consumablesSaveNewCartridgeButton.UseVisualStyleBackColor = false;
+            consumablesSaveNewCartridgeButton.Click += consumablesSaveNewCartridgeButton_Click;
             // 
             // consumablesBergquistLabel
             // 
@@ -2432,6 +2459,7 @@
             consumablesUpdateImageScanningButton.TabIndex = 18;
             consumablesUpdateImageScanningButton.Text = "Update Image Scanning";
             consumablesUpdateImageScanningButton.UseVisualStyleBackColor = false;
+            consumablesUpdateImageScanningButton.Click += consumablesGlassOffsetComboBox_TextUpdate;
             // 
             // consumablesBergquistComboBox
             // 
@@ -2450,6 +2478,7 @@
             consumablesElastomerComboBox.Name = "consumablesElastomerComboBox";
             consumablesElastomerComboBox.Size = new Size(206, 26);
             consumablesElastomerComboBox.TabIndex = 16;
+            consumablesElastomerComboBox.SelectedIndexChanged += consumablesElastomerComboBox_SelectedIndexChanged;
             // 
             // consumablesCartridgeComboBox
             // 
@@ -2459,6 +2488,7 @@
             consumablesCartridgeComboBox.Name = "consumablesCartridgeComboBox";
             consumablesCartridgeComboBox.Size = new Size(206, 26);
             consumablesCartridgeComboBox.TabIndex = 15;
+            consumablesCartridgeComboBox.SelectedIndexChanged += consumablesCartridgeComboBox_SelectedIndexChanged;
             // 
             // consumablesImageScanningDataGridView
             // 
@@ -2542,6 +2572,7 @@
             consumablesBergquistDataButton.TabIndex = 13;
             consumablesBergquistDataButton.Text = "Update Bergquist Data";
             consumablesBergquistDataButton.UseVisualStyleBackColor = false;
+            consumablesBergquistDataButton.Click += consumablesBergquistDataButton_Click;
             // 
             // consumablesUpdateElastomerData
             // 
@@ -2554,6 +2585,7 @@
             consumablesUpdateElastomerData.TabIndex = 12;
             consumablesUpdateElastomerData.Text = "Update Elastomer Data";
             consumablesUpdateElastomerData.UseVisualStyleBackColor = false;
+            consumablesUpdateElastomerData.Click += consumablesUpdateElastomerData_Click;
             // 
             // consumablesUpdateCartridgeDataButton
             // 
@@ -2566,6 +2598,7 @@
             consumablesUpdateCartridgeDataButton.TabIndex = 11;
             consumablesUpdateCartridgeDataButton.Text = "Update Cartridge Data";
             consumablesUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
+            consumablesUpdateCartridgeDataButton.Click += consumablesUpdateCartridgeDataButton_Click;
             // 
             // consumablesImageScanningLabel
             // 
