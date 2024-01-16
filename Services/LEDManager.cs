@@ -20,6 +20,7 @@ namespace Independent_Reader_GUI.Services
         private LED Cy5p5;
         // Command Queue to feed in Commands
         private ConcurrentQueue<LEDCommand> commandQueue = new ConcurrentQueue<LEDCommand>();
+        private ConcurrentQueue<LEDCommand> priorityCommandQueue = new ConcurrentQueue<LEDCommand>();
         // Command Queue cancellation token
         private CancellationTokenSource commandQueueCancellationTokenSource = new CancellationTokenSource();
 
@@ -48,22 +49,22 @@ namespace Independent_Reader_GUI.Services
             //
             // Setup and Send the LED Commands
             //
-            LEDCommand checkConnectionCommand = new LEDCommand() { Type = LEDCommand.CommandType.CheckConnectionAsync, LED = led };
+            LEDCommand checkConnectionCommand = new LEDCommand{ Type = LEDCommand.CommandType.CheckConnectionAsync, LED = led };
             EnqueueCommand(checkConnectionCommand);
-            LEDCommand getIntensityCommand = new LEDCommand() { Type = LEDCommand.CommandType.GetIntensity, LED = led };
+            LEDCommand getIntensityCommand = new LEDCommand{ Type = LEDCommand.CommandType.GetIntensity, LED = led };
             EnqueueCommand(getIntensityCommand);
             //
             // Set the DataGridView values for the LED
             //
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, led.Connected, "C", "N", led.Name, "State");
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, led.Connected, "C", "N", led.Name, "State");
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, led.Connected, "C", "N", "State", led.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, led.Connected, "C", "N", "State", led.Name);
             if (int.TryParse(led.Intensity.ToString(), out int value))
             {
-                int intensity = value;
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeLEDsDataGridView, "Intensity (%)", led.Name, intensity.ToString());
-                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, intensity > 0, "On", "Off", led.Name, "IO");
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, "Intensity (%)", led.Name, intensity.ToString());
-                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, intensity > 0, "On", "Off", led.Name, "IO");
+                int intensity = value;               
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString());
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, intensity > 0, "On", "Off", "IO", led.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString());
+                dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, intensity > 0, "On", "Off", "IO", led.Name);
             }
         }
 
@@ -116,6 +117,11 @@ namespace Independent_Reader_GUI.Services
             commandQueue.Enqueue(command);
         }
 
+        public void EnqueuePriorityCommand(LEDCommand command)
+        {
+            priorityCommandQueue.Enqueue(command);
+        }
+
         /// <summary>
         /// Cancel the CommandQueue Processing
         /// </summary>
@@ -128,28 +134,65 @@ namespace Independent_Reader_GUI.Services
         {
             while (!commandQueueCancellationTokenSource.Token.IsCancellationRequested)
             {
-                if (commandQueue.TryDequeue(out LEDCommand command))
+                if (priorityCommandQueue.Count == 0)
                 {
-                    switch (command.Type)
+                    if (commandQueue.TryDequeue(out LEDCommand command))
                     {
-                        case LEDCommand.CommandType.CheckConnectionAsync:
-                            await command.LED.CheckConnectionAsync();
-                            break;
-                        case LEDCommand.CommandType.GetVersionAsync:
-                            await command.LED.GetVersionAsync();
-                            break;
-                        case LEDCommand.CommandType.On:
-                            await command.LED.On(command.Intensity);
-                            break;
-                        case LEDCommand.CommandType.Off:
-                            await command.LED.Off();
-                            break;
-                        case LEDCommand.CommandType.GetIntensity:
-                            await command.LED.GetIntensity();
-                            break;
+                        switch (command.Type)
+                        {
+                            case LEDCommand.CommandType.CheckConnectionAsync:
+                                await command.LED.CheckConnectionAsync();
+                                break;
+                            case LEDCommand.CommandType.GetVersionAsync:
+                                await command.LED.GetVersionAsync();
+                                break;
+                            case LEDCommand.CommandType.On:
+                                await command.LED.On(command.Intensity);
+                                break;
+                            case LEDCommand.CommandType.Off:
+                                await command.LED.Off();
+                                break;
+                            case LEDCommand.CommandType.GetIntensity:
+                                await command.LED.GetIntensity();
+                                break;
+                        }
                     }
+                    await Task.Delay(50);
                 }
-                await Task.Delay(50);
+                else
+                {
+                    if (priorityCommandQueue.TryDequeue(out LEDCommand command))
+                    {
+                        try
+                        {
+                            switch (command.Type)
+                            {
+                                case LEDCommand.CommandType.CheckConnectionAsync:
+                                    await command.LED.CheckConnectionAsync();
+                                    break;
+                                case LEDCommand.CommandType.GetVersionAsync:
+                                    await command.LED.GetVersionAsync();
+                                    break;
+                                case LEDCommand.CommandType.On:
+                                    await command.LED.On(command.Intensity);
+                                    break;
+                                case LEDCommand.CommandType.Off:
+                                    await command.LED.Off();
+                                    break;
+                                case LEDCommand.CommandType.GetIntensity:
+                                    await command.LED.GetIntensity();
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Unable to handle {command.LED.Name} priority command due to {ex.Message}");
+                            // Note: Might need to requeue this command as a priority command
+                            EnqueuePriorityCommand(command);
+                        }
+                    }
+                    await Task.Delay(50);
+                }
             }
         }
     }

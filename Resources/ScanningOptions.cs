@@ -317,7 +317,7 @@ namespace Independent_Reader_GUI.Resources
                             scanningOption.FOVdX = int.Parse(configurationNode.Element("FOVdX").Value);
                             scanningOption.SampledX = int.Parse(configurationNode.Element("SampledX").Value);
                             scanningOption.dY = int.Parse(configurationNode.Element("dY").Value);
-                            scanningOption.RotationalOffset = int.Parse(configurationNode.Element("RotationalOffset").Value);
+                            scanningOption.RotationalOffset = double.Parse(configurationNode.Element("RotationalOffset").Value);
                             return;
                         }
                     }

@@ -42,6 +42,7 @@
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(independentReaderForm));
             tabControl = new TabControl();
             homeTabPage = new TabPage();
             homeAPIConnectedRadioButton = new RadioButton();
@@ -2538,6 +2539,7 @@
             Controls.Add(firmwareVersionLabel);
             Controls.Add(softwareVersionLabel);
             Controls.Add(tabControl);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "independentReaderForm";
             Text = "Independent Reader";
             tabControl.ResumeLayout(false);

@@ -15,7 +15,6 @@ namespace Independent_Reader_GUI.Models
         private string name = string.Empty;
         private int address = int.MinValue;
         public string IO = string.Empty;
-        public string Version = string.Empty;
         private bool connected = false;
         private bool homed = false;
         private int position = int.MinValue;
@@ -23,6 +22,7 @@ namespace Independent_Reader_GUI.Models
         private TimeSpan waitTimeSpan;
         private const int checkInTimeInMilliseconds = 200;
         private const int msDelay = 50;
+        private string version = "?";
 
         public Motor(string name, int address, APIManager apiManager, double timeoutInMilliseconds = 3000) 
         {
@@ -133,10 +133,12 @@ namespace Independent_Reader_GUI.Models
             {
                 var data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/reader/axis/version/{address}");
                 await Task.Delay(msDelay);
+                version = data.Response;
                 return data.Response;
             }
             catch (Exception ex)
             {
+                version = "?";
                 return "?";
             }
         }
@@ -216,6 +218,11 @@ namespace Independent_Reader_GUI.Models
         public bool Homed
         {
             get { return homed; }
+        }
+
+        public string Version
+        {
+            get { return version; }
         }
     }
 }

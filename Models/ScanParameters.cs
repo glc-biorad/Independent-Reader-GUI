@@ -56,7 +56,7 @@ namespace Independent_Reader_GUI.Models
             this.ExperimentName = experimentName;
             this.HeaterLetter = heaterLetter;
             this.x0 = x0; this.y0 = y0; this.z0 = z0;
-            this.FOVdX = fOVdX; this.SampledX = sampledX; this.dY = dY;
+            this.FOVdX = fOVdX; this.SampledX = sampledX; this.dY = dY; this.RotationalOffset = rotationalOffset;
             this.ImageBrightField = imageBrightField; this.BrightFieldIntensity = brightFieldIntensity; this.BrightFieldExposure = brightFieldExposure;
             this.ImageCy5 = imageCy5; this.Cy5Intensity = cy5Intensity; this.Cy5Exposure = cy5Exposure;
             this.ImageFAM = imageFAM; this.FAMIntensity = famIntensity; this.FAMExposure = famExposure;
