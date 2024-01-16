@@ -35,6 +35,7 @@ namespace Independent_Reader_GUI.Services
         {
             // Set the camera to IO scanning
             cameraManager.Scanning = true;
+            cameraManager.IO = "Scanning";
             // TODO: Create an experiment folder
             string experimentName = scanParameters.ExperimentName;
             string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";
@@ -80,6 +81,13 @@ namespace Independent_Reader_GUI.Services
                                 // Get the new x and y positions
                                 int xPos = scanParameters.x0 - scanParameters.FOVdX * fovIdx - scanParameters.SampledX * assayIdx;
                                 int yPos = scanParameters.y0 + scanParameters.dY * sampleIdx;
+                                if (fovIdx != 0 || assayIdx != 0)
+                                {
+                                    var _ = ApplyRotationalOffset(xPos, yPos, scanParameters.RotationalOffset);
+                                    xPos = (Int32)_.Item1;
+                                    yPos = (Int32)_.Item2;
+                                    Debug.WriteLine($"New X,y -> {xPos}, {yPos}");
+                                }
                                 // Move to the position for this FOV
                                 MotorCommand xMotorCommand = new MotorCommand
                                 {
@@ -192,9 +200,26 @@ namespace Independent_Reader_GUI.Services
                 }
             }
             cameraManager.Scanning = false;
+            if (cameraManager.Streaming)
+            {
+                cameraManager.IO = "Streaming";
+            }
+            else
+            {
+                cameraManager.IO = "Idle";
+            }
         }
 
-        public async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition)
+        /// <summary>
+        /// Take an image and save it
+        /// </summary>
+        /// <param name="imageFilePath"></param>
+        /// <param name="imageFileName"></param>
+        /// <param name="intensity"></param>
+        /// <param name="exposure"></param>
+        /// <param name="filterWheelPosition"></param>
+        /// <returns></returns>
+        private async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition)
         {
             // Move the Filter Wheel
             MotorCommand filterWheelMoveCommand = new MotorCommand
@@ -223,6 +248,32 @@ namespace Independent_Reader_GUI.Services
             Debug.WriteLine($"Saving Image to: {imageFilePath}\\{imageFileName}");
             await cameraManager.SetExposureTime(exposure);
             await cameraManager.CaptureImageAsync($"{imageFilePath}\\{imageFileName}");
+        }
+
+        /// <summary>
+        /// Apply the Rotational Offset to a coordinate
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="rotationalOffsetInDegrees"></param>
+        /// <returns></returns>
+        private Tuple<double, double> ApplyRotationalOffset(int x, int y, double rotationalOffsetInDegrees)
+        {
+            // Convert angle from degrees to radians
+            double theta = (Math.PI / 180) * rotationalOffsetInDegrees;
+            // Define the rotation matrix
+            double cosTheta = Math.Cos(theta);
+            double sinTheta = Math.Sin(theta);
+            double[,] R =
+            {
+                {cosTheta, -sinTheta },
+                {sinTheta, cosTheta}
+            };
+            // Apply the rotation matrix to coordiante (x and y)
+            double Rx = R[0, 0] * x + R[0, 1] * y;
+            double Ry = R[1, 0] * (double)x + R[1, 1] * (double)y;
+            Debug.WriteLine($"HERE: {x}, {y} -> {Rx}, {Ry} -> {rotationalOffsetInDegrees}");
+            return Tuple.Create(Rx, Ry);
         }
     }
 }

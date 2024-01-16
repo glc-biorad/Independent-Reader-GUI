@@ -388,9 +388,9 @@ namespace Independent_Reader_GUI
             homeTECsDataGridView.Rows.Add(homeTECsFanOnTemp.PropertyName, homeTECsFanOnTemp.ValueTECA, homeTECsFanOnTemp.ValueTECB, homeTECsFanOnTemp.ValueTECC, homeTECsFanOnTemp.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsFanOffTemp.PropertyName, homeTECsFanOffTemp.ValueTECA, homeTECsFanOffTemp.ValueTECB, homeTECsFanOffTemp.ValueTECC, homeTECsFanOffTemp.ValueTECD);
             homeTECsDataGridView.Rows.Add(homeTECsCurrent.PropertyName, homeTECsCurrent.ValueTECA, homeTECsCurrent.ValueTECB, homeTECsCurrent.ValueTECC, homeTECsCurrent.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsMaxCurrent.PropertyName, homeTECsMaxCurrent.ValueTECA, homeTECsMaxCurrent.ValueTECB, homeTECsMaxCurrent.ValueTECC, homeTECsMaxCurrent.ValueTECD);
+            homeTECsDataGridView.Rows.Add(homeTECsMaxCurrent.PropertyName, tecA.CurrentErrorThreshold, tecB.CurrentErrorThreshold, tecC.CurrentErrorThreshold, tecD.CurrentErrorThreshold);
             homeTECsDataGridView.Rows.Add(homeTECsVoltage.PropertyName, homeTECsVoltage.ValueTECA, homeTECsVoltage.ValueTECB, homeTECsVoltage.ValueTECC, homeTECsVoltage.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsMaxVoltage.PropertyName, homeTECsMaxVoltage.ValueTECA, homeTECsMaxVoltage.ValueTECB, homeTECsMaxVoltage.ValueTECC, homeTECsMaxVoltage.ValueTECD);
+            homeTECsDataGridView.Rows.Add(homeTECsMaxVoltage.PropertyName, tecA.VoltageErrorThreshold, tecB.VoltageErrorThreshold, tecC.VoltageErrorThreshold, tecD.VoltageErrorThreshold);
         }
 
         /// <summary>
@@ -531,16 +531,16 @@ namespace Independent_Reader_GUI
         private void AddControlMotorsDefaultData()
         {
             MotorData controlMotorData = new MotorData();
-            controlMotorsDataGridView.Rows.Add("x", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.xMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("y", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.yMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("z", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.zMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Filter Wheel", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.FilterWheelMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray AB", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayABMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Tray CD", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayCDMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp A", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampAMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp B", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampBMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp C", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampCMotorDefaultSpeed, controlMotorData.Home);
-            controlMotorsDataGridView.Rows.Add("Clamp D", controlMotorData.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("x", xMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.xMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("y", yMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.yMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("z", zMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.zMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Filter Wheel", filterWheelMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.FilterWheelMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray AB", trayABMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayABMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Tray CD", trayCDMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.TrayCDMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp A", clampAMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampAMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp B", clampBMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampBMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp C", clampCMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampCMotorDefaultSpeed, controlMotorData.Home);
+            controlMotorsDataGridView.Rows.Add("Clamp D", clampDMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
         }
 
         /// <summary>
@@ -863,13 +863,13 @@ namespace Independent_Reader_GUI
                     if (intensity == 0)
                     {
                         LEDCommand ledOffCommand = new LEDCommand() { Type = LEDCommand.CommandType.Off, LED = led };
-                        ledManager.EnqueueCommand(ledOffCommand);
+                        ledManager.EnqueuePriorityCommand(ledOffCommand);
                         dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "Off");
                     }
                     else
                     {
                         LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
-                        ledManager.EnqueueCommand(ledOnCommand);
+                        ledManager.EnqueuePriorityCommand(ledOnCommand);
                         dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "On");
                     }
                 }
@@ -1318,7 +1318,9 @@ namespace Independent_Reader_GUI
             // Check the TECs data every fast tick
             tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
             // TODO: Check the LEDs data every fast tick
-            //ledManager.HandleFastTickEvent(dataGridViewManager, homeLEDsDataGridView, controlLEDsDataGridView);
+            ledManager.HandleFastTickEvent(dataGridViewManager, homeLEDsDataGridView, controlLEDsDataGridView);
+            // Check the Camera
+            cameraManager.HandleFastTickEvent(dataGridViewManager, homeCameraDataGridView);
         }
 
         public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
@@ -2515,7 +2517,7 @@ namespace Independent_Reader_GUI
             int fovdx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "FOV dX (\u03BCS)", imagingScanParametersDataGridView));
             int sampledx = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Sample dX (\u03BCS)", imagingScanParametersDataGridView));
             int dy = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "dY (\u03BCS)", imagingScanParametersDataGridView));
-            int rotationalOffset = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Rotational Offset (\u00B0)", imagingScanParametersDataGridView));
+            double rotationalOffset = double.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Value", "Rotational Offset (\u00B0)", imagingScanParametersDataGridView));
             // Determine the Channels to image in with their associated parameters (intensity, exposure)
             bool imageBrightField = (dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Use", imagingLEDsDataGridView) == "Yes") ? true : false;
             int intensityBrightField = int.Parse(dataGridViewManager.GetColumnCellValueByColumnAndRowName("Bright Field", "Intensity (%)", imagingLEDsDataGridView));

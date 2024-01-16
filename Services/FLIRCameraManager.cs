@@ -30,6 +30,7 @@ namespace Independent_Reader_GUI.Services
         private int exposure = 12; // minimum allowed
         private AutoFocusManager autoFocusManager = new AutoFocusManager();
         private BitmapManager bitmapManager = new BitmapManager();
+        public string IO = "Idle";
 
         public FLIRCameraManager(PictureBox pictureBox)
         {
@@ -140,12 +141,14 @@ namespace Independent_Reader_GUI.Services
 
         public async Task CaptureImageAsync(string path)
         {
+            IO = "Capturing";
             // Clone the image 
             using (var currentImage = currentImageBitmap)
             {
                 // Save the image
                 currentImage.Save(path);
             }
+            IO = "Idle";
         }
 
         public async Task<int> StartStreamAsync()
@@ -153,6 +156,7 @@ namespace Independent_Reader_GUI.Services
             if (connected)
             {
                 streaming = true;
+                IO = "Streaming";
                 try
                 {
                     // Retrieve enumeration node from nodemap
@@ -221,6 +225,7 @@ namespace Independent_Reader_GUI.Services
                 {
                     MessageBox.Show($"Unable to stream due to {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     streaming = false;
+                    IO = "Idle";
                     camera.EndAcquisition();
                     return -1;
                 }
@@ -229,8 +234,10 @@ namespace Independent_Reader_GUI.Services
             {
                 streaming = false;
                 MessageBox.Show("Cannot start stream, FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                IO = "Idle";
                 return -1;
             }
+            IO = "Idle";
             return 0;
         }
 
@@ -244,13 +251,21 @@ namespace Independent_Reader_GUI.Services
             if (connected)
             {
                 streaming = false;
+                IO = "Idle";
                 camera.EndAcquisition();
             }
             else
             {
                 streaming = false;
+                IO = "Idle";
                 MessageBox.Show("FLIR camera is not connected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        public void HandleFastTickEvent(DataGridViewManager dataGridViewManager, DataGridView homeCameraDataGridView)
+        {
+            // Check the IO for the camera
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(homeCameraDataGridView, IO, 0, "IO");
         }
     }
 }

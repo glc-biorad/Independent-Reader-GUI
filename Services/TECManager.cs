@@ -651,7 +651,7 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.ActualFanSpeed, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
                     "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
@@ -697,6 +697,20 @@ namespace Independent_Reader_GUI.Services
                         "IO", "Ramping");
                     dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
                 }
+            }
+            if (double.TryParse(tec.CurrentErrorThreshold, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Max Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.CurrentErrorThreshold)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Max Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.CurrentErrorThreshold)));
+            }
+            if (double.TryParse(tec.VoltageErrorThreshold, out _))
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Max Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.VoltageErrorThreshold)));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "Max Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.VoltageErrorThreshold)));
             }
         }
     }

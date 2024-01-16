@@ -172,20 +172,18 @@ namespace Independent_Reader_GUI.Models
             string? message = data.Message;
             string? response = data.Response?.Replace("\r", "");
             #endregion
-            // Obtain the Version from the response
-            string value;
-            int intensity;
-            value = response;
-            if (value == string.Empty)
+            // Obtain the intensity from the response
+            int intensity = 0;
+            if (response == string.Empty || response == null)
             {
-                value = "?";
                 intensity = 0;
-                this.Intensity = intensity;
+                Intensity = intensity;
             }
             else
             {
-                intensity = int.Parse(value);
-                this.Intensity = intensity;
+                string val = response;
+                intensity = (Int32)double.Parse(val);
+                Intensity = intensity;
             }
             return intensity;
         }
@@ -211,7 +209,14 @@ namespace Independent_Reader_GUI.Models
                 }
                 stopwatch.Stop();
                 this.Intensity = intensity;
-                this.IO = "On";
+                if (intensity > 0)
+                {
+                    IO = "On";
+                }
+                else
+                {
+                    IO = "Off";
+                }
             }
             else
             {

@@ -247,10 +247,31 @@ namespace Independent_Reader_GUI.Services
             MotorCommand getPositionCommand = new MotorCommand() { Type = MotorCommand.CommandType.GetPositionAsync, Motor = motor };
             EnqueueCommand(getPositionCommand);
             //
+            // Get the Version if there is an issue with version number
+            //
+            try
+            {
+                if (motor != null)
+                {
+                    if (!motor.Version.Contains("v"))
+                    {
+                        MotorCommand getVersion = new MotorCommand() { Type = MotorCommand.CommandType.GetVersionAsync, Motor = motor };
+                        EnqueueCommand(getVersion);
+                    }
+                }               
+            }
+            catch (Exception ex)
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, "?");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, "?");
+            }
+            //
             // Set the DataGridView values for the Motor
             //
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeMotorsDataGridView, motor.Connected, "Connected", "Not Connected", motor.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlMotorsDataGridView, motor.Connected, "Connected", "Not Connected", motor.Name, "State");
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, motor.Version);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, motor.Version);
             if (int.TryParse(motor.Position.ToString(), out _))
             {
                 int pos = motor.Position;
