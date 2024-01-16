@@ -40,10 +40,38 @@
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(independentReaderForm));
-            tabControl = new TabControl();
+            softwareVersionLabel = new Label();
+            firmwareVersionLabel = new Label();
+            apiVersionLabel = new Label();
+            guiVersionLabel = new Label();
+            userLabel = new Label();
+            logoutButton = new Button();
+            resetButton = new Button();
+            mainAssayProtocolEditorTabPage = new TabPage();
+            assayProtocolEditorTabControl = new TabControl();
+            assayProtocolEditorRunTabPage = new TabPage();
+            assayProtocolEditorControlTabPage = new TabPage();
+            assayProtocolEditorProtocolEditorTabPage = new TabPage();
+            apeProtocolEditorPauseButton = new Button();
+            apeProtocolEditorEditActionButton = new Button();
+            apeProtocolEditorEstimateTimeTextBox = new TextBox();
+            apeProtocolEditorProtocolNameTextBox = new TextBox();
+            apeProtocolEditorEstimateTimeLabel = new Label();
+            apeProtocolEditorKillButton = new Button();
+            apeProtocolEditorRunButton = new Button();
+            apeProtocolEditorSaveProtocolButton = new Button();
+            apeProtocolEditorRemoveActionButton = new Button();
+            apeProtocolEditorLoadProtocolButton = new Button();
+            addapeProtocolEditorAddActionButton = new Button();
+            apeProtocolEditorProtocolNameLabel = new Label();
+            apeProtocolEditorProtocolDataGridView = new DataGridView();
+            apeProtocolEditorProtocolActionColumn = new DataGridViewTextBoxColumn();
+            assayProtocolEditorCoordinateEditorTabPage = new TabPage();
+            assayProtocolEditorSettingsTabPage = new TabPage();
+            assayProtocolEditorMetrologyTabPage = new TabPage();
+            mainReaderTabPage = new TabPage();
+            readerTabControl = new TabControl();
             homeTabPage = new TabPage();
             homeAPIConnectedRadioButton = new RadioButton();
             homeTECsDataGridView = new DataGridView();
@@ -254,14 +282,53 @@
             consumablesCartridgesHeightColumn = new DataGridViewTextBoxColumn();
             consumablesCartridgesLabel = new Label();
             metrologyTabPage = new TabPage();
-            softwareVersionLabel = new Label();
-            firmwareVersionLabel = new Label();
-            apiVersionLabel = new Label();
-            guiVersionLabel = new Label();
-            userLabel = new Label();
-            logoutButton = new Button();
-            resetButton = new Button();
-            tabControl.SuspendLayout();
+            mainTabControl = new TabControl();
+            mainHomeTabPage = new TabPage();
+            mainHomeValvesDataGridView = new DataGridView();
+            mainHomeValvesIDColumn = new DataGridViewTextBoxColumn();
+            mainHomeValvesNameColumn = new DataGridViewTextBoxColumn();
+            mainHomeValvesIOColumn = new DataGridViewTextBoxColumn();
+            mainHomeValvesLabel = new Label();
+            mainHomeCameraDataGridView = new DataGridView();
+            mainHomeCameraStateColumn = new DataGridViewTextBoxColumn();
+            mainHomeCameraIOColumn = new DataGridViewTextBoxColumn();
+            mainHomeLEDsDataGridView = new DataGridView();
+            mainHomeLEDsPropertyColumn = new DataGridViewTextBoxColumn();
+            mainHomeLEDsCy5Column = new DataGridViewTextBoxColumn();
+            mainHomeLEDsFAMColumn = new DataGridViewTextBoxColumn();
+            mainHomeLEDsHEXColumn = new DataGridViewTextBoxColumn();
+            mainHomeLEDsAttoColumn = new DataGridViewTextBoxColumn();
+            mainHomeLEDsAlexa = new DataGridViewTextBoxColumn();
+            mainHomeLEDsCy5p5Column = new DataGridViewTextBoxColumn();
+            mainHomePowerRelaysDataGridView = new DataGridView();
+            mainHomeIDColumn = new DataGridViewTextBoxColumn();
+            mainHomeNameColumn = new DataGridViewTextBoxColumn();
+            mainHomeIOColumn = new DataGridViewTextBoxColumn();
+            mainHomePowerRelaysLabel = new Label();
+            mainHomeCameraLabel = new Label();
+            mainHomeLEDsLabel = new Label();
+            mainHomeTECsLabel = new Label();
+            mainHomeTECsDataGridView = new DataGridView();
+            mainHomeTECsPropertyColumn = new DataGridViewTextBoxColumn();
+            mainHomeTECsTECAColumn = new DataGridViewTextBoxColumn();
+            mainHomeTECsTECBColumn = new DataGridViewTextBoxColumn();
+            mainHomeTECsTECCColumn = new DataGridViewTextBoxColumn();
+            mainHomeTECsTECDCColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsLabel = new Label();
+            mainHomeMotorsDataGridView = new DataGridView();
+            mainHomeMotorsNameColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsVersionColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsStateColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsIOColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsPositionColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsSpeedColumn = new DataGridViewTextBoxColumn();
+            mainHomeMotorsHomedColumn = new DataGridViewTextBoxColumn();
+            mainAssayProtocolEditorTabPage.SuspendLayout();
+            assayProtocolEditorTabControl.SuspendLayout();
+            assayProtocolEditorProtocolEditorTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)apeProtocolEditorProtocolDataGridView).BeginInit();
+            mainReaderTabPage.SuspendLayout();
+            readerTabControl.SuspendLayout();
             homeTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)homeLEDsDataGridView).BeginInit();
@@ -290,24 +357,369 @@
             ((System.ComponentModel.ISupportInitialize)consumablesBergquistsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)consumablesElastomerDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)consumablesCartridgesDataGridView).BeginInit();
+            mainTabControl.SuspendLayout();
+            mainHomeTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)mainHomeValvesDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeCameraDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeLEDsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomePowerRelaysDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeTECsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).BeginInit();
             SuspendLayout();
             // 
-            // tabControl
+            // softwareVersionLabel
             // 
-            tabControl.Controls.Add(homeTabPage);
-            tabControl.Controls.Add(runTabPage);
-            tabControl.Controls.Add(controlTabPage);
-            tabControl.Controls.Add(thermocyclingTabPage);
-            tabControl.Controls.Add(imagingTabPage);
-            tabControl.Controls.Add(settingsTabPage);
-            tabControl.Controls.Add(consumablesTabPage);
-            tabControl.Controls.Add(metrologyTabPage);
-            tabControl.Location = new Point(0, 0);
-            tabControl.Name = "tabControl";
-            tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1124, 612);
-            tabControl.TabIndex = 0;
-            tabControl.KeyDown += tabControl_KeyDown;
+            softwareVersionLabel.AutoSize = true;
+            softwareVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            softwareVersionLabel.ForeColor = Color.White;
+            softwareVersionLabel.Location = new Point(12, 661);
+            softwareVersionLabel.Name = "softwareVersionLabel";
+            softwareVersionLabel.Size = new Size(117, 16);
+            softwareVersionLabel.TabIndex = 1;
+            softwareVersionLabel.Text = "SW Version: 1.0.1";
+            // 
+            // firmwareVersionLabel
+            // 
+            firmwareVersionLabel.AutoSize = true;
+            firmwareVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            firmwareVersionLabel.ForeColor = Color.White;
+            firmwareVersionLabel.Location = new Point(147, 661);
+            firmwareVersionLabel.Name = "firmwareVersionLabel";
+            firmwareVersionLabel.Size = new Size(156, 16);
+            firmwareVersionLabel.TabIndex = 2;
+            firmwareVersionLabel.Text = "Firmware Version: 1.2.1";
+            // 
+            // apiVersionLabel
+            // 
+            apiVersionLabel.AutoSize = true;
+            apiVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            apiVersionLabel.ForeColor = Color.White;
+            apiVersionLabel.Location = new Point(318, 661);
+            apiVersionLabel.Name = "apiVersionLabel";
+            apiVersionLabel.Size = new Size(117, 16);
+            apiVersionLabel.TabIndex = 3;
+            apiVersionLabel.Text = "API Version: 1.0.1";
+            // 
+            // guiVersionLabel
+            // 
+            guiVersionLabel.AutoSize = true;
+            guiVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            guiVersionLabel.ForeColor = Color.White;
+            guiVersionLabel.Location = new Point(451, 661);
+            guiVersionLabel.Name = "guiVersionLabel";
+            guiVersionLabel.Size = new Size(118, 16);
+            guiVersionLabel.TabIndex = 4;
+            guiVersionLabel.Text = "GUI Version: 1.0.0";
+            // 
+            // userLabel
+            // 
+            userLabel.AutoSize = true;
+            userLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            userLabel.ForeColor = Color.White;
+            userLabel.Location = new Point(585, 661);
+            userLabel.Name = "userLabel";
+            userLabel.Size = new Size(107, 16);
+            userLabel.TabIndex = 5;
+            userLabel.Text = "User: glc-biorad";
+            // 
+            // logoutButton
+            // 
+            logoutButton.BackColor = SystemColors.Highlight;
+            logoutButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            logoutButton.ForeColor = Color.White;
+            logoutButton.Location = new Point(896, 654);
+            logoutButton.Name = "logoutButton";
+            logoutButton.Size = new Size(98, 30);
+            logoutButton.TabIndex = 6;
+            logoutButton.Text = "Logout";
+            logoutButton.UseVisualStyleBackColor = false;
+            logoutButton.Click += logoutButton_Click;
+            // 
+            // resetButton
+            // 
+            resetButton.BackColor = Color.IndianRed;
+            resetButton.FlatAppearance.BorderColor = Color.Red;
+            resetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            resetButton.ForeColor = Color.White;
+            resetButton.Location = new Point(1000, 654);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(98, 30);
+            resetButton.TabIndex = 7;
+            resetButton.Text = "Reset";
+            resetButton.UseVisualStyleBackColor = false;
+            // 
+            // mainAssayProtocolEditorTabPage
+            // 
+            mainAssayProtocolEditorTabPage.Controls.Add(assayProtocolEditorTabControl);
+            mainAssayProtocolEditorTabPage.Location = new Point(4, 24);
+            mainAssayProtocolEditorTabPage.Name = "mainAssayProtocolEditorTabPage";
+            mainAssayProtocolEditorTabPage.Padding = new Padding(3);
+            mainAssayProtocolEditorTabPage.Size = new Size(1116, 621);
+            mainAssayProtocolEditorTabPage.TabIndex = 1;
+            mainAssayProtocolEditorTabPage.Text = "Assay Protocol Editor";
+            mainAssayProtocolEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // assayProtocolEditorTabControl
+            // 
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorRunTabPage);
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorControlTabPage);
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorProtocolEditorTabPage);
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorCoordinateEditorTabPage);
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorSettingsTabPage);
+            assayProtocolEditorTabControl.Controls.Add(assayProtocolEditorMetrologyTabPage);
+            assayProtocolEditorTabControl.Location = new Point(0, 0);
+            assayProtocolEditorTabControl.Name = "assayProtocolEditorTabControl";
+            assayProtocolEditorTabControl.SelectedIndex = 0;
+            assayProtocolEditorTabControl.Size = new Size(1116, 621);
+            assayProtocolEditorTabControl.TabIndex = 0;
+            // 
+            // assayProtocolEditorRunTabPage
+            // 
+            assayProtocolEditorRunTabPage.Location = new Point(4, 24);
+            assayProtocolEditorRunTabPage.Name = "assayProtocolEditorRunTabPage";
+            assayProtocolEditorRunTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorRunTabPage.TabIndex = 5;
+            assayProtocolEditorRunTabPage.Text = "Run";
+            assayProtocolEditorRunTabPage.UseVisualStyleBackColor = true;
+            // 
+            // assayProtocolEditorControlTabPage
+            // 
+            assayProtocolEditorControlTabPage.Location = new Point(4, 24);
+            assayProtocolEditorControlTabPage.Name = "assayProtocolEditorControlTabPage";
+            assayProtocolEditorControlTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorControlTabPage.TabIndex = 6;
+            assayProtocolEditorControlTabPage.Text = "Control";
+            assayProtocolEditorControlTabPage.UseVisualStyleBackColor = true;
+            // 
+            // assayProtocolEditorProtocolEditorTabPage
+            // 
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorPauseButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorEditActionButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorEstimateTimeTextBox);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorProtocolNameTextBox);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorEstimateTimeLabel);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorKillButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorRunButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorSaveProtocolButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorRemoveActionButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorLoadProtocolButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(addapeProtocolEditorAddActionButton);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorProtocolNameLabel);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorProtocolDataGridView);
+            assayProtocolEditorProtocolEditorTabPage.Location = new Point(4, 24);
+            assayProtocolEditorProtocolEditorTabPage.Name = "assayProtocolEditorProtocolEditorTabPage";
+            assayProtocolEditorProtocolEditorTabPage.Padding = new Padding(3);
+            assayProtocolEditorProtocolEditorTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorProtocolEditorTabPage.TabIndex = 0;
+            assayProtocolEditorProtocolEditorTabPage.Text = "Protocol Editor";
+            assayProtocolEditorProtocolEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // apeProtocolEditorPauseButton
+            // 
+            apeProtocolEditorPauseButton.BackColor = SystemColors.Highlight;
+            apeProtocolEditorPauseButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorPauseButton.ForeColor = Color.White;
+            apeProtocolEditorPauseButton.Location = new Point(952, 521);
+            apeProtocolEditorPauseButton.Name = "apeProtocolEditorPauseButton";
+            apeProtocolEditorPauseButton.Size = new Size(150, 33);
+            apeProtocolEditorPauseButton.TabIndex = 14;
+            apeProtocolEditorPauseButton.Text = "Pause";
+            apeProtocolEditorPauseButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorEditActionButton
+            // 
+            apeProtocolEditorEditActionButton.BackColor = SystemColors.Highlight;
+            apeProtocolEditorEditActionButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorEditActionButton.ForeColor = Color.White;
+            apeProtocolEditorEditActionButton.Location = new Point(796, 521);
+            apeProtocolEditorEditActionButton.Name = "apeProtocolEditorEditActionButton";
+            apeProtocolEditorEditActionButton.Size = new Size(150, 33);
+            apeProtocolEditorEditActionButton.TabIndex = 13;
+            apeProtocolEditorEditActionButton.Text = "Edit Action";
+            apeProtocolEditorEditActionButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorEstimateTimeTextBox
+            // 
+            apeProtocolEditorEstimateTimeTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorEstimateTimeTextBox.Location = new Point(124, 39);
+            apeProtocolEditorEstimateTimeTextBox.Name = "apeProtocolEditorEstimateTimeTextBox";
+            apeProtocolEditorEstimateTimeTextBox.Size = new Size(139, 26);
+            apeProtocolEditorEstimateTimeTextBox.TabIndex = 12;
+            // 
+            // apeProtocolEditorProtocolNameTextBox
+            // 
+            apeProtocolEditorProtocolNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorProtocolNameTextBox.Location = new Point(124, 6);
+            apeProtocolEditorProtocolNameTextBox.Name = "apeProtocolEditorProtocolNameTextBox";
+            apeProtocolEditorProtocolNameTextBox.Size = new Size(353, 26);
+            apeProtocolEditorProtocolNameTextBox.TabIndex = 11;
+            // 
+            // apeProtocolEditorEstimateTimeLabel
+            // 
+            apeProtocolEditorEstimateTimeLabel.AutoSize = true;
+            apeProtocolEditorEstimateTimeLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorEstimateTimeLabel.Location = new Point(10, 42);
+            apeProtocolEditorEstimateTimeLabel.Name = "apeProtocolEditorEstimateTimeLabel";
+            apeProtocolEditorEstimateTimeLabel.Size = new Size(108, 18);
+            apeProtocolEditorEstimateTimeLabel.TabIndex = 10;
+            apeProtocolEditorEstimateTimeLabel.Text = "Estimate Time";
+            // 
+            // apeProtocolEditorKillButton
+            // 
+            apeProtocolEditorKillButton.BackColor = Color.IndianRed;
+            apeProtocolEditorKillButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorKillButton.ForeColor = Color.White;
+            apeProtocolEditorKillButton.Location = new Point(952, 557);
+            apeProtocolEditorKillButton.Name = "apeProtocolEditorKillButton";
+            apeProtocolEditorKillButton.Size = new Size(150, 33);
+            apeProtocolEditorKillButton.TabIndex = 7;
+            apeProtocolEditorKillButton.Text = "Kill";
+            apeProtocolEditorKillButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorRunButton
+            // 
+            apeProtocolEditorRunButton.BackColor = SystemColors.Highlight;
+            apeProtocolEditorRunButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorRunButton.ForeColor = Color.White;
+            apeProtocolEditorRunButton.Location = new Point(952, 485);
+            apeProtocolEditorRunButton.Name = "apeProtocolEditorRunButton";
+            apeProtocolEditorRunButton.Size = new Size(150, 33);
+            apeProtocolEditorRunButton.TabIndex = 6;
+            apeProtocolEditorRunButton.Text = "Run";
+            apeProtocolEditorRunButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorSaveProtocolButton
+            // 
+            apeProtocolEditorSaveProtocolButton.BackColor = SystemColors.Highlight;
+            apeProtocolEditorSaveProtocolButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorSaveProtocolButton.ForeColor = Color.White;
+            apeProtocolEditorSaveProtocolButton.Location = new Point(952, 3);
+            apeProtocolEditorSaveProtocolButton.Name = "apeProtocolEditorSaveProtocolButton";
+            apeProtocolEditorSaveProtocolButton.Size = new Size(150, 33);
+            apeProtocolEditorSaveProtocolButton.TabIndex = 5;
+            apeProtocolEditorSaveProtocolButton.Text = "Save Protocol";
+            apeProtocolEditorSaveProtocolButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorRemoveActionButton
+            // 
+            apeProtocolEditorRemoveActionButton.BackColor = Color.IndianRed;
+            apeProtocolEditorRemoveActionButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorRemoveActionButton.ForeColor = Color.White;
+            apeProtocolEditorRemoveActionButton.Location = new Point(796, 557);
+            apeProtocolEditorRemoveActionButton.Name = "apeProtocolEditorRemoveActionButton";
+            apeProtocolEditorRemoveActionButton.Size = new Size(150, 33);
+            apeProtocolEditorRemoveActionButton.TabIndex = 4;
+            apeProtocolEditorRemoveActionButton.Text = "Remove Action";
+            apeProtocolEditorRemoveActionButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorLoadProtocolButton
+            // 
+            apeProtocolEditorLoadProtocolButton.BackColor = SystemColors.Highlight;
+            apeProtocolEditorLoadProtocolButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorLoadProtocolButton.ForeColor = Color.White;
+            apeProtocolEditorLoadProtocolButton.Location = new Point(952, 35);
+            apeProtocolEditorLoadProtocolButton.Name = "apeProtocolEditorLoadProtocolButton";
+            apeProtocolEditorLoadProtocolButton.Size = new Size(150, 33);
+            apeProtocolEditorLoadProtocolButton.TabIndex = 3;
+            apeProtocolEditorLoadProtocolButton.Text = "Load Protocol";
+            apeProtocolEditorLoadProtocolButton.UseVisualStyleBackColor = false;
+            // 
+            // addapeProtocolEditorAddActionButton
+            // 
+            addapeProtocolEditorAddActionButton.BackColor = Color.MediumSeaGreen;
+            addapeProtocolEditorAddActionButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            addapeProtocolEditorAddActionButton.ForeColor = Color.White;
+            addapeProtocolEditorAddActionButton.Location = new Point(796, 485);
+            addapeProtocolEditorAddActionButton.Name = "addapeProtocolEditorAddActionButton";
+            addapeProtocolEditorAddActionButton.Size = new Size(150, 33);
+            addapeProtocolEditorAddActionButton.TabIndex = 2;
+            addapeProtocolEditorAddActionButton.Text = "Add Action";
+            addapeProtocolEditorAddActionButton.UseVisualStyleBackColor = false;
+            // 
+            // apeProtocolEditorProtocolNameLabel
+            // 
+            apeProtocolEditorProtocolNameLabel.AutoSize = true;
+            apeProtocolEditorProtocolNameLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorProtocolNameLabel.Location = new Point(6, 9);
+            apeProtocolEditorProtocolNameLabel.Name = "apeProtocolEditorProtocolNameLabel";
+            apeProtocolEditorProtocolNameLabel.Size = new Size(112, 18);
+            apeProtocolEditorProtocolNameLabel.TabIndex = 1;
+            apeProtocolEditorProtocolNameLabel.Text = "Protocol Name";
+            // 
+            // apeProtocolEditorProtocolDataGridView
+            // 
+            apeProtocolEditorProtocolDataGridView.AllowUserToAddRows = false;
+            apeProtocolEditorProtocolDataGridView.AllowUserToDeleteRows = false;
+            apeProtocolEditorProtocolDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            apeProtocolEditorProtocolDataGridView.Columns.AddRange(new DataGridViewColumn[] { apeProtocolEditorProtocolActionColumn });
+            apeProtocolEditorProtocolDataGridView.Location = new Point(6, 71);
+            apeProtocolEditorProtocolDataGridView.Name = "apeProtocolEditorProtocolDataGridView";
+            apeProtocolEditorProtocolDataGridView.ReadOnly = true;
+            apeProtocolEditorProtocolDataGridView.RowTemplate.Height = 25;
+            apeProtocolEditorProtocolDataGridView.Size = new Size(1096, 408);
+            apeProtocolEditorProtocolDataGridView.TabIndex = 0;
+            // 
+            // apeProtocolEditorProtocolActionColumn
+            // 
+            apeProtocolEditorProtocolActionColumn.HeaderText = "Action";
+            apeProtocolEditorProtocolActionColumn.Name = "apeProtocolEditorProtocolActionColumn";
+            apeProtocolEditorProtocolActionColumn.ReadOnly = true;
+            apeProtocolEditorProtocolActionColumn.Width = 1045;
+            // 
+            // assayProtocolEditorCoordinateEditorTabPage
+            // 
+            assayProtocolEditorCoordinateEditorTabPage.Location = new Point(4, 24);
+            assayProtocolEditorCoordinateEditorTabPage.Name = "assayProtocolEditorCoordinateEditorTabPage";
+            assayProtocolEditorCoordinateEditorTabPage.Padding = new Padding(3);
+            assayProtocolEditorCoordinateEditorTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorCoordinateEditorTabPage.TabIndex = 1;
+            assayProtocolEditorCoordinateEditorTabPage.Text = "Coordinate Editor";
+            assayProtocolEditorCoordinateEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // assayProtocolEditorSettingsTabPage
+            // 
+            assayProtocolEditorSettingsTabPage.Location = new Point(4, 24);
+            assayProtocolEditorSettingsTabPage.Name = "assayProtocolEditorSettingsTabPage";
+            assayProtocolEditorSettingsTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorSettingsTabPage.TabIndex = 3;
+            assayProtocolEditorSettingsTabPage.Text = "Settings";
+            assayProtocolEditorSettingsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // assayProtocolEditorMetrologyTabPage
+            // 
+            assayProtocolEditorMetrologyTabPage.Location = new Point(4, 24);
+            assayProtocolEditorMetrologyTabPage.Name = "assayProtocolEditorMetrologyTabPage";
+            assayProtocolEditorMetrologyTabPage.Size = new Size(1108, 593);
+            assayProtocolEditorMetrologyTabPage.TabIndex = 4;
+            assayProtocolEditorMetrologyTabPage.Text = "Metrology";
+            assayProtocolEditorMetrologyTabPage.UseVisualStyleBackColor = true;
+            // 
+            // mainReaderTabPage
+            // 
+            mainReaderTabPage.Controls.Add(readerTabControl);
+            mainReaderTabPage.Location = new Point(4, 24);
+            mainReaderTabPage.Name = "mainReaderTabPage";
+            mainReaderTabPage.Padding = new Padding(3);
+            mainReaderTabPage.Size = new Size(1116, 621);
+            mainReaderTabPage.TabIndex = 0;
+            mainReaderTabPage.Text = "Reader";
+            mainReaderTabPage.UseVisualStyleBackColor = true;
+            // 
+            // readerTabControl
+            // 
+            readerTabControl.Controls.Add(homeTabPage);
+            readerTabControl.Controls.Add(runTabPage);
+            readerTabControl.Controls.Add(controlTabPage);
+            readerTabControl.Controls.Add(thermocyclingTabPage);
+            readerTabControl.Controls.Add(imagingTabPage);
+            readerTabControl.Controls.Add(settingsTabPage);
+            readerTabControl.Controls.Add(consumablesTabPage);
+            readerTabControl.Controls.Add(metrologyTabPage);
+            readerTabControl.Location = new Point(0, 0);
+            readerTabControl.Name = "readerTabControl";
+            readerTabControl.SelectedIndex = 0;
+            readerTabControl.Size = new Size(1120, 612);
+            readerTabControl.TabIndex = 1;
             // 
             // homeTabPage
             // 
@@ -323,7 +735,7 @@
             homeTabPage.Location = new Point(4, 24);
             homeTabPage.Name = "homeTabPage";
             homeTabPage.Padding = new Padding(3);
-            homeTabPage.Size = new Size(1116, 584);
+            homeTabPage.Size = new Size(1112, 584);
             homeTabPage.TabIndex = 0;
             homeTabPage.Text = "Home";
             homeTabPage.UseVisualStyleBackColor = true;
@@ -336,7 +748,7 @@
             homeAPIConnectedRadioButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             homeAPIConnectedRadioButton.ForeColor = Color.White;
             homeAPIConnectedRadioButton.ImageAlign = ContentAlignment.TopRight;
-            homeAPIConnectedRadioButton.Location = new Point(985, 550);
+            homeAPIConnectedRadioButton.Location = new Point(988, 553);
             homeAPIConnectedRadioButton.Name = "homeAPIConnectedRadioButton";
             homeAPIConnectedRadioButton.Size = new Size(123, 28);
             homeAPIConnectedRadioButton.TabIndex = 9;
@@ -396,7 +808,7 @@
             // 
             homeTECsLabel.AutoSize = true;
             homeTECsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            homeTECsLabel.Location = new Point(549, 3);
+            homeTECsLabel.Location = new Point(552, 6);
             homeTECsLabel.Name = "homeTECsLabel";
             homeTECsLabel.Size = new Size(48, 18);
             homeTECsLabel.TabIndex = 6;
@@ -472,7 +884,7 @@
             // 
             homeLEDsLabel.AutoSize = true;
             homeLEDsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            homeLEDsLabel.Location = new Point(8, 408);
+            homeLEDsLabel.Location = new Point(11, 411);
             homeLEDsLabel.Name = "homeLEDsLabel";
             homeLEDsLabel.Size = new Size(48, 18);
             homeLEDsLabel.TabIndex = 4;
@@ -513,7 +925,7 @@
             // 
             homeCameraLabel.AutoSize = true;
             homeCameraLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            homeCameraLabel.Location = new Point(8, 314);
+            homeCameraLabel.Location = new Point(11, 317);
             homeCameraLabel.Name = "homeCameraLabel";
             homeCameraLabel.Size = new Size(65, 18);
             homeCameraLabel.TabIndex = 2;
@@ -593,7 +1005,7 @@
             // 
             homeMotorsLabel.AutoSize = true;
             homeMotorsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            homeMotorsLabel.Location = new Point(8, 3);
+            homeMotorsLabel.Location = new Point(11, 6);
             homeMotorsLabel.Name = "homeMotorsLabel";
             homeMotorsLabel.Size = new Size(56, 18);
             homeMotorsLabel.TabIndex = 0;
@@ -614,7 +1026,7 @@
             runTabPage.Location = new Point(4, 24);
             runTabPage.Name = "runTabPage";
             runTabPage.Padding = new Padding(3);
-            runTabPage.Size = new Size(1116, 584);
+            runTabPage.Size = new Size(1112, 584);
             runTabPage.TabIndex = 1;
             runTabPage.Text = "Run";
             runTabPage.UseVisualStyleBackColor = true;
@@ -643,7 +1055,6 @@
             runAssayMetaDataGridView.RowTemplate.Height = 25;
             runAssayMetaDataGridView.Size = new Size(327, 103);
             runAssayMetaDataGridView.TabIndex = 10;
-            runAssayMetaDataGridView.KeyDown += runAssayMetaDataGridView_KeyDown;
             // 
             // runAssayMetaDataIDColumn
             // 
@@ -669,7 +1080,6 @@
             runSampleMetaDataGridView.RowTemplate.Height = 25;
             runSampleMetaDataGridView.Size = new Size(327, 243);
             runSampleMetaDataGridView.TabIndex = 7;
-            runSampleMetaDataGridView.KeyDown += runSampleMetaDataGridView_KeyDown;
             // 
             // runSampleMetaDataIDColumn
             // 
@@ -697,7 +1107,6 @@
             runImagingSetupDataGridView.RowTemplate.Height = 25;
             runImagingSetupDataGridView.Size = new Size(379, 554);
             runImagingSetupDataGridView.TabIndex = 6;
-            runImagingSetupDataGridView.KeyDown += runImagingSetupDataGridView_KeyDown;
             // 
             // runImagingSetupPropertyColumn
             // 
@@ -727,7 +1136,6 @@
             runExperimentDataGridView.RowTemplate.Height = 25;
             runExperimentDataGridView.Size = new Size(384, 554);
             runExperimentDataGridView.TabIndex = 5;
-            runExperimentDataGridView.KeyDown += runExperimentDataGridView_KeyDown;
             // 
             // runExperimentDataPropertyColumn
             // 
@@ -755,13 +1163,12 @@
             runRunButton.TabIndex = 4;
             runRunButton.Text = "Run";
             runRunButton.UseVisualStyleBackColor = false;
-            runRunButton.Click += runRunButton_Click;
             // 
             // runAssayMetaDataLabel
             // 
             runAssayMetaDataLabel.AutoSize = true;
             runAssayMetaDataLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runAssayMetaDataLabel.Location = new Point(781, 323);
+            runAssayMetaDataLabel.Location = new Point(784, 326);
             runAssayMetaDataLabel.Name = "runAssayMetaDataLabel";
             runAssayMetaDataLabel.Size = new Size(128, 18);
             runAssayMetaDataLabel.TabIndex = 3;
@@ -771,7 +1178,7 @@
             // 
             runSampleMetaDataLabel.AutoSize = true;
             runSampleMetaDataLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runSampleMetaDataLabel.Location = new Point(781, 3);
+            runSampleMetaDataLabel.Location = new Point(784, 6);
             runSampleMetaDataLabel.Name = "runSampleMetaDataLabel";
             runSampleMetaDataLabel.Size = new Size(139, 18);
             runSampleMetaDataLabel.TabIndex = 2;
@@ -781,7 +1188,7 @@
             // 
             runImagingSetupLabel.AutoSize = true;
             runImagingSetupLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            runImagingSetupLabel.Location = new Point(396, 3);
+            runImagingSetupLabel.Location = new Point(399, 6);
             runImagingSetupLabel.Name = "runImagingSetupLabel";
             runImagingSetupLabel.Size = new Size(108, 18);
             runImagingSetupLabel.TabIndex = 1;
@@ -791,7 +1198,7 @@
             // 
             tunExperimentDataLabel.AutoSize = true;
             tunExperimentDataLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            tunExperimentDataLabel.Location = new Point(3, 3);
+            tunExperimentDataLabel.Location = new Point(6, 6);
             tunExperimentDataLabel.Name = "tunExperimentDataLabel";
             tunExperimentDataLabel.Size = new Size(125, 18);
             tunExperimentDataLabel.TabIndex = 0;
@@ -819,7 +1226,7 @@
             controlTabPage.Controls.Add(controlMotorsLabel);
             controlTabPage.Location = new Point(4, 24);
             controlTabPage.Name = "controlTabPage";
-            controlTabPage.Size = new Size(1116, 584);
+            controlTabPage.Size = new Size(1112, 584);
             controlTabPage.TabIndex = 2;
             controlTabPage.Text = "Control";
             controlTabPage.UseVisualStyleBackColor = true;
@@ -845,7 +1252,6 @@
             controlTECDResetButton.TabIndex = 16;
             controlTECDResetButton.Text = "Reset";
             controlTECDResetButton.UseVisualStyleBackColor = false;
-            controlTECDResetButton.Click += controlTECDResetButton_Click;
             // 
             // controlTECCResetButton
             // 
@@ -858,7 +1264,6 @@
             controlTECCResetButton.TabIndex = 15;
             controlTECCResetButton.Text = "Reset";
             controlTECCResetButton.UseVisualStyleBackColor = false;
-            controlTECCResetButton.Click += controlTECCResetButton_Click;
             // 
             // controlTECBResetButton
             // 
@@ -871,7 +1276,6 @@
             controlTECBResetButton.TabIndex = 14;
             controlTECBResetButton.Text = "Reset";
             controlTECBResetButton.UseVisualStyleBackColor = false;
-            controlTECBResetButton.Click += controlTECBResetButton_Click;
             // 
             // controlTECAResetButton
             // 
@@ -884,7 +1288,6 @@
             controlTECAResetButton.TabIndex = 13;
             controlTECAResetButton.Text = "Reset";
             controlTECAResetButton.UseVisualStyleBackColor = false;
-            controlTECAResetButton.Click += controlTECAResetButton_Click;
             // 
             // controlLEDsDataGridView
             // 
@@ -971,7 +1374,6 @@
             controlTECDUpdateButton.TabIndex = 10;
             controlTECDUpdateButton.Text = "Update";
             controlTECDUpdateButton.UseVisualStyleBackColor = false;
-            controlTECDUpdateButton.Click += controlTECDUpdateButton_Click;
             // 
             // controlTECCUpdateButton
             // 
@@ -984,7 +1386,6 @@
             controlTECCUpdateButton.TabIndex = 9;
             controlTECCUpdateButton.Text = "Update";
             controlTECCUpdateButton.UseVisualStyleBackColor = false;
-            controlTECCUpdateButton.Click += controlTECCUpdateButton_Click;
             // 
             // controlTECBUpdateButton
             // 
@@ -997,7 +1398,6 @@
             controlTECBUpdateButton.TabIndex = 8;
             controlTECBUpdateButton.Text = "Update";
             controlTECBUpdateButton.UseVisualStyleBackColor = false;
-            controlTECBUpdateButton.Click += controlTECBUpdateButton_Click;
             // 
             // controlTECAUpdateButton
             // 
@@ -1010,7 +1410,6 @@
             controlTECAUpdateButton.TabIndex = 7;
             controlTECAUpdateButton.Text = "Update";
             controlTECAUpdateButton.UseVisualStyleBackColor = false;
-            controlTECAUpdateButton.Click += controlTECAUpdateButton_Click;
             // 
             // controlTECsDataGridView
             // 
@@ -1025,7 +1424,6 @@
             controlTECsDataGridView.RowTemplate.Height = 25;
             controlTECsDataGridView.Size = new Size(569, 466);
             controlTECsDataGridView.TabIndex = 6;
-            controlTECsDataGridView.KeyDown += controlTECsDataGridView_KeyDown;
             // 
             // controlTECsPropertyColumn
             // 
@@ -1081,7 +1479,6 @@
             controlHomeButton.TabIndex = 4;
             controlHomeButton.Text = "Home";
             controlHomeButton.UseVisualStyleBackColor = false;
-            controlHomeButton.Click += controlHomeButton_Click;
             // 
             // controlMoveButton
             // 
@@ -1094,7 +1491,6 @@
             controlMoveButton.TabIndex = 3;
             controlMoveButton.Text = "Move";
             controlMoveButton.UseVisualStyleBackColor = false;
-            controlMoveButton.Click += controlMoveButton_Click;
             // 
             // controlMotorsComboBox
             // 
@@ -1122,7 +1518,6 @@
             controlMotorsDataGridView.RowTemplate.Height = 25;
             controlMotorsDataGridView.Size = new Size(525, 294);
             controlMotorsDataGridView.TabIndex = 1;
-            controlMotorsDataGridView.KeyDown += controlMotorsDataGridView_KeyDown;
             // 
             // controlMotorsMotorColumn
             // 
@@ -1202,7 +1597,7 @@
             thermocyclingTabPage.Controls.Add(thermocyclingPlotView);
             thermocyclingTabPage.Location = new Point(4, 24);
             thermocyclingTabPage.Name = "thermocyclingTabPage";
-            thermocyclingTabPage.Size = new Size(1116, 584);
+            thermocyclingTabPage.Size = new Size(1112, 584);
             thermocyclingTabPage.TabIndex = 3;
             thermocyclingTabPage.Text = "Thermocycling";
             thermocyclingTabPage.UseVisualStyleBackColor = true;
@@ -1255,7 +1650,6 @@
             thermocyclingAddGoToButton.TabIndex = 16;
             thermocyclingAddGoToButton.Text = "Add GoTo";
             thermocyclingAddGoToButton.UseVisualStyleBackColor = false;
-            thermocyclingAddGoToButton.Click += thermocyclingAddGoToButton_Click;
             // 
             // thermocyclingTECDKillButton
             // 
@@ -1268,7 +1662,6 @@
             thermocyclingTECDKillButton.TabIndex = 15;
             thermocyclingTECDKillButton.Text = "Kill";
             thermocyclingTECDKillButton.UseVisualStyleBackColor = false;
-            thermocyclingTECDKillButton.Click += thermocyclingTECDKillButton_Click;
             // 
             // thermocyclingTECCKillButton
             // 
@@ -1281,7 +1674,6 @@
             thermocyclingTECCKillButton.TabIndex = 14;
             thermocyclingTECCKillButton.Text = "Kill";
             thermocyclingTECCKillButton.UseVisualStyleBackColor = false;
-            thermocyclingTECCKillButton.Click += thermocyclingTECCKillButton_Click;
             // 
             // thermocyclingTECBKillButton
             // 
@@ -1294,7 +1686,6 @@
             thermocyclingTECBKillButton.TabIndex = 13;
             thermocyclingTECBKillButton.Text = "Kill";
             thermocyclingTECBKillButton.UseVisualStyleBackColor = false;
-            thermocyclingTECBKillButton.Click += thermocyclingTECBKillButton_Click;
             // 
             // thermocyclingTECAKillButton
             // 
@@ -1307,7 +1698,6 @@
             thermocyclingTECAKillButton.TabIndex = 12;
             thermocyclingTECAKillButton.Text = "Kill";
             thermocyclingTECAKillButton.UseVisualStyleBackColor = false;
-            thermocyclingTECAKillButton.Click += thermocyclingTECAKillButton_Click;
             // 
             // thermocyclingTECDRunButton
             // 
@@ -1320,7 +1710,6 @@
             thermocyclingTECDRunButton.TabIndex = 11;
             thermocyclingTECDRunButton.Text = "Run";
             thermocyclingTECDRunButton.UseVisualStyleBackColor = false;
-            thermocyclingTECDRunButton.Click += thermocyclingTECDRunButton_Click;
             // 
             // thermocyclingTECCRunButton
             // 
@@ -1333,7 +1722,6 @@
             thermocyclingTECCRunButton.TabIndex = 10;
             thermocyclingTECCRunButton.Text = "Run";
             thermocyclingTECCRunButton.UseVisualStyleBackColor = false;
-            thermocyclingTECCRunButton.Click += thermocyclingTECCRunButton_Click;
             // 
             // thermocyclingTECBRunButton
             // 
@@ -1346,7 +1734,6 @@
             thermocyclingTECBRunButton.TabIndex = 9;
             thermocyclingTECBRunButton.Text = "Run";
             thermocyclingTECBRunButton.UseVisualStyleBackColor = false;
-            thermocyclingTECBRunButton.Click += thermocyclingTECBRunButton_Click;
             // 
             // thermocyclingTECARunButton
             // 
@@ -1359,7 +1746,6 @@
             thermocyclingTECARunButton.TabIndex = 8;
             thermocyclingTECARunButton.Text = "Run";
             thermocyclingTECARunButton.UseVisualStyleBackColor = false;
-            thermocyclingTECARunButton.Click += thermocyclingTECARunButton_Click;
             // 
             // thermocyclingProtocolStatusesDataGridView
             // 
@@ -1427,7 +1813,6 @@
             thermocyclingLoadProtocolButton.TabIndex = 5;
             thermocyclingLoadProtocolButton.Text = "Load Protocol";
             thermocyclingLoadProtocolButton.UseVisualStyleBackColor = false;
-            thermocyclingLoadProtocolButton.Click += thermocyclingLoadProtocolButton_Click;
             // 
             // thermocyclingRemoveStepButton
             // 
@@ -1452,7 +1837,6 @@
             thermocyclingEditStepButton.TabIndex = 3;
             thermocyclingEditStepButton.Text = "Edit Step";
             thermocyclingEditStepButton.UseVisualStyleBackColor = false;
-            thermocyclingEditStepButton.Click += thermocyclingEditStepButton_Click;
             // 
             // thermocyclingSaveProtocolButton
             // 
@@ -1465,7 +1849,6 @@
             thermocyclingSaveProtocolButton.TabIndex = 2;
             thermocyclingSaveProtocolButton.Text = "Save Protocol";
             thermocyclingSaveProtocolButton.UseVisualStyleBackColor = false;
-            thermocyclingSaveProtocolButton.Click += thermocyclingSaveProtocolButton_Click;
             // 
             // thermocyclingAddStepButton
             // 
@@ -1478,7 +1861,6 @@
             thermocyclingAddStepButton.TabIndex = 1;
             thermocyclingAddStepButton.Text = "Add Step";
             thermocyclingAddStepButton.UseVisualStyleBackColor = false;
-            thermocyclingAddStepButton.Click += thermocyclingAddStepButton_Click;
             // 
             // thermocyclingPlotView
             // 
@@ -1491,7 +1873,6 @@
             thermocyclingPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
             thermocyclingPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
             thermocyclingPlotView.ZoomVerticalCursor = Cursors.SizeNS;
-            thermocyclingPlotView.MouseDown += thermocyclingPlotView_MouseDown;
             // 
             // imagingTabPage
             // 
@@ -1514,12 +1895,10 @@
             imagingTabPage.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             imagingTabPage.Location = new Point(4, 24);
             imagingTabPage.Name = "imagingTabPage";
-            imagingTabPage.Size = new Size(1116, 584);
+            imagingTabPage.Size = new Size(1112, 584);
             imagingTabPage.TabIndex = 4;
             imagingTabPage.Text = "Imaging";
             imagingTabPage.UseVisualStyleBackColor = true;
-            imagingTabPage.Enter += imagingTabPage_Enter;
-            imagingTabPage.Leave += imagingTabPage_Leave;
             // 
             // imagingBrightFieldButton
             // 
@@ -1532,30 +1911,21 @@
             imagingBrightFieldButton.TabIndex = 18;
             imagingBrightFieldButton.Text = "Bright Field";
             imagingBrightFieldButton.UseVisualStyleBackColor = false;
-            imagingBrightFieldButton.Click += imagingBrightFieldButton_Click;
             // 
             // imagingLEDsDataGridView
             // 
             imagingLEDsDataGridView.AllowUserToAddRows = false;
             imagingLEDsDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            imagingLEDsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsBrightFieldColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             imagingLEDsDataGridView.Location = new Point(264, 419);
             imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
             imagingLEDsDataGridView.RowHeadersVisible = false;
@@ -1626,7 +1996,6 @@
             imagingKillButon.TabIndex = 13;
             imagingKillButon.Text = "Kill";
             imagingKillButon.UseVisualStyleBackColor = false;
-            imagingKillButon.Click += imagingKillButon_Click;
             // 
             // imagingScanButton
             // 
@@ -1639,37 +2008,27 @@
             imagingScanButton.TabIndex = 12;
             imagingScanButton.Text = "Scan";
             imagingScanButton.UseVisualStyleBackColor = false;
-            imagingScanButton.Click += imagingScanButton_Click;
             // 
             // imagingScanParametersDataGridView
             // 
             imagingScanParametersDataGridView.AllowUserToAddRows = false;
             imagingScanParametersDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = SystemColors.Control;
-            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            imagingScanParametersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             imagingScanParametersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             imagingScanParametersDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingScanParametersPropertyColumn, imagingScanParametersValueColumn });
             imagingScanParametersDataGridView.Location = new Point(692, 28);
             imagingScanParametersDataGridView.Name = "imagingScanParametersDataGridView";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            imagingScanParametersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            imagingScanParametersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             imagingScanParametersDataGridView.RowHeadersVisible = false;
             imagingScanParametersDataGridView.RowTemplate.Height = 25;
             imagingScanParametersDataGridView.Size = new Size(417, 300);
             imagingScanParametersDataGridView.TabIndex = 11;
-            imagingScanParametersDataGridView.KeyDown += imagingScanParametersDataGridView_KeyDown;
             // 
             // imagingScanParametersPropertyColumn
             // 
@@ -1756,7 +2115,6 @@
             imagingCaptureImageButton.TabIndex = 3;
             imagingCaptureImageButton.Text = "Capture Image";
             imagingCaptureImageButton.UseVisualStyleBackColor = false;
-            imagingCaptureImageButton.Click += imagingCaptureImageButton_Click;
             // 
             // imagingCameraViewLabel
             // 
@@ -1776,9 +2134,6 @@
             imagingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             imagingPictureBox.TabIndex = 0;
             imagingPictureBox.TabStop = false;
-            imagingPictureBox.MouseDown += imagingPictureBox_MouseDown;
-            imagingPictureBox.MouseMove += imagingPictureBox_MouseMove;
-            imagingPictureBox.MouseUp += imagingPictureBox_MouseUp;
             // 
             // settingsTabPage
             // 
@@ -1788,7 +2143,7 @@
             settingsTabPage.Controls.Add(settingsMotorsLabel);
             settingsTabPage.Location = new Point(4, 24);
             settingsTabPage.Name = "settingsTabPage";
-            settingsTabPage.Size = new Size(1116, 584);
+            settingsTabPage.Size = new Size(1112, 584);
             settingsTabPage.TabIndex = 5;
             settingsTabPage.Text = "Settings";
             settingsTabPage.UseVisualStyleBackColor = true;
@@ -1930,7 +2285,7 @@
             consumablesTabPage.Location = new Point(4, 24);
             consumablesTabPage.Name = "consumablesTabPage";
             consumablesTabPage.Padding = new Padding(3);
-            consumablesTabPage.Size = new Size(1116, 584);
+            consumablesTabPage.Size = new Size(1112, 584);
             consumablesTabPage.TabIndex = 7;
             consumablesTabPage.Text = "Consumables";
             consumablesTabPage.UseVisualStyleBackColor = true;
@@ -1943,14 +2298,12 @@
             consumablesGlassOffsetComboBox.Name = "consumablesGlassOffsetComboBox";
             consumablesGlassOffsetComboBox.Size = new Size(142, 26);
             consumablesGlassOffsetComboBox.TabIndex = 31;
-            consumablesGlassOffsetComboBox.SelectedIndexChanged += consumablesGlassOffsetComboBox_SelectedIndexChanged;
-            consumablesGlassOffsetComboBox.TextUpdate += consumablesGlassOffsetComboBox_TextUpdate;
             // 
             // consumablesGlassOffsetLabel
             // 
             consumablesGlassOffsetLabel.AutoSize = true;
             consumablesGlassOffsetLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesGlassOffsetLabel.Location = new Point(617, 511);
+            consumablesGlassOffsetLabel.Location = new Point(620, 514);
             consumablesGlassOffsetLabel.Name = "consumablesGlassOffsetLabel";
             consumablesGlassOffsetLabel.Size = new Size(133, 18);
             consumablesGlassOffsetLabel.TabIndex = 30;
@@ -1967,7 +2320,6 @@
             consumablesDeleteBergquistButton.TabIndex = 29;
             consumablesDeleteBergquistButton.Text = "Delete Bergquist";
             consumablesDeleteBergquistButton.UseVisualStyleBackColor = false;
-            consumablesDeleteBergquistButton.Click += consumablesDeleteBergquistButton_Click;
             // 
             // consumablesDeleteElastomerButton
             // 
@@ -1980,7 +2332,6 @@
             consumablesDeleteElastomerButton.TabIndex = 28;
             consumablesDeleteElastomerButton.Text = "Delete Elastomer";
             consumablesDeleteElastomerButton.UseVisualStyleBackColor = false;
-            consumablesDeleteElastomerButton.Click += consumablesDeleteElastomerButton_Click;
             // 
             // consumablesSaveNewBergquistButton
             // 
@@ -1993,7 +2344,6 @@
             consumablesSaveNewBergquistButton.TabIndex = 27;
             consumablesSaveNewBergquistButton.Text = "Save New Bergquist";
             consumablesSaveNewBergquistButton.UseVisualStyleBackColor = false;
-            consumablesSaveNewBergquistButton.Click += consumablesSaveNewBergquistButton_Click;
             // 
             // consumablesSaveNewElastomerButton
             // 
@@ -2006,7 +2356,6 @@
             consumablesSaveNewElastomerButton.TabIndex = 26;
             consumablesSaveNewElastomerButton.Text = "Save New Elastomer";
             consumablesSaveNewElastomerButton.UseVisualStyleBackColor = false;
-            consumablesSaveNewElastomerButton.Click += consumablesSaveNewElastomerButton_Click;
             // 
             // consumablesDeleteCartridgeButton
             // 
@@ -2019,7 +2368,6 @@
             consumablesDeleteCartridgeButton.TabIndex = 25;
             consumablesDeleteCartridgeButton.Text = "Delete Cartridge";
             consumablesDeleteCartridgeButton.UseVisualStyleBackColor = false;
-            consumablesDeleteCartridgeButton.Click += consumablesDeleteCartridgeButton_Click;
             // 
             // consumablesSaveNewCartridgeButton
             // 
@@ -2032,13 +2380,12 @@
             consumablesSaveNewCartridgeButton.TabIndex = 24;
             consumablesSaveNewCartridgeButton.Text = "Save New Cartridge";
             consumablesSaveNewCartridgeButton.UseVisualStyleBackColor = false;
-            consumablesSaveNewCartridgeButton.Click += consumablesSaveNewCartridgeButton_Click;
             // 
             // consumablesBergquistLabel
             // 
             consumablesBergquistLabel.AutoSize = true;
             consumablesBergquistLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesBergquistLabel.Location = new Point(144, 326);
+            consumablesBergquistLabel.Location = new Point(147, 329);
             consumablesBergquistLabel.Name = "consumablesBergquistLabel";
             consumablesBergquistLabel.Size = new Size(75, 18);
             consumablesBergquistLabel.TabIndex = 23;
@@ -2048,7 +2395,7 @@
             // 
             consumablesElastomerLabel.AutoSize = true;
             consumablesElastomerLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesElastomerLabel.Location = new Point(147, 217);
+            consumablesElastomerLabel.Location = new Point(150, 220);
             consumablesElastomerLabel.Name = "consumablesElastomerLabel";
             consumablesElastomerLabel.Size = new Size(79, 18);
             consumablesElastomerLabel.TabIndex = 22;
@@ -2058,7 +2405,7 @@
             // 
             consumablesCartridgeLabel.AutoSize = true;
             consumablesCartridgeLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesCartridgeLabel.Location = new Point(149, 98);
+            consumablesCartridgeLabel.Location = new Point(152, 101);
             consumablesCartridgeLabel.Name = "consumablesCartridgeLabel";
             consumablesCartridgeLabel.Size = new Size(74, 18);
             consumablesCartridgeLabel.TabIndex = 21;
@@ -2068,7 +2415,7 @@
             // 
             consumablesImageScanningNoteLabel.AutoSize = true;
             consumablesImageScanningNoteLabel.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesImageScanningNoteLabel.Location = new Point(8, 502);
+            consumablesImageScanningNoteLabel.Location = new Point(11, 505);
             consumablesImageScanningNoteLabel.Name = "consumablesImageScanningNoteLabel";
             consumablesImageScanningNoteLabel.Size = new Size(571, 15);
             consumablesImageScanningNoteLabel.TabIndex = 20;
@@ -2085,7 +2432,6 @@
             consumablesUpdateImageScanningButton.TabIndex = 18;
             consumablesUpdateImageScanningButton.Text = "Update Image Scanning";
             consumablesUpdateImageScanningButton.UseVisualStyleBackColor = false;
-            consumablesUpdateImageScanningButton.Click += consumablesUpdateImageScanningButton_Click;
             // 
             // consumablesBergquistComboBox
             // 
@@ -2104,7 +2450,6 @@
             consumablesElastomerComboBox.Name = "consumablesElastomerComboBox";
             consumablesElastomerComboBox.Size = new Size(206, 26);
             consumablesElastomerComboBox.TabIndex = 16;
-            consumablesElastomerComboBox.SelectedIndexChanged += consumablesElastomerComboBox_SelectedIndexChanged;
             // 
             // consumablesCartridgeComboBox
             // 
@@ -2114,7 +2459,6 @@
             consumablesCartridgeComboBox.Name = "consumablesCartridgeComboBox";
             consumablesCartridgeComboBox.Size = new Size(206, 26);
             consumablesCartridgeComboBox.TabIndex = 15;
-            consumablesCartridgeComboBox.SelectedIndexChanged += consumablesCartridgeComboBox_SelectedIndexChanged;
             // 
             // consumablesImageScanningDataGridView
             // 
@@ -2126,12 +2470,11 @@
             consumablesImageScanningDataGridView.Location = new Point(8, 365);
             consumablesImageScanningDataGridView.Name = "consumablesImageScanningDataGridView";
             consumablesImageScanningDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle7;
             consumablesImageScanningDataGridView.RowTemplate.Height = 25;
             consumablesImageScanningDataGridView.Size = new Size(1100, 134);
             consumablesImageScanningDataGridView.TabIndex = 14;
-            consumablesImageScanningDataGridView.KeyDown += consumablesImageScanningDataGridView_KeyDown;
             // 
             // consumablesImageScanningHeaterColumn
             // 
@@ -2199,7 +2542,6 @@
             consumablesBergquistDataButton.TabIndex = 13;
             consumablesBergquistDataButton.Text = "Update Bergquist Data";
             consumablesBergquistDataButton.UseVisualStyleBackColor = false;
-            consumablesBergquistDataButton.Click += consumablesBergquistDataButton_Click;
             // 
             // consumablesUpdateElastomerData
             // 
@@ -2212,7 +2554,6 @@
             consumablesUpdateElastomerData.TabIndex = 12;
             consumablesUpdateElastomerData.Text = "Update Elastomer Data";
             consumablesUpdateElastomerData.UseVisualStyleBackColor = false;
-            consumablesUpdateElastomerData.Click += consumablesUpdateElastomerData_Click;
             // 
             // consumablesUpdateCartridgeDataButton
             // 
@@ -2225,13 +2566,12 @@
             consumablesUpdateCartridgeDataButton.TabIndex = 11;
             consumablesUpdateCartridgeDataButton.Text = "Update Cartridge Data";
             consumablesUpdateCartridgeDataButton.UseVisualStyleBackColor = false;
-            consumablesUpdateCartridgeDataButton.Click += consumablesUpdateCartridgeDataButton_Click;
             // 
             // consumablesImageScanningLabel
             // 
             consumablesImageScanningLabel.AutoSize = true;
             consumablesImageScanningLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesImageScanningLabel.Location = new Point(8, 344);
+            consumablesImageScanningLabel.Location = new Point(11, 347);
             consumablesImageScanningLabel.Name = "consumablesImageScanningLabel";
             consumablesImageScanningLabel.Size = new Size(120, 18);
             consumablesImageScanningLabel.TabIndex = 6;
@@ -2246,12 +2586,11 @@
             consumablesBergquistsDataGridView.Location = new Point(8, 254);
             consumablesBergquistsDataGridView.Name = "consumablesBergquistsDataGridView";
             consumablesBergquistsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle10.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle8.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle8;
             consumablesBergquistsDataGridView.RowTemplate.Height = 25;
             consumablesBergquistsDataGridView.Size = new Size(1100, 55);
             consumablesBergquistsDataGridView.TabIndex = 5;
-            consumablesBergquistsDataGridView.KeyDown += consumablesBergquistsDataGridView_KeyDown;
             // 
             // consumablesBergquistsNameColumn
             // 
@@ -2281,7 +2620,7 @@
             // 
             consumablesBergquistsLabel.AutoSize = true;
             consumablesBergquistsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesBergquistsLabel.Location = new Point(8, 233);
+            consumablesBergquistsLabel.Location = new Point(11, 236);
             consumablesBergquistsLabel.Name = "consumablesBergquistsLabel";
             consumablesBergquistsLabel.Size = new Size(83, 18);
             consumablesBergquistsLabel.TabIndex = 4;
@@ -2296,12 +2635,11 @@
             consumablesElastomerDataGridView.Location = new Point(6, 145);
             consumablesElastomerDataGridView.Name = "consumablesElastomerDataGridView";
             consumablesElastomerDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle11.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             consumablesElastomerDataGridView.RowTemplate.Height = 25;
             consumablesElastomerDataGridView.Size = new Size(1102, 50);
             consumablesElastomerDataGridView.TabIndex = 3;
-            consumablesElastomerDataGridView.KeyDown += consumablesElastomerDataGridView_KeyDown;
             // 
             // consumablesElastomerNameColumn
             // 
@@ -2343,7 +2681,7 @@
             // 
             consumablesElastomersLabel.AutoSize = true;
             consumablesElastomersLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesElastomersLabel.Location = new Point(3, 124);
+            consumablesElastomersLabel.Location = new Point(6, 127);
             consumablesElastomersLabel.Name = "consumablesElastomersLabel";
             consumablesElastomersLabel.Size = new Size(87, 18);
             consumablesElastomersLabel.TabIndex = 2;
@@ -2357,31 +2695,30 @@
             consumablesCartridgesDataGridView.AllowUserToResizeRows = false;
             consumablesCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             consumablesCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { consumablesCartridgesNameColumn, consumablesCartridgesPartitionTypeColumn, consumablesCartridgesSamplesColumn, consumablesCartridgesAssaysColumn, consumablesCartridgesLengthColumn, consumablesCartridgesWidthColumn, consumablesCartridgesHeightColumn });
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = SystemColors.Window;
-            dataGridViewCellStyle12.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-            consumablesCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = SystemColors.Window;
+            dataGridViewCellStyle10.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
+            consumablesCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle10;
             consumablesCartridgesDataGridView.Location = new Point(8, 29);
             consumablesCartridgesDataGridView.Name = "consumablesCartridgesDataGridView";
-            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = SystemColors.Control;
-            dataGridViewCellStyle13.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
-            consumablesCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = SystemColors.Control;
+            dataGridViewCellStyle11.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            consumablesCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
             consumablesCartridgesDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle14.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle12.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
             consumablesCartridgesDataGridView.RowTemplate.Height = 25;
             consumablesCartridgesDataGridView.Size = new Size(1100, 50);
             consumablesCartridgesDataGridView.TabIndex = 1;
-            consumablesCartridgesDataGridView.KeyDown += consumablesCartridgesDataGridView_KeyDown;
             // 
             // consumablesCartridgesNameColumn
             // 
@@ -2429,7 +2766,7 @@
             // 
             consumablesCartridgesLabel.AutoSize = true;
             consumablesCartridgesLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesCartridgesLabel.Location = new Point(8, 8);
+            consumablesCartridgesLabel.Location = new Point(11, 11);
             consumablesCartridgesLabel.Name = "consumablesCartridgesLabel";
             consumablesCartridgesLabel.Size = new Size(82, 18);
             consumablesCartridgesLabel.TabIndex = 0;
@@ -2439,98 +2776,373 @@
             // 
             metrologyTabPage.Location = new Point(4, 24);
             metrologyTabPage.Name = "metrologyTabPage";
-            metrologyTabPage.Size = new Size(1116, 584);
+            metrologyTabPage.Size = new Size(1112, 584);
             metrologyTabPage.TabIndex = 6;
             metrologyTabPage.Text = "Metrology";
             metrologyTabPage.UseVisualStyleBackColor = true;
             // 
-            // softwareVersionLabel
+            // mainTabControl
             // 
-            softwareVersionLabel.AutoSize = true;
-            softwareVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            softwareVersionLabel.ForeColor = Color.White;
-            softwareVersionLabel.Location = new Point(12, 623);
-            softwareVersionLabel.Name = "softwareVersionLabel";
-            softwareVersionLabel.Size = new Size(117, 16);
-            softwareVersionLabel.TabIndex = 1;
-            softwareVersionLabel.Text = "SW Version: 1.0.1";
+            mainTabControl.Controls.Add(mainHomeTabPage);
+            mainTabControl.Controls.Add(mainAssayProtocolEditorTabPage);
+            mainTabControl.Controls.Add(mainReaderTabPage);
+            mainTabControl.Location = new Point(0, 1);
+            mainTabControl.Name = "mainTabControl";
+            mainTabControl.SelectedIndex = 0;
+            mainTabControl.Size = new Size(1124, 649);
+            mainTabControl.TabIndex = 8;
             // 
-            // firmwareVersionLabel
+            // mainHomeTabPage
             // 
-            firmwareVersionLabel.AutoSize = true;
-            firmwareVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            firmwareVersionLabel.ForeColor = Color.White;
-            firmwareVersionLabel.Location = new Point(147, 623);
-            firmwareVersionLabel.Name = "firmwareVersionLabel";
-            firmwareVersionLabel.Size = new Size(156, 16);
-            firmwareVersionLabel.TabIndex = 2;
-            firmwareVersionLabel.Text = "Firmware Version: 1.2.1";
+            mainHomeTabPage.Controls.Add(mainHomeValvesDataGridView);
+            mainHomeTabPage.Controls.Add(mainHomeValvesLabel);
+            mainHomeTabPage.Controls.Add(mainHomeCameraDataGridView);
+            mainHomeTabPage.Controls.Add(mainHomeLEDsDataGridView);
+            mainHomeTabPage.Controls.Add(mainHomePowerRelaysDataGridView);
+            mainHomeTabPage.Controls.Add(mainHomePowerRelaysLabel);
+            mainHomeTabPage.Controls.Add(mainHomeCameraLabel);
+            mainHomeTabPage.Controls.Add(mainHomeLEDsLabel);
+            mainHomeTabPage.Controls.Add(mainHomeTECsLabel);
+            mainHomeTabPage.Controls.Add(mainHomeTECsDataGridView);
+            mainHomeTabPage.Controls.Add(mainHomeMotorsLabel);
+            mainHomeTabPage.Controls.Add(mainHomeMotorsDataGridView);
+            mainHomeTabPage.Location = new Point(4, 24);
+            mainHomeTabPage.Name = "mainHomeTabPage";
+            mainHomeTabPage.Size = new Size(1116, 621);
+            mainHomeTabPage.TabIndex = 2;
+            mainHomeTabPage.Text = "Home";
+            mainHomeTabPage.UseVisualStyleBackColor = true;
             // 
-            // apiVersionLabel
+            // mainHomeValvesDataGridView
             // 
-            apiVersionLabel.AutoSize = true;
-            apiVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            apiVersionLabel.ForeColor = Color.White;
-            apiVersionLabel.Location = new Point(318, 623);
-            apiVersionLabel.Name = "apiVersionLabel";
-            apiVersionLabel.Size = new Size(117, 16);
-            apiVersionLabel.TabIndex = 3;
-            apiVersionLabel.Text = "API Version: 1.0.1";
+            mainHomeValvesDataGridView.AllowUserToAddRows = false;
+            mainHomeValvesDataGridView.AllowUserToDeleteRows = false;
+            mainHomeValvesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomeValvesDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeValvesIDColumn, mainHomeValvesNameColumn, mainHomeValvesIOColumn });
+            mainHomeValvesDataGridView.Location = new Point(796, 509);
+            mainHomeValvesDataGridView.Name = "mainHomeValvesDataGridView";
+            mainHomeValvesDataGridView.ReadOnly = true;
+            mainHomeValvesDataGridView.RowHeadersVisible = false;
+            mainHomeValvesDataGridView.RowTemplate.Height = 25;
+            mainHomeValvesDataGridView.Size = new Size(312, 92);
+            mainHomeValvesDataGridView.TabIndex = 11;
             // 
-            // guiVersionLabel
+            // mainHomeValvesIDColumn
             // 
-            guiVersionLabel.AutoSize = true;
-            guiVersionLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            guiVersionLabel.ForeColor = Color.White;
-            guiVersionLabel.Location = new Point(451, 623);
-            guiVersionLabel.Name = "guiVersionLabel";
-            guiVersionLabel.Size = new Size(118, 16);
-            guiVersionLabel.TabIndex = 4;
-            guiVersionLabel.Text = "GUI Version: 1.0.0";
+            mainHomeValvesIDColumn.HeaderText = "ID";
+            mainHomeValvesIDColumn.Name = "mainHomeValvesIDColumn";
+            mainHomeValvesIDColumn.ReadOnly = true;
+            mainHomeValvesIDColumn.Width = 40;
             // 
-            // userLabel
+            // mainHomeValvesNameColumn
             // 
-            userLabel.AutoSize = true;
-            userLabel.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            userLabel.ForeColor = Color.White;
-            userLabel.Location = new Point(585, 623);
-            userLabel.Name = "userLabel";
-            userLabel.Size = new Size(107, 16);
-            userLabel.TabIndex = 5;
-            userLabel.Text = "User: glc-biorad";
+            mainHomeValvesNameColumn.HeaderText = "Name";
+            mainHomeValvesNameColumn.Name = "mainHomeValvesNameColumn";
+            mainHomeValvesNameColumn.ReadOnly = true;
+            mainHomeValvesNameColumn.Width = 185;
             // 
-            // logoutButton
+            // mainHomeValvesIOColumn
             // 
-            logoutButton.BackColor = SystemColors.Highlight;
-            logoutButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            logoutButton.ForeColor = Color.White;
-            logoutButton.Location = new Point(896, 616);
-            logoutButton.Name = "logoutButton";
-            logoutButton.Size = new Size(98, 30);
-            logoutButton.TabIndex = 6;
-            logoutButton.Text = "Logout";
-            logoutButton.UseVisualStyleBackColor = false;
-            logoutButton.Click += logoutButton_Click;
+            mainHomeValvesIOColumn.HeaderText = "IO";
+            mainHomeValvesIOColumn.Name = "mainHomeValvesIOColumn";
+            mainHomeValvesIOColumn.ReadOnly = true;
+            mainHomeValvesIOColumn.Width = 80;
             // 
-            // resetButton
+            // mainHomeValvesLabel
             // 
-            resetButton.BackColor = Color.IndianRed;
-            resetButton.FlatAppearance.BorderColor = Color.Red;
-            resetButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            resetButton.ForeColor = Color.White;
-            resetButton.Location = new Point(1000, 616);
-            resetButton.Name = "resetButton";
-            resetButton.Size = new Size(98, 30);
-            resetButton.TabIndex = 7;
-            resetButton.Text = "Reset";
-            resetButton.UseVisualStyleBackColor = false;
+            mainHomeValvesLabel.AutoSize = true;
+            mainHomeValvesLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomeValvesLabel.Location = new Point(796, 488);
+            mainHomeValvesLabel.Name = "mainHomeValvesLabel";
+            mainHomeValvesLabel.Size = new Size(54, 18);
+            mainHomeValvesLabel.TabIndex = 10;
+            mainHomeValvesLabel.Text = "Valves";
+            // 
+            // mainHomeCameraDataGridView
+            // 
+            mainHomeCameraDataGridView.AllowUserToAddRows = false;
+            mainHomeCameraDataGridView.AllowUserToDeleteRows = false;
+            mainHomeCameraDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomeCameraDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeCameraStateColumn, mainHomeCameraIOColumn });
+            mainHomeCameraDataGridView.Location = new Point(796, 431);
+            mainHomeCameraDataGridView.Name = "mainHomeCameraDataGridView";
+            mainHomeCameraDataGridView.ReadOnly = true;
+            mainHomeCameraDataGridView.RowHeadersVisible = false;
+            mainHomeCameraDataGridView.RowTemplate.Height = 25;
+            mainHomeCameraDataGridView.Size = new Size(312, 46);
+            mainHomeCameraDataGridView.TabIndex = 9;
+            // 
+            // mainHomeCameraStateColumn
+            // 
+            mainHomeCameraStateColumn.HeaderText = "State";
+            mainHomeCameraStateColumn.Name = "mainHomeCameraStateColumn";
+            mainHomeCameraStateColumn.ReadOnly = true;
+            mainHomeCameraStateColumn.Width = 150;
+            // 
+            // mainHomeCameraIOColumn
+            // 
+            mainHomeCameraIOColumn.HeaderText = "IO";
+            mainHomeCameraIOColumn.Name = "mainHomeCameraIOColumn";
+            mainHomeCameraIOColumn.ReadOnly = true;
+            mainHomeCameraIOColumn.Width = 155;
+            // 
+            // mainHomeLEDsDataGridView
+            // 
+            mainHomeLEDsDataGridView.AllowUserToAddRows = false;
+            mainHomeLEDsDataGridView.AllowUserToDeleteRows = false;
+            mainHomeLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomeLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeLEDsPropertyColumn, mainHomeLEDsCy5Column, mainHomeLEDsFAMColumn, mainHomeLEDsHEXColumn, mainHomeLEDsAttoColumn, mainHomeLEDsAlexa, mainHomeLEDsCy5p5Column });
+            mainHomeLEDsDataGridView.Location = new Point(8, 431);
+            mainHomeLEDsDataGridView.Name = "mainHomeLEDsDataGridView";
+            mainHomeLEDsDataGridView.ReadOnly = true;
+            mainHomeLEDsDataGridView.RowHeadersVisible = false;
+            mainHomeLEDsDataGridView.RowTemplate.Height = 25;
+            mainHomeLEDsDataGridView.Size = new Size(782, 115);
+            mainHomeLEDsDataGridView.TabIndex = 8;
+            // 
+            // mainHomeLEDsPropertyColumn
+            // 
+            mainHomeLEDsPropertyColumn.HeaderText = "";
+            mainHomeLEDsPropertyColumn.Name = "mainHomeLEDsPropertyColumn";
+            mainHomeLEDsPropertyColumn.ReadOnly = true;
+            mainHomeLEDsPropertyColumn.Width = 175;
+            // 
+            // mainHomeLEDsCy5Column
+            // 
+            mainHomeLEDsCy5Column.HeaderText = "Cy5";
+            mainHomeLEDsCy5Column.Name = "mainHomeLEDsCy5Column";
+            mainHomeLEDsCy5Column.ReadOnly = true;
+            // 
+            // mainHomeLEDsFAMColumn
+            // 
+            mainHomeLEDsFAMColumn.HeaderText = "FAM";
+            mainHomeLEDsFAMColumn.Name = "mainHomeLEDsFAMColumn";
+            mainHomeLEDsFAMColumn.ReadOnly = true;
+            // 
+            // mainHomeLEDsHEXColumn
+            // 
+            mainHomeLEDsHEXColumn.HeaderText = "HEX";
+            mainHomeLEDsHEXColumn.Name = "mainHomeLEDsHEXColumn";
+            mainHomeLEDsHEXColumn.ReadOnly = true;
+            // 
+            // mainHomeLEDsAttoColumn
+            // 
+            mainHomeLEDsAttoColumn.HeaderText = "Atto";
+            mainHomeLEDsAttoColumn.Name = "mainHomeLEDsAttoColumn";
+            mainHomeLEDsAttoColumn.ReadOnly = true;
+            // 
+            // mainHomeLEDsAlexa
+            // 
+            mainHomeLEDsAlexa.HeaderText = "Alexa";
+            mainHomeLEDsAlexa.Name = "mainHomeLEDsAlexa";
+            mainHomeLEDsAlexa.ReadOnly = true;
+            // 
+            // mainHomeLEDsCy5p5Column
+            // 
+            mainHomeLEDsCy5p5Column.HeaderText = "Cy5.5";
+            mainHomeLEDsCy5p5Column.Name = "mainHomeLEDsCy5p5Column";
+            mainHomeLEDsCy5p5Column.ReadOnly = true;
+            // 
+            // mainHomePowerRelaysDataGridView
+            // 
+            mainHomePowerRelaysDataGridView.AllowUserToAddRows = false;
+            mainHomePowerRelaysDataGridView.AllowUserToDeleteRows = false;
+            mainHomePowerRelaysDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomePowerRelaysDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeIDColumn, mainHomeNameColumn, mainHomeIOColumn });
+            mainHomePowerRelaysDataGridView.Location = new Point(11, 569);
+            mainHomePowerRelaysDataGridView.Name = "mainHomePowerRelaysDataGridView";
+            mainHomePowerRelaysDataGridView.ReadOnly = true;
+            mainHomePowerRelaysDataGridView.RowHeadersVisible = false;
+            mainHomePowerRelaysDataGridView.RowTemplate.Height = 25;
+            mainHomePowerRelaysDataGridView.Size = new Size(473, 46);
+            mainHomePowerRelaysDataGridView.TabIndex = 7;
+            // 
+            // mainHomeIDColumn
+            // 
+            mainHomeIDColumn.HeaderText = "ID";
+            mainHomeIDColumn.Name = "mainHomeIDColumn";
+            mainHomeIDColumn.ReadOnly = true;
+            // 
+            // mainHomeNameColumn
+            // 
+            mainHomeNameColumn.HeaderText = "Name";
+            mainHomeNameColumn.Name = "mainHomeNameColumn";
+            mainHomeNameColumn.ReadOnly = true;
+            mainHomeNameColumn.Width = 250;
+            // 
+            // mainHomeIOColumn
+            // 
+            mainHomeIOColumn.HeaderText = "IO";
+            mainHomeIOColumn.Name = "mainHomeIOColumn";
+            mainHomeIOColumn.ReadOnly = true;
+            mainHomeIOColumn.Width = 120;
+            // 
+            // mainHomePowerRelaysLabel
+            // 
+            mainHomePowerRelaysLabel.AutoSize = true;
+            mainHomePowerRelaysLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomePowerRelaysLabel.Location = new Point(11, 548);
+            mainHomePowerRelaysLabel.Name = "mainHomePowerRelaysLabel";
+            mainHomePowerRelaysLabel.Size = new Size(104, 18);
+            mainHomePowerRelaysLabel.TabIndex = 6;
+            mainHomePowerRelaysLabel.Text = "Power Relays";
+            // 
+            // mainHomeCameraLabel
+            // 
+            mainHomeCameraLabel.AutoSize = true;
+            mainHomeCameraLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomeCameraLabel.Location = new Point(796, 410);
+            mainHomeCameraLabel.Name = "mainHomeCameraLabel";
+            mainHomeCameraLabel.Size = new Size(65, 18);
+            mainHomeCameraLabel.TabIndex = 5;
+            mainHomeCameraLabel.Text = "Camera";
+            // 
+            // mainHomeLEDsLabel
+            // 
+            mainHomeLEDsLabel.AutoSize = true;
+            mainHomeLEDsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomeLEDsLabel.Location = new Point(8, 410);
+            mainHomeLEDsLabel.Name = "mainHomeLEDsLabel";
+            mainHomeLEDsLabel.Size = new Size(48, 18);
+            mainHomeLEDsLabel.TabIndex = 4;
+            mainHomeLEDsLabel.Text = "LEDs";
+            // 
+            // mainHomeTECsLabel
+            // 
+            mainHomeTECsLabel.AutoSize = true;
+            mainHomeTECsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomeTECsLabel.Location = new Point(630, 10);
+            mainHomeTECsLabel.Name = "mainHomeTECsLabel";
+            mainHomeTECsLabel.Size = new Size(48, 18);
+            mainHomeTECsLabel.TabIndex = 3;
+            mainHomeTECsLabel.Text = "TECs";
+            // 
+            // mainHomeTECsDataGridView
+            // 
+            mainHomeTECsDataGridView.AllowUserToAddRows = false;
+            mainHomeTECsDataGridView.AllowUserToDeleteRows = false;
+            mainHomeTECsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomeTECsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeTECsPropertyColumn, mainHomeTECsTECAColumn, mainHomeTECsTECBColumn, mainHomeTECsTECCColumn, mainHomeTECsTECDCColumn });
+            mainHomeTECsDataGridView.Location = new Point(627, 33);
+            mainHomeTECsDataGridView.Name = "mainHomeTECsDataGridView";
+            mainHomeTECsDataGridView.ReadOnly = true;
+            mainHomeTECsDataGridView.RowHeadersVisible = false;
+            mainHomeTECsDataGridView.RowTemplate.Height = 25;
+            mainHomeTECsDataGridView.Size = new Size(481, 368);
+            mainHomeTECsDataGridView.TabIndex = 2;
+            // 
+            // mainHomeTECsPropertyColumn
+            // 
+            mainHomeTECsPropertyColumn.HeaderText = "";
+            mainHomeTECsPropertyColumn.Name = "mainHomeTECsPropertyColumn";
+            mainHomeTECsPropertyColumn.ReadOnly = true;
+            mainHomeTECsPropertyColumn.Width = 155;
+            // 
+            // mainHomeTECsTECAColumn
+            // 
+            mainHomeTECsTECAColumn.HeaderText = "TEC A";
+            mainHomeTECsTECAColumn.Name = "mainHomeTECsTECAColumn";
+            mainHomeTECsTECAColumn.ReadOnly = true;
+            mainHomeTECsTECAColumn.Width = 80;
+            // 
+            // mainHomeTECsTECBColumn
+            // 
+            mainHomeTECsTECBColumn.HeaderText = "TEC B";
+            mainHomeTECsTECBColumn.Name = "mainHomeTECsTECBColumn";
+            mainHomeTECsTECBColumn.ReadOnly = true;
+            mainHomeTECsTECBColumn.Width = 80;
+            // 
+            // mainHomeTECsTECCColumn
+            // 
+            mainHomeTECsTECCColumn.HeaderText = "TEC C";
+            mainHomeTECsTECCColumn.Name = "mainHomeTECsTECCColumn";
+            mainHomeTECsTECCColumn.ReadOnly = true;
+            mainHomeTECsTECCColumn.Width = 80;
+            // 
+            // mainHomeTECsTECDCColumn
+            // 
+            mainHomeTECsTECDCColumn.HeaderText = "TEC D";
+            mainHomeTECsTECDCColumn.Name = "mainHomeTECsTECDCColumn";
+            mainHomeTECsTECDCColumn.ReadOnly = true;
+            mainHomeTECsTECDCColumn.Width = 80;
+            // 
+            // mainHomeMotorsLabel
+            // 
+            mainHomeMotorsLabel.AutoSize = true;
+            mainHomeMotorsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomeMotorsLabel.Location = new Point(11, 10);
+            mainHomeMotorsLabel.Name = "mainHomeMotorsLabel";
+            mainHomeMotorsLabel.Size = new Size(56, 18);
+            mainHomeMotorsLabel.TabIndex = 1;
+            mainHomeMotorsLabel.Text = "Motors";
+            // 
+            // mainHomeMotorsDataGridView
+            // 
+            mainHomeMotorsDataGridView.AllowUserToAddRows = false;
+            mainHomeMotorsDataGridView.AllowUserToDeleteRows = false;
+            mainHomeMotorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainHomeMotorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainHomeMotorsNameColumn, mainHomeMotorsVersionColumn, mainHomeMotorsStateColumn, mainHomeMotorsIOColumn, mainHomeMotorsPositionColumn, mainHomeMotorsSpeedColumn, mainHomeMotorsHomedColumn });
+            mainHomeMotorsDataGridView.Location = new Point(8, 33);
+            mainHomeMotorsDataGridView.Name = "mainHomeMotorsDataGridView";
+            mainHomeMotorsDataGridView.ReadOnly = true;
+            mainHomeMotorsDataGridView.RowHeadersVisible = false;
+            mainHomeMotorsDataGridView.RowTemplate.Height = 25;
+            mainHomeMotorsDataGridView.Size = new Size(613, 368);
+            mainHomeMotorsDataGridView.TabIndex = 0;
+            // 
+            // mainHomeMotorsNameColumn
+            // 
+            mainHomeMotorsNameColumn.HeaderText = "Name";
+            mainHomeMotorsNameColumn.Name = "mainHomeMotorsNameColumn";
+            mainHomeMotorsNameColumn.ReadOnly = true;
+            mainHomeMotorsNameColumn.Width = 90;
+            // 
+            // mainHomeMotorsVersionColumn
+            // 
+            mainHomeMotorsVersionColumn.HeaderText = "Version";
+            mainHomeMotorsVersionColumn.Name = "mainHomeMotorsVersionColumn";
+            mainHomeMotorsVersionColumn.ReadOnly = true;
+            mainHomeMotorsVersionColumn.Width = 70;
+            // 
+            // mainHomeMotorsStateColumn
+            // 
+            mainHomeMotorsStateColumn.HeaderText = "State";
+            mainHomeMotorsStateColumn.Name = "mainHomeMotorsStateColumn";
+            mainHomeMotorsStateColumn.ReadOnly = true;
+            mainHomeMotorsStateColumn.Width = 110;
+            // 
+            // mainHomeMotorsIOColumn
+            // 
+            mainHomeMotorsIOColumn.HeaderText = "IO";
+            mainHomeMotorsIOColumn.Name = "mainHomeMotorsIOColumn";
+            mainHomeMotorsIOColumn.ReadOnly = true;
+            mainHomeMotorsIOColumn.Width = 70;
+            // 
+            // mainHomeMotorsPositionColumn
+            // 
+            mainHomeMotorsPositionColumn.HeaderText = "Position (μS)";
+            mainHomeMotorsPositionColumn.Name = "mainHomeMotorsPositionColumn";
+            mainHomeMotorsPositionColumn.ReadOnly = true;
+            // 
+            // mainHomeMotorsSpeedColumn
+            // 
+            mainHomeMotorsSpeedColumn.HeaderText = "Speed (μS/s)";
+            mainHomeMotorsSpeedColumn.Name = "mainHomeMotorsSpeedColumn";
+            mainHomeMotorsSpeedColumn.ReadOnly = true;
+            // 
+            // mainHomeMotorsHomedColumn
+            // 
+            mainHomeMotorsHomedColumn.HeaderText = "Homed";
+            mainHomeMotorsHomedColumn.Name = "mainHomeMotorsHomedColumn";
+            mainHomeMotorsHomedColumn.ReadOnly = true;
+            mainHomeMotorsHomedColumn.Width = 70;
             // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
-            ClientSize = new Size(1124, 650);
+            ClientSize = new Size(1124, 688);
             Controls.Add(resetButton);
             Controls.Add(logoutButton);
             Controls.Add(userLabel);
@@ -2538,11 +3150,17 @@
             Controls.Add(apiVersionLabel);
             Controls.Add(firmwareVersionLabel);
             Controls.Add(softwareVersionLabel);
-            Controls.Add(tabControl);
+            Controls.Add(mainTabControl);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "independentReaderForm";
-            Text = "Independent Reader";
-            tabControl.ResumeLayout(false);
+            Text = "BRADx Development GUI";
+            mainAssayProtocolEditorTabPage.ResumeLayout(false);
+            assayProtocolEditorTabControl.ResumeLayout(false);
+            assayProtocolEditorProtocolEditorTabPage.ResumeLayout(false);
+            assayProtocolEditorProtocolEditorTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)apeProtocolEditorProtocolDataGridView).EndInit();
+            mainReaderTabPage.ResumeLayout(false);
+            readerTabControl.ResumeLayout(false);
             homeTabPage.ResumeLayout(false);
             homeTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)homeTECsDataGridView).EndInit();
@@ -2578,28 +3196,20 @@
             ((System.ComponentModel.ISupportInitialize)consumablesBergquistsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)consumablesElastomerDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)consumablesCartridgesDataGridView).EndInit();
+            mainTabControl.ResumeLayout(false);
+            mainHomeTabPage.ResumeLayout(false);
+            mainHomeTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)mainHomeValvesDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeCameraDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeLEDsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomePowerRelaysDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeTECsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private TabControl tabControl;
-        private TabPage homeTabPage;
-        private TabPage runTabPage;
-        private TabPage controlTabPage;
-        private TabPage thermocyclingTabPage;
-        private TabPage imagingTabPage;
-        private TabPage settingsTabPage;
-        private TabPage metrologyTabPage;
-        private DataGridView homeMotorsDataGridView;
-        private Label homeMotorsLabel;
-        private DataGridView homeCameraDataGridView;
-        private Label homeCameraLabel;
-        private DataGridView homeLEDsDataGridView;
-        private Label homeLEDsLabel;
-        private DataGridView homeTECsDataGridView;
-        private Label homeTECsLabel;
         private Label softwareVersionLabel;
         private Label firmwareVersionLabel;
         private Label apiVersionLabel;
@@ -2607,18 +3217,19 @@
         private Label userLabel;
         private Button logoutButton;
         private Button resetButton;
-        private DataGridView runAssayMetaDataGridView;
-        private DataGridView runSampleMetaDataGridView;
-        private DataGridView runImagingSetupDataGridView;
-        private DataGridView runExperimentDataGridView;
-        private Button runRunButton;
-        private Label runAssayMetaDataLabel;
-        private Label runSampleMetaDataLabel;
-        private Label runImagingSetupLabel;
-        private Label tunExperimentDataLabel;
-        private DataGridViewTextBoxColumn runAssayMetaDataIDColumn;
-        private DataGridViewTextBoxColumn runAssayMetaDataNameColumn;
-        private Button runClearFormButton;
+        private TabPage mainAssayProtocolEditorTabPage;
+        private TabPage mainReaderTabPage;
+        private TabControl readerTabControl;
+        private TabPage homeTabPage;
+        private RadioButton homeAPIConnectedRadioButton;
+        private DataGridView homeTECsDataGridView;
+        private DataGridViewTextBoxColumn homeTECsProprtyColumn;
+        private DataGridViewTextBoxColumn homeTECsTECAColumn;
+        private DataGridViewTextBoxColumn homeTECsTECBColumn;
+        private DataGridViewTextBoxColumn homeTECsTECCColumn;
+        private DataGridViewTextBoxColumn homeTECsTECDColumn;
+        private Label homeTECsLabel;
+        private DataGridView homeLEDsDataGridView;
         private DataGridViewTextBoxColumn homeLEDsPropertiesColumn;
         private DataGridViewTextBoxColumn homeLEDsCy5Column;
         private DataGridViewTextBoxColumn homeLEDsFAMColumn;
@@ -2626,37 +3237,81 @@
         private DataGridViewTextBoxColumn homeLEDsAttoColumn;
         private DataGridViewTextBoxColumn homeLEDsAlexaColumn;
         private DataGridViewTextBoxColumn homeLEDsCy55Column;
-        private Button controlMoveButton;
-        private ComboBox controlMotorsComboBox;
-        private DataGridView controlMotorsDataGridView;
-        private Label controlMotorsLabel;
-        private Label controlTECsLabel;
-        private Button controlHomeButton;
+        private Label homeLEDsLabel;
+        private DataGridView homeCameraDataGridView;
+        private DataGridViewTextBoxColumn homeCameraStateColumn;
+        private DataGridViewTextBoxColumn homeCameraIOColumn;
+        private Label homeCameraLabel;
+        private DataGridView homeMotorsDataGridView;
+        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
+        private DataGridViewTextBoxColumn homeMotorsVersionColumn;
+        private DataGridViewTextBoxColumn homeMotorsStateColumn;
+        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
+        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
+        private Label homeMotorsLabel;
+        private TabPage runTabPage;
+        private Button runClearFormButton;
+        private DataGridView runAssayMetaDataGridView;
+        private DataGridViewTextBoxColumn runAssayMetaDataIDColumn;
+        private DataGridViewTextBoxColumn runAssayMetaDataNameColumn;
+        private DataGridView runSampleMetaDataGridView;
+        private DataGridViewTextBoxColumn runSampleMetaDataIDColumn;
+        private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
+        private DataGridView runImagingSetupDataGridView;
+        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
+        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
+        private DataGridView runExperimentDataGridView;
+        private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
+        private DataGridViewTextBoxColumn runExperimentDataValueColumn;
+        private Button runRunButton;
+        private Label runAssayMetaDataLabel;
+        private Label runSampleMetaDataLabel;
+        private Label runImagingSetupLabel;
+        private Label tunExperimentDataLabel;
+        private TabPage controlTabPage;
+        private Label controlMotorLabel;
+        private Button controlTECDResetButton;
+        private Button controlTECCResetButton;
+        private Button controlTECBResetButton;
+        private Button controlTECAResetButton;
         private DataGridView controlLEDsDataGridView;
+        private DataGridViewTextBoxColumn controlLEDsPropertyColumn;
+        private DataGridViewTextBoxColumn controlLEDsCy5Column;
+        private DataGridViewTextBoxColumn controlLEDsFAMColumn;
+        private DataGridViewTextBoxColumn controlLEDsHEXColumn;
+        private DataGridViewTextBoxColumn controlLEDsAttoColumn;
+        private DataGridViewTextBoxColumn controlLEDsAlexaColumn;
+        private DataGridViewTextBoxColumn controlLEDsCy5p5Column;
         private Label controlLEDsLabel;
         private Button controlTECDUpdateButton;
         private Button controlTECCUpdateButton;
         private Button controlTECBUpdateButton;
         private Button controlTECAUpdateButton;
         private DataGridView controlTECsDataGridView;
-        private DataGridViewTextBoxColumn homeTECsProprtyColumn;
-        private DataGridViewTextBoxColumn homeTECsTECAColumn;
-        private DataGridViewTextBoxColumn homeTECsTECBColumn;
-        private DataGridViewTextBoxColumn homeTECsTECCColumn;
-        private DataGridViewTextBoxColumn homeTECsTECDColumn;
-        private OxyPlot.WindowsForms.PlotView thermocyclingPlotView;
-        private Button thermocyclingLoadProtocolButton;
-        private Button thermocyclingRemoveStepButton;
-        private Button thermocyclingEditStepButton;
-        private Button thermocyclingSaveProtocolButton;
-        private Button thermocyclingAddStepButton;
-        private DataGridView thermocyclingProtocolStatusesDataGridView;
-        private Label thermocyclingProtocolStatusesLabel;
-        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesPropertyColumn;
-        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECAColumn;
-        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECBColumn;
-        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECCColumn;
-        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECDColumn;
+        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
+        private DataGridViewTextBoxColumn controlTECsTECAColumn;
+        private DataGridViewTextBoxColumn controlTECsTECBColumn;
+        private DataGridViewTextBoxColumn controlTECsTECCColumn;
+        private DataGridViewTextBoxColumn controlTECsTECDColumn;
+        private Label controlTECsLabel;
+        private Button controlHomeButton;
+        private Button controlMoveButton;
+        private ComboBox controlMotorsComboBox;
+        private DataGridView controlMotorsDataGridView;
+        private DataGridViewTextBoxColumn controlMotorsMotorColumn;
+        private DataGridViewTextBoxColumn controlMotorsVersionColumn;
+        private DataGridViewTextBoxColumn controlMotorsStateColumn;
+        private DataGridViewTextBoxColumn controlMotorsPositionColumn;
+        private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn controlMotorsHomeColumn;
+        private Label controlMotorsLabel;
+        private TabPage thermocyclingTabPage;
+        private TextBox thermocyclingEstimatedTimeTextBox;
+        private Label thermocyclingEstimatedTimeLabel;
+        private TextBox thermocyclingProtocolNameTextBox;
+        private Label thermocyclingPlottedProtocolLabel;
+        private Button thermocyclingAddGoToButton;
         private Button thermocyclingTECDKillButton;
         private Button thermocyclingTECCKillButton;
         private Button thermocyclingTECBKillButton;
@@ -2665,135 +3320,22 @@
         private Button thermocyclingTECCRunButton;
         private Button thermocyclingTECBRunButton;
         private Button thermocyclingTECARunButton;
-        private Button thermocyclingAddGoToButton;
-        private PictureBox imagingPictureBox;
-        private Button imagingCaptureImageButton;
-        private Label imagingCameraViewLabel;
-        private Label imagingDxLabel;
-        private Label imagingDzLabel;
-        private Label imagingDyLabel;
-        private DataGridView imagingScanParametersDataGridView;
-        private Label imagingScanParametersLabel;
-        private TextBox imagingDzTextBox;
-        private TextBox imagingDyTextBox;
-        private TextBox imagingDxTextBox;
-        private DataGridViewTextBoxColumn imagingScanParametersPropertyColumn;
-        private DataGridViewTextBoxColumn imagingScanParametersValueColumn;
-        private Button imagingKillButon;
-        private Button imagingScanButton;
-        private Label imagingLEDsLabel;
-        private DataGridView imagingLEDsDataGridView;
-        private Label settingsMotorsLabel;
-        private DataGridView settingsMotorsDataGridView;
-        private Label settingsLEDsLabel;
-        private DataGridView settingsTECsDataGridView;
-        private DataGridViewTextBoxColumn settingsTECsPropertyColumn;
-        private DataGridViewTextBoxColumn settingsTECsTECAColumn;
-        private DataGridViewTextBoxColumn settingsTECsTECBColumn;
-        private DataGridViewTextBoxColumn settingsTECsTECCColumn;
-        private DataGridViewTextBoxColumn settingsTECsTECDColumn;
-        private DataGridViewTextBoxColumn settingsMotorsMotorColumn;
-        private DataGridViewTextBoxColumn settingsMotorsDefaultSpeedColumn;
-        private DataGridViewTextBoxColumn settingsMotorsAccelerationColumn;
-        private DataGridViewTextBoxColumn settingsMotorsDeaccelerationColumn;
-        private DataGridViewTextBoxColumn settingsMotorsHomeSpeedColumn;
-        private DataGridViewTextBoxColumn settingsMotorsEnabledColumn;
-        private Button controlTECDResetButton;
-        private Button controlTECCResetButton;
-        private Button controlTECBResetButton;
-        private Button controlTECAResetButton;
-        private DataGridViewTextBoxColumn controlLEDsPropertyColumn;
-        private DataGridViewTextBoxColumn controlLEDsCy5Column;
-        private DataGridViewTextBoxColumn controlLEDsFAMColumn;
-        private DataGridViewTextBoxColumn controlLEDsHEXColumn;
-        private DataGridViewTextBoxColumn controlLEDsAttoColumn;
-        private DataGridViewTextBoxColumn controlLEDsAlexaColumn;
-        private DataGridViewTextBoxColumn controlLEDsCy5p5Column;
-        private Label controlMotorLabel;
-        private DataGridViewTextBoxColumn runSampleMetaDataIDColumn;
-        private DataGridViewTextBoxColumn runSampleMetaDataNameColumn;
-        private DataGridViewTextBoxColumn runImagingSetupPropertyColumn;
-        private DataGridViewTextBoxColumn runImagingSetupValueColumn;
-        private DataGridViewTextBoxColumn runExperimentDataPropertyColumn;
-        private DataGridViewTextBoxColumn runExperimentDataValueColumn;
-        private DataGridViewTextBoxColumn homeCameraStateColumn;
-        private DataGridViewTextBoxColumn homeCameraIOColumn;
-        private TabPage consumablesTabPage;
-        private DataGridView consumablesCartridgesDataGridView;
-        private Label consumablesCartridgesLabel;
-        private Label consumablesElastomersLabel;
-        private DataGridView consumablesBergquistsDataGridView;
-        private Label consumablesBergquistsLabel;
-        private DataGridView consumablesElastomerDataGridView;
-        private Label consumablesImageScanningLabel;
-        private Button consumablesUpdateCartridgeDataButton;
-        private Button consumablesUpdateElastomerData;
-        private Button consumablesBergquistDataButton;
-        private DataGridViewTextBoxColumn homeMotorsMotorColumn;
-        private DataGridViewTextBoxColumn homeMotorsVersionColumn;
-        private DataGridViewTextBoxColumn homeMotorsStateColumn;
-        private DataGridViewTextBoxColumn homeMotorsStepsColumn;
-        private DataGridViewTextBoxColumn homeMotorsSpeedColumn;
-        private DataGridViewTextBoxColumn homeMotorsHomeColumn;
-        private DataGridViewTextBoxColumn controlMotorsMotorColumn;
-        private DataGridViewTextBoxColumn controlMotorsVersionColumn;
-        private DataGridViewTextBoxColumn controlMotorsStateColumn;
-        private DataGridViewTextBoxColumn controlMotorsPositionColumn;
-        private DataGridViewTextBoxColumn controlMotorsSpeedColumn;
-        private DataGridViewTextBoxColumn controlMotorsHomeColumn;
-        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
-        private DataGridViewTextBoxColumn controlTECsTECAColumn;
-        private DataGridViewTextBoxColumn controlTECsTECBColumn;
-        private DataGridViewTextBoxColumn controlTECsTECCColumn;
-        private DataGridViewTextBoxColumn controlTECsTECDColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerNameColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerThicknessColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerThermalCoefficientColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerShoreHardnessColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerMoldColumn;
-        private DataGridViewTextBoxColumn consumablesElastomerFilmColumn;
-        private DataGridViewTextBoxColumn consumablesBergquistsNameColumn;
-        private DataGridViewTextBoxColumn consumablesBergquistsThicknessColumn;
-        private DataGridViewTextBoxColumn consumablesBergquistsThermalCoefficientColumn;
-        private DataGridViewTextBoxColumn consumablesBergquistsShoreHardnessColumn;
-        private DataGridView consumablesImageScanningDataGridView;
-        private ComboBox consumablesCartridgeComboBox;
-        private ComboBox consumablesBergquistComboBox;
-        private ComboBox consumablesElastomerComboBox;
-        private Label consumablesImageScanningNoteLabel;
-        private Button consumablesUpdateImageScanningButton;
-        private Label consumablesBergquistLabel;
-        private Label consumablesElastomerLabel;
-        private Label consumablesCartridgeLabel;
-        private Button consumablesDeleteElastomerButton;
-        private Button consumablesSaveNewBergquistButton;
-        private Button consumablesSaveNewElastomerButton;
-        private Button consumablesDeleteCartridgeButton;
-        private Button consumablesSaveNewCartridgeButton;
-        private Button consumablesDeleteBergquistButton;
-        private ComboBox consumablesGlassOffsetComboBox;
-        private Label consumablesGlassOffsetLabel;
-        private Label thermocyclingPlottedProtocolLabel;
-        private TextBox thermocyclingProtocolNameTextBox;
-        private RadioButton homeAPIConnectedRadioButton;
-        private TextBox thermocyclingEstimatedTimeTextBox;
-        private Label thermocyclingEstimatedTimeLabel;
+        private DataGridView thermocyclingProtocolStatusesDataGridView;
+        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesPropertyColumn;
+        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECAColumn;
+        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECBColumn;
+        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECCColumn;
+        private DataGridViewTextBoxColumn thermocyclingProtocolStatusesTECDColumn;
+        private Label thermocyclingProtocolStatusesLabel;
+        private Button thermocyclingLoadProtocolButton;
+        private Button thermocyclingRemoveStepButton;
+        private Button thermocyclingEditStepButton;
+        private Button thermocyclingSaveProtocolButton;
+        private Button thermocyclingAddStepButton;
+        private OxyPlot.WindowsForms.PlotView thermocyclingPlotView;
+        private TabPage imagingTabPage;
         private Button imagingBrightFieldButton;
-        private DataGridViewTextBoxColumn consumablesCartridgesNameColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesPartitionTypeColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesSamplesColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesAssaysColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesLengthColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesWidthColumn;
-        private DataGridViewTextBoxColumn consumablesCartridgesHeightColumn;
-        private DataGridViewTextBoxColumn consumablesImageScanningHeaterColumn;
-        private DataGridViewTextBoxColumn consumablesImageScanningX0Column;
-        private DataGridViewTextBoxColumn consumablesImageScanningy0Column;
-        private DataGridViewTextBoxColumn consumablesImageScanningz0Column;
-        private DataGridViewTextBoxColumn consumablesImageScanningFOVdXColumn;
-        private DataGridViewTextBoxColumn consumablesSampledXColumn;
-        private DataGridViewTextBoxColumn consumablesImageScanningdYColumn;
-        private DataGridViewTextBoxColumn consumablesImageScanningRotationalOffsetColumn;
+        private DataGridView imagingLEDsDataGridView;
         private DataGridViewTextBoxColumn imagingLEDsPropertyColumn;
         private DataGridViewTextBoxColumn imagingLEDsBrightFieldColumn;
         private DataGridViewTextBoxColumn imagingLEDsCy5Column;
@@ -2802,5 +3344,154 @@
         private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
         private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
         private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
+        private Label imagingLEDsLabel;
+        private Button imagingKillButon;
+        private Button imagingScanButton;
+        private DataGridView imagingScanParametersDataGridView;
+        private DataGridViewTextBoxColumn imagingScanParametersPropertyColumn;
+        private DataGridViewTextBoxColumn imagingScanParametersValueColumn;
+        private Label imagingScanParametersLabel;
+        private TextBox imagingDzTextBox;
+        private TextBox imagingDyTextBox;
+        private TextBox imagingDxTextBox;
+        private Label imagingDzLabel;
+        private Label imagingDyLabel;
+        private Label imagingDxLabel;
+        private Button imagingCaptureImageButton;
+        private Label imagingCameraViewLabel;
+        private PictureBox imagingPictureBox;
+        private TabPage settingsTabPage;
+        private DataGridView settingsTECsDataGridView;
+        private DataGridViewTextBoxColumn settingsTECsPropertyColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECAColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECBColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECCColumn;
+        private DataGridViewTextBoxColumn settingsTECsTECDColumn;
+        private Label settingsLEDsLabel;
+        private DataGridView settingsMotorsDataGridView;
+        private DataGridViewTextBoxColumn settingsMotorsMotorColumn;
+        private DataGridViewTextBoxColumn settingsMotorsDefaultSpeedColumn;
+        private DataGridViewTextBoxColumn settingsMotorsAccelerationColumn;
+        private DataGridViewTextBoxColumn settingsMotorsDeaccelerationColumn;
+        private DataGridViewTextBoxColumn settingsMotorsHomeSpeedColumn;
+        private DataGridViewTextBoxColumn settingsMotorsEnabledColumn;
+        private Label settingsMotorsLabel;
+        private TabPage consumablesTabPage;
+        private ComboBox consumablesGlassOffsetComboBox;
+        private Label consumablesGlassOffsetLabel;
+        private Button consumablesDeleteBergquistButton;
+        private Button consumablesDeleteElastomerButton;
+        private Button consumablesSaveNewBergquistButton;
+        private Button consumablesSaveNewElastomerButton;
+        private Button consumablesDeleteCartridgeButton;
+        private Button consumablesSaveNewCartridgeButton;
+        private Label consumablesBergquistLabel;
+        private Label consumablesElastomerLabel;
+        private Label consumablesCartridgeLabel;
+        private Label consumablesImageScanningNoteLabel;
+        private Button consumablesUpdateImageScanningButton;
+        private ComboBox consumablesBergquistComboBox;
+        private ComboBox consumablesElastomerComboBox;
+        private ComboBox consumablesCartridgeComboBox;
+        private DataGridView consumablesImageScanningDataGridView;
+        private DataGridViewTextBoxColumn consumablesImageScanningHeaterColumn;
+        private DataGridViewTextBoxColumn consumablesImageScanningX0Column;
+        private DataGridViewTextBoxColumn consumablesImageScanningy0Column;
+        private DataGridViewTextBoxColumn consumablesImageScanningz0Column;
+        private DataGridViewTextBoxColumn consumablesImageScanningFOVdXColumn;
+        private DataGridViewTextBoxColumn consumablesSampledXColumn;
+        private DataGridViewTextBoxColumn consumablesImageScanningdYColumn;
+        private DataGridViewTextBoxColumn consumablesImageScanningRotationalOffsetColumn;
+        private Button consumablesBergquistDataButton;
+        private Button consumablesUpdateElastomerData;
+        private Button consumablesUpdateCartridgeDataButton;
+        private Label consumablesImageScanningLabel;
+        private DataGridView consumablesBergquistsDataGridView;
+        private DataGridViewTextBoxColumn consumablesBergquistsNameColumn;
+        private DataGridViewTextBoxColumn consumablesBergquistsThicknessColumn;
+        private DataGridViewTextBoxColumn consumablesBergquistsThermalCoefficientColumn;
+        private DataGridViewTextBoxColumn consumablesBergquistsShoreHardnessColumn;
+        private Label consumablesBergquistsLabel;
+        private DataGridView consumablesElastomerDataGridView;
+        private DataGridViewTextBoxColumn consumablesElastomerNameColumn;
+        private DataGridViewTextBoxColumn consumablesElastomerThicknessColumn;
+        private DataGridViewTextBoxColumn consumablesElastomerThermalCoefficientColumn;
+        private DataGridViewTextBoxColumn consumablesElastomerShoreHardnessColumn;
+        private DataGridViewTextBoxColumn consumablesElastomerMoldColumn;
+        private DataGridViewTextBoxColumn consumablesElastomerFilmColumn;
+        private Label consumablesElastomersLabel;
+        private DataGridView consumablesCartridgesDataGridView;
+        private DataGridViewTextBoxColumn consumablesCartridgesNameColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesPartitionTypeColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesSamplesColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesAssaysColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesLengthColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesWidthColumn;
+        private DataGridViewTextBoxColumn consumablesCartridgesHeightColumn;
+        private Label consumablesCartridgesLabel;
+        private TabPage metrologyTabPage;
+        private TabControl mainTabControl;
+        private TabControl assayProtocolEditorTabControl;
+        private TabPage assayProtocolEditorProtocolEditorTabPage;
+        private TabPage assayProtocolEditorCoordinateEditorTabPage;
+        private TabPage assayProtocolEditorSettingsTabPage;
+        private TabPage assayProtocolEditorRunTabPage;
+        private TabPage assayProtocolEditorControlTabPage;
+        private TabPage assayProtocolEditorMetrologyTabPage;
+        private TabPage mainHomeTabPage;
+        private Label mainHomeMotorsLabel;
+        private DataGridView mainHomeMotorsDataGridView;
+        private Label mainHomeTECsLabel;
+        private DataGridView mainHomeTECsDataGridView;
+        private DataGridView mainHomePowerRelaysDataGridView;
+        private DataGridViewTextBoxColumn mainHomeIDColumn;
+        private DataGridViewTextBoxColumn mainHomeNameColumn;
+        private DataGridViewTextBoxColumn mainHomeIOColumn;
+        private Label mainHomePowerRelaysLabel;
+        private Label mainHomeCameraLabel;
+        private Label mainHomeLEDsLabel;
+        private DataGridView mainHomeCameraDataGridView;
+        private DataGridViewTextBoxColumn mainHomeCameraStateColumn;
+        private DataGridViewTextBoxColumn mainHomeCameraIOColumn;
+        private DataGridView mainHomeLEDsDataGridView;
+        private Label mainHomeValvesLabel;
+        private DataGridViewTextBoxColumn mainHomeLEDsPropertyColumn;
+        private DataGridViewTextBoxColumn mainHomeLEDsCy5Column;
+        private DataGridViewTextBoxColumn mainHomeLEDsFAMColumn;
+        private DataGridViewTextBoxColumn mainHomeLEDsHEXColumn;
+        private DataGridViewTextBoxColumn mainHomeLEDsAttoColumn;
+        private DataGridViewTextBoxColumn mainHomeLEDsAlexa;
+        private DataGridViewTextBoxColumn mainHomeLEDsCy5p5Column;
+        private DataGridView mainHomeValvesDataGridView;
+        private DataGridViewTextBoxColumn mainHomeMotorsNameColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsVersionColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsStateColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsIOColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsPositionColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsSpeedColumn;
+        private DataGridViewTextBoxColumn mainHomeMotorsHomedColumn;
+        private DataGridViewTextBoxColumn mainHomeValvesIDColumn;
+        private DataGridViewTextBoxColumn mainHomeValvesNameColumn;
+        private DataGridViewTextBoxColumn mainHomeValvesIOColumn;
+        private DataGridViewTextBoxColumn mainHomeTECsPropertyColumn;
+        private DataGridViewTextBoxColumn mainHomeTECsTECAColumn;
+        private DataGridViewTextBoxColumn mainHomeTECsTECBColumn;
+        private DataGridViewTextBoxColumn mainHomeTECsTECCColumn;
+        private DataGridViewTextBoxColumn mainHomeTECsTECDCColumn;
+        private Label apeProtocolEditorProtocolNameLabel;
+        private DataGridView apeProtocolEditorProtocolDataGridView;
+        private DataGridViewTextBoxColumn apeProtocolEditorProtocolActionColumn;
+        private Button apeProtocolEditorAddPippetorActionButton;
+        private Button addapeProtocolEditorAddActionButton;
+        private Button apeProtocolEditorKillButton;
+        private Button apeProtocolEditorRunButton;
+        private Button apeProtocolEditorSaveProtocolButton;
+        private Button apeProtocolEditorRemoveActionButton;
+        private Button apeProtocolEditorLoadProtocolButton;
+        private Label apeProtocolEditorEstimateTimeLabel;
+        private Button apeProtocolEditorEditActionButton;
+        private TextBox apeProtocolEditorEstimateTimeTextBox;
+        private TextBox apeProtocolEditorProtocolNameTextBox;
+        private Button apeProtocolEditorPauseButton;
     }
 }
