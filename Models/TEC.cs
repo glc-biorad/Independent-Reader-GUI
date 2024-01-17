@@ -38,6 +38,10 @@ namespace Independent_Reader_GUI.Models
         private double previousObjectTemperature = double.MinValue;
         private string previousFanControl = "Disabled";
         public bool RunningProtocol = false;
+        public List<Tuple<DateTime, double>> ObjectTemperatures = new List<Tuple<DateTime, double>>();
+        public List<Tuple<DateTime, double>> SinkTemperatures = new List<Tuple<DateTime, double>>();
+        public List<Tuple<DateTime, double>> TargetTemperatures = new List<Tuple<DateTime, double>>();
+        public List<Tuple<DateTime, double>> FanSpeeds = new List<Tuple<DateTime, double>>();
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {

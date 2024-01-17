@@ -10,6 +10,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace Independent_Reader_GUI.Services
         private int subsectionTextFontSize = 12;
         private DeviceRgb columnHeaderBackgroundColor = new DeviceRgb(235, 222, 199);
         private PdfFont columnHeaderFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+        private TECPlotManager tecPlotManager;
 
         public ReportManager(string filePath)
         {
@@ -40,6 +42,7 @@ namespace Independent_Reader_GUI.Services
             writer = new PdfWriter(filePath);
             pdf = new PdfDocument(writer);
             document = new Document(pdf);
+            tecPlotManager = new TECPlotManager();
         }
 
         public async Task CloseAsync()
@@ -87,6 +90,52 @@ namespace Independent_Reader_GUI.Services
             text.SetMarginBottom(10);
             document.Add(text);
             await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Add data to be plotted to the report
+        /// </summary>
+        /// <param name="data">Data to be plotted</param>
+        /// <param name="plotTitle">Title of the plot</param>
+        /// <param name="yAxisTitle">Y-Axis title</param>
+        /// <returns></returns>
+        public async Task AddPlotAsync(List<Tuple<DateTime, double>> data, string plotTitle, string yAxisTitle)
+        {
+            // Create the PlotModel for this data
+            var plotModel = tecPlotManager.CreatePlotModel(data, plotTitle, yAxisTitle);
+            // Export the PlotModel to a png
+            tecPlotManager.ExportPlotModelToPNG(plotModel, "plot.png", 600, 400);
+            // Add the plot image to the PDF
+            ImageData imageData = ImageDataFactory.Create("plot.png");
+            iText.Layout.Element.Image plotImage = new iText.Layout.Element.Image(imageData);
+            document.Add(plotImage);
+            await Task.Delay(50);
+            // TODO: Remove the plot.png tmp file
+        }
+
+        /// <summary>
+        /// Add two sets of data to be plotted in the report
+        /// </summary>
+        /// <param name="data1"></param>
+        /// <param name="data2"></param>
+        /// <param name="plotTitle"></param>
+        /// <param name="yAxisTitle"></param>
+        /// <param name="data1Title"></param>
+        /// <param name="data2Title"></param>
+        /// <returns></returns>
+        public async Task AddPlotAsync(List<Tuple<DateTime, double>> data1, List<Tuple<DateTime, double>> data2, string plotTitle, string yAxisTitle, 
+            string data1Title, string data2Title)
+        {
+            // Create the PlotModel for this data
+            var plotModel = tecPlotManager.CreatePlotModel(data1, data2, plotTitle, yAxisTitle, data1Title, data2Title);
+            // Export the PlotModel to a png
+            tecPlotManager.ExportPlotModelToPNG(plotModel, "plot.png", 600, 400);
+            // Add the plot image to the PDF
+            ImageData imageData = ImageDataFactory.Create("plot.png");
+            iText.Layout.Element.Image plotImage = new iText.Layout.Element.Image(imageData);
+            document.Add(plotImage);
+            await Task.Delay(50);
+            // TODO: Remove the plot.png tmp file
         }
 
         public async Task AddHeaderLogoAsync(string logoFilePath, int width, int height)
