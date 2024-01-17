@@ -36,6 +36,7 @@ namespace Independent_Reader_GUI.Services
         private CancellationTokenSource commandQueueCancellationTokenSource = new CancellationTokenSource();
         private int msDelay = 5;
         private double tempReachedCutoff = 0.5;
+        private TECPlotManager tecPlotManager = new TECPlotManager();
 
         public TECManager(TEC tecA, TEC tecB, TEC tecC, TEC tecD)
         {
@@ -535,6 +536,12 @@ namespace Independent_Reader_GUI.Services
                 $" and tray are not included within this report.");
             await reportManager.AddSubSectionAsync("Protocol Status", "This section includes the protocol statuses for all TECs at the end of this run.");
             await reportManager.AddTableAsync(dataGridView);
+            // Create the data plot for the TEC Actual and Target Object Temperatures
+            await reportManager.AddPlotAsync(tec.ObjectTemperatures, tec.TargetTemperatures, $"{tec.Name} Object and Target Temperatures", "T (\u00B0C)", "Object Temp", "Target Temp");
+            // Create the data plot for the TEC Sink Temperature
+            await reportManager.AddPlotAsync(tec.SinkTemperatures, $"{tec.Name} Sink Temperatures", "T (\u00B0C)");
+            // Create the data plot for the TEC Fan Speeds
+            await reportManager.AddPlotAsync(tec.FanSpeeds, $"{tec.Name} Fan Speeds", "T (rpm)");
             await reportManager.CloseAsync();
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete");
         }
@@ -605,7 +612,7 @@ namespace Independent_Reader_GUI.Services
                     tec.RunningProtocol = false;
                     // TODO: Set the Protocol Running cell background color to Yellow for a certain amount of time or indefinitely
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No");
-                    // TODO: Set the tec*ProtocolRunning bool variable to false
+                    // TODO: Generate a report based on what occured
                 }
             }
         }
@@ -679,6 +686,10 @@ namespace Independent_Reader_GUI.Services
         private void HandleTECFastTickEvent(TEC tec, DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView)
         {
             //
+            // Get the current time
+            //
+            DateTime now = DateTime.Now;
+            //
             // Setup and Send TEC Commands
             //
             // Setup the CheckConnection command and add it to the TECsManager Queue
@@ -746,6 +757,9 @@ namespace Independent_Reader_GUI.Services
                     "Actual Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
                     "Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                // Store the Actual Object Temperature
+                Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualObjectTemperature));
+                tec.ObjectTemperatures.Add(tuple);
             }
             if (double.TryParse(tec.ActualSinkTemperature, out _))
             {
@@ -755,6 +769,9 @@ namespace Independent_Reader_GUI.Services
                     "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
                     "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                // Store the Actual Sink Temperature
+                Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualSinkTemperature));
+                tec.SinkTemperatures.Add(tuple);
             }
             if (double.TryParse(tec.TargetObjectTemperature, out _))
             {
@@ -764,6 +781,9 @@ namespace Independent_Reader_GUI.Services
                     "Target Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
                     "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                // Store the Target Object Temperature
+                Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.TargetObjectTemperature));
+                tec.TargetTemperatures.Add(tuple);
             }
             if (double.TryParse(tec.ActualFanSpeed, out _))
             {
@@ -773,6 +793,9 @@ namespace Independent_Reader_GUI.Services
                     "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
                     "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                // Store the Fan Speeds
+                Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualFanSpeed));
+                tec.FanSpeeds.Add(tuple);
             }
             if (double.TryParse(tec.ActualOutputCurrent, out _))
             {

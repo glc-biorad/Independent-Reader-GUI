@@ -153,6 +153,7 @@ namespace Independent_Reader_GUI.Models
         public int DefaultDx = int.MinValue;
         public int DefaultDy = int.MinValue;
         public int DefaultDz = int.MinValue;
+        public string AssayProtocolsDataPath;
 
         public Configuration()
         {
@@ -291,6 +292,7 @@ namespace Independent_Reader_GUI.Models
             DefaultThermocyclingProtocolName = rootNode.Element("DefaultThermocyclingProtocolName").Value;
             TECWaitTimeoutInSeconds = int.Parse(rootNode.Element("TECWaitTimeoutInSeconds").Value);
             DefaultLocalImageDataPath = rootNode.Element("DefaultLocalImageDataPath").Value;
+            AssayProtocolsDataPath = rootNode.Element("AssayProtocolsDataPath").Value;
         }
     }
 }

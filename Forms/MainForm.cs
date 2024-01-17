@@ -30,12 +30,15 @@ namespace Independent_Reader_GUI
         private TimerManager mainFormSlowTimerManager;
         private TimerManager thermocyclingStatusTimerManager;
         private PictureBoxManager pictureBoxManager;
-        private string defaultProtocolDirectory;
+        private string defaultThermocyclingProtocolDirectory;
+        private string defaultAssayProtocolDirectory;
         private ThermocyclingProtocol protocol = new ThermocyclingProtocol();
         private ThermocyclingProtocolPlotManager plotManager = new ThermocyclingProtocolPlotManager();
         private ThermocyclingProtocolManager protocolManager;
+        private AssayProtocolManager assayProtocolManager;
         private TECManager tecManager;
         private MotorsManager motorManager;
+        private ChassisManager chassisManager;
         private CartridgeOptions cartridgeOptions;
         private ElastomerOptions elastomerOptions;
         private BergquistOptions bergquistOptions;
@@ -48,6 +51,7 @@ namespace Independent_Reader_GUI
         private TEC tecB;
         private TEC tecC;
         private TEC tecD;
+        private Chassis chassis;
         private Motor xMotor;
         private Motor yMotor;
         private Motor zMotor;
@@ -121,8 +125,16 @@ namespace Independent_Reader_GUI
             Task.Run(async () => await ledManager.InitializeLEDParameters()).Wait();
             Task.Run(async () => await ledManager.ProcessCommandQueue());
 
+            //
+            // Setup the Chassis and it's Manager
+            //
+            chassis = new Chassis(apiManager);
+            chassisManager = new ChassisManager(chassis);
+            Task.Run(async () => await chassisManager.ProcessCommandQueues());
+
             // Initialize
             protocolManager = new ThermocyclingProtocolManager(configuration);
+            assayProtocolManager = new AssayProtocolManager();
             pictureBoxManager = new PictureBoxManager(configuration);
             cartridgeOptions = new CartridgeOptions(configuration);
             elastomerOptions = new ElastomerOptions(configuration);
@@ -133,7 +145,8 @@ namespace Independent_Reader_GUI
             emailManager = new EmailManager();
 
             // Obtain default data paths
-            defaultProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
+            defaultThermocyclingProtocolDirectory = configuration.ThermocyclingProtocolsDataPath;
+            defaultAssayProtocolDirectory = configuration.AssayProtocolsDataPath;
 
             // Add default data
             AddHomeMotorsDefaultData();
@@ -150,6 +163,7 @@ namespace Independent_Reader_GUI
             AddThermocyclingProtocolStatusesDefaultData();
             AddImagingScanParametersDefaultData();
             AddImagingLEDsDefaultData();
+            AddMainHomeDefaultData();
 
             // Add default plots
             AddThermocyclingDefaultPlot();
@@ -205,12 +219,46 @@ namespace Independent_Reader_GUI
             this.runExperimentDataGridView.CellValueChanged += new DataGridViewCellEventHandler(runExperimentDataGridView_CellValueChanged);
             this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
             this.imagingScanParametersDataGridView.CellValueChanged += new DataGridViewCellEventHandler(imagingScanParametersDataGridView_CellValueChanged);
+            this.mainHomePowerRelaysDataGridView.CellValueChanged += new DataGridViewCellEventHandler(mainHomePowerRelaysDataGridView_CellValueChanged);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
 
             // Subscribe to the form closing event handler
             this.FormClosing += new FormClosingEventHandler(IndependentReaderGUI_FormClosing);
+        }
+
+        private void AddMainHomeDefaultData()
+        {
+            //
+            // Setup the Motors data
+            //
+
+            //
+            // Setup the TECs data
+            //
+
+            // 
+            // Setup the Camera data
+            //
+
+            //
+            // Setup the LEDs data
+            //
+
+            //
+            // Setup the Valves data
+            //
+
+            //
+            // Setup the Power Relays data
+            //
+            mainHomePowerRelaysDataGridView.Rows.Add(1, "TEC Fans", false);
+            mainHomePowerRelaysDataGridView.Rows.Add(2, "TEC A", false);
+            mainHomePowerRelaysDataGridView.Rows.Add(3, "TEC B", false);
+            mainHomePowerRelaysDataGridView.Rows.Add(4, "TEC C", false);
+            mainHomePowerRelaysDataGridView.Rows.Add(5, "TEC D", false);
+            mainHomePowerRelaysDataGridView.Rows.Add(6, "Motor", false);
         }
 
         /// <summary>
@@ -881,6 +929,16 @@ namespace Independent_Reader_GUI
             }
         }
 
+        public void mainHomePowerRelaysDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            // Get the Power Relay ID of the row which had a change
+            int id = int.Parse(dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(mainHomePowerRelaysDataGridView, "ID", e.RowIndex));
+            // Setup the Command to set the Power Relay state
+            string state = dataGridViewManager.GetColumnCellValueByColumnNameAndRowIndex(mainHomePowerRelaysDataGridView, "IO", e.RowIndex).ToString().ToLower();
+            ChassisCommand chassisCommand = new ChassisCommand { Type = ChassisCommand.CommandType.SetPowerRelayState, Chassis = chassis, ID = id - 1, RelayState = state };
+            chassisManager.EnqueueCommand(chassisCommand);
+        }
+
         public void imagingScanParametersDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             // Get the Heater, Elastomer, Bergquist, Cartridge, and Glass Offset to determine the Scan Parameters
@@ -1244,7 +1302,7 @@ namespace Independent_Reader_GUI
         {
             FileSearcher fileSearcher = new FileSearcher();
             // FIXME: take the initial directory default value from a config file 
-            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: defaultProtocolDirectory);
+            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: defaultThermocyclingProtocolDirectory);
             if (filePath != null)
             {
                 // FIXME: ClearPlot dos not behave as expected, x axis does not reset to 0
@@ -1271,7 +1329,7 @@ namespace Independent_Reader_GUI
             FileSearcher fileSearcher = new FileSearcher();
             // Determine where to save this protocol
             // FIXME: take the initial directory default value from a config file 
-            var filePath = fileSearcher.GetSaveFilePath(initialDirectory: defaultProtocolDirectory);
+            var filePath = fileSearcher.GetSaveFilePath(initialDirectory: defaultThermocyclingProtocolDirectory);
             if (filePath != null)
             {
                 protocolManager.SaveProtocol(protocol, filePath, userLabel.Text, DateTime.Now.ToString("MM/dd/yyyy"));
@@ -1538,6 +1596,7 @@ namespace Independent_Reader_GUI
             ledManager.CloseCommandQueueProcessing();
             motorManager.CloseCommandQueueProcessing();
             motorManager.ClosePriorityCommandQueueProcessing();
+            chassisManager.CloseCommandQueueProcessing();
             // Disconnect the Camera
             cameraManager.StopStreamAsync().Wait();
             cameraManager.Disconnect();
@@ -1571,10 +1630,10 @@ namespace Independent_Reader_GUI
             {
                 // Check if the temperature or fan control was set
                 var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "Temp Enabled", controlTECsDataGridView);
-                TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecA };
+                TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = tempControlCellValue, TEC = tecA };
                 tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
                 var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecA.Name, "Fan Control", controlTECsDataGridView);
-                TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecA };
+                TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = fanControlCellValue, TEC = tecA };
                 tecManager.EnqueuePriorityCommand(setFanControlCommand);
                 // Check if the target temperature is set
                 double temp;
@@ -1589,8 +1648,8 @@ namespace Independent_Reader_GUI
                     // Setup the SetObjectTemperature command and add it to the TECsManager Queue
                     TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecA, Parameter = temp };
                     tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
-                }                              
-            }            
+                }
+            }
         }
 
         /// <summary>
@@ -1611,10 +1670,10 @@ namespace Independent_Reader_GUI
                 {
                     // Check if the temperature or fan control was set
                     var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "Temp Enabled", controlTECsDataGridView);
-                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecB };
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = tempControlCellValue, TEC = tecB };
                     tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
                     var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecB.Name, "Fan Control", controlTECsDataGridView);
-                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecB };
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = fanControlCellValue, TEC = tecB };
                     tecManager.EnqueuePriorityCommand(setFanControlCommand);
                     // Check if the target temperature is set
                     double temp;
@@ -1630,7 +1689,7 @@ namespace Independent_Reader_GUI
                         TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecB, Parameter = temp };
                         tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
                     }
-                }                
+                }
             }
             else
             {
@@ -1656,10 +1715,10 @@ namespace Independent_Reader_GUI
                 {
                     // Check if the temperature or fan control was set
                     var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Temp Enabled", controlTECsDataGridView);
-                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecC };
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = tempControlCellValue, TEC = tecC };
                     tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
                     var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Fan Control", controlTECsDataGridView);
-                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecC };
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = fanControlCellValue, TEC = tecC };
                     tecManager.EnqueuePriorityCommand(setFanControlCommand);
                     // Check if the target temperature is set
                     double temp;
@@ -1675,7 +1734,7 @@ namespace Independent_Reader_GUI
                         TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecC, Parameter = temp };
                         tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
                     }
-                }               
+                }
             }
             else
             {
@@ -1701,10 +1760,10 @@ namespace Independent_Reader_GUI
                 {
                     // Check if the temperature or fan control was set
                     var tempControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Temp Enabled", controlTECsDataGridView);
-                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = "On", TEC = tecD };
+                    TECCommand setTemperatureControlCommand = new TECCommand { Type = TECCommand.CommandType.SetTemperatureControl, Parameter = tempControlCellValue, TEC = tecD };
                     tecManager.EnqueuePriorityCommand(setTemperatureControlCommand);
                     var fanControlCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Fan Control", controlTECsDataGridView);
-                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = "Enabled", TEC = tecD };
+                    TECCommand setFanControlCommand = new TECCommand { Type = TECCommand.CommandType.SetFanControl, Parameter = fanControlCellValue, TEC = tecD };
                     tecManager.EnqueuePriorityCommand(setFanControlCommand);
                     // Check if the target temperature is set
                     double temp;
@@ -1720,7 +1779,7 @@ namespace Independent_Reader_GUI
                         TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tecD, Parameter = temp };
                         tecManager.EnqueuePriorityCommand(setObjectTemperatureCommand);
                     }
-                }                
+                }
             }
             else
             {
@@ -2683,6 +2742,36 @@ namespace Independent_Reader_GUI
                 pictureBoxManager.DrawLine(imagingPictureBox);
                 // Start the stream again
                 await cameraManager.StartStreamAsync();
+            }
+        }
+
+        private void thermocyclingRemoveStepButton_Click(object sender, EventArgs e)
+        {
+            // Get the selected step
+            // Remove the selected step
+            MessageBox.Show("Removing a step has not been implemented yet.");
+        }
+
+        private void apeProtocolEditorLoadProtocolButton_Click(object sender, EventArgs e)
+        {
+            // Open a Load File window
+            FileSearcher fileSearcher = new FileSearcher();
+            var filePath = fileSearcher.GetLoadFilePath(initialDirectory: defaultAssayProtocolDirectory);
+            if (filePath != null)
+            {
+
+                // Load in the protocol
+                AssayProtocol assayProtocol = assayProtocolManager.LoadProtocol(filePath);
+                // Set the Protocol Name Text Box
+                apeProtocolEditorProtocolNameTextBox.Text = assayProtocol.Name;
+                // Set the "Estimated Time"
+                //TimeSpan estimatedTimeSpan = TimeSpan.FromSeconds(int.Parse(protocol.GetTimeInSeconds().ToString()));
+                apeProtocolEditorEstimateTimeTextBox.Text = "2:01:53";
+                // Load in the Actions to the DataGridView
+                foreach (var action in assayProtocol.Actions)
+                {
+                    apeProtocolEditorProtocolDataGridView.Rows.Add(action.ActionText);
+                }
             }
         }
     }

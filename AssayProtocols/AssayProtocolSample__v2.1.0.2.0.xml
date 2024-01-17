@@ -7,7 +7,7 @@
 	<Time>00:12:46</Time>
 	<Actions>
 		<HeaterShaker>
-			<Type>SetTemperature</Type>
+			<Type>Set Temperature</Type>
 			<Temperature>60</Temperature>
 			<ActionText>Set temperature of Heater/Shaker to 60 °C. </ActionText>
 			<Description>Change temperature to 60 C for lysed sample.</Description>
@@ -25,6 +25,7 @@
 			<Description>Pickup tips for binding solution and bead transfer.</Description>
 		</Tips>
 		<Move>
+			<Type>Absolute</Type>
 			<Tip>1000</Tip>
 			<ConsumableName>ReagentCartridge</ConsumableName>
 			<ConsumableTray>A</ConsumableTray>
@@ -92,6 +93,7 @@
 			<Description>Transfer binding solution to lysed sample.</Description>
 		</Transfer>
 		<Move>
+			<Type>Absolute</Type>
 			<Tip>1000</Tip>
 			<ConsumableName>ReagentCartridge</ConsumableName>
 			<ConsumableTray>A</ConsumableTray>
@@ -159,6 +161,7 @@
 			<Description>Transfer binding solution to lysed sample.</Description>
 		</Transfer>
 		<Move>
+			<Type>Absolute</Type>
 			<Tip>1000</Tip>
 			<ConsumableName>ReagentCartridge</ConsumableName>
 			<ConsumableTray>A</ConsumableTray>
@@ -226,6 +229,7 @@
 			<Description>Transfer binding solution to lysed sample.</Description>
 		</Transfer>
 		<Move>
+			<Type>Absolute</Type>
 			<Tip>1000</Tip>
 			<ConsumableName>ReagentCartridge</ConsumableName>
 			<ConsumableTray>A</ConsumableTray>
@@ -301,7 +305,7 @@
 			<Description>Eject tips from binding solution and bead transfer.</Description>
 		</Tips>
 		<HeaterShaker>
-			<Type>SetRPM</Type>
+			<Type>Set RPM</Type>
 			<RPM>1000</RPM>
 			<ActionText>Set RPM of Heater/Shaker to 1000.</ActionText>
 			<Description>Shake to enhance DNA binding to magnetic beads.</Description>
