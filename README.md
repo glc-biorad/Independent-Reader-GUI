@@ -4,6 +4,31 @@
 Independent Reader GUI is a tool for utilizing the full functionality of the Independent Reader Module. It allows user to view all running submodule metrological data and submodule status, control submodules, create/edit dPCR thermocycling protocols on 4 individual thermocycling TEC heaters, run protocols on these heaters simultaniously or interwoven, image dPCR cartridges (before, during, and/or after dPCR), perform full workflow runs (image, thermocycle, image, etc.), set default settings/configurations for the instrument, and update/create data entries for new cartridges, elastomer, bergquists, and/or cartridge scanning parameters. The intent is to provide a single use application for all possible needs for all types of users (admin, FSE, scientist, lab tech, etc). 
 
 ## To-Do (Future Updates and Features)
+### Assay Protocol Editor
+- Add all types of Assay Protocol Actions
+  - Mix
+    - Vertical
+    - Horizontal
+    - Standing
+  - Move
+    - Absolute
+    - Relative
+  - Transfer
+  - Delay
+  - Pipette
+    - Aspirate
+    - Dispense
+    - Detection (LLD)
+  - Pool
+  - Tips
+    - Eject
+    - Pickup
+- Add Action Button
+- Edit Action Button
+- Copy, Cut and Paste Functionality
+- Remove Action Button
+### Coordinate Ediotr
+- Define coordinates using XML
 ### Home Tab
 - Add current camera exposure to the Camera DataGridView
 - Add a DataGridView to show relay value states 
