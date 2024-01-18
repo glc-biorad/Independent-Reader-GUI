@@ -147,6 +147,7 @@ namespace Independent_Reader_GUI.Services
             {
                 // Save the image
                 currentImage.Save(path);
+                await Task.Delay(200);
             }
             IO = "Idle";
         }

@@ -38,6 +38,20 @@ namespace Independent_Reader_GUI.Resources
             }
         }
 
+        /// <summary>
+        /// Return the option names
+        /// </summary>
+        /// <returns>List of option names</returns>
+        public List<string> Names()
+        {
+            List<string> names = new List<string>();
+            foreach (var option in options)
+            {
+                names.Add(option.Name);
+            }
+            return names;
+        }
+
         public List<Bergquist> Options
         {
             get { return options; }

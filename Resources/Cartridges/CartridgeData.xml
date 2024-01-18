@@ -60,4 +60,16 @@
     <Height>0.8</Height>
     <HeightUnits>mm</HeightUnits>
   </Cartridge>
+  <Cartridge>
+    <Name>Vantiva V2</Name>
+    <PartitionType>Droplets</PartitionType>
+    <NumberofSampleChambers>8</NumberofSampleChambers>
+    <NumberofAssayChambers>1</NumberofAssayChambers>
+    <Length>4.1</Length>
+    <LengthUnits>mm</LengthUnits>
+    <Width>6</Width>
+    <WidthUnits>mm</WidthUnits>
+    <Height>0.9</Height>
+    <HeightUnits>mm</HeightUnits>
+  </Cartridge>
 </Cartridges>

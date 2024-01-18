@@ -421,7 +421,8 @@ namespace Independent_Reader_GUI.Services
         /// <param name="configuration">Configuration for the instrument</param>
         /// <param name="cancellationToken">Cancellation token for killing the run</param>
         /// <returns></returns>
-        public async Task Run(ThermocyclingProtocol protocol, TEC tec, DataGridView dataGridView, Configuration configuration, CancellationToken cancellationToken)
+        public async Task Run(ThermocyclingProtocol protocol, TEC tec, DataGridView dataGridView, 
+            Configuration configuration, Cartridge cartridge, Elastomer elastomer, Bergquist bergquist, CancellationToken cancellationToken)
         {
             DataGridViewManager dataGridViewManager = new DataGridViewManager();
             DateTime startDateTime = DateTime.Now;
@@ -534,6 +535,27 @@ namespace Independent_Reader_GUI.Services
                 $" means the temperature measured by the internal temperature sensor for {tec.Name}), the sink temperature, and when the fans were on for {tec.Name}. Extra information" +
                 $" regarding the cartridge used, the pressure applied to said cartridge, the elastomer/bergquist used if at all, images before/during/after, and positions for the clamp" +
                 $" and tray are not included within this report.");
+            await reportManager.AddSubSectionAsync("Run Data", "This section includes the initial conditions and run parameters.");
+            // Setup the run data table
+            List<string> runDataColumnHeaders = new List<string>
+            {
+                "",
+                "Value",
+            };
+            List<string> protocolNameRow = new List<string> { "Protocol", protocol.Name };
+            List<string> estimateRunTimeRow = new List<string> {"Estimated Run Time", TimeSpan.FromSeconds(int.Parse(protocol.GetTimeInSeconds().ToString())).ToString(@"hh\:mm\:ss") };
+            List<string> startDateRow = new List<string> {"Date", DateTime.Now.ToString("MM/dd/yyyy") };
+            List<string> startTimeRow = new List<string> {"Date", DateTime.Now.ToString("hh:mm:ss tt") };
+            List<string> cartridgeRow = new List<string> {"Cartridge", cartridge.Name };
+            List<string> elastomerRow = new List<string> {"Elastomer", elastomer.Name };
+            List<string> bergquistRow = new List<string> {"Bergquist", bergquist.Name };
+            List<string> initialSinkTempRow = new List<string> {"Initial Sink Temp (\u00B0C)", "" };
+            List<string> initialObjectTempRow = new List<string> {"Initial Object Temp (\u00B0C)", "" };
+            List<List<string>> rows = new List<List<string>>
+            {
+                protocolNameRow, estimateRunTimeRow, startDateRow, startTimeRow, cartridgeRow, elastomerRow, bergquistRow, initialSinkTempRow, initialObjectTempRow
+            };
+            await reportManager.AddTableAsync(runDataColumnHeaders, rows);
             await reportManager.AddSubSectionAsync("Protocol Status", "This section includes the protocol statuses for all TECs at the end of this run.");
             await reportManager.AddTableAsync(dataGridView);
             // Create the data plot for the TEC Actual and Target Object Temperatures
@@ -555,7 +577,8 @@ namespace Independent_Reader_GUI.Services
         /// <param name="protocol"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public async Task HandleRunClickEvent(object sender, EventArgs e, DataGridView dataGridView, ThermocyclingProtocol protocol, Configuration configuration)
+        public async Task HandleRunClickEvent(object sender, EventArgs e, DataGridView dataGridView, 
+            ThermocyclingProtocol protocol, Configuration configuration, Cartridge cartridge, Elastomer elastomer, Bergquist bergquist)
         {
             // Get the Name of the clicked Run button to get the TEC to use
             if (sender.GetType() == typeof(Button))
@@ -580,7 +603,7 @@ namespace Independent_Reader_GUI.Services
                 }
                 tecCancellationTokenSources[_cts_idx] = new CancellationTokenSource();
                 // Start the run on the TEC with a cancelation token
-                await Run(protocol, tec, dataGridView, configuration, tecCancellationTokenSources[_cts_idx].Token);
+                await Run(protocol, tec, dataGridView, configuration, cartridge, elastomer, bergquist, tecCancellationTokenSources[_cts_idx].Token);
             }
         }
 

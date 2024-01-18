@@ -176,5 +176,32 @@ namespace Independent_Reader_GUI.Services
             document.Add(table);
             await Task.Delay(1);
         }
+
+        public async Task AddTableAsync(List<string> columnHeaders, List<List<string>> rows)
+        {
+            // Initialize the table
+            Table table = new Table(columnHeaders.Count);
+            // Add Header Text to the table
+            foreach (string header in columnHeaders)
+            {
+                Cell cell = new Cell();
+                cell.Add(new Paragraph(header));
+                cell.SetBackgroundColor(columnHeaderBackgroundColor);
+                cell.SetFont(columnHeaderFont);
+                table.AddHeaderCell(cell);
+            }
+            // Add the rows to the table
+            foreach (List<string> row in rows)
+            {
+                foreach (string cellValue in row)
+                {
+                    table.AddCell(new Cell().Add(new Paragraph(cellValue ?? "")));
+                }
+            }
+            table.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+            table.SetMarginBottom(10);
+            document.Add(table);
+            await Task.Delay(5);
+        }
     }
 }

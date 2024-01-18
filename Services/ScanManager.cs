@@ -36,11 +36,11 @@ namespace Independent_Reader_GUI.Services
             // Set the camera to IO scanning
             cameraManager.Scanning = true;
             cameraManager.IO = "Scanning";
-            // TODO: Create an experiment folder
+            // Create an experiment folder
             string experimentName = scanParameters.ExperimentName;
             string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";
             Directory.CreateDirectory($"{dir}\\{experimentName}");
-            // TODO: Create a heater folder inside the experiment folder (heaterB for example)
+            // Create a heater folder inside the experiment folder (heaterB for example)
             string heaterLetter = scanParameters.HeaterLetter;
             Directory.CreateDirectory($"{dir}\\{experimentName}\\heater{heaterLetter}");
             // Move the z motor to its position
@@ -81,13 +81,16 @@ namespace Independent_Reader_GUI.Services
                                 // Get the new x and y positions
                                 int xPos = scanParameters.x0 - scanParameters.FOVdX * fovIdx - scanParameters.SampledX * assayIdx;
                                 int yPos = scanParameters.y0 + scanParameters.dY * sampleIdx;
-                                if (fovIdx != 0 || assayIdx != 0)
+                                if (scanParameters.RotationalOffset > 0)
                                 {
-                                    var _ = ApplyRotationalOffset(xPos, yPos, scanParameters.RotationalOffset);
-                                    xPos = (Int32)_.Item1;
-                                    yPos = (Int32)_.Item2;
-                                    Debug.WriteLine($"New X,y -> {xPos}, {yPos}");
-                                }
+                                    if (fovIdx != 0 || assayIdx != 0)
+                                    {
+                                        var _ = ApplyRotationalOffset(xPos, yPos, scanParameters.RotationalOffset);
+                                        xPos = (Int32)_.Item1;
+                                        yPos = (Int32)_.Item2;
+                                        Debug.WriteLine($"New X,y -> {xPos}, {yPos}");
+                                    }
+                                }                               
                                 // Move to the position for this FOV
                                 MotorCommand xMotorCommand = new MotorCommand
                                 {
@@ -138,7 +141,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.FAMFilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"bf_{assayName}_{exposure}.tiff", 
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("HEX"));
                                 }
                                 if (scanParameters.ImageCy5)
                                 {
@@ -147,7 +150,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.Cy5FilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"cy5_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("Cy5"));
                                 }
                                 if (scanParameters.ImageFAM)
                                 {
@@ -156,7 +159,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.FAMFilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"fam_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("FAM"));
                                 }
                                 if (scanParameters.ImageHEX)
                                 {
@@ -165,7 +168,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.HEXFilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"hex_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("HEX"));
                                 }
                                 if (scanParameters.ImageAtto)
                                 {
@@ -174,7 +177,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.AttoFilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"Atto_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("Atto"));
                                 }
                                 if (scanParameters.ImageAlexa)
                                 {
@@ -183,7 +186,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.AlexaFilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"alexa_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("Alexa"));
                                 }
                                 if (scanParameters.ImageCy5p5)
                                 {
@@ -192,7 +195,7 @@ namespace Independent_Reader_GUI.Services
                                     filterWheelPos = configuration.Cy5p5FilterWheelPosition;
                                     // Image
                                     await TakeImage(imagePath, $"cy55_{assayName}_{exposure}.tiff",
-                                        intensity, exposure, filterWheelPos);
+                                        intensity, exposure, filterWheelPos, ledManager.GetLEDFromName("Cy5p5"));
                                 }
                             }
                         }
@@ -219,8 +222,13 @@ namespace Independent_Reader_GUI.Services
         /// <param name="exposure"></param>
         /// <param name="filterWheelPosition"></param>
         /// <returns></returns>
-        private async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition)
+        private async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition, LED led)
         {
+            // Turn off all LEDs
+            ledManager.TurnAllOff();
+            // Turn on the LED
+            LEDCommand ledCommand = new LEDCommand { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
+            ledManager.EnqueuePriorityCommand(ledCommand);
             // Move the Filter Wheel
             MotorCommand filterWheelMoveCommand = new MotorCommand
             {
@@ -245,8 +253,10 @@ namespace Independent_Reader_GUI.Services
             // Capture the image
             Directory.CreateDirectory(imageFilePath);
             // Set Exposure in Microseconds
+            //imageFileName = imageFileName.Replace(" ", "_");
             Debug.WriteLine($"Saving Image to: {imageFilePath}\\{imageFileName}");
             await cameraManager.SetExposureTime(exposure);
+            await Task.Delay(100);
             await cameraManager.CaptureImageAsync($"{imageFilePath}\\{imageFileName}");
         }
 
