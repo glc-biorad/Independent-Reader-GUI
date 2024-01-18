@@ -69,6 +69,7 @@ namespace Independent_Reader_GUI
         private LED Alexa;
         private LED Cy5p5;
         private LEDManager ledManager;
+        private ClampPressureCalculator clampPressureCalculator = new ClampPressureCalculator();
 
         /// <summary>
         /// Initialization of the Form
@@ -699,6 +700,19 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddThermocyclingProtocolStatusesDefaultData()
         {
+            // Add the Default Tray and Clamp Positions
+            thermocyclingTrayPositionTextBox.Text = configuration.TrayABClosedValue.ToString();
+            thermocyclingClampPositionTextBox.Text = configuration.ClampALoweredValue.ToString();
+            // Set the Pressure from the default settings
+            //double glassOffset = double.Parse(thermocyclingGlassOffsetComboBox.Text.ToString());
+            double glassOffset = configuration.DefaultGlassOffset;
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(configuration.DefaultCartridge);
+            Elastomer elastomer = elastomerOptions.GetElastomerFromName(configuration.DefaultElastomer);
+            Bergquist bergquist = bergquistOptions.GetBergquistFromName(configuration.DefaultBergquist);
+            double clampPositionMM = configuration.ClampALoweredValue * configuration.MicrostepToMillimeterConversion;
+            double A = cartridge.Width * cartridge.Length * 0.00155; // mm^2 to in^2
+            thermocyclingPressureTextBox.Text = clampPressureCalculator.ComputePressureKPa(0.23, glassOffset, cartridge, elastomer, bergquist, clampPositionMM, A).ToString();
+            // Setup the DataGridView
             TECsData thermocyclingProtocolStatusesData = new TECsData();
             thermocyclingProtocolStatusesDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
             thermocyclingProtocolStatusesDataGridView.Rows.Add("Protocol", thermocyclingProtocolStatusesData.ValueTECA, thermocyclingProtocolStatusesData.ValueTECB, thermocyclingProtocolStatusesData.ValueTECC, thermocyclingProtocolStatusesData.ValueTECD);
@@ -881,6 +895,16 @@ namespace Independent_Reader_GUI
                 consumablesGlassOffsetComboBox.Items.Add(glassOffsetOption.ToString());
             }
             consumablesGlassOffsetComboBox.SelectedItem = configuration.DefaultGlassOffset;
+
+            // Setup the Cartridge, Elastomer, and Bergquist ComboBoxes on the Reader - Thermocycling Tab
+            thermocyclingCartridgeComboBox.DataSource = cartridgeOptions.Names();
+            thermocyclingCartridgeComboBox.Text = configuration.DefaultCartridge;
+            thermocyclingElastomerComboBox.DataSource = elastomerOptions.Names();
+            thermocyclingElastomerComboBox.Text = configuration.DefaultElastomer;
+            thermocyclingBergquistComboBox.DataSource = bergquistOptions.Names();
+            thermocyclingBergquistComboBox.Text = configuration.DefaultBergquist;
+            thermocyclingGlassOffsetComboBox.DataSource = scanningOptions.GetGlassOffsets();
+            thermocyclingGlassOffsetComboBox.Text = configuration.DefaultGlassOffset.ToString();
         }
 
         private async void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -2405,10 +2429,14 @@ namespace Independent_Reader_GUI
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Get the selected Cartridge, Elastomer, and Bergquist used for the run
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(thermocyclingCartridgeComboBox.Text);
+            Elastomer elastomer = elastomerOptions.GetElastomerFromName(thermocyclingElastomerComboBox.Text);
+            Bergquist bergquist = bergquistOptions.GetBergquistFromName(thermocyclingBergquistComboBox.Text);
             // Handle the click event
             if (protocol != null && protocolNameExists)
             {
-                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration, cartridge, elastomer, bergquist);
             }
             else
             {
@@ -2427,10 +2455,14 @@ namespace Independent_Reader_GUI
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Get the selected Cartridge, Elastomer, and Bergquist used for the run
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(thermocyclingCartridgeComboBox.Text);
+            Elastomer elastomer = elastomerOptions.GetElastomerFromName(thermocyclingElastomerComboBox.Text);
+            Bergquist bergquist = bergquistOptions.GetBergquistFromName(thermocyclingBergquistComboBox.Text);
             // Handle the click event
             if (protocol != null && protocolNameExists)
             {
-                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration, cartridge, elastomer, bergquist);
             }
             else
             {
@@ -2449,10 +2481,14 @@ namespace Independent_Reader_GUI
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Get the selected Cartridge, Elastomer, and Bergquist used for the run
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(thermocyclingCartridgeComboBox.Text);
+            Elastomer elastomer = elastomerOptions.GetElastomerFromName(thermocyclingElastomerComboBox.Text);
+            Bergquist bergquist = bergquistOptions.GetBergquistFromName(thermocyclingBergquistComboBox.Text);
             // Handle the click event
             if (protocol != null && protocolNameExists)
             {
-                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration, cartridge, elastomer, bergquist);
             }
             else
             {
@@ -2471,10 +2507,14 @@ namespace Independent_Reader_GUI
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
+            // Get the selected Cartridge, Elastomer, and Bergquist used for the run
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(thermocyclingCartridgeComboBox.Text);
+            Elastomer elastomer = elastomerOptions.GetElastomerFromName(thermocyclingElastomerComboBox.Text);
+            Bergquist bergquist = bergquistOptions.GetBergquistFromName(thermocyclingBergquistComboBox.Text);
             // Handle the click event
             if (protocol != null && protocolNameExists)
             {
-                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration);
+                await tecManager.HandleRunClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView, protocol, configuration, cartridge, elastomer, bergquist);
             }
             else
             {
@@ -2485,16 +2525,6 @@ namespace Independent_Reader_GUI
         private void thermocyclingTECDKillButton_Click(object sender, EventArgs e)
         {
             tecManager.HandleKillClickEvent(sender, e, thermocyclingProtocolStatusesDataGridView);
-        }
-
-        private async void imagingTabPage_Enter(object sender, EventArgs e)
-        {
-            //await cameraManager.StartStreamAsync();
-        }
-
-        private async void imagingTabPage_Leave(object sender, EventArgs e)
-        {
-            //await cameraManager.StopStreamAsync();
         }
 
         private void imagingBrightFieldButton_Click(object sender, EventArgs e)
@@ -2662,14 +2692,21 @@ namespace Independent_Reader_GUI
             {
                 if (row.Cells[0].Value.ToString().Contains("Sample"))
                 {
-                    try
-                    {
-                        sampleNames.Add(row.Cells[1].Value.ToString());
-                    }
-                    catch (Exception ex)
+                    if (row.Cells[1].Value == null)
                     {
                         sampleNames.Add("");
                     }
+                    else
+                    {
+                        try
+                        {
+                            sampleNames.Add(row.Cells[1].Value.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            sampleNames.Add("");
+                        }
+                    }                    
                 }
                 else if (row.Cells[0].Value.ToString().Contains("Assay"))
                 {

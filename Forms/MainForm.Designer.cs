@@ -161,6 +161,20 @@
             controlMotorsHomeColumn = new DataGridViewTextBoxColumn();
             controlMotorsLabel = new Label();
             thermocyclingTabPage = new TabPage();
+            thermocyclingPressureTextBox = new TextBox();
+            thermocyclingClampPositionTextBox = new TextBox();
+            thermocyclingTrayPositionTextBox = new TextBox();
+            thermocyclingGlassOffsetComboBox = new ComboBox();
+            thermocyclingPressureLabel = new Label();
+            thermocyclingClampPositionLabel = new Label();
+            thermocyclingTrayPositionLabel = new Label();
+            thermocyclingGlassOffsetLabel = new Label();
+            thermocyclingBergquistComboBox = new ComboBox();
+            thermocyclingElastomerComboBox = new ComboBox();
+            thermocyclingCartridgeComboBox = new ComboBox();
+            thermocyclingBergquistLabel = new Label();
+            thermocyclingElastomerLabel = new Label();
+            thermocyclingCartridgeLabel = new Label();
             thermocyclingEstimatedTimeTextBox = new TextBox();
             thermocyclingEstimatedTimeLabel = new Label();
             thermocyclingProtocolNameTextBox = new TextBox();
@@ -1589,6 +1603,20 @@
             // 
             // thermocyclingTabPage
             // 
+            thermocyclingTabPage.Controls.Add(thermocyclingPressureTextBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingClampPositionTextBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingTrayPositionTextBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingGlassOffsetComboBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingPressureLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingClampPositionLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingTrayPositionLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingGlassOffsetLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingBergquistComboBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingElastomerComboBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingCartridgeComboBox);
+            thermocyclingTabPage.Controls.Add(thermocyclingBergquistLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingElastomerLabel);
+            thermocyclingTabPage.Controls.Add(thermocyclingCartridgeLabel);
             thermocyclingTabPage.Controls.Add(thermocyclingEstimatedTimeTextBox);
             thermocyclingTabPage.Controls.Add(thermocyclingEstimatedTimeLabel);
             thermocyclingTabPage.Controls.Add(thermocyclingProtocolNameTextBox);
@@ -1617,40 +1645,175 @@
             thermocyclingTabPage.Text = "Thermocycling";
             thermocyclingTabPage.UseVisualStyleBackColor = true;
             // 
+            // thermocyclingPressureTextBox
+            // 
+            thermocyclingPressureTextBox.Enabled = false;
+            thermocyclingPressureTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingPressureTextBox.Location = new Point(957, 121);
+            thermocyclingPressureTextBox.Name = "thermocyclingPressureTextBox";
+            thermocyclingPressureTextBox.Size = new Size(149, 21);
+            thermocyclingPressureTextBox.TabIndex = 35;
+            // 
+            // thermocyclingClampPositionTextBox
+            // 
+            thermocyclingClampPositionTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingClampPositionTextBox.Location = new Point(957, 92);
+            thermocyclingClampPositionTextBox.Name = "thermocyclingClampPositionTextBox";
+            thermocyclingClampPositionTextBox.Size = new Size(149, 21);
+            thermocyclingClampPositionTextBox.TabIndex = 34;
+            // 
+            // thermocyclingTrayPositionTextBox
+            // 
+            thermocyclingTrayPositionTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingTrayPositionTextBox.Location = new Point(957, 63);
+            thermocyclingTrayPositionTextBox.Name = "thermocyclingTrayPositionTextBox";
+            thermocyclingTrayPositionTextBox.Size = new Size(149, 21);
+            thermocyclingTrayPositionTextBox.TabIndex = 33;
+            // 
+            // thermocyclingGlassOffsetComboBox
+            // 
+            thermocyclingGlassOffsetComboBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingGlassOffsetComboBox.FormattingEnabled = true;
+            thermocyclingGlassOffsetComboBox.ItemHeight = 15;
+            thermocyclingGlassOffsetComboBox.Location = new Point(957, 36);
+            thermocyclingGlassOffsetComboBox.Name = "thermocyclingGlassOffsetComboBox";
+            thermocyclingGlassOffsetComboBox.Size = new Size(149, 23);
+            thermocyclingGlassOffsetComboBox.TabIndex = 32;
+            // 
+            // thermocyclingPressureLabel
+            // 
+            thermocyclingPressureLabel.AutoSize = true;
+            thermocyclingPressureLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingPressureLabel.Location = new Point(860, 124);
+            thermocyclingPressureLabel.Name = "thermocyclingPressureLabel";
+            thermocyclingPressureLabel.Size = new Size(97, 15);
+            thermocyclingPressureLabel.TabIndex = 31;
+            thermocyclingPressureLabel.Text = "Pressure (KPa):";
+            // 
+            // thermocyclingClampPositionLabel
+            // 
+            thermocyclingClampPositionLabel.AutoSize = true;
+            thermocyclingClampPositionLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingClampPositionLabel.Location = new Point(836, 95);
+            thermocyclingClampPositionLabel.Name = "thermocyclingClampPositionLabel";
+            thermocyclingClampPositionLabel.Size = new Size(121, 15);
+            thermocyclingClampPositionLabel.TabIndex = 30;
+            thermocyclingClampPositionLabel.Text = "Clamp Position (µS):";
+            // 
+            // thermocyclingTrayPositionLabel
+            // 
+            thermocyclingTrayPositionLabel.AutoSize = true;
+            thermocyclingTrayPositionLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingTrayPositionLabel.Location = new Point(848, 66);
+            thermocyclingTrayPositionLabel.Name = "thermocyclingTrayPositionLabel";
+            thermocyclingTrayPositionLabel.Size = new Size(109, 15);
+            thermocyclingTrayPositionLabel.TabIndex = 29;
+            thermocyclingTrayPositionLabel.Text = "Tray Position (µS):";
+            // 
+            // thermocyclingGlassOffsetLabel
+            // 
+            thermocyclingGlassOffsetLabel.AutoSize = true;
+            thermocyclingGlassOffsetLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingGlassOffsetLabel.Location = new Point(844, 39);
+            thermocyclingGlassOffsetLabel.Name = "thermocyclingGlassOffsetLabel";
+            thermocyclingGlassOffsetLabel.Size = new Size(113, 15);
+            thermocyclingGlassOffsetLabel.TabIndex = 28;
+            thermocyclingGlassOffsetLabel.Text = "Glass Offset (mm):";
+            // 
+            // thermocyclingBergquistComboBox
+            // 
+            thermocyclingBergquistComboBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingBergquistComboBox.FormattingEnabled = true;
+            thermocyclingBergquistComboBox.ItemHeight = 15;
+            thermocyclingBergquistComboBox.Location = new Point(676, 121);
+            thermocyclingBergquistComboBox.Name = "thermocyclingBergquistComboBox";
+            thermocyclingBergquistComboBox.Size = new Size(149, 23);
+            thermocyclingBergquistComboBox.TabIndex = 27;
+            // 
+            // thermocyclingElastomerComboBox
+            // 
+            thermocyclingElastomerComboBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingElastomerComboBox.FormattingEnabled = true;
+            thermocyclingElastomerComboBox.ItemHeight = 15;
+            thermocyclingElastomerComboBox.Location = new Point(676, 92);
+            thermocyclingElastomerComboBox.Name = "thermocyclingElastomerComboBox";
+            thermocyclingElastomerComboBox.Size = new Size(149, 23);
+            thermocyclingElastomerComboBox.TabIndex = 26;
+            // 
+            // thermocyclingCartridgeComboBox
+            // 
+            thermocyclingCartridgeComboBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingCartridgeComboBox.FormattingEnabled = true;
+            thermocyclingCartridgeComboBox.ItemHeight = 15;
+            thermocyclingCartridgeComboBox.Location = new Point(676, 63);
+            thermocyclingCartridgeComboBox.Name = "thermocyclingCartridgeComboBox";
+            thermocyclingCartridgeComboBox.Size = new Size(149, 23);
+            thermocyclingCartridgeComboBox.TabIndex = 25;
+            // 
+            // thermocyclingBergquistLabel
+            // 
+            thermocyclingBergquistLabel.AutoSize = true;
+            thermocyclingBergquistLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingBergquistLabel.Location = new Point(605, 124);
+            thermocyclingBergquistLabel.Name = "thermocyclingBergquistLabel";
+            thermocyclingBergquistLabel.Size = new Size(65, 15);
+            thermocyclingBergquistLabel.TabIndex = 24;
+            thermocyclingBergquistLabel.Text = "Bergquist:";
+            // 
+            // thermocyclingElastomerLabel
+            // 
+            thermocyclingElastomerLabel.AutoSize = true;
+            thermocyclingElastomerLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingElastomerLabel.Location = new Point(602, 95);
+            thermocyclingElastomerLabel.Name = "thermocyclingElastomerLabel";
+            thermocyclingElastomerLabel.Size = new Size(68, 15);
+            thermocyclingElastomerLabel.TabIndex = 23;
+            thermocyclingElastomerLabel.Text = "Elastomer:";
+            // 
+            // thermocyclingCartridgeLabel
+            // 
+            thermocyclingCartridgeLabel.AutoSize = true;
+            thermocyclingCartridgeLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingCartridgeLabel.Location = new Point(609, 66);
+            thermocyclingCartridgeLabel.Name = "thermocyclingCartridgeLabel";
+            thermocyclingCartridgeLabel.Size = new Size(63, 15);
+            thermocyclingCartridgeLabel.TabIndex = 22;
+            thermocyclingCartridgeLabel.Text = "Cartridge:";
+            // 
             // thermocyclingEstimatedTimeTextBox
             // 
             thermocyclingEstimatedTimeTextBox.Enabled = false;
-            thermocyclingEstimatedTimeTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingEstimatedTimeTextBox.Location = new Point(711, 48);
+            thermocyclingEstimatedTimeTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeTextBox.Location = new Point(676, 36);
             thermocyclingEstimatedTimeTextBox.Name = "thermocyclingEstimatedTimeTextBox";
-            thermocyclingEstimatedTimeTextBox.Size = new Size(110, 26);
+            thermocyclingEstimatedTimeTextBox.Size = new Size(149, 21);
             thermocyclingEstimatedTimeTextBox.TabIndex = 21;
             // 
             // thermocyclingEstimatedTimeLabel
             // 
             thermocyclingEstimatedTimeLabel.AutoSize = true;
-            thermocyclingEstimatedTimeLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            thermocyclingEstimatedTimeLabel.Location = new Point(571, 51);
+            thermocyclingEstimatedTimeLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingEstimatedTimeLabel.Location = new Point(572, 39);
             thermocyclingEstimatedTimeLabel.Name = "thermocyclingEstimatedTimeLabel";
-            thermocyclingEstimatedTimeLabel.Size = new Size(132, 19);
+            thermocyclingEstimatedTimeLabel.Size = new Size(98, 15);
             thermocyclingEstimatedTimeLabel.TabIndex = 20;
             thermocyclingEstimatedTimeLabel.Text = "Estimated Time:";
             // 
             // thermocyclingProtocolNameTextBox
             // 
-            thermocyclingProtocolNameTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingProtocolNameTextBox.Location = new Point(711, 12);
+            thermocyclingProtocolNameTextBox.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            thermocyclingProtocolNameTextBox.Location = new Point(678, 9);
             thermocyclingProtocolNameTextBox.Name = "thermocyclingProtocolNameTextBox";
-            thermocyclingProtocolNameTextBox.Size = new Size(279, 26);
+            thermocyclingProtocolNameTextBox.Size = new Size(426, 21);
             thermocyclingProtocolNameTextBox.TabIndex = 19;
             // 
             // thermocyclingPlottedProtocolLabel
             // 
             thermocyclingPlottedProtocolLabel.AutoSize = true;
-            thermocyclingPlottedProtocolLabel.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            thermocyclingPlottedProtocolLabel.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point);
             thermocyclingPlottedProtocolLabel.Location = new Point(571, 12);
             thermocyclingPlottedProtocolLabel.Name = "thermocyclingPlottedProtocolLabel";
-            thermocyclingPlottedProtocolLabel.Size = new Size(138, 19);
+            thermocyclingPlottedProtocolLabel.Size = new Size(101, 15);
             thermocyclingPlottedProtocolLabel.TabIndex = 17;
             thermocyclingPlottedProtocolLabel.Text = "Plotted Protocol:";
             // 
@@ -1777,12 +1940,12 @@
             thermocyclingProtocolStatusesDataGridView.AllowUserToDeleteRows = false;
             thermocyclingProtocolStatusesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             thermocyclingProtocolStatusesDataGridView.Columns.AddRange(new DataGridViewColumn[] { thermocyclingProtocolStatusesPropertyColumn, thermocyclingProtocolStatusesTECAColumn, thermocyclingProtocolStatusesTECBColumn, thermocyclingProtocolStatusesTECCColumn, thermocyclingProtocolStatusesTECDColumn });
-            thermocyclingProtocolStatusesDataGridView.Location = new Point(571, 103);
+            thermocyclingProtocolStatusesDataGridView.Location = new Point(571, 177);
             thermocyclingProtocolStatusesDataGridView.Name = "thermocyclingProtocolStatusesDataGridView";
             thermocyclingProtocolStatusesDataGridView.ReadOnly = true;
             thermocyclingProtocolStatusesDataGridView.RowHeadersVisible = false;
             thermocyclingProtocolStatusesDataGridView.RowTemplate.Height = 25;
-            thermocyclingProtocolStatusesDataGridView.Size = new Size(537, 344);
+            thermocyclingProtocolStatusesDataGridView.Size = new Size(537, 270);
             thermocyclingProtocolStatusesDataGridView.TabIndex = 7;
             // 
             // thermocyclingProtocolStatusesPropertyColumn
@@ -1820,7 +1983,7 @@
             // 
             thermocyclingProtocolStatusesLabel.AutoSize = true;
             thermocyclingProtocolStatusesLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            thermocyclingProtocolStatusesLabel.Location = new Point(571, 82);
+            thermocyclingProtocolStatusesLabel.Location = new Point(572, 156);
             thermocyclingProtocolStatusesLabel.Name = "thermocyclingProtocolStatusesLabel";
             thermocyclingProtocolStatusesLabel.Size = new Size(131, 18);
             thermocyclingProtocolStatusesLabel.TabIndex = 6;
@@ -2101,6 +2264,7 @@
             imagingDzTextBox.Name = "imagingDzTextBox";
             imagingDzTextBox.Size = new Size(142, 21);
             imagingDzTextBox.TabIndex = 9;
+            imagingDzTextBox.KeyDown += tabControl_KeyDown;
             // 
             // imagingDyTextBox
             // 
@@ -2109,6 +2273,7 @@
             imagingDyTextBox.Name = "imagingDyTextBox";
             imagingDyTextBox.Size = new Size(142, 21);
             imagingDyTextBox.TabIndex = 8;
+            imagingDyTextBox.KeyDown += tabControl_KeyDown;
             // 
             // imagingDxTextBox
             // 
@@ -2117,6 +2282,7 @@
             imagingDxTextBox.Name = "imagingDxTextBox";
             imagingDxTextBox.Size = new Size(142, 21);
             imagingDxTextBox.TabIndex = 7;
+            imagingDxTextBox.KeyDown += tabControl_KeyDown;
             // 
             // imagingDzLabel
             // 
@@ -3570,5 +3736,19 @@
         private DataGridViewTextBoxColumn mainHomeIDColumn;
         private DataGridViewTextBoxColumn mainHomeNameColumn;
         private DataGridViewCheckBoxColumn mainHomeIOColumn;
+        private Label thermocyclingBergquistLabel;
+        private Label thermocyclingElastomerLabel;
+        private Label thermocyclingCartridgeLabel;
+        private ComboBox thermocyclingBergquistComboBox;
+        private ComboBox thermocyclingElastomerComboBox;
+        private ComboBox thermocyclingCartridgeComboBox;
+        private Label thermocyclingPressureLabel;
+        private Label thermocyclingClampPositionLabel;
+        private Label thermocyclingTrayPositionLabel;
+        private Label thermocyclingGlassOffsetLabel;
+        private TextBox thermocyclingPressureTextBox;
+        private TextBox thermocyclingClampPositionTextBox;
+        private TextBox thermocyclingTrayPositionTextBox;
+        private ComboBox thermocyclingGlassOffsetComboBox;
     }
 }

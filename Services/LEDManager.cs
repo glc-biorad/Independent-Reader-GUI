@@ -109,6 +109,25 @@ namespace Independent_Reader_GUI.Services
         }
 
         /// <summary>
+        /// Turn off all LEDs
+        /// </summary>
+        public void TurnAllOff()
+        {
+            LEDCommand cy5Command = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Cy5 };
+            EnqueuePriorityCommand(cy5Command);
+            LEDCommand famCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = FAM };
+            EnqueuePriorityCommand(famCommand);
+            LEDCommand hexCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = HEX };
+            EnqueuePriorityCommand(hexCommand);
+            LEDCommand attoCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Atto };
+            EnqueuePriorityCommand(attoCommand);
+            LEDCommand alexaCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Alexa };
+            EnqueuePriorityCommand(alexaCommand);
+            LEDCommand cy5p5Command = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Cy5p5 };
+            EnqueuePriorityCommand(cy5p5Command);
+        }
+
+        /// <summary>
         /// Enqueue commands to the LED Manager
         /// </summary>
         /// <param name="command"></param>

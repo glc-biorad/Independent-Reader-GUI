@@ -6,6 +6,7 @@
 	<Instrument>
 		<Name>Independent Reader</Name>
 		<ID>1</ID>
+		<MicrostepToMillimeterConversion>0.0000091</MicrostepToMillimeterConversion>
 		<LEDs>
 			<Cy5ID>1</Cy5ID>
 			<FAMID>6</FAMID>
@@ -47,6 +48,7 @@
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 				<DefaultDx>1000</DefaultDx>
+				<DefaultValue>0</DefaultValue>
 			</x>
 			<y>
 				<Address>2</Address>
@@ -56,6 +58,7 @@
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 				<DefaultDy>500</DefaultDy>
+				<DefaultValue>0</DefaultValue>
 			</y>
 			<z>
 				<Address>3</Address>
@@ -65,6 +68,7 @@
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
 				<DefaultDz>1000</DefaultDz>
+				<DefaultValue>0</DefaultValue>
 			</z>
 			<FilterWheel>
 				<Address>4</Address>
@@ -73,6 +77,7 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
 			</FilterWheel>
 			<ClampA>
 				<Address>8</Address>
@@ -81,6 +86,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<RaisedValue>0</RaisedValue>
+				<LoweredValue>350000</LoweredValue>
 			</ClampA>
 			<ClampB>
 				<Address>9</Address>
@@ -89,6 +97,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<RaisedValue>0</RaisedValue>
+				<LoweredValue>350000</LoweredValue>
 			</ClampB>
 			<ClampC>
 				<Address>10</Address>
@@ -97,6 +108,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<RaisedValue>0</RaisedValue>
+				<LoweredValue>350000</LoweredValue>
 			</ClampC>
 			<ClampD>
 				<Address>11</Address>
@@ -105,6 +119,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<RaisedValue>0</RaisedValue>
+				<LoweredValue>350000</LoweredValue>
 			</ClampD>
 			<TrayAB>
 				<Address>6</Address>
@@ -113,6 +130,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<OpenValue>0</OpenValue>
+				<ClosedValue>790000</ClosedValue>
 			</TrayAB>
 			<TrayCD>
 				<Address>7</Address>
@@ -121,6 +141,9 @@
 				<Deacceleration></Deacceleration>
 				<HomingSpeed></HomingSpeed>
 				<Enabled></Enabled>
+				<DefaultValue>0</DefaultValue>
+				<OpenValue>0</OpenValue>
+				<ClosedValue>790000</ClosedValue>
 			</TrayCD>
 		</Motors>		
 		<TECs>

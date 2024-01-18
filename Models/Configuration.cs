@@ -18,6 +18,7 @@ namespace Independent_Reader_GUI.Models
         public string ConfigurationDataPath;
         public string InstrumentName = string.Empty;
         public string InstrumentID = string.Empty;
+        public double MicrostepToMillimeterConversion = double.NaN;
         public int TECWaitTimeoutInSeconds = int.MinValue;
         public int Cy5ID = int.MinValue;
         public int FAMID = int.MinValue;
@@ -154,6 +155,18 @@ namespace Independent_Reader_GUI.Models
         public int DefaultDy = int.MinValue;
         public int DefaultDz = int.MinValue;
         public string AssayProtocolsDataPath;
+        public int TrayABOpenValue = int.MinValue;
+        public int TrayABClosedValue = int.MinValue;
+        public int TrayCDOpenValue = int.MinValue;
+        public int TrayCDClosedValue = int.MinValue;
+        public int ClampARaisedValue = int.MinValue;
+        public int ClampBRaisedValue = int.MinValue;
+        public int ClampCRaisedValue = int.MinValue;
+        public int ClampDRaisedValue = int.MinValue;
+        public int ClampALoweredValue = int.MinValue;
+        public int ClampBLoweredValue = int.MinValue;
+        public int ClampCLoweredValue = int.MinValue;
+        public int ClampDLoweredValue = int.MinValue;
 
         public Configuration()
         {
@@ -171,6 +184,7 @@ namespace Independent_Reader_GUI.Models
             var instrumentNode = rootNode.Element("Instrument");
             InstrumentName = instrumentNode.Element("Name").Value;
             InstrumentID = instrumentNode.Element("ID").Value;
+            MicrostepToMillimeterConversion = double.Parse(instrumentNode.Element("MicrostepToMillimeterConversion").Value);
             ThermocyclingProtocolsDataPath = rootNode.Element("ThermocyclingProtocolsDataPath").Value;
             // Read in the instrument configuration for the LEDs
             var ledsNode = instrumentNode.Element("LEDs");
@@ -222,21 +236,33 @@ namespace Independent_Reader_GUI.Models
             var clampAMotorNode = motorsNode.Element("ClampA");
             ClampAMotorAddress = int.Parse(clampAMotorNode.Element("Address").Value);
             ClampAMotorDefaultSpeed = int.Parse(clampAMotorNode.Element("DefaultSpeed").Value);
+            ClampARaisedValue = int.Parse(clampAMotorNode.Element("RaisedValue").Value);
+            ClampALoweredValue = int.Parse(clampAMotorNode.Element("LoweredValue").Value);
             var clampBMotorNode = motorsNode.Element("ClampB");
             ClampBMotorAddress = int.Parse(clampBMotorNode.Element("Address").Value);
             ClampBMotorDefaultSpeed = int.Parse(clampBMotorNode.Element("DefaultSpeed").Value);
+            ClampBRaisedValue = int.Parse(clampBMotorNode.Element("RaisedValue").Value);
+            ClampBLoweredValue = int.Parse(clampBMotorNode.Element("LoweredValue").Value);
             var clampCMotorNode = motorsNode.Element("ClampC");
             ClampCMotorAddress = int.Parse(clampCMotorNode.Element("Address").Value);
             ClampCMotorDefaultSpeed = int.Parse(clampCMotorNode.Element("DefaultSpeed").Value);
+            ClampCRaisedValue = int.Parse(clampCMotorNode.Element("RaisedValue").Value);
+            ClampCLoweredValue = int.Parse(clampCMotorNode.Element("LoweredValue").Value);
             var clampDMotorNode = motorsNode.Element("ClampD");
             ClampDMotorAddress = int.Parse(clampDMotorNode.Element("Address").Value);
             ClampDMotorDefaultSpeed = int.Parse(clampDMotorNode.Element("DefaultSpeed").Value);
+            ClampDRaisedValue = int.Parse(clampDMotorNode.Element("RaisedValue").Value);
+            ClampDLoweredValue = int.Parse(clampDMotorNode.Element("LoweredValue").Value);
             var trayABMotorNode = motorsNode.Element("TrayAB");
             TrayABMotorAddress = int.Parse(trayABMotorNode.Element("Address").Value);
             TrayABMotorDefaultSpeed = int.Parse(trayABMotorNode.Element("DefaultSpeed").Value);
+            TrayABOpenValue = int.Parse(trayABMotorNode.Element("OpenValue").Value);
+            TrayABClosedValue = int.Parse(trayABMotorNode.Element("ClosedValue").Value);
             var trayCDMotorNode = motorsNode.Element("TrayCD");
             TrayCDMotorAddress = int.Parse(trayCDMotorNode.Element("Address").Value);
             TrayCDMotorDefaultSpeed = int.Parse(trayCDMotorNode.Element("DefaultSpeed").Value);
+            TrayCDOpenValue = int.Parse(trayCDMotorNode.Element("OpenValue").Value);
+            TrayCDClosedValue = int.Parse(trayCDMotorNode.Element("ClosedValue").Value);
             // Read in the instrument configuration for the TECs
             var tecsNode = instrumentNode.Element("TECs");
             var tecANode = tecsNode.Element("TECA");

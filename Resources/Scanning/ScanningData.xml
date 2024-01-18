@@ -69,11 +69,11 @@
       <GlassOffsetUnits>mm</GlassOffsetUnits>
       <X0>717300</X0>
       <Y0>10258</Y0>
-      <Z0>309000</Z0>
+      <Z0>325000</Z0>
       <FOVdX>72500</FOVdX>
       <SampledX>252000</SampledX>
       <dY>23000</dY>
-      <RotationalOffset>1.64</RotationalOffset>
+      <RotationalOffset>0.0</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
   </A>
