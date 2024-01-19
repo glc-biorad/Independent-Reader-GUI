@@ -202,6 +202,7 @@
             thermocyclingAddStepButton = new Button();
             thermocyclingPlotView = new OxyPlot.WindowsForms.PlotView();
             imagingTabPage = new TabPage();
+            imagingAutofocusButton = new Button();
             imagingBrightFieldButton = new Button();
             imagingLEDsDataGridView = new DataGridView();
             imagingLEDsPropertyColumn = new DataGridViewTextBoxColumn();
@@ -340,6 +341,25 @@
             mainHomeMotorsPositionColumn = new DataGridViewTextBoxColumn();
             mainHomeMotorsSpeedColumn = new DataGridViewTextBoxColumn();
             mainHomeMotorsHomedColumn = new DataGridViewTextBoxColumn();
+            mainLogTab = new TabPage();
+            mainLogErrorsDataGridView = new DataGridView();
+            mainLogErrorLabel = new Label();
+            mainLogActionsLabel = new Label();
+            mainLogActionsDataGridView = new DataGridView();
+            mainLogErrorsModuleColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsSubmoduleColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsMessageColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsTimeColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsDateColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsUserColumn = new DataGridViewTextBoxColumn();
+            mainLogActionsModule = new DataGridViewTextBoxColumn();
+            mainLogActionsSubmoduleColumn = new DataGridViewTextBoxColumn();
+            mainLogActionsActionColumn = new DataGridViewTextBoxColumn();
+            mainLogActionsTimeColumn = new DataGridViewTextBoxColumn();
+            mainLogActionsDateColumn = new DataGridViewTextBoxColumn();
+            mainLogActionsUserColumn = new DataGridViewTextBoxColumn();
+            mainLogDownloadActionsLogButton = new Button();
+            mainLogDownloadErrorLogButton = new Button();
             mainAssayProtocolEditorTabPage.SuspendLayout();
             assayProtocolEditorTabControl.SuspendLayout();
             assayProtocolEditorProtocolEditorTabPage.SuspendLayout();
@@ -382,6 +402,9 @@
             ((System.ComponentModel.ISupportInitialize)mainHomePowerRelaysDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mainHomeTECsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).BeginInit();
+            mainLogTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainLogActionsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // softwareVersionLabel
@@ -2069,6 +2092,7 @@
             // 
             // imagingTabPage
             // 
+            imagingTabPage.Controls.Add(imagingAutofocusButton);
             imagingTabPage.Controls.Add(imagingBrightFieldButton);
             imagingTabPage.Controls.Add(imagingLEDsDataGridView);
             imagingTabPage.Controls.Add(imagingLEDsLabel);
@@ -2093,14 +2117,27 @@
             imagingTabPage.Text = "Imaging";
             imagingTabPage.UseVisualStyleBackColor = true;
             // 
+            // imagingAutofocusButton
+            // 
+            imagingAutofocusButton.BackColor = SystemColors.Highlight;
+            imagingAutofocusButton.Font = new Font("Arial", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingAutofocusButton.ForeColor = Color.White;
+            imagingAutofocusButton.Location = new Point(207, 398);
+            imagingAutofocusButton.Name = "imagingAutofocusButton";
+            imagingAutofocusButton.Size = new Size(82, 36);
+            imagingAutofocusButton.TabIndex = 19;
+            imagingAutofocusButton.Text = "Autofocus";
+            imagingAutofocusButton.UseVisualStyleBackColor = false;
+            imagingAutofocusButton.Click += imagingAutofocusButton_Click;
+            // 
             // imagingBrightFieldButton
             // 
             imagingBrightFieldButton.BackColor = SystemColors.Highlight;
-            imagingBrightFieldButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingBrightFieldButton.Font = new Font("Arial", 11F, FontStyle.Regular, GraphicsUnit.Point);
             imagingBrightFieldButton.ForeColor = Color.White;
-            imagingBrightFieldButton.Location = new Point(8, 398);
+            imagingBrightFieldButton.Location = new Point(4, 398);
             imagingBrightFieldButton.Name = "imagingBrightFieldButton";
-            imagingBrightFieldButton.Size = new Size(104, 36);
+            imagingBrightFieldButton.Size = new Size(92, 36);
             imagingBrightFieldButton.TabIndex = 18;
             imagingBrightFieldButton.Text = "Bright Field";
             imagingBrightFieldButton.UseVisualStyleBackColor = false;
@@ -2128,11 +2165,11 @@
             dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
             imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
-            imagingLEDsDataGridView.Location = new Point(264, 419);
+            imagingLEDsDataGridView.Location = new Point(294, 419);
             imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
             imagingLEDsDataGridView.RowHeadersVisible = false;
             imagingLEDsDataGridView.RowTemplate.Height = 25;
-            imagingLEDsDataGridView.Size = new Size(844, 150);
+            imagingLEDsDataGridView.Size = new Size(814, 150);
             imagingLEDsDataGridView.TabIndex = 17;
             // 
             // imagingLEDsPropertyColumn
@@ -2140,7 +2177,7 @@
             imagingLEDsPropertyColumn.HeaderText = "";
             imagingLEDsPropertyColumn.Name = "imagingLEDsPropertyColumn";
             imagingLEDsPropertyColumn.ReadOnly = true;
-            imagingLEDsPropertyColumn.Width = 140;
+            imagingLEDsPropertyColumn.Width = 110;
             // 
             // imagingLEDsBrightFieldColumn
             // 
@@ -2181,7 +2218,7 @@
             // 
             imagingLEDsLabel.AutoSize = true;
             imagingLEDsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            imagingLEDsLabel.Location = new Point(264, 398);
+            imagingLEDsLabel.Location = new Point(294, 398);
             imagingLEDsLabel.Name = "imagingLEDsLabel";
             imagingLEDsLabel.Size = new Size(48, 18);
             imagingLEDsLabel.TabIndex = 16;
@@ -2314,11 +2351,11 @@
             // imagingCaptureImageButton
             // 
             imagingCaptureImageButton.BackColor = SystemColors.Highlight;
-            imagingCaptureImageButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            imagingCaptureImageButton.Font = new Font("Arial", 11F, FontStyle.Regular, GraphicsUnit.Point);
             imagingCaptureImageButton.ForeColor = Color.White;
-            imagingCaptureImageButton.Location = new Point(118, 398);
+            imagingCaptureImageButton.Location = new Point(93, 398);
             imagingCaptureImageButton.Name = "imagingCaptureImageButton";
-            imagingCaptureImageButton.Size = new Size(140, 36);
+            imagingCaptureImageButton.Size = new Size(115, 36);
             imagingCaptureImageButton.TabIndex = 3;
             imagingCaptureImageButton.Text = "Capture Image";
             imagingCaptureImageButton.UseVisualStyleBackColor = false;
@@ -3010,6 +3047,7 @@
             mainTabControl.Controls.Add(mainHomeTabPage);
             mainTabControl.Controls.Add(mainAssayProtocolEditorTabPage);
             mainTabControl.Controls.Add(mainReaderTabPage);
+            mainTabControl.Controls.Add(mainLogTab);
             mainTabControl.Location = new Point(0, 1);
             mainTabControl.Name = "mainTabControl";
             mainTabControl.SelectedIndex = 0;
@@ -3379,6 +3417,178 @@
             mainHomeMotorsHomedColumn.ReadOnly = true;
             mainHomeMotorsHomedColumn.Width = 70;
             // 
+            // mainLogTab
+            // 
+            mainLogTab.Controls.Add(mainLogDownloadErrorLogButton);
+            mainLogTab.Controls.Add(mainLogDownloadActionsLogButton);
+            mainLogTab.Controls.Add(mainLogActionsDataGridView);
+            mainLogTab.Controls.Add(mainLogActionsLabel);
+            mainLogTab.Controls.Add(mainLogErrorLabel);
+            mainLogTab.Controls.Add(mainLogErrorsDataGridView);
+            mainLogTab.Location = new Point(4, 24);
+            mainLogTab.Name = "mainLogTab";
+            mainLogTab.Padding = new Padding(3);
+            mainLogTab.Size = new Size(1116, 621);
+            mainLogTab.TabIndex = 3;
+            mainLogTab.Text = "Log";
+            mainLogTab.UseVisualStyleBackColor = true;
+            // 
+            // mainLogErrorsDataGridView
+            // 
+            mainLogErrorsDataGridView.AllowUserToAddRows = false;
+            mainLogErrorsDataGridView.AllowUserToDeleteRows = false;
+            mainLogErrorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainLogErrorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainLogErrorsModuleColumn, mainLogErrorsSubmoduleColumn, mainLogErrorsMessageColumn, mainLogErrorsTimeColumn, mainLogErrorsDateColumn, mainLogErrorsUserColumn });
+            mainLogErrorsDataGridView.Location = new Point(6, 357);
+            mainLogErrorsDataGridView.Name = "mainLogErrorsDataGridView";
+            mainLogErrorsDataGridView.ReadOnly = true;
+            mainLogErrorsDataGridView.RowHeadersVisible = false;
+            mainLogErrorsDataGridView.RowTemplate.Height = 25;
+            mainLogErrorsDataGridView.Size = new Size(1102, 220);
+            mainLogErrorsDataGridView.TabIndex = 0;
+            // 
+            // mainLogErrorLabel
+            // 
+            mainLogErrorLabel.AutoSize = true;
+            mainLogErrorLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogErrorLabel.Location = new Point(8, 336);
+            mainLogErrorLabel.Name = "mainLogErrorLabel";
+            mainLogErrorLabel.Size = new Size(51, 18);
+            mainLogErrorLabel.TabIndex = 1;
+            mainLogErrorLabel.Text = "Errors";
+            // 
+            // mainLogActionsLabel
+            // 
+            mainLogActionsLabel.AutoSize = true;
+            mainLogActionsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogActionsLabel.Location = new Point(8, 7);
+            mainLogActionsLabel.Name = "mainLogActionsLabel";
+            mainLogActionsLabel.Size = new Size(60, 18);
+            mainLogActionsLabel.TabIndex = 2;
+            mainLogActionsLabel.Text = "Actions";
+            // 
+            // mainLogActionsDataGridView
+            // 
+            mainLogActionsDataGridView.AllowUserToAddRows = false;
+            mainLogActionsDataGridView.AllowUserToDeleteRows = false;
+            mainLogActionsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainLogActionsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainLogActionsModule, mainLogActionsSubmoduleColumn, mainLogActionsActionColumn, mainLogActionsTimeColumn, mainLogActionsDateColumn, mainLogActionsUserColumn });
+            mainLogActionsDataGridView.Location = new Point(6, 28);
+            mainLogActionsDataGridView.Name = "mainLogActionsDataGridView";
+            mainLogActionsDataGridView.ReadOnly = true;
+            mainLogActionsDataGridView.RowHeadersVisible = false;
+            mainLogActionsDataGridView.RowTemplate.Height = 25;
+            mainLogActionsDataGridView.Size = new Size(1102, 278);
+            mainLogActionsDataGridView.TabIndex = 3;
+            // 
+            // mainLogErrorsModuleColumn
+            // 
+            mainLogErrorsModuleColumn.HeaderText = "Module";
+            mainLogErrorsModuleColumn.Name = "mainLogErrorsModuleColumn";
+            mainLogErrorsModuleColumn.ReadOnly = true;
+            mainLogErrorsModuleColumn.Width = 110;
+            // 
+            // mainLogErrorsSubmoduleColumn
+            // 
+            mainLogErrorsSubmoduleColumn.HeaderText = "Submodule";
+            mainLogErrorsSubmoduleColumn.Name = "mainLogErrorsSubmoduleColumn";
+            mainLogErrorsSubmoduleColumn.ReadOnly = true;
+            mainLogErrorsSubmoduleColumn.Width = 110;
+            // 
+            // mainLogErrorsMessageColumn
+            // 
+            mainLogErrorsMessageColumn.HeaderText = "Message";
+            mainLogErrorsMessageColumn.Name = "mainLogErrorsMessageColumn";
+            mainLogErrorsMessageColumn.ReadOnly = true;
+            mainLogErrorsMessageColumn.Width = 540;
+            // 
+            // mainLogErrorsTimeColumn
+            // 
+            mainLogErrorsTimeColumn.HeaderText = "Time";
+            mainLogErrorsTimeColumn.Name = "mainLogErrorsTimeColumn";
+            mainLogErrorsTimeColumn.ReadOnly = true;
+            mainLogErrorsTimeColumn.Width = 110;
+            // 
+            // mainLogErrorsDateColumn
+            // 
+            mainLogErrorsDateColumn.HeaderText = "Date";
+            mainLogErrorsDateColumn.Name = "mainLogErrorsDateColumn";
+            mainLogErrorsDateColumn.ReadOnly = true;
+            mainLogErrorsDateColumn.Width = 110;
+            // 
+            // mainLogErrorsUserColumn
+            // 
+            mainLogErrorsUserColumn.HeaderText = "User";
+            mainLogErrorsUserColumn.Name = "mainLogErrorsUserColumn";
+            mainLogErrorsUserColumn.ReadOnly = true;
+            mainLogErrorsUserColumn.Width = 110;
+            // 
+            // mainLogActionsModule
+            // 
+            mainLogActionsModule.HeaderText = "Module";
+            mainLogActionsModule.Name = "mainLogActionsModule";
+            mainLogActionsModule.ReadOnly = true;
+            mainLogActionsModule.Width = 110;
+            // 
+            // mainLogActionsSubmoduleColumn
+            // 
+            mainLogActionsSubmoduleColumn.HeaderText = "Submodule";
+            mainLogActionsSubmoduleColumn.Name = "mainLogActionsSubmoduleColumn";
+            mainLogActionsSubmoduleColumn.ReadOnly = true;
+            mainLogActionsSubmoduleColumn.Width = 110;
+            // 
+            // mainLogActionsActionColumn
+            // 
+            mainLogActionsActionColumn.HeaderText = "Action";
+            mainLogActionsActionColumn.Name = "mainLogActionsActionColumn";
+            mainLogActionsActionColumn.ReadOnly = true;
+            mainLogActionsActionColumn.Width = 540;
+            // 
+            // mainLogActionsTimeColumn
+            // 
+            mainLogActionsTimeColumn.HeaderText = "Time";
+            mainLogActionsTimeColumn.Name = "mainLogActionsTimeColumn";
+            mainLogActionsTimeColumn.ReadOnly = true;
+            mainLogActionsTimeColumn.Width = 110;
+            // 
+            // mainLogActionsDateColumn
+            // 
+            mainLogActionsDateColumn.HeaderText = "Date";
+            mainLogActionsDateColumn.Name = "mainLogActionsDateColumn";
+            mainLogActionsDateColumn.ReadOnly = true;
+            mainLogActionsDateColumn.Width = 110;
+            // 
+            // mainLogActionsUserColumn
+            // 
+            mainLogActionsUserColumn.HeaderText = "User";
+            mainLogActionsUserColumn.Name = "mainLogActionsUserColumn";
+            mainLogActionsUserColumn.ReadOnly = true;
+            mainLogActionsUserColumn.Width = 110;
+            // 
+            // mainLogDownloadActionsLogButton
+            // 
+            mainLogDownloadActionsLogButton.BackColor = Color.DodgerBlue;
+            mainLogDownloadActionsLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogDownloadActionsLogButton.ForeColor = Color.White;
+            mainLogDownloadActionsLogButton.Location = new Point(950, 312);
+            mainLogDownloadActionsLogButton.Name = "mainLogDownloadActionsLogButton";
+            mainLogDownloadActionsLogButton.Size = new Size(158, 36);
+            mainLogDownloadActionsLogButton.TabIndex = 4;
+            mainLogDownloadActionsLogButton.Text = "Download Log";
+            mainLogDownloadActionsLogButton.UseVisualStyleBackColor = false;
+            // 
+            // mainLogDownloadErrorLogButton
+            // 
+            mainLogDownloadErrorLogButton.BackColor = Color.DodgerBlue;
+            mainLogDownloadErrorLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogDownloadErrorLogButton.ForeColor = Color.White;
+            mainLogDownloadErrorLogButton.Location = new Point(950, 580);
+            mainLogDownloadErrorLogButton.Name = "mainLogDownloadErrorLogButton";
+            mainLogDownloadErrorLogButton.Size = new Size(158, 36);
+            mainLogDownloadErrorLogButton.TabIndex = 5;
+            mainLogDownloadErrorLogButton.Text = "Download Log";
+            mainLogDownloadErrorLogButton.UseVisualStyleBackColor = false;
+            // 
             // independentReaderForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -3447,6 +3657,10 @@
             ((System.ComponentModel.ISupportInitialize)mainHomePowerRelaysDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)mainHomeTECsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).EndInit();
+            mainLogTab.ResumeLayout(false);
+            mainLogTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainLogActionsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -3578,14 +3792,6 @@
         private TabPage imagingTabPage;
         private Button imagingBrightFieldButton;
         private DataGridView imagingLEDsDataGridView;
-        private DataGridViewTextBoxColumn imagingLEDsPropertyColumn;
-        private DataGridViewTextBoxColumn imagingLEDsBrightFieldColumn;
-        private DataGridViewTextBoxColumn imagingLEDsCy5Column;
-        private DataGridViewTextBoxColumn imagingLEDsFAMColumn;
-        private DataGridViewTextBoxColumn imagingLEDsHEXColumn;
-        private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
-        private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
-        private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
         private Label imagingLEDsLabel;
         private Button imagingKillButon;
         private Button imagingScanButton;
@@ -3750,5 +3956,33 @@
         private TextBox thermocyclingClampPositionTextBox;
         private TextBox thermocyclingTrayPositionTextBox;
         private ComboBox thermocyclingGlassOffsetComboBox;
+        private Button imagingAutofocusButton;
+        private DataGridViewTextBoxColumn imagingLEDsPropertyColumn;
+        private DataGridViewTextBoxColumn imagingLEDsBrightFieldColumn;
+        private DataGridViewTextBoxColumn imagingLEDsCy5Column;
+        private DataGridViewTextBoxColumn imagingLEDsFAMColumn;
+        private DataGridViewTextBoxColumn imagingLEDsHEXColumn;
+        private DataGridViewTextBoxColumn imagingLEDsAttoColumn;
+        private DataGridViewTextBoxColumn imagingLEDsAlexaColumn;
+        private DataGridViewTextBoxColumn imagingLEDsCy5p5Column;
+        private TabPage mainLogTab;
+        private DataGridView mainLogActionsDataGridView;
+        private Label mainLogActionsLabel;
+        private Label mainLogErrorLabel;
+        private DataGridView mainLogErrorsDataGridView;
+        private DataGridViewTextBoxColumn mainLogActionsModule;
+        private DataGridViewTextBoxColumn mainLogActionsSubmoduleColumn;
+        private DataGridViewTextBoxColumn mainLogActionsActionColumn;
+        private DataGridViewTextBoxColumn mainLogActionsTimeColumn;
+        private DataGridViewTextBoxColumn mainLogActionsDateColumn;
+        private DataGridViewTextBoxColumn mainLogActionsUserColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsModuleColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsSubmoduleColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsMessageColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsTimeColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsDateColumn;
+        private DataGridViewTextBoxColumn mainLogErrorsUserColumn;
+        private Button mainLogDownloadErrorLogButton;
+        private Button mainLogDownloadActionsLogButton;
     }
 }

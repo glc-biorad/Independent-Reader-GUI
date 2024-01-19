@@ -15,15 +15,17 @@ namespace Independent_Reader_GUI.Services
         MotorsManager motorsManager;
         FLIRCameraManager cameraManager;
         LEDManager ledManager;
+        TECManager tecManager;
         private int msDelay = 500;
         private int positionCutoff = 500;
 
-        public ScanManager(Configuration configuration, MotorsManager motorsManager, FLIRCameraManager cameraManager, LEDManager ledManager)
+        public ScanManager(Configuration configuration, MotorsManager motorsManager, FLIRCameraManager cameraManager, LEDManager ledManager, TECManager tecManager)
         {
             this.configuration = configuration;
             this.motorsManager = motorsManager;
             this.cameraManager = cameraManager;
             this.ledManager = ledManager;
+            this.tecManager = tecManager;
         }
 
         /// <summary>
@@ -36,6 +38,8 @@ namespace Independent_Reader_GUI.Services
             // Set the camera to IO scanning
             cameraManager.Scanning = true;
             cameraManager.IO = "Scanning";
+            // Turn off TEC Fans if thermocycling protocols are not running on them
+            tecManager.TurnOffFansBasedOnOutcome(!tecManager.TECA.RunningProtocol, !tecManager.TECB.RunningProtocol, !tecManager.TECC.RunningProtocol, !tecManager.TECD.RunningProtocol);
             // Create an experiment folder
             string experimentName = scanParameters.ExperimentName;
             string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";

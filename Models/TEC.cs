@@ -12,6 +12,7 @@ namespace Independent_Reader_GUI.Models
     {
         private int id = int.MinValue;
         private string name = string.Empty;
+        public string ParentModule = "Reader";
         private bool connected;
         private Configuration configuration;
         private readonly APIManager apiManager;
@@ -42,6 +43,10 @@ namespace Independent_Reader_GUI.Models
         public List<Tuple<DateTime, double>> SinkTemperatures = new List<Tuple<DateTime, double>>();
         public List<Tuple<DateTime, double>> TargetTemperatures = new List<Tuple<DateTime, double>>();
         public List<Tuple<DateTime, double>> FanSpeeds = new List<Tuple<DateTime, double>>();
+        public string ErrorMessage = "";
+        public int ErrorNumber;
+        public string ErrorDescription = "";
+        public bool InErrorState = false;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)
         {
@@ -698,6 +703,153 @@ namespace Independent_Reader_GUI.Models
                 value = "?";
             }
             actualOutputVoltage = value;
+        }
+
+        public async Task GetDeviceStatus()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/device-status/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(msDelay);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            value = response;
+            if (value == string.Empty)
+            {
+                value = "?";
+            }
+            if (value == "Error")
+            {
+                ErrorMessage = "Error";
+                InErrorState = true;
+                
+            }
+            else
+            {
+                InErrorState = false;
+            }
+            deviceStatus = value;
+        }
+
+        /// <summary>
+        /// Get the Error Number on the TEC
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetErrorNumber()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/error-number/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(msDelay);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            int value;
+            if (int.TryParse(response, out _))
+            {
+                value = int.Parse(response);
+            }
+            else
+            {
+                value = -1;
+            }
+            ErrorNumber = value;
+        }
+
+        /// <summary>
+        /// Get the Error Description on the TEC
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetErrorDescription()
+        {
+            // TODO: Replace the endpoint with a private const from the configuration XML data file
+            APIResponse data = new APIResponse();
+            string resp = "None";
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (resp == "None" && stopwatch.Elapsed.TotalSeconds < timeout)
+            {
+                try
+                {
+                    data = await apiManager.GetAsync<APIResponse>($"http://127.0.0.1:8000/tec/error-description/?heater=Heater%20{name.Last()}");
+                    await Task.Delay(msDelay);
+                    resp = data.Response?.Replace("\r", "");
+
+                }
+                catch (Exception ex)
+                {
+                    data = new APIResponse();
+                }
+            }
+            stopwatch.Stop();
+            // TODO: Check the submodule id and the module id
+            // TODO: Replace this section with a class or method internal to APIResponse to check the APIResponse output
+            #region
+            int? sid = data.SubmoduleID;
+            int? mid = data.ModuleID;
+            int? duration_us = data.DurationInMicroSeconds;
+            string? message = data.Message;
+            string? response = data.Response?.Replace("\r", "");
+            #endregion
+            // Obtain the value from the response
+            string value;
+            if (response == null)
+            {
+                value = "?";
+            }
+            else
+            {
+                value = response;
+            }
+            ErrorDescription = value;
         }
 
         public async Task GetRelativeCoolingPower()
