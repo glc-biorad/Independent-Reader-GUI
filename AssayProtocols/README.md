@@ -3,7 +3,7 @@
 ## Overview
 Assay Protocols contain the name of the protocol, the version, the author, creation date, and all the actions the protocol takes.
 
-## File Naming COnvention
+## File Naming Convention
 protocolName__vA.B.C.D.E.xml
 
 ## Protocol Name
