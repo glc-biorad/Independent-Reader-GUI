@@ -61,9 +61,9 @@ namespace Independent_Reader_GUI.Services
             if (int.TryParse(led.Intensity.ToString(), out int value))
             {
                 int intensity = value;               
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString());
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString(), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, intensity > 0, "On", "Off", "IO", led.Name);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString());
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "Intensity (%)", led.Intensity.ToString(), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, intensity > 0, "On", "Off", "IO", led.Name);
             }
         }

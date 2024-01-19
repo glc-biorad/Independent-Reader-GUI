@@ -858,11 +858,23 @@ namespace Independent_Reader_GUI
                     e.CellStyle.BackColor = Color.Gold;
                     e.CellStyle.ForeColor = Color.White;
                 }
+                else if (cellValue.Equals("Ramping"))
+                {
+                    e.CellStyle.BackColor = Color.LightGoldenrodYellow;
+                    e.CellStyle.ForeColor = Color.Black;
+                }
+                else if (cellValue.Equals("Error"))
+                {
+                    e.CellStyle.BackColor = Color.Red;
+                    e.CellStyle.ForeColor = Color.White;
+                }
                 else
                 {
                     e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
                     e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
                 }
+
+                // TODO: Change Cell Style based on Values
             }
         }
 
@@ -924,13 +936,13 @@ namespace Independent_Reader_GUI
                     {
                         LEDCommand ledOffCommand = new LEDCommand() { Type = LEDCommand.CommandType.Off, LED = led };
                         ledManager.EnqueuePriorityCommand(ledOffCommand);
-                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "Off");
+                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "Off", Color.White);
                     }
                     else
                     {
                         LEDCommand ledOnCommand = new LEDCommand() { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
                         ledManager.EnqueuePriorityCommand(ledOnCommand);
-                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "On");
+                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlLEDsDataGridView, led.Name, "IO", "On", Color.White);
                     }
                 }
                 catch (LEDNotConnectedException ex)
@@ -974,13 +986,13 @@ namespace Independent_Reader_GUI
             // Get the Scan parameters based on this combination
             ScanningOption scanParameters = scanningOptions.GetScanningOptionData(heaterName, cartridgeName, glassOffset, elastomerName, bergquistName);
             // Set the Values in the DataGridView base on the results
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "x0 (\u03BCS)", scanParameters.X0.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "y0 (\u03BCS)", scanParameters.Y0.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "z0 (\u03BCS)", scanParameters.Z0.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "FOV dX (\u03BCS)", scanParameters.FOVdX.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Sample dX (\u03BCS)", scanParameters.SampledX.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "dY (\u03BCS)", scanParameters.dY.ToString());
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Rotational Offset (\u00B0)", scanParameters.RotationalOffset.ToString());
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "x0 (\u03BCS)", scanParameters.X0.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "y0 (\u03BCS)", scanParameters.Y0.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "z0 (\u03BCS)", scanParameters.Z0.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "FOV dX (\u03BCS)", scanParameters.FOVdX.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Sample dX (\u03BCS)", scanParameters.SampledX.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "dY (\u03BCS)", scanParameters.dY.ToString(), Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(imagingScanParametersDataGridView, "Value", "Rotational Offset (\u00B0)", scanParameters.RotationalOffset.ToString(), Color.White);
             // Get the row we are changing
             DataGridViewRow row = imagingScanParametersDataGridView.Rows[e.RowIndex];
             // TODO: Update this to only trigger if the cartridge changes (will trigger if I reselect the same cartridge?)
@@ -1108,33 +1120,33 @@ namespace Independent_Reader_GUI
             else
             {
                 string xMotorVersion = await xMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion, Color.White);
                 string yMotorVersion = await yMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion, Color.White);
                 string zMotorVersion = await zMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion, Color.White);
                 string filterWheelMotorVersion = await filterWheelMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion, Color.White);
                 string trayABMotorVersion = await trayABMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion, Color.White);
                 string trayCDMotorVersion = await trayCDMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion, Color.White);
                 string tecAFirmwareVersion = await tecA.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion, Color.White);
                 string tecBFirmwareVersion = await tecB.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC B", "Version", tecBFirmwareVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC B", "Version", tecBFirmwareVersion, Color.White);
                 string tecCFirmwareVersion = await tecC.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC C", "Version", tecCFirmwareVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC C", "Version", tecCFirmwareVersion, Color.White);
                 string tecDFirmwareVersion = await tecD.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC D", "Version", tecDFirmwareVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC D", "Version", tecDFirmwareVersion, Color.White);
                 string clampAMotorVersion = await clampAMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion, Color.White);
                 string clampBMotorVersion = await clampBMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion, Color.White);
                 string clampCMotorVersion = await clampCMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion, Color.White);
                 string clampDMotorVersion = await clampDMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion, Color.White);
             }
         }
 
@@ -1422,7 +1434,7 @@ namespace Independent_Reader_GUI
                 if (TimeSpan.ParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
-                        tecA.Name, "Estimated Time Left", (TimeSpan.Parse(tecATimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                        tecA.Name, "Estimated Time Left", (TimeSpan.Parse(tecATimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"), Color.White);
                 }
             }
             // TEC B
@@ -1431,7 +1443,7 @@ namespace Independent_Reader_GUI
                 if (TimeSpan.ParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
-                        tecB.Name, "Estimated Time Left", (TimeSpan.Parse(tecBTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                        tecB.Name, "Estimated Time Left", (TimeSpan.Parse(tecBTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"), Color.White);
                 }
             }
             // TEC C
@@ -1440,7 +1452,7 @@ namespace Independent_Reader_GUI
                 if (TimeSpan.ParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
-                        tecC.Name, "Estimated Time Left", (TimeSpan.Parse(tecCTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                        tecC.Name, "Estimated Time Left", (TimeSpan.Parse(tecCTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"), Color.White);
                 }
             }
             // TEC D
@@ -1449,7 +1461,7 @@ namespace Independent_Reader_GUI
                 if (TimeSpan.ParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView,
-                        tecD.Name, "Estimated Time Left", (TimeSpan.Parse(tecDTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"));
+                        tecD.Name, "Estimated Time Left", (TimeSpan.Parse(tecDTimeLeftCellValue) - dt).ToString(@"hh\:mm\:ss"), Color.White);
                 }
             }
         }

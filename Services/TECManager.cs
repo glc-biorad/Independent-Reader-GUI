@@ -494,26 +494,26 @@ namespace Independent_Reader_GUI.Services
             try
             {
                 // Set the protocol name in the data grid view for this tec
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol", protocol.Name);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol", protocol.Name, Color.White);
                 // Get the amount of time the protocol is estimated to take
                 int estimatedProtocolTimeInSeconds = int.Parse(protocol.GetTimeInSeconds().ToString());
                 TimeSpan estimatedProtocolTimeSpan = TimeSpan.FromSeconds(estimatedProtocolTimeInSeconds);
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Estimated Time Left", estimatedProtocolTimeSpan.ToString(@"hh\:mm\:ss"));
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Estimated Time Left", estimatedProtocolTimeSpan.ToString(@"hh\:mm\:ss"), Color.White);
                 // TODO: Set the cell for the Protocol Running to MediumSeaGreen
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "Yes");
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Running");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "Yes", Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Running", Color.White);
                 // TODO: Set the tec*ProtocolRunning bool variable to true
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     int stepIndex = 1;
-                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", "NA");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", "NA", Color.White);
                     foreach (var step in protocol.Steps)
                     {
                         // Get the step type
                         string stepType = step.TypeName;
                         // Set the step number
-                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Step", (stepIndex).ToString());
+                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Step", (stepIndex).ToString(), Color.White);
                         stepIndex++;
                         if (stepType == ThermocyclingProtocolStepType.Set)
                         {
@@ -521,7 +521,7 @@ namespace Independent_Reader_GUI.Services
                             TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tec, Parameter = step.Temperature };
                             EnqueuePriorityCommand(setObjectTemperatureCommand);
                             // TODO: Ensure that the temperature is actually changed
-                            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString());
+                            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString(), Color.White);
                             // Get the step time and units
                             int stepTime = int.Parse(step.Time.ToString());
                             string stepTimeUnits = step.TimeUnits;
@@ -535,7 +535,7 @@ namespace Independent_Reader_GUI.Services
                             TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tec, Parameter = step.Temperature };
                             EnqueuePriorityCommand(setObjectTemperatureCommand);
                             // TODO: Ensure that the temperature is actually changed
-                            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString());
+                            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", step.Temperature.ToString(), Color.White);
                         }
                         else if (stepType == ThermocyclingProtocolStepType.GoTo)
                         {
@@ -550,14 +550,14 @@ namespace Independent_Reader_GUI.Services
                             {
                                 foreach (ThermocyclingProtocolStep cycleStep in cycleSteps)
                                 {
-                                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", $"{i+1}/{cycleCount}");
+                                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Cycle Number", $"{i+1}/{cycleCount}", Color.White);
                                     if (cycleStep.TypeName == ThermocyclingProtocolStepType.Set)
                                     {
                                         // Setup the SetObjectTemperature command and add it to the TECsManager Queue
                                         TECCommand setObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.SetObjectTemperature, TEC = tec, Parameter = cycleStep.Temperature };
                                         EnqueuePriorityCommand(setObjectTemperatureCommand);
                                         // TODO: Ensure that the temperature is actually changed
-                                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", cycleStep.Temperature.ToString());
+                                        dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Target Temp (\u00B0C)", cycleStep.Temperature.ToString(), Color.White);
                                         // Get the step time and units
                                         int stepTime = int.Parse(cycleStep.Time.ToString());
                                         string stepTimeUnits = cycleStep.TimeUnits;
@@ -578,8 +578,8 @@ namespace Independent_Reader_GUI.Services
             }
             catch (OperationCanceledException)
             {
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No");
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Cancelled");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No", Color.MediumSeaGreen);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Cancelled", Color.Yellow);
                 MessageBox.Show($"Run has been cancelled on {tec.Name}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tec.RunningProtocol = false;
                 // TODO: Generate a report
@@ -589,7 +589,7 @@ namespace Independent_Reader_GUI.Services
             tec.RunningProtocol = false;
             // TODO: Generate a report
             DateTime endDateTime = DateTime.Now;
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No");
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No", Color.White);
             ReportManager reportManager = new ReportManager(configuration.ReportsDataPath 
                 + $"{tec.Name.Replace(" ","")}_TC_Report.pdf");
             await reportManager.AddHeaderLogoAsync(configuration.ReportLogoDataPath, 50, 50);
@@ -629,7 +629,7 @@ namespace Independent_Reader_GUI.Services
             // Create the data plot for the TEC Fan Speeds
             await reportManager.AddPlotAsync(tec.FanSpeeds, $"{tec.Name} Fan Speeds", "T (rpm)");
             await reportManager.CloseAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete");
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete", Color.MediumSeaGreen);
         }
 
         /// <summary>
@@ -698,7 +698,7 @@ namespace Independent_Reader_GUI.Services
                     TEC tec = GetTECFromName(tecName);
                     tec.RunningProtocol = false;
                     // TODO: Set the Protocol Running cell background color to Yellow for a certain amount of time or indefinitely
-                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No");
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No", Color.White);
                     // TODO: Generate a report based on what occured
                 }
             }
@@ -798,8 +798,11 @@ namespace Independent_Reader_GUI.Services
             EnqueueCommand(checkConnectionCommand);
             // Fill the DataGridViews
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
         }
 
         /// <summary>
@@ -826,14 +829,14 @@ namespace Independent_Reader_GUI.Services
             if (tec.DeviceStatus == "Error")
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                        "IO", "Error");
-                dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.Red, tec.Name, "IO");
+                        "IO", "Error", Color.Red);
+                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.Red, tec.Name, "IO");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "IO", "Error");
-                dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Red, tec.Name, "IO");
+                    "IO", "Error", Color.Red);
+                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Red, tec.Name, "IO");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                    "IO", "Error");
-                dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.Red, tec.Name, "IO");
+                    "IO", "Error", Color.Red);
+                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.Red, tec.Name, "IO");
                 HandleError(tec);
             }
             // 
@@ -847,7 +850,7 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(getErrorNumberCommand);
             }
             // Log any non-error descriptions
-            if (tec.ErrorDescription != "No Error")
+            if (tec.ErrorDescription != "No Error" && tec.ErrorNumber != 0)
             {
                 mainLogErrorDataGridView.Rows.Add(tec.ParentModule, tec.Name, $"{tec.ErrorNumber}: {tec.ErrorDescription}", now.ToString("hh:mm:ss tt"), now.ToString("MM/dd/yyyy"), "glc-biorad");
                 Debug.WriteLine($"Error: {tec.ErrorNumber}: {tec.ErrorDescription}");
@@ -899,8 +902,11 @@ namespace Independent_Reader_GUI.Services
             // Set the DataGridValues for the TEC
             //
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.FanControlled == "Enabled", "Enabled", "Disabled", "Fan Control", tec.Name);
@@ -911,11 +917,11 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.ActualObjectTemperature, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
-                    "Actual Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                    "Actual Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Actual Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                    "Actual Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                    "Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)));
+                    "Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualObjectTemperature)), Color.White);
                 // Store the Actual Object Temperature
                 Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualObjectTemperature));
                 tec.ObjectTemperatures.Add(tuple);
@@ -923,11 +929,23 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.ActualSinkTemperature, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
-                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)));
+                    "Sink Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.ActualSinkTemperature)), Color.White);
+                // Warn the user if the Sink Value is getting too close to the upper or lower error thresholds
+                if (double.TryParse(tec.ActualSinkTemperature, out double sinkTemp) && double.TryParse(tec.SinkUpperErrorThreshold, out double sueThreshold))
+                {
+                    if (sinkTemp >= sueThreshold - 20)
+                    {
+                        dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Yellow, tec.Name, "Sink Temp (\u00B0C)");
+                    }
+                    else
+                    {
+                        dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.White, tec.Name, "Sink Temp (\u00B0C)");
+                    }
+                }               
                 // Store the Actual Sink Temperature
                 Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualSinkTemperature));
                 tec.SinkTemperatures.Add(tuple);
@@ -935,11 +953,11 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.TargetObjectTemperature, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Target Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                    "Target Object Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)));
+                    "Target Temp (\u00B0C)", String.Format("{0:0.0000}", double.Parse(tec.TargetObjectTemperature)), Color.White);
                 // Store the Target Object Temperature
                 Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.TargetObjectTemperature));
                 tec.TargetTemperatures.Add(tuple);
@@ -947,11 +965,11 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.ActualFanSpeed, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                    "Actual Fan Speed (rpm)", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)));
+                    "Fan RPM", String.Format("{0:0.0000}", double.Parse(tec.ActualFanSpeed)), Color.White);
                 // Store the Fan Speeds
                 Tuple<DateTime, double> tuple = new Tuple<DateTime, double>(now, double.Parse(tec.ActualFanSpeed));
                 tec.FanSpeeds.Add(tuple);
@@ -959,84 +977,84 @@ namespace Independent_Reader_GUI.Services
             if (double.TryParse(tec.ActualOutputCurrent, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)));
+                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)));
+                    "Current (A)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputCurrent)), Color.White);
             }
             if (double.TryParse(tec.ActualOutputVoltage, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
+                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)));
+                    "Voltage (V)", String.Format("{0:0.0000}", -1 * double.Parse(tec.ActualOutputVoltage)), Color.White);
             }         
             if (double.TryParse(tec.ActualObjectTemperature, out double actualTemp) && double.TryParse(tec.TargetObjectTemperature, out double targetTemp))
             {
                 if (Math.Abs(tec.PreviousObjectTemperature - double.Parse(tec.ActualObjectTemperature)) < tempReachedCutoff)
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                        "IO", "Idle");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.White, tec.Name, "IO");
+                        "IO", "Idle", Color.White);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.White, tec.Name, "IO");
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                        "IO", "Idle");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.White, tec.Name, "IO");
+                        "IO", "Idle", Color.White);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.White, tec.Name, "IO");
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                        "IO", "Idle");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.White, tec.Name, "IO");
+                        "IO", "Idle", Color.White);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.White, tec.Name, "IO");
                 }
                 else
                 {
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                        "IO", "Ramping");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                        "IO", "Ramping", Color.LightGoldenrodYellow);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                        "IO", "Ramping");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                        "IO", "Ramping", Color.LightGoldenrodYellow);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
                     dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
-                        "IO", "Ramping");
-                    dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
+                        "IO", "Ramping", Color.LightGoldenrodYellow);
+                    //dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.LightGoldenrodYellow, tec.Name, "IO");
                 }
             }
             if (double.TryParse(tec.CurrentErrorThreshold, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))));
+                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))));
+                    "Max Current (A)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.CurrentErrorThreshold))), Color.White);
             }
             if (double.TryParse(tec.VoltageErrorThreshold, out _))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
-                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))));
+                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))));
+                    "Max Voltage (V)", String.Format("{0:0.0000}", Math.Abs(double.Parse(tec.VoltageErrorThreshold))), Color.White);
             }
             if (double.TryParse(tec.FanTargetTemperature, out double fanTargetTemp))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name, 
-                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp));
+                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp));
+                    "Fan On Temp (\u00B0C)", String.Format("{0:0.0000}", fanTargetTemp), Color.White);
             }
             if (double.TryParse(tec.ObjectUpperErrorThreshold, out double objectUpperErrorThreshold))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Object Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectUpperErrorThreshold));
+                    "Object Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectUpperErrorThreshold), Color.White);
             }
             if (double.TryParse(tec.ObjectLowerErrorThreshold, out double objectLowerErrorThreshold))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Object Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectLowerErrorThreshold));
+                    "Object Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", objectLowerErrorThreshold), Color.White);
             }
             if (double.TryParse(tec.SinkUpperErrorThreshold, out double sinkUpperErrorThreshold))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Sink Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkUpperErrorThreshold));
+                    "Sink Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkUpperErrorThreshold), Color.White);
             }
             if (double.TryParse(tec.SinkLowerErrorThreshold, out double sinkLowerErrorThreshold))
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
-                    "Sink Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkLowerErrorThreshold));
+                    "Sink Lower Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkLowerErrorThreshold), Color.White);
             }
         }
     }

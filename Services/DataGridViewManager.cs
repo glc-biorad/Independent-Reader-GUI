@@ -34,9 +34,34 @@ namespace Independent_Reader_GUI.Services
         /// <param name="rowName"></param>
         public void SetCellBackColorByColumnAndRowNames(DataGridView dataGridView, Color color, string columnName, string rowName)
         {
+            // Check if invole is required
+            if (dataGridView.InvokeRequired)
+            {
+                dataGridView.Invoke(new Action(() => SetCellBackColorByColumnAndRowNames(dataGridView, color, columnName, rowName)));
+            }
+            else
+            {
+                int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+                int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = color;
+                dataGridView.InvalidateCell(columnIndex, rowIndex); //
+            }
+        }
+
+        public void SetCellBackColorByColumnAndRowNamesBasedOnOutcome(DataGridView dataGridView, bool outcome, Color successColor, Color failColor, string columnName, string rowName)
+        {
             int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
             int rowIndex = GetRowIndexFromName(dataGridView, rowName);
-            dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = color;
+            if (outcome)
+            {                
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = successColor;
+                dataGridView.InvalidateCell(columnIndex, rowIndex);
+            }
+            else
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = failColor;
+                dataGridView.InvalidateCell(columnIndex, rowIndex);
+            }
         }
 
         /// <summary>
@@ -203,13 +228,16 @@ namespace Independent_Reader_GUI.Services
         /// <param name="rowName">Row name for the cell to be set</param>
         /// <param name="cellValue">Value to place in the DataGridView's cell</param>
         public void SetTextBoxCellStringValueByColumnandRowNames(DataGridView dataGridView,
-            string columnName, string rowName, string cellValue)
+            string columnName, string rowName, string cellValue, Color cellColor)
         {
             int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
             int rowIndex = GetRowIndexFromName(dataGridView, rowName);
             try
             {
                 dataGridView.Rows[rowIndex].Cells[columnIndex].Value = cellValue;
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = cellColor;
+                dataGridView.InvalidateCell(columnIndex, rowIndex);
+                //dataGridView.Refresh();
             }
             catch (Exception ex)
             {

@@ -262,16 +262,16 @@ namespace Independent_Reader_GUI.Services
             }
             catch (Exception ex)
             {
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, "?");
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, "?");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, "?", Color.Yellow);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, "?", Color.Yellow);
             }
             //
             // Set the DataGridView values for the Motor
             //
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeMotorsDataGridView, motor.Connected, "Connected", "Not Connected", motor.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlMotorsDataGridView, motor.Connected, "Connected", "Not Connected", motor.Name, "State");
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, motor.Version);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, motor.Version);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", motor.Name, motor.Version, Color.White);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Version", motor.Name, motor.Version, Color.White);
             if (int.TryParse(motor.Position.ToString(), out _))
             {
                 int pos = motor.Position;
@@ -284,8 +284,8 @@ namespace Independent_Reader_GUI.Services
                     Debug.WriteLine($"Unable to get the absolute position value ({motor.Position}) for {motor.Name}");
                     pos = motor.Position;
                 }
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString());
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString());
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString(), Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString(), Color.White);
             }
         }
     }
