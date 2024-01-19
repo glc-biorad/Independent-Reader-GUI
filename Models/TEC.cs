@@ -44,8 +44,8 @@ namespace Independent_Reader_GUI.Models
         public List<Tuple<DateTime, double>> TargetTemperatures = new List<Tuple<DateTime, double>>();
         public List<Tuple<DateTime, double>> FanSpeeds = new List<Tuple<DateTime, double>>();
         public string ErrorMessage = "";
-        public int ErrorNumber;
-        public string ErrorDescription = "";
+        public int ErrorNumber = 0;
+        public string ErrorDescription = "No Error";
         public bool InErrorState = false;
 
         public TEC(int id, string name, APIManager apiManager, Configuration configuration)

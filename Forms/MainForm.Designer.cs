@@ -42,6 +42,7 @@
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(independentReaderForm));
             softwareVersionLabel = new Label();
             firmwareVersionLabel = new Label();
@@ -342,24 +343,24 @@
             mainHomeMotorsSpeedColumn = new DataGridViewTextBoxColumn();
             mainHomeMotorsHomedColumn = new DataGridViewTextBoxColumn();
             mainLogTab = new TabPage();
-            mainLogErrorsDataGridView = new DataGridView();
-            mainLogErrorLabel = new Label();
-            mainLogActionsLabel = new Label();
+            mainLogDownloadErrorLogButton = new Button();
+            mainLogDownloadActionsLogButton = new Button();
             mainLogActionsDataGridView = new DataGridView();
-            mainLogErrorsModuleColumn = new DataGridViewTextBoxColumn();
-            mainLogErrorsSubmoduleColumn = new DataGridViewTextBoxColumn();
-            mainLogErrorsMessageColumn = new DataGridViewTextBoxColumn();
-            mainLogErrorsTimeColumn = new DataGridViewTextBoxColumn();
-            mainLogErrorsDateColumn = new DataGridViewTextBoxColumn();
-            mainLogErrorsUserColumn = new DataGridViewTextBoxColumn();
             mainLogActionsModule = new DataGridViewTextBoxColumn();
             mainLogActionsSubmoduleColumn = new DataGridViewTextBoxColumn();
             mainLogActionsActionColumn = new DataGridViewTextBoxColumn();
             mainLogActionsTimeColumn = new DataGridViewTextBoxColumn();
             mainLogActionsDateColumn = new DataGridViewTextBoxColumn();
             mainLogActionsUserColumn = new DataGridViewTextBoxColumn();
-            mainLogDownloadActionsLogButton = new Button();
-            mainLogDownloadErrorLogButton = new Button();
+            mainLogActionsLabel = new Label();
+            mainLogErrorLabel = new Label();
+            mainLogErrorsDataGridView = new DataGridView();
+            mainLogErrorsModuleColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsSubmoduleColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsMessageColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsTimeColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsDateColumn = new DataGridViewTextBoxColumn();
+            mainLogErrorsUserColumn = new DataGridViewTextBoxColumn();
             mainAssayProtocolEditorTabPage.SuspendLayout();
             assayProtocolEditorTabControl.SuspendLayout();
             assayProtocolEditorProtocolEditorTabPage.SuspendLayout();
@@ -403,8 +404,8 @@
             ((System.ComponentModel.ISupportInitialize)mainHomeTECsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).BeginInit();
             mainLogTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)mainLogActionsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // softwareVersionLabel
@@ -1468,6 +1469,14 @@
             controlTECsDataGridView.AllowUserToResizeRows = false;
             controlTECsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             controlTECsDataGridView.Columns.AddRange(new DataGridViewColumn[] { controlTECsPropertyColumn, controlTECsTECAColumn, controlTECsTECBColumn, controlTECsTECCColumn, controlTECsTECDColumn });
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            controlTECsDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             controlTECsDataGridView.Location = new Point(539, 26);
             controlTECsDataGridView.Name = "controlTECsDataGridView";
             controlTECsDataGridView.RowHeadersVisible = false;
@@ -1487,6 +1496,7 @@
             // 
             controlTECsTECAColumn.HeaderText = "TEC A";
             controlTECsTECAColumn.Name = "controlTECsTECAColumn";
+            controlTECsTECAColumn.Resizable = DataGridViewTriState.False;
             controlTECsTECAColumn.SortMode = DataGridViewColumnSortMode.NotSortable;
             // 
             // controlTECsTECBColumn
@@ -2147,24 +2157,24 @@
             // 
             imagingLEDsDataGridView.AllowUserToAddRows = false;
             imagingLEDsDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            imagingLEDsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsBrightFieldColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
             dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
             dataGridViewCellStyle6.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            imagingLEDsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            imagingLEDsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            imagingLEDsDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingLEDsPropertyColumn, imagingLEDsBrightFieldColumn, imagingLEDsCy5Column, imagingLEDsFAMColumn, imagingLEDsHEXColumn, imagingLEDsAttoColumn, imagingLEDsAlexaColumn, imagingLEDsCy5p5Column });
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = SystemColors.Window;
+            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
+            imagingLEDsDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             imagingLEDsDataGridView.Location = new Point(294, 419);
             imagingLEDsDataGridView.Name = "imagingLEDsDataGridView";
             imagingLEDsDataGridView.RowHeadersVisible = false;
@@ -2258,14 +2268,14 @@
             imagingScanParametersDataGridView.Columns.AddRange(new DataGridViewColumn[] { imagingScanParametersPropertyColumn, imagingScanParametersValueColumn });
             imagingScanParametersDataGridView.Location = new Point(692, 28);
             imagingScanParametersDataGridView.Name = "imagingScanParametersDataGridView";
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = SystemColors.Control;
-            dataGridViewCellStyle7.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            imagingScanParametersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            imagingScanParametersDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             imagingScanParametersDataGridView.RowHeadersVisible = false;
             imagingScanParametersDataGridView.RowTemplate.Height = 25;
             imagingScanParametersDataGridView.Size = new Size(417, 300);
@@ -2728,8 +2738,8 @@
             consumablesImageScanningDataGridView.Location = new Point(8, 365);
             consumablesImageScanningDataGridView.Name = "consumablesImageScanningDataGridView";
             consumablesImageScanningDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle8.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesImageScanningDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             consumablesImageScanningDataGridView.RowTemplate.Height = 25;
             consumablesImageScanningDataGridView.Size = new Size(1100, 134);
             consumablesImageScanningDataGridView.TabIndex = 14;
@@ -2847,8 +2857,8 @@
             consumablesBergquistsDataGridView.Location = new Point(8, 254);
             consumablesBergquistsDataGridView.Name = "consumablesBergquistsDataGridView";
             consumablesBergquistsDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle9.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesBergquistsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
             consumablesBergquistsDataGridView.RowTemplate.Height = 25;
             consumablesBergquistsDataGridView.Size = new Size(1100, 55);
             consumablesBergquistsDataGridView.TabIndex = 5;
@@ -2896,8 +2906,8 @@
             consumablesElastomerDataGridView.Location = new Point(6, 145);
             consumablesElastomerDataGridView.Name = "consumablesElastomerDataGridView";
             consumablesElastomerDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle10.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesElastomerDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle11;
             consumablesElastomerDataGridView.RowTemplate.Height = 25;
             consumablesElastomerDataGridView.Size = new Size(1102, 50);
             consumablesElastomerDataGridView.TabIndex = 3;
@@ -2956,27 +2966,27 @@
             consumablesCartridgesDataGridView.AllowUserToResizeRows = false;
             consumablesCartridgesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             consumablesCartridgesDataGridView.Columns.AddRange(new DataGridViewColumn[] { consumablesCartridgesNameColumn, consumablesCartridgesPartitionTypeColumn, consumablesCartridgesSamplesColumn, consumablesCartridgesAssaysColumn, consumablesCartridgesLengthColumn, consumablesCartridgesWidthColumn, consumablesCartridgesHeightColumn });
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = SystemColors.Window;
-            dataGridViewCellStyle11.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle11.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
-            consumablesCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
-            consumablesCartridgesDataGridView.Location = new Point(8, 29);
-            consumablesCartridgesDataGridView.Name = "consumablesCartridgesDataGridView";
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = SystemColors.Control;
-            dataGridViewCellStyle12.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle12.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle12.BackColor = SystemColors.Window;
+            dataGridViewCellStyle12.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
-            consumablesCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            consumablesCartridgesDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
+            consumablesCartridgesDataGridView.DefaultCellStyle = dataGridViewCellStyle12;
+            consumablesCartridgesDataGridView.Location = new Point(8, 29);
+            consumablesCartridgesDataGridView.Name = "consumablesCartridgesDataGridView";
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = SystemColors.Control;
             dataGridViewCellStyle13.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            consumablesCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle13.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = DataGridViewTriState.True;
+            consumablesCartridgesDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            consumablesCartridgesDataGridView.RowHeadersVisible = false;
+            dataGridViewCellStyle14.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            consumablesCartridgesDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
             consumablesCartridgesDataGridView.RowTemplate.Height = 25;
             consumablesCartridgesDataGridView.Size = new Size(1100, 50);
             consumablesCartridgesDataGridView.TabIndex = 1;
@@ -3227,8 +3237,8 @@
             mainHomePowerRelaysDataGridView.Location = new Point(630, 424);
             mainHomePowerRelaysDataGridView.Name = "mainHomePowerRelaysDataGridView";
             mainHomePowerRelaysDataGridView.RowHeadersVisible = false;
-            dataGridViewCellStyle14.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            mainHomePowerRelaysDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle15.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            mainHomePowerRelaysDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             mainHomePowerRelaysDataGridView.RowTemplate.Height = 25;
             mainHomePowerRelaysDataGridView.Size = new Size(209, 194);
             mainHomePowerRelaysDataGridView.TabIndex = 7;
@@ -3433,39 +3443,29 @@
             mainLogTab.Text = "Log";
             mainLogTab.UseVisualStyleBackColor = true;
             // 
-            // mainLogErrorsDataGridView
+            // mainLogDownloadErrorLogButton
             // 
-            mainLogErrorsDataGridView.AllowUserToAddRows = false;
-            mainLogErrorsDataGridView.AllowUserToDeleteRows = false;
-            mainLogErrorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            mainLogErrorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainLogErrorsModuleColumn, mainLogErrorsSubmoduleColumn, mainLogErrorsMessageColumn, mainLogErrorsTimeColumn, mainLogErrorsDateColumn, mainLogErrorsUserColumn });
-            mainLogErrorsDataGridView.Location = new Point(6, 357);
-            mainLogErrorsDataGridView.Name = "mainLogErrorsDataGridView";
-            mainLogErrorsDataGridView.ReadOnly = true;
-            mainLogErrorsDataGridView.RowHeadersVisible = false;
-            mainLogErrorsDataGridView.RowTemplate.Height = 25;
-            mainLogErrorsDataGridView.Size = new Size(1102, 220);
-            mainLogErrorsDataGridView.TabIndex = 0;
+            mainLogDownloadErrorLogButton.BackColor = Color.DodgerBlue;
+            mainLogDownloadErrorLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogDownloadErrorLogButton.ForeColor = Color.White;
+            mainLogDownloadErrorLogButton.Location = new Point(950, 580);
+            mainLogDownloadErrorLogButton.Name = "mainLogDownloadErrorLogButton";
+            mainLogDownloadErrorLogButton.Size = new Size(158, 36);
+            mainLogDownloadErrorLogButton.TabIndex = 5;
+            mainLogDownloadErrorLogButton.Text = "Download Log";
+            mainLogDownloadErrorLogButton.UseVisualStyleBackColor = false;
             // 
-            // mainLogErrorLabel
+            // mainLogDownloadActionsLogButton
             // 
-            mainLogErrorLabel.AutoSize = true;
-            mainLogErrorLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            mainLogErrorLabel.Location = new Point(8, 336);
-            mainLogErrorLabel.Name = "mainLogErrorLabel";
-            mainLogErrorLabel.Size = new Size(51, 18);
-            mainLogErrorLabel.TabIndex = 1;
-            mainLogErrorLabel.Text = "Errors";
-            // 
-            // mainLogActionsLabel
-            // 
-            mainLogActionsLabel.AutoSize = true;
-            mainLogActionsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            mainLogActionsLabel.Location = new Point(8, 7);
-            mainLogActionsLabel.Name = "mainLogActionsLabel";
-            mainLogActionsLabel.Size = new Size(60, 18);
-            mainLogActionsLabel.TabIndex = 2;
-            mainLogActionsLabel.Text = "Actions";
+            mainLogDownloadActionsLogButton.BackColor = Color.DodgerBlue;
+            mainLogDownloadActionsLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogDownloadActionsLogButton.ForeColor = Color.White;
+            mainLogDownloadActionsLogButton.Location = new Point(950, 312);
+            mainLogDownloadActionsLogButton.Name = "mainLogDownloadActionsLogButton";
+            mainLogDownloadActionsLogButton.Size = new Size(158, 36);
+            mainLogDownloadActionsLogButton.TabIndex = 4;
+            mainLogDownloadActionsLogButton.Text = "Download Log";
+            mainLogDownloadActionsLogButton.UseVisualStyleBackColor = false;
             // 
             // mainLogActionsDataGridView
             // 
@@ -3480,48 +3480,6 @@
             mainLogActionsDataGridView.RowTemplate.Height = 25;
             mainLogActionsDataGridView.Size = new Size(1102, 278);
             mainLogActionsDataGridView.TabIndex = 3;
-            // 
-            // mainLogErrorsModuleColumn
-            // 
-            mainLogErrorsModuleColumn.HeaderText = "Module";
-            mainLogErrorsModuleColumn.Name = "mainLogErrorsModuleColumn";
-            mainLogErrorsModuleColumn.ReadOnly = true;
-            mainLogErrorsModuleColumn.Width = 110;
-            // 
-            // mainLogErrorsSubmoduleColumn
-            // 
-            mainLogErrorsSubmoduleColumn.HeaderText = "Submodule";
-            mainLogErrorsSubmoduleColumn.Name = "mainLogErrorsSubmoduleColumn";
-            mainLogErrorsSubmoduleColumn.ReadOnly = true;
-            mainLogErrorsSubmoduleColumn.Width = 110;
-            // 
-            // mainLogErrorsMessageColumn
-            // 
-            mainLogErrorsMessageColumn.HeaderText = "Message";
-            mainLogErrorsMessageColumn.Name = "mainLogErrorsMessageColumn";
-            mainLogErrorsMessageColumn.ReadOnly = true;
-            mainLogErrorsMessageColumn.Width = 540;
-            // 
-            // mainLogErrorsTimeColumn
-            // 
-            mainLogErrorsTimeColumn.HeaderText = "Time";
-            mainLogErrorsTimeColumn.Name = "mainLogErrorsTimeColumn";
-            mainLogErrorsTimeColumn.ReadOnly = true;
-            mainLogErrorsTimeColumn.Width = 110;
-            // 
-            // mainLogErrorsDateColumn
-            // 
-            mainLogErrorsDateColumn.HeaderText = "Date";
-            mainLogErrorsDateColumn.Name = "mainLogErrorsDateColumn";
-            mainLogErrorsDateColumn.ReadOnly = true;
-            mainLogErrorsDateColumn.Width = 110;
-            // 
-            // mainLogErrorsUserColumn
-            // 
-            mainLogErrorsUserColumn.HeaderText = "User";
-            mainLogErrorsUserColumn.Name = "mainLogErrorsUserColumn";
-            mainLogErrorsUserColumn.ReadOnly = true;
-            mainLogErrorsUserColumn.Width = 110;
             // 
             // mainLogActionsModule
             // 
@@ -3565,29 +3523,81 @@
             mainLogActionsUserColumn.ReadOnly = true;
             mainLogActionsUserColumn.Width = 110;
             // 
-            // mainLogDownloadActionsLogButton
+            // mainLogActionsLabel
             // 
-            mainLogDownloadActionsLogButton.BackColor = Color.DodgerBlue;
-            mainLogDownloadActionsLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            mainLogDownloadActionsLogButton.ForeColor = Color.White;
-            mainLogDownloadActionsLogButton.Location = new Point(950, 312);
-            mainLogDownloadActionsLogButton.Name = "mainLogDownloadActionsLogButton";
-            mainLogDownloadActionsLogButton.Size = new Size(158, 36);
-            mainLogDownloadActionsLogButton.TabIndex = 4;
-            mainLogDownloadActionsLogButton.Text = "Download Log";
-            mainLogDownloadActionsLogButton.UseVisualStyleBackColor = false;
+            mainLogActionsLabel.AutoSize = true;
+            mainLogActionsLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogActionsLabel.Location = new Point(8, 7);
+            mainLogActionsLabel.Name = "mainLogActionsLabel";
+            mainLogActionsLabel.Size = new Size(60, 18);
+            mainLogActionsLabel.TabIndex = 2;
+            mainLogActionsLabel.Text = "Actions";
             // 
-            // mainLogDownloadErrorLogButton
+            // mainLogErrorLabel
             // 
-            mainLogDownloadErrorLogButton.BackColor = Color.DodgerBlue;
-            mainLogDownloadErrorLogButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            mainLogDownloadErrorLogButton.ForeColor = Color.White;
-            mainLogDownloadErrorLogButton.Location = new Point(950, 580);
-            mainLogDownloadErrorLogButton.Name = "mainLogDownloadErrorLogButton";
-            mainLogDownloadErrorLogButton.Size = new Size(158, 36);
-            mainLogDownloadErrorLogButton.TabIndex = 5;
-            mainLogDownloadErrorLogButton.Text = "Download Log";
-            mainLogDownloadErrorLogButton.UseVisualStyleBackColor = false;
+            mainLogErrorLabel.AutoSize = true;
+            mainLogErrorLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            mainLogErrorLabel.Location = new Point(8, 336);
+            mainLogErrorLabel.Name = "mainLogErrorLabel";
+            mainLogErrorLabel.Size = new Size(51, 18);
+            mainLogErrorLabel.TabIndex = 1;
+            mainLogErrorLabel.Text = "Errors";
+            // 
+            // mainLogErrorsDataGridView
+            // 
+            mainLogErrorsDataGridView.AllowUserToAddRows = false;
+            mainLogErrorsDataGridView.AllowUserToDeleteRows = false;
+            mainLogErrorsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            mainLogErrorsDataGridView.Columns.AddRange(new DataGridViewColumn[] { mainLogErrorsModuleColumn, mainLogErrorsSubmoduleColumn, mainLogErrorsMessageColumn, mainLogErrorsTimeColumn, mainLogErrorsDateColumn, mainLogErrorsUserColumn });
+            mainLogErrorsDataGridView.Location = new Point(6, 357);
+            mainLogErrorsDataGridView.Name = "mainLogErrorsDataGridView";
+            mainLogErrorsDataGridView.ReadOnly = true;
+            mainLogErrorsDataGridView.RowHeadersVisible = false;
+            mainLogErrorsDataGridView.RowTemplate.Height = 25;
+            mainLogErrorsDataGridView.Size = new Size(1102, 220);
+            mainLogErrorsDataGridView.TabIndex = 0;
+            // 
+            // mainLogErrorsModuleColumn
+            // 
+            mainLogErrorsModuleColumn.HeaderText = "Module";
+            mainLogErrorsModuleColumn.Name = "mainLogErrorsModuleColumn";
+            mainLogErrorsModuleColumn.ReadOnly = true;
+            mainLogErrorsModuleColumn.Width = 110;
+            // 
+            // mainLogErrorsSubmoduleColumn
+            // 
+            mainLogErrorsSubmoduleColumn.HeaderText = "Submodule";
+            mainLogErrorsSubmoduleColumn.Name = "mainLogErrorsSubmoduleColumn";
+            mainLogErrorsSubmoduleColumn.ReadOnly = true;
+            mainLogErrorsSubmoduleColumn.Width = 110;
+            // 
+            // mainLogErrorsMessageColumn
+            // 
+            mainLogErrorsMessageColumn.HeaderText = "Message";
+            mainLogErrorsMessageColumn.Name = "mainLogErrorsMessageColumn";
+            mainLogErrorsMessageColumn.ReadOnly = true;
+            mainLogErrorsMessageColumn.Width = 540;
+            // 
+            // mainLogErrorsTimeColumn
+            // 
+            mainLogErrorsTimeColumn.HeaderText = "Time";
+            mainLogErrorsTimeColumn.Name = "mainLogErrorsTimeColumn";
+            mainLogErrorsTimeColumn.ReadOnly = true;
+            mainLogErrorsTimeColumn.Width = 110;
+            // 
+            // mainLogErrorsDateColumn
+            // 
+            mainLogErrorsDateColumn.HeaderText = "Date";
+            mainLogErrorsDateColumn.Name = "mainLogErrorsDateColumn";
+            mainLogErrorsDateColumn.ReadOnly = true;
+            mainLogErrorsDateColumn.Width = 110;
+            // 
+            // mainLogErrorsUserColumn
+            // 
+            mainLogErrorsUserColumn.HeaderText = "User";
+            mainLogErrorsUserColumn.Name = "mainLogErrorsUserColumn";
+            mainLogErrorsUserColumn.ReadOnly = true;
+            mainLogErrorsUserColumn.Width = 110;
             // 
             // independentReaderForm
             // 
@@ -3659,8 +3669,8 @@
             ((System.ComponentModel.ISupportInitialize)mainHomeMotorsDataGridView).EndInit();
             mainLogTab.ResumeLayout(false);
             mainLogTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)mainLogActionsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mainLogErrorsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -3745,11 +3755,6 @@
         private Button controlTECBUpdateButton;
         private Button controlTECAUpdateButton;
         private DataGridView controlTECsDataGridView;
-        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
-        private DataGridViewTextBoxColumn controlTECsTECAColumn;
-        private DataGridViewTextBoxColumn controlTECsTECBColumn;
-        private DataGridViewTextBoxColumn controlTECsTECCColumn;
-        private DataGridViewTextBoxColumn controlTECsTECDColumn;
         private Label controlTECsLabel;
         private Button controlHomeButton;
         private Button controlMoveButton;
@@ -3984,5 +3989,10 @@
         private DataGridViewTextBoxColumn mainLogErrorsUserColumn;
         private Button mainLogDownloadErrorLogButton;
         private Button mainLogDownloadActionsLogButton;
+        private DataGridViewTextBoxColumn controlTECsPropertyColumn;
+        private DataGridViewTextBoxColumn controlTECsTECAColumn;
+        private DataGridViewTextBoxColumn controlTECsTECBColumn;
+        private DataGridViewTextBoxColumn controlTECsTECCColumn;
+        private DataGridViewTextBoxColumn controlTECsTECDColumn;
     }
 }
