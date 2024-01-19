@@ -142,7 +142,7 @@ namespace Independent_Reader_GUI
             bergquistOptions = new BergquistOptions(configuration);
             scanningOptions = new ScanningOptions(configuration, consumablesImageScanningDataGridView);
             defaultScanningOption = scanningOptions.GetScanningOptionData("A", configuration.DefaultCartridge, configuration.DefaultGlassOffset, configuration.DefaultElastomer, configuration.DefaultBergquist);
-            scanManager = new ScanManager(configuration, motorManager, cameraManager, ledManager);
+            scanManager = new ScanManager(configuration, motorManager, cameraManager, ledManager, tecManager);
             emailManager = new EmailManager();
 
             // Obtain default data paths
@@ -1386,7 +1386,7 @@ namespace Independent_Reader_GUI
             // Check the Motors data every fast tick
             motorManager.HandleFastTickEvent(dataGridViewManager, homeMotorsDataGridView, controlMotorsDataGridView);
             // Check the TECs data every fast tick
-            tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+            tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorsDataGridView);
             // TODO: Check the LEDs data every fast tick
             ledManager.HandleFastTickEvent(dataGridViewManager, homeLEDsDataGridView, controlLEDsDataGridView);
             // Check the Camera
@@ -2706,17 +2706,24 @@ namespace Independent_Reader_GUI
                         {
                             sampleNames.Add("");
                         }
-                    }                    
+                    }
                 }
                 else if (row.Cells[0].Value.ToString().Contains("Assay"))
                 {
-                    try
-                    {
-                        assayNames.Add(row.Cells[1].Value.ToString());
-                    }
-                    catch (Exception ex)
+                    if (row.Cells[1].Value == null)
                     {
                         assayNames.Add("");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            assayNames.Add(row.Cells[1].Value.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            assayNames.Add("");
+                        }
                     }
                 }
             }
@@ -2810,6 +2817,11 @@ namespace Independent_Reader_GUI
                     apeProtocolEditorProtocolDataGridView.Rows.Add(action.ActionText);
                 }
             }
+        }
+
+        private void imagingAutofocusButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Unable to Autofocus, this has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

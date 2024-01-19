@@ -38,6 +38,9 @@ namespace Independent_Reader_GUI.Models
             SetFanControl,
             GetFanTargetTemperature,
             SetFanTargetTemperature,
+            GetDeviceStatus,
+            GetErrorNumber,
+            GetErrorDescription,
         }
 
         public CommandType Type { get; set; }

@@ -18,10 +18,10 @@ namespace Independent_Reader_GUI.Services
     /// </summary>
     internal class TECManager
     {
-        private TEC TECA;
-        private TEC TECB;
-        private TEC TECC;
-        private TEC TECD;
+        public TEC TECA;
+        public TEC TECB;
+        public TEC TECC;
+        public TEC TECD;
         private List<CancellationTokenSource> tecCancellationTokenSources = new List<CancellationTokenSource>();
         private CancellationTokenSource tecARunCancellationTokenSource;
         private CancellationTokenSource tecBRunCancellationTokenSource;
@@ -166,6 +166,15 @@ namespace Independent_Reader_GUI.Services
                                 case TECCommand.CommandType.SetFanTargetTemperature:
                                     await command.TEC.SetFanTargetTemperature(double.Parse(command.Parameter.ToString()));
                                     break;
+                                case TECCommand.CommandType.GetDeviceStatus:
+                                    await command.TEC.GetDeviceStatus();
+                                    break;
+                                case TECCommand.CommandType.GetErrorNumber:
+                                    await command.TEC.GetErrorNumber();
+                                    break;
+                                case TECCommand.CommandType.GetErrorDescription:
+                                    await command.TEC.GetErrorDescription();
+                                    break;
                             }
                         }
                         catch (Exception ex)
@@ -250,6 +259,15 @@ namespace Independent_Reader_GUI.Services
                                     break;
                                 case TECCommand.CommandType.SetFanTargetTemperature:
                                     await command.TEC.SetFanTargetTemperature(double.Parse(command.Parameter.ToString()));
+                                    break;
+                                case TECCommand.CommandType.GetDeviceStatus:
+                                    await command.TEC.GetDeviceStatus();
+                                    break;
+                                case TECCommand.CommandType.GetErrorNumber:
+                                    await command.TEC.GetErrorNumber();
+                                    break;
+                                case TECCommand.CommandType.GetErrorDescription:
+                                    await command.TEC.GetErrorDescription();
                                     break;
                             }
                         }
@@ -409,6 +427,52 @@ namespace Independent_Reader_GUI.Services
                 EnqueuePriorityCommand(getFanControlCommand);
                 TECCommand getTargetFanTempCommand = new TECCommand { Type = TECCommand.CommandType.GetFanTargetTemperature, TEC = TECB };
                 EnqueuePriorityCommand(getTargetFanTempCommand);
+            }
+        }
+
+        /// <summary>
+        /// Turn off TEC Fans based on an outcome
+        /// </summary>
+        /// <param name="tecAOutcome"></param>
+        /// <param name="tecBOutcome"></param>
+        /// <param name="tecDOutcome"></param>
+        /// <param name="tecDOutcome"></param>
+        public void TurnOffFansBasedOnOutcome(bool tecAOutcome, bool tecBOutcome, bool tecCOutcome, bool tecDOutcome)
+        {
+            if (tecAOutcome)
+            {
+                TECCommand command = new TECCommand { Type = TECCommand.CommandType.SetFanControl, TEC = TECA, Parameter = "Disabled" };
+                EnqueuePriorityCommand(command);
+            }
+            if (tecBOutcome)
+            {
+                TECCommand command = new TECCommand { Type = TECCommand.CommandType.SetFanControl, TEC = TECB, Parameter = "Disabled" };
+                EnqueuePriorityCommand(command);
+            }
+            if (tecCOutcome)
+            {
+                TECCommand command = new TECCommand { Type = TECCommand.CommandType.SetFanControl, TEC = TECC, Parameter = "Disabled" };
+                EnqueuePriorityCommand(command);
+            }
+            if (tecDOutcome)
+            {
+                TECCommand command = new TECCommand { Type = TECCommand.CommandType.SetFanControl, TEC = TECD, Parameter = "Disabled" };
+                EnqueuePriorityCommand(command);
+            }
+        }
+
+        public void HandleError(TEC tec)
+        {
+            DateTime now = DateTime.Now;
+            string time = now.ToString("hh:mm:ss tt");
+            string date = now.ToString("MM/dd/yyyy");
+            Debug.WriteLine($"{tec.Name} was found in an error state {tec.ErrorMessage} at {time} on {date}, attempting to resolve and this will be logged.");
+            // Attempt to reset the device N times
+            // TODO: Repalce 5 with a configurable value from the XML
+            for (int i = 0; i < 5; i++)
+            {
+                TECCommand resetCommand = new TECCommand { Type = TECCommand.CommandType.ResetAsync, TEC = tec };
+                EnqueuePriorityCommand(resetCommand);
             }
         }
 
@@ -675,28 +739,67 @@ namespace Independent_Reader_GUI.Services
         /// <param name="dataGridViewManager"></param>
         /// <param name="homeTECsDataGridView"></param>
         /// <param name="controlTECsDataGridView"></param>
-        public void HandleFastTickEvent(DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView)
-        {
+        public void HandleFastTickEvent(DataGridViewManager 
+            dataGridViewManager, DataGridView homeTECsDataGridView, 
+            DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView, DataGridView mainLogErrorDataGridView)
+        {            
             // TECA
             if (TECA.Connected)
             {
-                HandleTECFastTickEvent(TECA, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+                HandleTECFastTickEvent(TECA, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
+            }
+            else
+            {
+                HandleTECFastTickEventOnDisconnect(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
             }
             // TECB
             if (TECB.Connected)
             {
-                HandleTECFastTickEvent(TECB, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+                HandleTECFastTickEvent(TECB, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
+            }
+            else
+            {
+                HandleTECFastTickEventOnDisconnect(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
             }
             // TECC
             if (TECC.Connected)
             {
-                HandleTECFastTickEvent(TECC, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+                HandleTECFastTickEvent(TECC, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
+            }
+            else
+            {
+                HandleTECFastTickEventOnDisconnect(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
             }
             // TECD
             if (TECD.Connected)
             {
-                HandleTECFastTickEvent(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView);
+                HandleTECFastTickEvent(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
             }
+            else
+            {
+                HandleTECFastTickEventOnDisconnect(TECD, dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorDataGridView);
+            }
+        }
+
+        /// <summary>
+        /// Handle the Fast Tick Event for a TEC when it is not connected
+        /// </summary>
+        /// <param name="tec"></param>
+        /// <param name="dataGridViewManager"></param>
+        /// <param name="homeTECsDataGridView"></param>
+        /// <param name="controlTECsDataGridView"></param>
+        /// <param name="thermocyclingProtocolStatusesDataGridView"></param>
+        private void HandleTECFastTickEventOnDisconnect(TEC tec, 
+            DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, 
+            DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView, DataGridView mainLogErrorDataGridView)
+        {
+            // Setup the CheckConnection command and add it to the TECsManager Queue
+            TECCommand checkConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tec };
+            EnqueueCommand(checkConnectionCommand);
+            // Fill the DataGridViews
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
         }
 
         /// <summary>
@@ -706,18 +809,51 @@ namespace Independent_Reader_GUI.Services
         /// <param name="dataGridViewManager"></param>
         /// <param name="homeTECsDataGridView"></param>
         /// <param name="controlTECsDataGridView"></param>
-        private void HandleTECFastTickEvent(TEC tec, DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView)
+        private void HandleTECFastTickEvent(TEC tec, 
+            DataGridViewManager dataGridViewManager, DataGridView homeTECsDataGridView, 
+            DataGridView controlTECsDataGridView, DataGridView thermocyclingProtocolStatusesDataGridView, DataGridView mainLogErrorDataGridView)
         {
             //
             // Get the current time
             //
             DateTime now = DateTime.Now;
             //
+            //
+            // Check the Device Status
+            //
+            TECCommand deviceStatusCommand = new TECCommand { Type = TECCommand.CommandType.GetDeviceStatus, TEC = tec };
+            EnqueuePriorityCommand(deviceStatusCommand);
+            if (tec.DeviceStatus == "Error")
+            {
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                        "IO", "Error");
+                dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.Red, tec.Name, "IO");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
+                    "IO", "Error");
+                dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Red, tec.Name, "IO");
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
+                    "IO", "Error");
+                dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.Red, tec.Name, "IO");
+                HandleError(tec);
+            }
+            // 
+            // Get Error Descriptions and log if in an error state
+            //
+            if (tec.InErrorState)
+            {
+                TECCommand getErrorDescriptionCommand = new TECCommand { Type = TECCommand.CommandType.GetErrorDescription, TEC = tec };
+                EnqueuePriorityCommand(getErrorDescriptionCommand);
+                TECCommand getErrorNumberCommand = new TECCommand { Type = TECCommand.CommandType.GetErrorNumber, TEC = tec };
+                EnqueuePriorityCommand(getErrorNumberCommand);
+            }
+            // Log any non-error descriptions
+            if (tec.ErrorDescription != "No Error")
+            {
+                mainLogErrorDataGridView.Rows.Add(tec.ParentModule, tec.Name, $"{tec.ErrorNumber}: {tec.ErrorDescription}", now.ToString("hh:mm:ss tt"), now.ToString("MM/dd/yyyy"), "glc-biorad");
+                Debug.WriteLine($"Error: {tec.ErrorNumber}: {tec.ErrorDescription}");
+            }
             // Setup and Send TEC Commands
             //
-            // Setup the CheckConnection command and add it to the TECsManager Queue
-            TECCommand checkConnectionCommand = new TECCommand { Type = TECCommand.CommandType.CheckConnectionAsync, TEC = tec };
-            EnqueueCommand(checkConnectionCommand);
             // Setup the GetObjectTemperature command and add it to the TECsManager Queue
             TECCommand getObjectTemperatureCommand = new TECCommand { Type = TECCommand.CommandType.GetObjectTemperature, TEC = tec };
             EnqueueCommand(getObjectTemperatureCommand);
