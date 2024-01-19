@@ -798,11 +798,8 @@ namespace Independent_Reader_GUI.Services
             EnqueueCommand(checkConnectionCommand);
             // Fill the DataGridViews
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
         }
 
         /// <summary>
@@ -830,13 +827,10 @@ namespace Independent_Reader_GUI.Services
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
                         "IO", "Error", Color.Red);
-                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(homeTECsDataGridView, Color.Red, tec.Name, "IO");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
                     "IO", "Error", Color.Red);
-                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Red, tec.Name, "IO");
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(thermocyclingProtocolStatusesDataGridView, tec.Name,
                     "IO", "Error", Color.Red);
-                //dataGridViewManager.SetCellBackColorByColumnAndRowNames(thermocyclingProtocolStatusesDataGridView, Color.Red, tec.Name, "IO");
                 HandleError(tec);
             }
             // 
@@ -902,11 +896,8 @@ namespace Independent_Reader_GUI.Services
             // Set the DataGridValues for the TEC
             //
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, "Connected", "Not Connected", "State", tec.Name);
-            dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnOutcome(thermocyclingProtocolStatusesDataGridView, tec.Connected, Color.MediumSeaGreen, Color.Red, tec.Name, "State");
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlTECsDataGridView, tec.TemperatureControlled == "On", "On", "Off", "Temp Enabled", tec.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeTECsDataGridView, tec.FanControlled == "Enabled", "Enabled", "Disabled", "Fan Control", tec.Name);
@@ -940,6 +931,7 @@ namespace Independent_Reader_GUI.Services
                     if (sinkTemp >= sueThreshold - 20)
                     {
                         dataGridViewManager.SetCellBackColorByColumnAndRowNames(controlTECsDataGridView, Color.Yellow, tec.Name, "Sink Temp (\u00B0C)");
+                        //dataGridViewManager.SetCellBackColorByColumnAndRowNamesBasedOnColor(controlTECsDataGridView, Color.Yellow, Color.LightGoldenrodYellow, tec.Name, "Sink Temp (\u00B0C)");
                     }
                     else
                     {

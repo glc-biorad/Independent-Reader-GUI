@@ -868,11 +868,11 @@ namespace Independent_Reader_GUI
                     e.CellStyle.BackColor = Color.Red;
                     e.CellStyle.ForeColor = Color.White;
                 }
-                else
-                {
-                    e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
-                    e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
-                }
+                //else
+                //{
+                //    e.CellStyle.BackColor = homeMotorsDataGridView.DefaultCellStyle.BackColor;
+                //    e.CellStyle.ForeColor = homeMotorsDataGridView.DefaultCellStyle.ForeColor;
+                //}
 
                 // TODO: Change Cell Style based on Values
             }

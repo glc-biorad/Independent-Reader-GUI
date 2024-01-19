@@ -48,6 +48,29 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        /// <summary>
+        /// Set Cell BackColor for a cell provided the column and row name if the cell color matches either of the two colors provided
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="color1"></param>
+        /// <param name="color2"></param>
+        /// <param name="columnName"></param>
+        /// <param name="rowName"></param>
+        public void SetCellBackColorByColumnAndRowNamesBasedOnColor(DataGridView dataGridView, Color color1, Color color2, string columnName, string rowName)
+        {
+            int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
+            int rowIndex = GetRowIndexFromName(dataGridView, rowName);
+            if (dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor == color1)
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = color2;
+            }
+            else
+            {
+                dataGridView.Rows[rowIndex].Cells[columnIndex].Style.BackColor = color1;
+            }
+            dataGridView.InvalidateCell(columnIndex, rowIndex); //
+        }
+
         public void SetCellBackColorByColumnAndRowNamesBasedOnOutcome(DataGridView dataGridView, bool outcome, Color successColor, Color failColor, string columnName, string rowName)
         {
             int columnIndex = GetColumnIndexFromName(dataGridView, columnName);
