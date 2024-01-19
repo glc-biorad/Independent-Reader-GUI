@@ -87,6 +87,12 @@ Independent Reader GUI is a tool for utilizing the full functionality of the Ind
 ### Prerequists
 - Visual Studio 2022
 - .NET Framework 6.0
+- Spinnaker SDK (version 3.1.0.79)
+  - Go to the Spinnaker Software Download page on the [Spinnaker Teledyne FLIR website](https://www.flir.com/products/spinnaker-sdk/?vertical=machine+vision&segment=iis)
+  - Click the download button (will need to sign in or create an account)
+  - Look for version 3.1.0.79 and download it for Windows
+  - Unzip it
+  - Use the Wizard to set up the SDK for Application Development
 ### Installation
 1. Clone the repo
 2. Open the solution in Visual Studio and build the project
