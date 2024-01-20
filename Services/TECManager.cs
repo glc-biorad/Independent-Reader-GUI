@@ -1,5 +1,4 @@
 ﻿using Independent_Reader_GUI.Models;
-using Independent_Reader_GUI.Resources;
 using SpinnakerNET.GenApi;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,10 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using OxyPlot;
+using Independent_Reader_GUI.Models.Consumables;
+using Independent_Reader_GUI.Models.Hardware.TEC;
+using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
+using Independent_Reader_GUI.Models.Units;
 
 namespace Independent_Reader_GUI.Services
 {

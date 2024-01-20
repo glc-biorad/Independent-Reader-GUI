@@ -1,4 +1,7 @@
 ﻿using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Models.Hardware.LED;
+using Independent_Reader_GUI.Models.Hardware.Motor;
+using Independent_Reader_GUI.Models.Scanning;
 using iText.Layout.Element;
 using System;
 using System.Collections.Generic;

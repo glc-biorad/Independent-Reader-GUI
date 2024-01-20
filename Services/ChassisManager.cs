@@ -1,4 +1,4 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Models.Hardware.Chassis;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Models.Consumables;
 using System;
 using System.Collections.Generic;
 using System.Linq;

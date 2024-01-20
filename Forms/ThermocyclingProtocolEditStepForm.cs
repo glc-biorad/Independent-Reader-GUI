@@ -1,5 +1,5 @@
-﻿using Independent_Reader_GUI.Models;
-using Independent_Reader_GUI.Resources;
+﻿using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
+using Independent_Reader_GUI.Models.Units;
 using Independent_Reader_GUI.Services;
 using System;
 using System.Collections.Generic;
