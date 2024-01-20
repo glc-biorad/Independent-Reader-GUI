@@ -263,7 +263,7 @@
 			<ImagerDx>1000</ImagerDx>
 			<ImagerDy>1000</ImagerDy>
 			<ImagedDz>1000</ImagedDz>
-			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\Resources\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
 		</Defaults>
 	</glc-biorad>
 	<acd-biorad>
@@ -304,16 +304,16 @@
 			<ImagerDx>1000</ImagerDx>
 			<ImagerDy>1000</ImagerDy>
 			<ImagedDz>1000</ImagedDz>
-			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
+			<ThermocyclingProtocol>&BASEPATH;Independent-Reader-GUI\Resources\ThermocyclingProtocols\ThermocyclingProtocolDefault.xml</ThermocyclingProtocol>
 		</Defaults>
 	</acd-biorad>
 	<InstrumentName>Independent Reader</InstrumentName>
 	<InstrumentID>1</InstrumentID>
-	<DefaultLocalImageDataPath>&BASEPATH;Independent-Reader-GUI\ReaderImages</DefaultLocalImageDataPath>
-	<ThermocyclingProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
+	<DefaultLocalImageDataPath>&BASEPATH;Independent-Reader-GUI\Resources\ReaderImages</DefaultLocalImageDataPath>
+	<ThermocyclingProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\Resources\ThermocyclingProtocols\</ThermocyclingProtocolsDataPath>
 	<BergquistDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Bergquist\BergquistData.xml</BergquistDataPath>
 	<CartridgeDataPath>&BASEPATH;Independent-Reader-GUI\Resources\Cartridges\CartridgeData.xml</CartridgeDataPath>
-	<AssayProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\AssayProtocols\</AssayProtocolsDataPath>
+	<AssayProtocolsDataPath>&BASEPATH;Independent-Reader-GUI\Resources\AssayProtocols\</AssayProtocolsDataPath>
 	<DefaultThermocyclingProtocolName>Sample MW dPCR Protocol</DefaultThermocyclingProtocolName>
 	<DefaultPartitionType>Microwells</DefaultPartitionType>
 	<DefaultCartridge>M2M</DefaultCartridge>

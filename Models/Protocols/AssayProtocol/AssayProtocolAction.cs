@@ -14,6 +14,7 @@ namespace Independent_Reader_GUI.Models.Protocols.AssayProtocol
         public int ID;
         public string ActionText;
         public string Description;
+        public bool DisplayDescription;
 
         private Dictionary<string, Type> dict = new Dictionary<string, Type>
         {

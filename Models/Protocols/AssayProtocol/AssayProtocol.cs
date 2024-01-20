@@ -21,6 +21,17 @@ namespace Independent_Reader_GUI.Models.Protocols.AssayProtocol
             Actions = new List<AssayProtocolAction>();
         }
 
+        public AssayProtocol(string name, string version, string author, List<AssayProtocolAction> actions)
+        {
+            DateCreated = DateTime.Now;
+            Date = DateCreated.ToString("MM/dd/yyyy");
+            Time = DateCreated.ToString("hh:mm:ss tt");
+            Author = author;
+            Name = name;
+            Version = version; // automated versioning handled at the UI
+            Actions = actions;
+        }
+
         /// <summary>
         /// Set the Name of the Assay Protocol
         /// </summary>

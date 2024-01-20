@@ -56,6 +56,8 @@
             assayProtocolEditorRunTabPage = new TabPage();
             assayProtocolEditorControlTabPage = new TabPage();
             assayProtocolEditorProtocolEditorTabPage = new TabPage();
+            apeProtocolEditorVersionTextBox = new TextBox();
+            apeProtocolEditorVersionLabel = new Label();
             apeProtocolEditorPauseButton = new Button();
             apeProtocolEditorEditActionButton = new Button();
             apeProtocolEditorEstimateTimeTextBox = new TextBox();
@@ -534,6 +536,8 @@
             // 
             // assayProtocolEditorProtocolEditorTabPage
             // 
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorVersionTextBox);
+            assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorVersionLabel);
             assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorPauseButton);
             assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorEditActionButton);
             assayProtocolEditorProtocolEditorTabPage.Controls.Add(apeProtocolEditorEstimateTimeTextBox);
@@ -554,6 +558,24 @@
             assayProtocolEditorProtocolEditorTabPage.TabIndex = 0;
             assayProtocolEditorProtocolEditorTabPage.Text = "Protocol Editor";
             assayProtocolEditorProtocolEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // apeProtocolEditorVersionTextBox
+            // 
+            apeProtocolEditorVersionTextBox.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorVersionTextBox.Location = new Point(632, 6);
+            apeProtocolEditorVersionTextBox.Name = "apeProtocolEditorVersionTextBox";
+            apeProtocolEditorVersionTextBox.Size = new Size(199, 26);
+            apeProtocolEditorVersionTextBox.TabIndex = 16;
+            // 
+            // apeProtocolEditorVersionLabel
+            // 
+            apeProtocolEditorVersionLabel.AutoSize = true;
+            apeProtocolEditorVersionLabel.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            apeProtocolEditorVersionLabel.Location = new Point(503, 9);
+            apeProtocolEditorVersionLabel.Name = "apeProtocolEditorVersionLabel";
+            apeProtocolEditorVersionLabel.Size = new Size(123, 18);
+            apeProtocolEditorVersionLabel.TabIndex = 15;
+            apeProtocolEditorVersionLabel.Text = "Protocol Version";
             // 
             // apeProtocolEditorPauseButton
             // 
@@ -677,6 +699,7 @@
             addapeProtocolEditorAddActionButton.TabIndex = 2;
             addapeProtocolEditorAddActionButton.Text = "Add Action";
             addapeProtocolEditorAddActionButton.UseVisualStyleBackColor = false;
+            addapeProtocolEditorAddActionButton.Click += addapeProtocolEditorAddActionButton_Click;
             // 
             // apeProtocolEditorProtocolNameLabel
             // 
@@ -3994,5 +4017,8 @@
         private DataGridViewTextBoxColumn controlTECsTECBColumn;
         private DataGridViewTextBoxColumn controlTECsTECCColumn;
         private DataGridViewTextBoxColumn controlTECsTECDColumn;
+        private TextBox apeProtocolEditorVersionTextBox;
+        private Label apeProtocolEditorVersionLabel;
+        private TextBox apeProtocolEditorCoordinateVersionTextBox;
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Protocol>
 	<Name>Assay Protocol Sample</Name>
-	<Version>2.1.0.2.0</Version>
+	<Version>2.0.0</Version>	
 	<Author>glc-biorad</Author>
 	<Date>1/16/2024</Date>
 	<Time>00:12:46</Time>
@@ -11,10 +11,12 @@
 			<Temperature>60</Temperature>
 			<ActionText>Set temperature of Heater/Shaker to 60 °C. </ActionText>
 			<Description>Change temperature to 60 C for lysed sample.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</HeaterShaker>
 		<Magnet>
 			<Type>Engage</Type>
 			<Description>Ensure the magnet is engaged for binding.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Magnet>
 		<Tips>
 			<Type>Pickup</Type>
@@ -23,6 +25,7 @@
 			<Column>1</Column>
 			<ActionText>Pickup 1000 μL tips from tray A column 1.</ActionText>
 			<Description>Pickup tips for binding solution and bead transfer.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Tips>
 		<Move>
 			<Type>Absolute</Type>
@@ -36,6 +39,7 @@
 			<RelativeDisplacementAlongZ>0</RelativeDisplacementAlongZ>
 			<ActionText>Move to Reagent Cartridge tray A column 1.</ActionText>
 			<Description>Move to the Reagent Cartridge to mix the binding solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Move>
 		<Mix>
 			<Type>Vertical</Type>
@@ -57,6 +61,7 @@
 			<ResidualDispensePressure>100</ResidualDispensePressure>
 			<ActionText>Mix 600 μL of Binding Solution (aspirating @ -100 mbar, dispensing @ 100 mbar) with 1000 μL tips using all 8 channels, a 120 uL residual dispense (@ 100 mbar), and a 20000 μS vertical displacement.</ActionText>
 			<Description>Mix the binding solution so that the beads are dispersed in solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Mix>
 		<Transfer>
 			<Tip>1000</Tip>
@@ -91,6 +96,7 @@
 			<AirGapPressure>0</AirGapPressure>
 			<ActionText>Transfer 850 μL (@ -100 mbar) Binding Solution from Reagent Cartridge tray A column 1 and dispense 850 uL (@ -100 mbar) in Heater/Shaker column 1 moving up by 300000 μS with 1000 μL tips using all 8 channels, no air gap, and a 170 μL residual dispense (@ 100 mbar).</ActionText>
 			<Description>Transfer binding solution to lysed sample.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Transfer>
 		<Move>
 			<Type>Absolute</Type>
@@ -104,6 +110,7 @@
 			<RelativeDisplacementAlongZ>0</RelativeDisplacementAlongZ>
 			<ActionText>Move to Reagent Cartridge tray A column 2.</ActionText>
 			<Description>Move to the Reagent Cartridge to mix the binding solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Move>
 		<Mix>
 			<Type>Vertical</Type>
@@ -125,6 +132,7 @@
 			<ResidualDispensePressure>100</ResidualDispensePressure>
 			<ActionText>Mix 600 μL of Binding Solution (aspirating @ -100 mbar, dispensing @ 100 mbar) with 1000 μL tips using all 8 channels, a 120 uL residual dispense (@ 100 mbar), and a 20000 μS vertical displacement.</ActionText>
 			<Description>Mix the binding solution so that the beads are dispersed in solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Mix>
 		<Transfer>
 			<Tip>1000</Tip>
@@ -159,6 +167,7 @@
 			<AirGapPressure>-100</AirGapPressure>
 			<ActionText>Transfer 850 μL (@ -100 mbar) Binding Solution from Reagent Cartridge tray A column 2 and dispense 850 uL (@ -100 mbar) in Heater/Shaker column 1 moving up by 300000 μS with 1000 μL tips using all 8 channels, no air gap, and a 170 μL residual dispense (@ 100 mbar).</ActionText>
 			<Description>Transfer binding solution to lysed sample.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Transfer>
 		<Move>
 			<Type>Absolute</Type>
@@ -172,6 +181,7 @@
 			<RelativeDisplacementAlongZ>0</RelativeDisplacementAlongZ>
 			<ActionText>Move to Reagent Cartridge tray A column 1.</ActionText>
 			<Description>Move to the Reagent Cartridge to mix the binding solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Move>
 		<Mix>
 			<Type>Vertical</Type>
@@ -193,6 +203,7 @@
 			<ResidualDispensePressure>100</ResidualDispensePressure>
 			<ActionText>Mix 600 μL of Binding Solution (aspirating @ -100 mbar, dispensing @ 100 mbar) with 1000 μL tips using all 8 channels, a 120 uL residual dispense (@ 100 mbar), and a 20000 μS vertical displacement.</ActionText>
 			<Description>Mix the binding solution so that the beads are dispersed in solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Mix>
 		<Transfer>
 			<Tip>1000</Tip>
@@ -227,6 +238,7 @@
 			<AirGapPressure>-100</AirGapPressure>
 			<ActionText>Transfer 850 μL (@ -100 mbar) Binding Solution from Reagent Cartridge tray A column 11 and dispense 850 uL (@ -100 mbar) in Heater/Shaker column 1 moving up by 300000 μS with 1000 μL tips using all 8 channels, no air gap, and a 170 μL residual dispense (@ 100 mbar).</ActionText>
 			<Description>Transfer binding solution to lysed sample.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Transfer>
 		<Move>
 			<Type>Absolute</Type>
@@ -261,6 +273,7 @@
 			<ResidualDispensePressure>100</ResidualDispensePressure>
 			<ActionText>Mix 600 μL of Binding Solution (aspirating @ -100 mbar, dispensing @ 100 mbar) with 1000 μL tips using all 8 channels, a 120 uL residual dispense (@ 100 mbar), and a 20000 μS vertical displacement.</ActionText>
 			<Description>Mix the binding solution so that the beads are dispersed in solution.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Mix>
 		<Transfer>
 			<Tip>1000</Tip>
@@ -295,6 +308,7 @@
 			<AirGapPressure>-100</AirGapPressure>
 			<ActionText>Transfer 850 μL (@ -100 mbar) Binding Solution from Reagent Cartridge tray A column 12 and dispense 850 uL (@ -100 mbar) in Heater/Shaker column 1 moving up by 300000 μS with 1000 μL tips using all 8 channels, no air gap, and a 170 μL residual dispense (@ 100 mbar).</ActionText>
 			<Description>Transfer binding solution to lysed sample.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Transfer>
 		<Tips>
 			<Type>Eject</Type>
@@ -303,18 +317,21 @@
 			<Column>1</Column>
 			<ActionText>Eject 1000 μL tips to tray A column 1.</ActionText>
 			<Description>Eject tips from binding solution and bead transfer.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Tips>
 		<HeaterShaker>
 			<Type>Set RPM</Type>
 			<RPM>1000</RPM>
 			<ActionText>Set RPM of Heater/Shaker to 1000.</ActionText>
 			<Description>Shake to enhance DNA binding to magnetic beads.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</HeaterShaker>
 		<Delay>
 			<Time>20</Time>
 			<Units>Minutes</Units>
 			<ActionText>Delay for 20 minutes.</ActionText>
 			<Description>Allow enough time for binding.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Delay>
 		<Tips>
 			<Type>Pickup</Type>
@@ -323,6 +340,7 @@
 			<Column>2</Column>
 			<ActionText>Pickup 1000 μL tips from tray A column 2.</ActionText>
 			<Description>Pickup tips for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Tips>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -378,6 +396,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>First pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -433,6 +452,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Second pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -488,6 +508,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Third pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -543,6 +564,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Fourth pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -598,6 +620,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Fifth pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -653,6 +676,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Sixth pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -708,6 +732,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Seventh pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -763,6 +788,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Eigth pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 		<Pooling>
 			<Tip>1000</Tip>
@@ -818,6 +844,7 @@
 			<IntermittentShakeRPM>1000</IntermittentShakeRPM>
 			<ActionText>Pool 880 μL of Solution from Heater/Shaker column 1 to Mag Separator column 1 using Sample Rack tray A with 5 dispenses [100, 180, 150, 150, 220] μL (@ [100,100,100,100,100] mbar) using a 20 μL air gap (@ 100 mbar), all 8 channels, intermittent shaking (@ 1000 rpm), and no residual dispense.</ActionText>
 			<Description>Ninth pre-dispense step for pooling.</Description>
+			<DisplayDescription>No</DisplayDescription>
 		</Pooling>
 	</Actions>
 </Protocol>

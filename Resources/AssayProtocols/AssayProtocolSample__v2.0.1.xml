@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Protocol>
 	<Name>Assay Protocol Sample</Name>
-	<Version>2.1.0.2.0</Version>
+	<Version>2.0.1</Version>
 	<Author>glc-biorad</Author>
 	<Date>1/16/2024</Date>
 	<Time>00:12:46</Time>
@@ -10,7 +10,7 @@
 			<ID>1</ID>
 			<Type>Set Temperature</Type>
 			<Temperature>60</Temperature>
-			<ActionText>Set Temperature of the Heater/Shaker to 60 °C. </ActionText>
+			<ActionText>Set Temperature of the Heater/Shaker to 60 °C.</ActionText>
 			<Description>Change temperature to 60 °C for lysed sample.</Description>
 		</HeaterShaker>
 		<HeaterShaker>

@@ -2833,6 +2833,8 @@ namespace Independent_Reader_GUI
                 // Set the "Estimated Time"
                 //TimeSpan estimatedTimeSpan = TimeSpan.FromSeconds(int.Parse(protocol.GetTimeInSeconds().ToString()));
                 apeProtocolEditorEstimateTimeTextBox.Text = "2:01:53";
+                // Set the Version Text Box
+                apeProtocolEditorVersionTextBox.Text = assayProtocol.Version;
                 // Load in the Actions to the DataGridView
                 foreach (var action in assayProtocol.Actions)
                 {
@@ -2844,6 +2846,32 @@ namespace Independent_Reader_GUI
         private void imagingAutofocusButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Unable to Autofocus, this has not been implemented yet", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void addapeProtocolEditorAddActionButton_Click(object sender, EventArgs e)
+        {
+            // Open a Assay Protocol Add Action Form Window
+            AssayProtocolAddActionForm addActionForm = new AssayProtocolAddActionForm();
+            if (addActionForm.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Ok");
+            }
+            //if (addStepForm.ShowDialog() == DialogResult.OK)
+            //{
+            //    double stepTemperature = addStepForm.StepTemperature;
+            //    string stepTypeName = addStepForm.StepTypeName;
+            //    double stepTime = addStepForm.StepTime;
+            //    string stepTimeUnits = addStepForm.StepTimeUnits;
+            //    int index = protocol.Count;
+            //    ThermocyclingProtocolStep step = new ThermocyclingProtocolStep();
+            //    step.Temperature = stepTemperature;
+            //    step.TypeName = stepTypeName;
+            //    step.Time = stepTime;
+            //    step.TimeUnits = stepTimeUnits;
+            //    step.Index = index;
+            //    protocol.AddStep(step);
+            //    plotManager.AddStep(step);
+            //}
         }
     }
 }
