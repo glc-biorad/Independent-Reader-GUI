@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Coordinates>
+	<Version>2.0</Version>
+	<InstrumentName>CDP 2.0</InstrumentName>
+	<InstrumentID>A</InstrumentID>
+	<Author>glc-biorad</Author>
+	<Date>1/17/2024</Date>
+	<Time>00:38:46</Time>
+	<Coordinate>
+		<Name>Example 1</Name>
+		<Description>This is an example coordinate</Description>
+		<ConsumableName>Reagent Cartridge</ConsumableName>
+		<ConsumableTray>A</ConsumableTray>
+		<ConsumableColumn>1</ConsumableColumn>
+		<Tip>1000</Tip>
+		<X>0</X>
+		<Y>0</Y>
+		<Z>0</Z>
+		<AspirateX>0</AspirateX>
+		<AspirateY>0</AspirateY>
+		<AspirateZ>0</AspirateZ>
+		<DispenseX>0</DispenseX>
+		<DispenseY>0</DispenseY>
+		<DispenseZ>0</DispenseZ>
+		<LLDZ>0</LLDZ>
+	</Coordinate>
+	<Coordinate>
+		<Name>Vantiva V2.0 Sample Loading</Name>
+		<Description>This is the sample loading coordinate for 200 uL tips on the Vantiva V2.0 chip for Heater A.</Description>
+		<ConsumableName>Tray</ConsumableName>
+		<ConsumableTray>A</ConsumableTray>
+		<ConsumableColumn>3</ConsumableColumn>
+		<Tip>200</Tip>
+		<X>0</X>
+		<Y>0</Y>
+		<Z>0</Z>
+		<AspirateX>0</AspirateX>
+		<AspirateY>0</AspirateY>
+		<AspirateZ>0</AspirateZ>
+		<DispenseX>1000</DispenseX>
+		<DispenseY>20000</DispenseY>
+		<DispenseZ>1000000</DispenseZ>
+		<LLDZ>0</LLDZ>
+	</Coordinate>
+</Coordinates>
