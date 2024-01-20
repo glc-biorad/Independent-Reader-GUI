@@ -1,4 +1,4 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
 using iText.IO.Font.Constants;
 using iText.IO.Image;
 using iText.Kernel.Colors;

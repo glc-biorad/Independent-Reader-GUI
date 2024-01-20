@@ -1,5 +1,4 @@
-﻿using Independent_Reader_GUI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using Independent_Reader_GUI.Exceptions;
 using System.Diagnostics;
+using Independent_Reader_GUI.Models.Hardware.LED;
 
 namespace Independent_Reader_GUI.Services
 {

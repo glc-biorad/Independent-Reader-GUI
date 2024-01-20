@@ -8,9 +8,10 @@ using System.Xml.Linq;
 using System.Globalization;
 using System.Runtime.Intrinsics.X86;
 using iText.Kernel.XMP.Impl;
+using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
 
 namespace Independent_Reader_GUI.Services
-{ 
+{
     /// <summary>
     /// Service to manage a Thermocycling Protocol
     /// </summary>

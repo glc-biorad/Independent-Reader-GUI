@@ -1,4 +1,4 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
 using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;

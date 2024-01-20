@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AForge.Imaging.Filters;
-using Independent_Reader_GUI.Models;
+using Independent_Reader_GUI.Models.Hardware.Motor;
 
 namespace Independent_Reader_GUI.Services
 {
