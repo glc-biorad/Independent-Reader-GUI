@@ -128,6 +128,44 @@ namespace Independent_Reader_GUI.Services
         }
 
         /// <summary>
+        /// Turn off all LEDs except for the one provided
+        /// </summary>
+        /// <param name="led">LED instance to not be turned off</param>
+        public void TurnAllOffExcept(LED led)
+        {
+            if (!led.Equals(Cy5))
+            {
+                LEDCommand cy5Command = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Cy5 };
+                EnqueuePriorityCommand(cy5Command);
+            }
+            if (!led.Equals(FAM))
+            {
+                LEDCommand famCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = FAM };
+                EnqueuePriorityCommand(famCommand);
+            }
+            if (!led.Equals(HEX))
+            {
+                LEDCommand hexCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = HEX };
+                EnqueuePriorityCommand(hexCommand);
+            }
+            if (!led.Equals(Atto))
+            {
+                LEDCommand attoCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Atto };
+                EnqueuePriorityCommand(attoCommand);
+            }
+            if (!led.Equals(Alexa))
+            {
+                LEDCommand alexaCommand = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Alexa };
+                EnqueuePriorityCommand(alexaCommand);
+            }
+            if (!led.Equals(Cy5p5))
+            {
+                LEDCommand cy5p5Command = new LEDCommand { Type = LEDCommand.CommandType.Off, LED = Cy5p5 };
+                EnqueuePriorityCommand(cy5p5Command);
+            }
+        }
+
+        /// <summary>
         /// Enqueue commands to the LED Manager
         /// </summary>
         /// <param name="command"></param>

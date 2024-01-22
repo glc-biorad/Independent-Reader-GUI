@@ -288,6 +288,7 @@
             addTipsActionButton.TabIndex = 50;
             addTipsActionButton.Text = "+";
             addTipsActionButton.UseVisualStyleBackColor = false;
+            addTipsActionButton.Click += addTipsActionButton_Click;
             // 
             // addTipsDescriptionRichTextBox
             // 
