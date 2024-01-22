@@ -1,7 +1,9 @@
-﻿using Independent_Reader_GUI.Models;
+﻿using Independent_Reader_GUI.Exceptions;
+using Independent_Reader_GUI.Models;
 using Independent_Reader_GUI.Models.Hardware.LED;
 using Independent_Reader_GUI.Models.Hardware.Motor;
 using Independent_Reader_GUI.Models.Scanning;
+using Independent_Reader_GUI.Utilities;
 using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,8 @@ namespace Independent_Reader_GUI.Services
         TECManager tecManager;
         private int msDelay = 500;
         private int positionCutoff = 500;
+        private TimeSpan waitTimeSpan = TimeSpan.FromMilliseconds(LED.Timeout);
+        private const int checkInTimeInMilliseconds = 200;
 
         public ScanManager(Configuration configuration, MotorsManager motorsManager, FLIRCameraManager cameraManager, LEDManager ledManager, TECManager tecManager)
         {
@@ -45,7 +49,7 @@ namespace Independent_Reader_GUI.Services
             tecManager.TurnOffFansBasedOnOutcome(!tecManager.TECA.RunningProtocol, !tecManager.TECB.RunningProtocol, !tecManager.TECC.RunningProtocol, !tecManager.TECD.RunningProtocol);
             // Create an experiment folder
             string experimentName = scanParameters.ExperimentName;
-            string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\ReaderImages";
+            string dir = "C:\\Users\\u112958\\source\\repos\\Independent-Reader-GUI\\Resources\\ReaderImages";
             Directory.CreateDirectory($"{dir}\\{experimentName}");
             // Create a heater folder inside the experiment folder (heaterB for example)
             string heaterLetter = scanParameters.HeaterLetter;
@@ -232,10 +236,21 @@ namespace Independent_Reader_GUI.Services
         private async Task TakeImage(string imageFilePath, string imageFileName, int intensity, int exposure, int filterWheelPosition, LED led)
         {
             // Turn off all LEDs
-            ledManager.TurnAllOff();
+            ledManager.TurnAllOffExcept(led);
             // Turn on the LED
             LEDCommand ledCommand = new LEDCommand { Type = LEDCommand.CommandType.On, Intensity = intensity, LED = led };
             ledManager.EnqueuePriorityCommand(ledCommand);
+            // Wait till the LED is on
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            while (led.IO != "On" && stopwatch.Elapsed < waitTimeSpan)
+            {
+                await Task.Delay(checkInTimeInMilliseconds);
+            }
+            if (led.IO == "Off")
+            {
+                Logger.LogError($"Unable to take image ({imageFileName}) because {led.Name} was not able to be turned on");
+                throw new UnexpectedResultException($"Unable to take image ({imageFileName}) because {led.Name} was not able to be turned on");
+            }
             // Move the Filter Wheel
             MotorCommand filterWheelMoveCommand = new MotorCommand
             {
@@ -263,7 +278,7 @@ namespace Independent_Reader_GUI.Services
             //imageFileName = imageFileName.Replace(" ", "_");
             Debug.WriteLine($"Saving Image to: {imageFilePath}\\{imageFileName}");
             await cameraManager.SetExposureTime(exposure);
-            await Task.Delay(100);
+            await Task.Delay(200);
             await cameraManager.CaptureImageAsync($"{imageFilePath}\\{imageFileName}");
         }
 
@@ -277,7 +292,7 @@ namespace Independent_Reader_GUI.Services
         private Tuple<double, double> ApplyRotationalOffset(int x, int y, double rotationalOffsetInDegrees)
         {
             // Convert angle from degrees to radians
-            double theta = (Math.PI / 180) * rotationalOffsetInDegrees;
+            double theta = (Math.PI / 180) * (360.0 - rotationalOffsetInDegrees);
             // Define the rotation matrix
             double cosTheta = Math.Cos(theta);
             double sinTheta = Math.Sin(theta);
@@ -290,7 +305,7 @@ namespace Independent_Reader_GUI.Services
             double Rx = R[0, 0] * x + R[0, 1] * y;
             double Ry = R[1, 0] * (double)x + R[1, 1] * (double)y;
             Debug.WriteLine($"HERE: {x}, {y} -> {Rx}, {Ry} -> {rotationalOffsetInDegrees}");
-            return Tuple.Create(Rx, Ry);
+            return Tuple.Create(Rx, y + (y + Ry)/2.0);
         }
     }
 }

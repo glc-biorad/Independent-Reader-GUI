@@ -62,6 +62,11 @@ namespace Independent_Reader_GUI.Services
             }
         }
 
+        public int Exposure
+        {
+            get { return exposure;  }
+        }
+
         public bool Connected
         { 
             get { return connected; } 
@@ -134,6 +139,52 @@ namespace Independent_Reader_GUI.Services
             catch (SpinnakerException ex)
             {
                 MessageBox.Show($"Unable to set exposure time due to {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
+            }
+            return 0;
+        }
+
+        public async Task<int> GetExposureTime()
+        {
+            try
+            {
+                //
+                // Disable the Auto Exposure
+                //
+                // Get the ExposureAuto node
+                IEnum iExposureAuto = nodeMap.GetNode<IEnum>("ExposureAuto");
+                if (iExposureAuto == null || !iExposureAuto.IsWritable || !iExposureAuto.IsReadable)
+                {
+                    MessageBox.Show("Unable to get the exposure time because the retrieval of the ExposureAuto node failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return -1;
+                }
+                // Get the Entry Enum
+                IEnumEntry iExposureAutoOff = iExposureAuto.GetEntryByName("Off");
+                if (iExposureAutoOff == null || !iExposureAutoOff.IsReadable)
+                {
+                    MessageBox.Show("Unable to get the exposure time because the retrieval of the Off enum entry failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return -1;
+                }
+                // Set the AutoExposure to Off
+                iExposureAuto.Value = iExposureAutoOff.Symbolic;
+                // 
+                // Set the Exposure Time
+                //
+                // Get the ExposureTime node
+                IFloat iExposureTime = nodeMap.GetNode<IFloat>("ExposureTime");
+                if (iExposureTime == null || !iExposureTime.IsWritable || !iExposureTime.IsReadable)
+                {
+                    MessageBox.Show("Unable to get the exposure time because the retrieval of the ExposureTime node failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return -1;
+                }
+                else
+                {
+                    exposure = (Int32)iExposureTime.Value;
+                }
+            }
+            catch (SpinnakerException ex)
+            {
+                MessageBox.Show($"Unable to get exposure time due to {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
             return 0;

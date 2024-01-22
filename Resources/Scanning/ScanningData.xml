@@ -73,7 +73,22 @@
       <FOVdX>72500</FOVdX>
       <SampledX>252000</SampledX>
       <dY>23000</dY>
-      <RotationalOffset>0.0</RotationalOffset>
+      <RotationalOffset>1.21</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>Vantiva v2.0</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>4.84</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
   </A>
@@ -150,6 +165,21 @@
       <FOVdX>0</FOVdX>
       <SampledX>0</SampledX>
       <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>Vantiva v2.0</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>4.84</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>531300</X0>
+      <Y0>290258</Y0>
+      <Z0>95000</Z0>
+      <FOVdX>77833</FOVdX>
+      <SampledX>311333</SampledX>
+      <dY>23000</dY>
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
@@ -230,6 +260,21 @@
       <RotationalOffset>0</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
+    <Configuration>
+      <Cartridge>Vantiva v2.0</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>4.84</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
   </C>
   <D>
     <Configuration>
@@ -297,6 +342,21 @@
       <Elastomer>FFBE 3Di2bV1.0M NPF</Elastomer>
       <Bergquist>Laird TFlex HD300</Bergquist>
       <GlassOffset>8.64</GlassOffset>
+      <GlassOffsetUnits>mm</GlassOffsetUnits>
+      <X0>0</X0>
+      <Y0>0</Y0>
+      <Z0>0</Z0>
+      <FOVdX>0</FOVdX>
+      <SampledX>0</SampledX>
+      <dY>0</dY>
+      <RotationalOffset>0</RotationalOffset>
+      <Units>μS</Units>
+    </Configuration>
+    <Configuration>
+      <Cartridge>Vantiva v2.0</Cartridge>
+      <Elastomer>None</Elastomer>
+      <Bergquist>None</Bergquist>
+      <GlassOffset>4.84</GlassOffset>
       <GlassOffsetUnits>mm</GlassOffsetUnits>
       <X0>0</X0>
       <Y0>0</Y0>

@@ -169,11 +169,13 @@ namespace Independent_Reader_GUI
             AddRunSamplesMetaDefaultData();
             AddRunAssaysMetaDefaultData();
             AddControlMotorsDefaultData();
+            AddControlCameraDefaultData();
             AddControlLEDsDefaultData();
             AddControlTECsDefaultData();
             AddThermocyclingProtocolStatusesDefaultData();
             AddImagingScanParametersDefaultData();
             AddImagingLEDsDefaultData();
+            AddImagingCameraDefaultData();
             AddMainHomeDefaultData();
 
             // Add default plots
@@ -231,6 +233,8 @@ namespace Independent_Reader_GUI
             this.controlLEDsDataGridView.CellValueChanged += new DataGridViewCellEventHandler(controlLEDsDataGridView_CellValueChanged);
             this.imagingScanParametersDataGridView.CellValueChanged += new DataGridViewCellEventHandler(imagingScanParametersDataGridView_CellValueChanged);
             this.mainHomePowerRelaysDataGridView.CellValueChanged += new DataGridViewCellEventHandler(mainHomePowerRelaysDataGridView_CellValueChanged);
+            readerControlCameraDataGridView.CellValueChanged += new DataGridViewCellEventHandler(readerControlCameraDataGridView_CellValueChanged);
+            readerImagingCameraDataGridView.CellValueChanged += new DataGridViewCellEventHandler(readerImagingCameraDataGridView_CellValueChanged);
 
             // Subscribe to the load event of this form to set defaults on form loading
             this.Load += new EventHandler(this.Form_Load);
@@ -586,6 +590,16 @@ namespace Independent_Reader_GUI
             controlMotorsDataGridView.Rows.Add("Clamp D", clampDMotor.Version, controlMotorData.State, controlMotorData.Position, configuration.ClampDMotorDefaultSpeed, controlMotorData.Home);
         }
 
+        private void AddControlCameraDefaultData()
+        {
+            readerControlCameraDataGridView.Rows.Add("Not Connected", cameraManager.IO, cameraManager.Exposure.ToString());
+        }
+
+        private void AddImagingCameraDefaultData()
+        {
+            readerImagingCameraDataGridView.Rows.Add("Not Connected", cameraManager.IO, cameraManager.Exposure.ToString());
+        }
+
         /// <summary>
         /// Add default data to the Control LEDs Data Grid View upon loading the Form
         /// </summary>
@@ -777,6 +791,19 @@ namespace Independent_Reader_GUI
             imagingScanParametersDataGridView.Rows.Add("Sample dX (\u03BCS)", defaultScanningOption.SampledX);
             imagingScanParametersDataGridView.Rows.Add("dY (\u03BCS)", defaultScanningOption.dY);
             imagingScanParametersDataGridView.Rows.Add("Rotational Offset (\u00B0)", defaultScanningOption.RotationalOffset);
+            // Set the Sample and Assay name rows but first clear the previous ones if there are any
+            dataGridViewManager.RemoveRowsByNameWhichContains(imagingScanParametersDataGridView, "Name");
+            Cartridge cartridge = cartridgeOptions.GetCartridgeFromName(configuration.DefaultCartridge);
+            int numberOfSamples = cartridge.NumberofSampleChambers;
+            int numberOfAssays = cartridge.NumberofAssayChambers;
+            for (int i = 0; i < numberOfSamples; i++)
+            {
+                imagingScanParametersDataGridView.Rows.Add($"Sample {i + 1} Name", $"Sample {i + 1}");
+            }
+            for (int i = 0; i < numberOfAssays; i++)
+            {
+                imagingScanParametersDataGridView.Rows.Add($"Assay {i + 1} Name", $"Assay {i + 1}");
+            }
         }
 
         private void AddImagingLEDsDefaultData()
@@ -927,6 +954,48 @@ namespace Independent_Reader_GUI
             thermocyclingBergquistComboBox.Text = configuration.DefaultBergquist;
             thermocyclingGlassOffsetComboBox.DataSource = scanningOptions.GetGlassOffsets();
             thermocyclingGlassOffsetComboBox.Text = configuration.DefaultGlassOffset.ToString();
+        }
+
+        private async void readerImagingCameraDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            // Get the selected property
+            var propertySelected = readerImagingCameraDataGridView.Columns[e.ColumnIndex].HeaderText;
+            // Check if the intensity value changed
+            if (propertySelected.Equals("Exposure (µs)"))
+            {
+                // Set the exposure of the Camera
+                try
+                {
+                    await cameraManager.SetExposureTime(double.Parse(readerImagingCameraDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Unable to set exposure ({readerImagingCameraDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value}) due to {ex.Message}");
+                    Logger.LogError("Unable to set exposure of the Camera");
+                    return;
+                }
+            }
+        }
+
+        private async void readerControlCameraDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            // Get the selected property
+            var propertySelected = readerControlCameraDataGridView.Columns[e.ColumnIndex].HeaderText;
+            // Check if the intensity value changed
+            if (propertySelected.Equals("Exposure (µs)"))
+            {
+                // Set the exposure of the Camera
+                try
+                {
+                    await cameraManager.SetExposureTime(double.Parse(readerControlCameraDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Unable to set exposure ({readerControlCameraDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value}) due to {ex.Message}");
+                    Logger.LogError("Unable to set exposure of the Camera");
+                    return;
+                }
+            }
         }
 
         private async void controlLEDsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1405,6 +1474,15 @@ namespace Independent_Reader_GUI
         {
             // Check the Camera is connected every fast tick
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(readerControlCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(readerImagingCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            // Set the camera io
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(readerControlCameraDataGridView, cameraManager.IO, 0, "IO");
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(readerImagingCameraDataGridView, cameraManager.IO, 0, "IO");
+            // Get the Camera Exposure every fast tick
+            await cameraManager.GetExposureTime();
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(homeCameraDataGridView,
+                cameraManager.Exposure.ToString(), 0, "Exposure (µs)");
             // Check the Motors data every fast tick
             motorManager.HandleFastTickEvent(dataGridViewManager, homeMotorsDataGridView, controlMotorsDataGridView);
             // Check the TECs data every fast tick
@@ -2085,6 +2163,7 @@ namespace Independent_Reader_GUI
             cartridge.Width = width;
             cartridge.Height = height;
             cartridgeOptions.SaveNewCartridge(cartridge);
+            cartridgeOptions.Update();
         }
 
         private void consumablesDeleteCartridgeButton_Click(object sender, EventArgs e)
@@ -2096,6 +2175,8 @@ namespace Independent_Reader_GUI
                 // Delete the cartridge from the XML data
                 cartridgeOptions.DeleteCartridgeByName(name);
             }
+            // Update the Cartridge options
+            cartridgeOptions.Update();
         }
 
         private void consumablesUpdateImageScanningButton_Click(object sender, EventArgs e)
@@ -2250,6 +2331,7 @@ namespace Independent_Reader_GUI
                 elastomer.Mold = mold;
                 // Add the new elastomer
                 elastomerOptions.SaveNewElastomer(elastomer);
+                elastomerOptions.Update();
             }
         }
 
@@ -2262,6 +2344,7 @@ namespace Independent_Reader_GUI
                 // Delete the elastomer from the XML data
                 elastomerOptions.DeleteElastomerByName(name);
             }
+            elastomerOptions.Update();
         }
 
         private void consumablesUpdateElastomerData_Click(object sender, EventArgs e)
@@ -2763,6 +2846,7 @@ namespace Independent_Reader_GUI
                 imageCy5p5, intensityCy5p5, exposureCy5p5,
                 sampleNames, assayNames);
             // Scan
+            MessageBox.Show($"Starting Scan {heaterLetter} {fovdx}");
             await scanManager.Scan(scanParameters);
         }
 
@@ -2854,24 +2938,18 @@ namespace Independent_Reader_GUI
             AssayProtocolAddActionForm addActionForm = new AssayProtocolAddActionForm();
             if (addActionForm.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Ok");
+                // Get the Description and Action Text
+                if (addActionForm.DisplayDescription)
+                {
+                    apeProtocolEditorProtocolDataGridView.Rows.Add($"Action Description: {addActionForm.GetDescription}");
+                }
+                apeProtocolEditorProtocolDataGridView.Rows.Add(addActionForm.GetActionText);
             }
-            //if (addStepForm.ShowDialog() == DialogResult.OK)
-            //{
-            //    double stepTemperature = addStepForm.StepTemperature;
-            //    string stepTypeName = addStepForm.StepTypeName;
-            //    double stepTime = addStepForm.StepTime;
-            //    string stepTimeUnits = addStepForm.StepTimeUnits;
-            //    int index = protocol.Count;
-            //    ThermocyclingProtocolStep step = new ThermocyclingProtocolStep();
-            //    step.Temperature = stepTemperature;
-            //    step.TypeName = stepTypeName;
-            //    step.Time = stepTime;
-            //    step.TimeUnits = stepTimeUnits;
-            //    step.Index = index;
-            //    protocol.AddStep(step);
-            //    plotManager.AddStep(step);
-            //}
+        }
+
+        private void readerConsumablesNewImageScanningButton_Click(object sender, EventArgs e)
+        {
+            //
         }
     }
 }

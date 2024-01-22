@@ -1,5 +1,6 @@
 ﻿using Independent_Reader_GUI.Models.API;
 using Independent_Reader_GUI.Services;
+using Independent_Reader_GUI.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -195,23 +196,32 @@ namespace Independent_Reader_GUI.Models.Hardware.TEC
         /// <returns></returns>
         public async Task CheckConnectionAsync()
         {
-            try
+            if (apiManager.Connected)
             {
-                var responseValue = await GetBoardAddressAsync();
-                await Task.Delay(msDelay);
-                if (responseValue != null && responseValue != 0)
+                try
                 {
-                    connected = true;
+                    var responseValue = await GetBoardAddressAsync();
+                    await Task.Delay(msDelay);
+                    if (responseValue != null && responseValue != 0)
+                    {
+                        connected = true;
+                        Logger.LogInfo($"{name} connected successfully.");
+                    }
+                    else
+                    {
+                        Logger.LogWarning($"Unable to connect {name} because no response was returned from the API.");
+                        connected = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Debug.WriteLine($"{name}: CheckConnectionAsync -> response = {responseValue}");
+                    Logger.LogError($"Unable to connect {name}", ex);
                     connected = false;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine($"{name}: CheckConnectionAsync -> {ex.Message}");
+                Logger.LogWarning($"Unable to connect {name} because the API is not connected.");
                 connected = false;
             }
         }
