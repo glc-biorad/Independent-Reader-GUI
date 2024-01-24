@@ -92,7 +92,7 @@ namespace Independent_Reader_GUI
             Task.Run(async () => await apiManager.CheckAPIConnection()).Wait();
             if (!apiManager.Connected)
             {
-                homeAPIConnectedRadioButton.BackColor = Color.Red;
+                mainHomeAPIConnectedRadioButton.BackColor = Color.Red;
             }
             // Connect to the FLIR Camera
             cameraManager = new FLIRCameraManager(imagingPictureBox);
@@ -195,10 +195,10 @@ namespace Independent_Reader_GUI
 
             // Add formatting to the data grid views
             this.runExperimentDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.runDataGridView_CellFormatting);
-            this.homeMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
-            this.homeTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
-            this.homeCameraDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
-            this.homeLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.mainHomeMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.mainHomeTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.mainHomeCameraDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
+            this.mainHomeLEDsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.controlMotorsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.controlTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.homeDataGridView_CellFormatting);
             this.controlTECsDataGridView.CellFormatting += new DataGridViewCellFormattingEventHandler(this.controlTECsDataGridView_CellFormatting);
@@ -210,12 +210,12 @@ namespace Independent_Reader_GUI
             // Set initial colors for connected modules
             // TODO: Put this region of code in a function to be called every N seconds
             #region
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
-            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(homeLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, HEX.Connected, "C", "N", "State", HEX.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, Atto.Connected, "C", "N", "State", Atto.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, Alexa.Connected, "C", "N", "State", Alexa.Name);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(mainHomeLEDsDataGridView, Cy5p5.Connected, "C", "N", "State", Cy5p5.Name);
             // Control Tab
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, Cy5.Connected, "C", "N", "State", Cy5.Name);
             dataGridViewManager.SetTextBoxCellStringValueByColumnAndRowNamesBasedOnOutcome(controlLEDsDataGridView, FAM.Connected, "C", "N", "State", FAM.Name);
@@ -281,6 +281,7 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeMotorsDefaultData()
         {
+            // TODO: Remove the home tab from the Reader and move it to the main home tab
             MotorData motorData = new MotorData();
             homeMotorsDataGridView.Rows.Add("x", motorData.Version, motorData.State, motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
             homeMotorsDataGridView.Rows.Add("y", motorData.Version, motorData.State, motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
@@ -292,6 +293,17 @@ namespace Independent_Reader_GUI
             homeMotorsDataGridView.Rows.Add("Clamp B", motorData.Version, motorData.State, motorData.Position, configuration.ClampBMotorDefaultSpeed, motorData.Home);
             homeMotorsDataGridView.Rows.Add("Clamp C", motorData.Version, motorData.State, motorData.Position, configuration.ClampCMotorDefaultSpeed, motorData.Home);
             homeMotorsDataGridView.Rows.Add("Clamp D", motorData.Version, motorData.State, motorData.Position, configuration.ClampDMotorDefaultSpeed, motorData.Home);
+
+            mainHomeMotorsDataGridView.Rows.Add("x", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("y", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("z", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.zMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Filter Wheel", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.FilterWheelMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Tray AB", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.TrayABMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Tray CD", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.TrayCDMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Clamp A", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.ClampAMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Clamp B", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.ClampBMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Clamp C", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.ClampCMotorDefaultSpeed, motorData.Home);
+            mainHomeMotorsDataGridView.Rows.Add("Clamp D", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.ClampDMotorDefaultSpeed, motorData.Home);
         }
 
         /// <summary>
@@ -300,6 +312,7 @@ namespace Independent_Reader_GUI
         private void AddHomeCameraDefaultData()
         {
             // TODO: Remove the exposure and temp of the camera and update the designer so the DataGridView doesnt use them and the CameraData class
+            // TODO: Remove the home on the reader tab and move it to the main home tab
             // doesnt use them
             CameraData homeCamera = new CameraData
             {
@@ -307,6 +320,8 @@ namespace Independent_Reader_GUI
                 IO = "?"
             };
             homeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.IO);
+            //
+            mainHomeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.IO);
         }
 
         /// <summary>
@@ -314,11 +329,19 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeLEDsDefaultData()
         {
+            // TODO: Move this to the Main Home tab
             homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             homeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
             homeLEDsDataGridView.Rows.Add("Exposure (\u03BCs)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
                 configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
             homeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
+            //
+            mainHomeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
+            mainHomeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
+            homeLEDsDataGridView.Rows.Add("Exposure (\u03BCs)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
+                configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
+            mainHomeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
+
         }
 
         /// <summary>
@@ -326,118 +349,21 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeTECsDefaultData()
         {
-            TECsData homeTECsState = new TECsData
-            {
-                PropertyName = "State",
-                ValueTECA = "Not Connected",
-                ValueTECB = "Not Connected",
-                ValueTECC = "Not Connected",
-                ValueTECD = "Not Connected",
-            };
-            TECsData homeTECsIO = new TECsData
-            {
-                PropertyName = "IO",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsActualTemp = new TECsData
-            {
-                PropertyName = "Actual Temp (\u00B0C)",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsTargetTemp = new TECsData
-            {
-                PropertyName = "Target Temp (\u00B0C)",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsTempEnabled = new TECsData
-            {
-                PropertyName = "Temp Enabled",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsSinkTemp = new TECsData
-            {
-                PropertyName = "Sink Temp (\u00B0C)",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsSinkTempMax = new TECsData
-            {
-                PropertyName = "Sink Temp Max (\u00B0C)",
-                ValueTECA = "101.0",
-                ValueTECB = "101.0",
-                ValueTECC = "101.0",
-                ValueTECD = "101.0",
-            };
-            TECsData homeTECsFanRPM = new TECsData
-            {
-                PropertyName = "Fan RPM",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsCurrent = new TECsData
-            {
-                PropertyName = "Current (A)",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsMaxCurrent = new TECsData
-            {
-                PropertyName = "Max Current (A)",
-                ValueTECA = "0.2",
-                ValueTECB = "0.2",
-                ValueTECC = "0.2",
-                ValueTECD = "0.2",
-            };
-            TECsData homeTECsVoltage = new TECsData
-            {
-                PropertyName = "Voltage (V)",
-                ValueTECA = "?",
-                ValueTECB = "?",
-                ValueTECC = "?",
-                ValueTECD = "?",
-            };
-            TECsData homeTECsMaxVoltage = new TECsData
-            {
-                PropertyName = "Max Voltage (V)",
-                ValueTECA = "24.0",
-                ValueTECB = "24.0",
-                ValueTECC = "24.0",
-                ValueTECD = "24.0",
-            };
-            TECsData homeTECsData = new TECsData();
-            homeTECsDataGridView.Rows.Add(homeTECsState.PropertyName, homeTECsState.ValueTECA, homeTECsState.ValueTECB, homeTECsState.ValueTECC, homeTECsState.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsIO.PropertyName, homeTECsIO.ValueTECA, homeTECsIO.ValueTECB, homeTECsIO.ValueTECC, homeTECsIO.ValueTECD);
-            homeTECsDataGridView.Rows.Add("Version", homeTECsData.ValueTECA, homeTECsData.ValueTECB, homeTECsData.ValueTECC, homeTECsData.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsActualTemp.PropertyName, homeTECsActualTemp.ValueTECA, homeTECsActualTemp.ValueTECB, homeTECsActualTemp.ValueTECC, homeTECsActualTemp.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsTargetTemp.PropertyName, homeTECsTargetTemp.ValueTECA, homeTECsTargetTemp.ValueTECB, homeTECsTargetTemp.ValueTECC, homeTECsTargetTemp.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsTempEnabled.PropertyName, homeTECsTempEnabled.ValueTECA, homeTECsTempEnabled.ValueTECB, homeTECsTempEnabled.ValueTECC, homeTECsTempEnabled.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsSinkTemp.PropertyName, homeTECsSinkTemp.ValueTECA, homeTECsSinkTemp.ValueTECB, homeTECsSinkTemp.ValueTECC, homeTECsSinkTemp.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsSinkTempMax.PropertyName, homeTECsSinkTempMax.ValueTECA, homeTECsSinkTempMax.ValueTECB, homeTECsSinkTempMax.ValueTECC, homeTECsSinkTempMax.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsFanRPM.PropertyName, homeTECsFanRPM.ValueTECA, homeTECsFanRPM.ValueTECB, homeTECsFanRPM.ValueTECC, homeTECsFanRPM.ValueTECD);
-            homeTECsDataGridView.Rows.Add("Fan Control", "Disabled", "Disabled", "Disabled", "Disabled");
-            homeTECsDataGridView.Rows.Add("Fan On Temp (\u00B0C)", "?", "?", "?", "?");
-            homeTECsDataGridView.Rows.Add(homeTECsCurrent.PropertyName, homeTECsCurrent.ValueTECA, homeTECsCurrent.ValueTECB, homeTECsCurrent.ValueTECC, homeTECsCurrent.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsMaxCurrent.PropertyName, tecA.CurrentErrorThreshold, tecB.CurrentErrorThreshold, tecC.CurrentErrorThreshold, tecD.CurrentErrorThreshold);
-            homeTECsDataGridView.Rows.Add(homeTECsVoltage.PropertyName, homeTECsVoltage.ValueTECA, homeTECsVoltage.ValueTECB, homeTECsVoltage.ValueTECC, homeTECsVoltage.ValueTECD);
-            homeTECsDataGridView.Rows.Add(homeTECsMaxVoltage.PropertyName, tecA.VoltageErrorThreshold, tecB.VoltageErrorThreshold, tecC.VoltageErrorThreshold, tecD.VoltageErrorThreshold);
+            mainHomeTECsDataGridView.Rows.Add("State", "Not Connected", "Not Connected", "Not Connected", "Not Connected");
+            mainHomeTECsDataGridView.Rows.Add("IO", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Version", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Actual Temp (°C)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Target Temp (°C)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Temp Enabled", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Sink Temp (°C)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Sink Temp Max (°C)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Fan RPM", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Fan Control", "Disabled", "Disabled", "Disabled", "Disabled");
+            mainHomeTECsDataGridView.Rows.Add("Fan On Temp (°C)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Current (A)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Max Current (A)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Voltage (V)", "?", "?", "?", "?");
+            mainHomeTECsDataGridView.Rows.Add("Max Voltage (V)", "?", "?", "?", "?");
         }
 
         /// <summary>
@@ -1173,10 +1099,15 @@ namespace Independent_Reader_GUI
         private async void Form_Load(object sender, EventArgs e)
         {
             // Change the default cell selection for data grid views on form loading
-            homeMotorsDataGridView.ClearSelection();
-            homeTECsDataGridView.ClearSelection();
-            homeCameraDataGridView.ClearSelection();
-            homeLEDsDataGridView.ClearSelection();
+            //homeMotorsDataGridView.ClearSelection();
+            //homeTECsDataGridView.ClearSelection();
+            //homeCameraDataGridView.ClearSelection();
+            //homeLEDsDataGridView.ClearSelection();
+            //
+            mainHomeMotorsDataGridView.ClearSelection();
+            mainHomeTECsDataGridView.ClearSelection();
+            mainHomeCameraDataGridView.ClearSelection();
+            mainHomeLEDsDataGridView.ClearSelection();
             runExperimentDataGridView.CurrentCell = runExperimentDataGridView.Rows[0].Cells[1];
             runImagingSetupDataGridView.CurrentCell = runImagingSetupDataGridView.Rows[0].Cells[1];
 
@@ -1199,33 +1130,33 @@ namespace Independent_Reader_GUI
             else
             {
                 string xMotorVersion = await xMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "x", xMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "x", xMotorVersion, Color.White);
                 string yMotorVersion = await yMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "y", yMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "y", yMotorVersion, Color.White);
                 string zMotorVersion = await zMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "z", zMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "z", zMotorVersion, Color.White);
                 string filterWheelMotorVersion = await filterWheelMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Filter Wheel", filterWheelMotorVersion, Color.White);
                 string trayABMotorVersion = await trayABMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Tray AB", trayABMotorVersion, Color.White);
                 string trayCDMotorVersion = await trayCDMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Tray CD", trayCDMotorVersion, Color.White);
                 string tecAFirmwareVersion = await tecA.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeTECsDataGridView, "TEC A", "Version", tecAFirmwareVersion, Color.White);
                 string tecBFirmwareVersion = await tecB.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC B", "Version", tecBFirmwareVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeTECsDataGridView, "TEC B", "Version", tecBFirmwareVersion, Color.White);
                 string tecCFirmwareVersion = await tecC.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC C", "Version", tecCFirmwareVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeTECsDataGridView, "TEC C", "Version", tecCFirmwareVersion, Color.White);
                 string tecDFirmwareVersion = await tecD.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, "TEC D", "Version", tecDFirmwareVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeTECsDataGridView, "TEC D", "Version", tecDFirmwareVersion, Color.White);
                 string clampAMotorVersion = await clampAMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Clamp A", clampAMotorVersion, Color.White);
                 string clampBMotorVersion = await clampBMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Clamp B", clampBMotorVersion, Color.White);
                 string clampCMotorVersion = await clampCMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Clamp C", clampCMotorVersion, Color.White);
                 string clampDMotorVersion = await clampDMotor.GetVersionAsync();
-                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion, Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(mainHomeMotorsDataGridView, "Version", "Clamp D", clampDMotorVersion, Color.White);
             }
         }
 
@@ -1472,8 +1403,14 @@ namespace Independent_Reader_GUI
 
         public async void mainFormFast_TickEventHandler(object sender, EventArgs e)
         {
+            // Check to make sure the API is connected
+            await apiManager.CheckAPIConnection();
+            if (!apiManager.Connected)
+            {
+                mainHomeAPIConnectedRadioButton.BackColor = Color.Red;
+            }
             // Check the Camera is connected every fast tick
-            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(homeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
+            dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(mainHomeCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(readerControlCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
             dataGridViewManager.SetTextBoxCellStringValueByIndicesBasedOnOutcome(readerImagingCameraDataGridView, cameraManager.Connected, "Connected", "Not Connected", 0, 0);
             // Set the camera io
@@ -1481,16 +1418,16 @@ namespace Independent_Reader_GUI
             dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(readerImagingCameraDataGridView, cameraManager.IO, 0, "IO");
             // Get the Camera Exposure every fast tick
             await cameraManager.GetExposureTime();
-            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(homeCameraDataGridView,
+            dataGridViewManager.SetTextBoxCellStringValueByRowIndexandColumnName(mainHomeCameraDataGridView,
                 cameraManager.Exposure.ToString(), 0, "Exposure (µs)");
             // Check the Motors data every fast tick
-            motorManager.HandleFastTickEvent(dataGridViewManager, homeMotorsDataGridView, controlMotorsDataGridView);
+            motorManager.HandleFastTickEvent(dataGridViewManager, mainHomeMotorsDataGridView, controlMotorsDataGridView);
             // Check the TECs data every fast tick
-            tecManager.HandleFastTickEvent(dataGridViewManager, homeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorsDataGridView);
+            tecManager.HandleFastTickEvent(dataGridViewManager, mainHomeTECsDataGridView, controlTECsDataGridView, thermocyclingProtocolStatusesDataGridView, mainLogErrorsDataGridView);
             // TODO: Check the LEDs data every fast tick
-            ledManager.HandleFastTickEvent(dataGridViewManager, homeLEDsDataGridView, controlLEDsDataGridView);
+            ledManager.HandleFastTickEvent(dataGridViewManager, mainHomeLEDsDataGridView, controlLEDsDataGridView);
             // Check the Camera
-            cameraManager.HandleFastTickEvent(dataGridViewManager, homeCameraDataGridView);
+            cameraManager.HandleFastTickEvent(dataGridViewManager, mainHomeCameraDataGridView);
         }
 
         public async void mainFormSlow_TickEventHandler(object sender, EventArgs e)
