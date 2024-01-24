@@ -85,14 +85,11 @@ namespace Independent_Reader_GUI.Services
         {
             // Check the connection of the LED board (only check one since they all share the same board)
             await Cy5.CheckConnectionAsync();
-            if (Cy5.Connected)
-            {
-                FAM.connected = true;
-                HEX.connected = true;
-                Atto.connected = true;
-                Alexa.connected = true;
-                Cy5p5.connected = true;
-            }
+            await FAM.CheckConnectionAsync();
+            await HEX.CheckConnectionAsync();
+            await Atto.CheckConnectionAsync();
+            await Alexa.CheckConnectionAsync();
+            await Cy5p5.CheckConnectionAsync();
         }
 
         public LED GetLEDFromName(string name)

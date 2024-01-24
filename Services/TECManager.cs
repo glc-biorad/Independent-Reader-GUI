@@ -1045,6 +1045,8 @@ namespace Independent_Reader_GUI.Services
             {
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlTECsDataGridView, tec.Name,
                     "Sink Upper Error Threshold (\u00B0C)", String.Format("{0:0.0000}", sinkUpperErrorThreshold), Color.White);
+                dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeTECsDataGridView, tec.Name,
+                    "Sink Temp Max (\u00B0C)", String.Format("{0:0.0000}", sinkUpperErrorThreshold), Color.White);
             }
             if (double.TryParse(tec.SinkLowerErrorThreshold, out double sinkLowerErrorThreshold))
             {
