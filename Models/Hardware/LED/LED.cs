@@ -25,7 +25,7 @@ namespace Independent_Reader_GUI.Models.Hardware.LED
         private Configuration configuration;
         private APIManager apiManager;
         // FIXME: Replace with a timeout from the configuration file;
-        private static int timeout = 5;
+        private static int timeout = 3000;
         private int msDelay = 50;
 
         public LED(string name, Configuration configuration, APIManager apiManager)
