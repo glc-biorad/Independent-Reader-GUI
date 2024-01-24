@@ -242,7 +242,8 @@ namespace Independent_Reader_GUI.Services
             ledManager.EnqueuePriorityCommand(ledCommand);
             // Wait till the LED is on
             Stopwatch stopwatch = Stopwatch.StartNew();
-            while (led.IO != "On" && stopwatch.Elapsed < waitTimeSpan)
+            //while (led.IO != "On" && stopwatch.Elapsed < waitTimeSpan)
+            while (led.IO != "On")
             {
                 await Task.Delay(checkInTimeInMilliseconds);
             }
@@ -250,6 +251,12 @@ namespace Independent_Reader_GUI.Services
             {
                 Logger.LogError($"Unable to take image ({imageFileName}) because {led.Name} was not able to be turned on");
                 throw new UnexpectedResultException($"Unable to take image ({imageFileName}) because {led.Name} was not able to be turned on");
+            }
+            // Wait till the exposure is correct
+            while (cameraManager.Exposure + 10 < exposure && cameraManager.Exposure - 10 > exposure)
+            {
+                cameraManager.SetExposureTime(exposure);
+                await Task.Delay(checkInTimeInMilliseconds);
             }
             // Move the Filter Wheel
             MotorCommand filterWheelMoveCommand = new MotorCommand

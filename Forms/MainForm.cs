@@ -283,17 +283,6 @@ namespace Independent_Reader_GUI
         {
             // TODO: Remove the home tab from the Reader and move it to the main home tab
             MotorData motorData = new MotorData();
-            homeMotorsDataGridView.Rows.Add("x", motorData.Version, motorData.State, motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("y", motorData.Version, motorData.State, motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("z", motorData.Version, motorData.State, motorData.Position, configuration.zMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Filter Wheel", motorData.Version, motorData.State, motorData.Position, configuration.FilterWheelMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Tray AB", motorData.Version, motorData.State, motorData.Position, configuration.TrayABMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Tray CD", motorData.Version, motorData.State, motorData.Position, configuration.TrayCDMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp A", motorData.Version, motorData.State, motorData.Position, configuration.ClampAMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp B", motorData.Version, motorData.State, motorData.Position, configuration.ClampBMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp C", motorData.Version, motorData.State, motorData.Position, configuration.ClampCMotorDefaultSpeed, motorData.Home);
-            homeMotorsDataGridView.Rows.Add("Clamp D", motorData.Version, motorData.State, motorData.Position, configuration.ClampDMotorDefaultSpeed, motorData.Home);
-
             mainHomeMotorsDataGridView.Rows.Add("x", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.xMotorDefaultSpeed, motorData.Home);
             mainHomeMotorsDataGridView.Rows.Add("y", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.yMotorDefaultSpeed, motorData.Home);
             mainHomeMotorsDataGridView.Rows.Add("z", motorData.Version, motorData.State, "Idle", motorData.Position, configuration.zMotorDefaultSpeed, motorData.Home);
@@ -312,15 +301,8 @@ namespace Independent_Reader_GUI
         private void AddHomeCameraDefaultData()
         {
             // TODO: Remove the exposure and temp of the camera and update the designer so the DataGridView doesnt use them and the CameraData class
-            // TODO: Remove the home on the reader tab and move it to the main home tab
             // doesnt use them
-            CameraData homeCamera = new CameraData
-            {
-                State = "Not Connected",
-                IO = "?"
-            };
-            homeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.IO);
-            //
+            CameraData homeCamera = new CameraData();
             mainHomeCameraDataGridView.Rows.Add(homeCamera.State, homeCamera.IO);
         }
 
@@ -329,17 +311,8 @@ namespace Independent_Reader_GUI
         /// </summary>
         private void AddHomeLEDsDefaultData()
         {
-            // TODO: Move this to the Main Home tab
-            homeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
-            homeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
-            homeLEDsDataGridView.Rows.Add("Exposure (\u03BCs)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
-                configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
-            homeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
-            //
             mainHomeLEDsDataGridView.Rows.Add("State", Cy5.GetState(), FAM.GetState(), HEX.GetState(), Atto.GetState(), Alexa.GetState(), Cy5p5.GetState());
             mainHomeLEDsDataGridView.Rows.Add("IO", Cy5.IO, FAM.IO, HEX.IO, Atto.IO, Alexa.IO, Cy5p5.IO);
-            homeLEDsDataGridView.Rows.Add("Exposure (\u03BCs)", configuration.Cy5Exposure, configuration.FAMExposure, configuration.HEXExposure,
-                configuration.AttoExposure, configuration.AlexaExposure, configuration.Cy5p5Exposure);
             mainHomeLEDsDataGridView.Rows.Add("Intensity (%)", Cy5.Intensity, FAM.Intensity, HEX.Intensity, Atto.Intensity, Alexa.Intensity, Cy5p5.Intensity);
 
         }
@@ -2580,7 +2553,8 @@ namespace Independent_Reader_GUI
                 SpeedParameter = configuration.FilterWheelMotorDefaultSpeed
             };
             motorManager.EnqueuePriorityCommand(moveFilterWheelCommand);
-            // TODO: Turn off the other LEDs
+            // Turn off all LEDs Except for HEX
+            ledManager.TurnAllOffExcept(HEX);
             // Turn on the HEX LED
             LEDCommand turnOnLEDCommand = new LEDCommand { Type = LEDCommand.CommandType.On, Intensity = configuration.HEXIntensity, LED = HEX };
             ledManager.EnqueueCommand(turnOnLEDCommand);
@@ -2884,9 +2858,10 @@ namespace Independent_Reader_GUI
             }
         }
 
-        private void readerConsumablesNewImageScanningButton_Click(object sender, EventArgs e)
+        private void readerImagingTrackBar_Scroll(object sender, EventArgs e)
         {
-            //
+            // Handle the scroll event
+            //pictureBoxManager.HandleZoom(imagingPictureBox, sender as TrackBar, e);
         }
     }
 }

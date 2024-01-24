@@ -161,5 +161,24 @@ namespace Independent_Reader_GUI.Services
                 return -1;
             }
         }
+
+        /// <summary>
+        /// Handle the Zooming in or out of a picture box
+        /// </summary>
+        /// <param name="pictureBox"></param>
+        /// <param name="trackbar"></param>
+        /// <param name="e"></param>
+        public void HandleZoom(PictureBox pictureBox, TrackBar trackbar, EventArgs e)
+        {
+            // Handle the Zoom event
+            int zoomFactor = trackbar.Value;
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            Image originalImage = pictureBox.Image;
+            if (pictureBox.Image != null && pictureBox.Image != originalImage)
+            {
+                pictureBox.Dispose();
+            }
+            // Create a new bitmap with the new zoomed size.
+        }
     }
 }

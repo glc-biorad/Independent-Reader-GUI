@@ -9,6 +9,7 @@ using System.Runtime.InteropServices; // For Marshal
 using SpinnakerNET;
 using SpinnakerNET.GenApi;
 using System.Diagnostics;
+using Independent_Reader_GUI.Utilities;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -251,17 +252,16 @@ namespace Independent_Reader_GUI.Services
                                 {
                                     using (IManagedImage convertedImage = processor.Convert(rawImage, PixelFormatEnums.Mono8))
                                     {
-                                        //currentImageBitmap = await autoFocusManager.SharpenImage(convertedImage.bitmap);
                                         currentImageBitmap = convertedImage.bitmap;
-                                        //Debug.WriteLine($"Blurriness Metric: {bitmapManager.CalculateFocusMetric(currentImageBitmap)}");
                                         try
-                                        {                                            
+                                        {
                                             pictureBox.Image = currentImageBitmap;
                                         }
                                         catch (Exception ex)
                                         {
                                             currentImageBitmap = currentImageBitmap;
-                                        }                                        
+                                            Logger.LogError($"Unable to update the PictureBox.", ex);
+                                        }
                                         await Task.Delay(100);
                                     }
                                 }
