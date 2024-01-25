@@ -2442,6 +2442,7 @@ namespace Independent_Reader_GUI
         {
             // Get the protocol name and protocol
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
+            MessageBox.Show(protocolName);
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
             // Get the selected Cartridge, Elastomer, and Bergquist used for the run

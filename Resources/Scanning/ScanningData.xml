@@ -73,7 +73,7 @@
       <FOVdX>72500</FOVdX>
       <SampledX>252000</SampledX>
       <dY>23000</dY>
-      <RotationalOffset>1.21</RotationalOffset>
+      <RotationalOffset>0.0</RotationalOffset>
       <Units>μS</Units>
     </Configuration>
     <Configuration>
