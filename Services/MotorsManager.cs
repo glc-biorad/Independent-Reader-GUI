@@ -50,6 +50,13 @@ namespace Independent_Reader_GUI.Services
             {
                 MotorCommand checkConnectionCommand = new MotorCommand() { Type = MotorCommand.CommandType.CheckConnectionAsync, Motor = motor };
                 EnqueuePriorityCommand(checkConnectionCommand);
+                MotorCommand getPositionCommand = new MotorCommand { Type = MotorCommand.CommandType.GetPositionAsync, Motor = motor };
+                EnqueuePriorityCommand(getPositionCommand);
+                await Task.Delay(200);
+                if (motor.Position == 0)
+                {
+                    motor.Homed = false;
+                }
             }
         }
 
@@ -287,6 +294,7 @@ namespace Independent_Reader_GUI.Services
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString(), Color.White);
                 dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(controlMotorsDataGridView, "Position (\u03BCS)", motor.Name, pos.ToString(), Color.White);
             }
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(homeMotorsDataGridView, "Home", motor.Name, motor.Homed.ToString(), Color.White);
         }
     }
 }

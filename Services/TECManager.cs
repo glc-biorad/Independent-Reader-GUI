@@ -13,6 +13,7 @@ using Independent_Reader_GUI.Models.Consumables;
 using Independent_Reader_GUI.Models.Hardware.TEC;
 using Independent_Reader_GUI.Models.Protocols.ThermocyclingProtocol;
 using Independent_Reader_GUI.Models.Units;
+using System.Windows.Forms;
 
 namespace Independent_Reader_GUI.Services
 {
@@ -40,8 +41,9 @@ namespace Independent_Reader_GUI.Services
         private int msDelay = 5;
         private double tempReachedCutoff = 0.5;
         private TECPlotManager tecPlotManager = new TECPlotManager();
+        private Configuration configuration;
 
-        public TECManager(TEC tecA, TEC tecB, TEC tecC, TEC tecD)
+        public TECManager(TEC tecA, TEC tecB, TEC tecC, TEC tecD, Configuration configuration)
         {
             TECA = tecA;
             TECB = tecB;
@@ -51,6 +53,7 @@ namespace Independent_Reader_GUI.Services
             tecCancellationTokenSources.Add(tecBRunCancellationTokenSource);
             tecCancellationTokenSources.Add(tecCRunCancellationTokenSource);
             tecCancellationTokenSources.Add(tecDRunCancellationTokenSource);
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -593,11 +596,17 @@ namespace Independent_Reader_GUI.Services
             // TODO: Generate a report
             DateTime endDateTime = DateTime.Now;
             dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "Protocol Running", "No", Color.White);
-            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath 
-                + $"{tec.Name.Replace(" ","")}_TC_Report.pdf");
+            await GenerateCompletedRunReport(tec, protocol, cartridge, elastomer, bergquist, dataGridView);
+            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete", Color.MediumSeaGreen);
+        }
+
+        private async Task GenerateCompletedRunReport(TEC tec, ThermocyclingProtocol protocol, Cartridge cartridge, Elastomer elastomer, Bergquist bergquist, DataGridView dataGridView)
+        {
+            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath
+                + $"{tec.Name.Replace(" ", "")}_TC_Report.pdf");
             await reportManager.AddHeaderLogoAsync(configuration.ReportLogoDataPath, 50, 50);
-            await reportManager.AddMainTitleAsync($"Thermocycling Run on {tec.Name}");
-            await reportManager.AddParagraphTextAsync($"This is a report automatically generated after a run on {tec.Name}." +
+            await reportManager.AddMainTitleAsync($"Thermocycling Run on {tec.Name} (COMPLETED)");
+            await reportManager.AddParagraphTextAsync($"This is a report automatically generated after a completed run on {tec.Name}." +
                 $" The contents of this report include when the run started and ended, which protocol was used, plots for the expected temperature, actual temperature (where actual here" +
                 $" means the temperature measured by the internal temperature sensor for {tec.Name}), the sink temperature, and when the fans were on for {tec.Name}. Extra information" +
                 $" regarding the cartridge used, the pressure applied to said cartridge, the elastomer/bergquist used if at all, images before/during/after, and positions for the clamp" +
@@ -610,14 +619,14 @@ namespace Independent_Reader_GUI.Services
                 "Value",
             };
             List<string> protocolNameRow = new List<string> { "Protocol", protocol.Name };
-            List<string> estimateRunTimeRow = new List<string> {"Estimated Run Time", TimeSpan.FromSeconds(int.Parse(protocol.GetTimeInSeconds().ToString())).ToString(@"hh\:mm\:ss") };
-            List<string> startDateRow = new List<string> {"Date", DateTime.Now.ToString("MM/dd/yyyy") };
-            List<string> startTimeRow = new List<string> {"Date", DateTime.Now.ToString("hh:mm:ss tt") };
-            List<string> cartridgeRow = new List<string> {"Cartridge", cartridge.Name };
-            List<string> elastomerRow = new List<string> {"Elastomer", elastomer.Name };
-            List<string> bergquistRow = new List<string> {"Bergquist", bergquist.Name };
-            List<string> initialSinkTempRow = new List<string> {"Initial Sink Temp (\u00B0C)", "" };
-            List<string> initialObjectTempRow = new List<string> {"Initial Object Temp (\u00B0C)", "" };
+            List<string> estimateRunTimeRow = new List<string> { "Estimated Run Time", TimeSpan.FromSeconds(int.Parse(protocol.GetTimeInSeconds().ToString())).ToString(@"hh\:mm\:ss") };
+            List<string> startDateRow = new List<string> { "Date", DateTime.Now.ToString("MM/dd/yyyy") };
+            List<string> startTimeRow = new List<string> { "Date", DateTime.Now.ToString("hh:mm:ss tt") };
+            List<string> cartridgeRow = new List<string> { "Cartridge", cartridge.Name };
+            List<string> elastomerRow = new List<string> { "Elastomer", elastomer.Name };
+            List<string> bergquistRow = new List<string> { "Bergquist", bergquist.Name };
+            List<string> initialSinkTempRow = new List<string> { "Initial Sink Temp (\u00B0C)", "" };
+            List<string> initialObjectTempRow = new List<string> { "Initial Object Temp (\u00B0C)", "" };
             List<List<string>> rows = new List<List<string>>
             {
                 protocolNameRow, estimateRunTimeRow, startDateRow, startTimeRow, cartridgeRow, elastomerRow, bergquistRow, initialSinkTempRow, initialObjectTempRow
@@ -632,7 +641,26 @@ namespace Independent_Reader_GUI.Services
             // Create the data plot for the TEC Fan Speeds
             await reportManager.AddPlotAsync(tec.FanSpeeds, $"{tec.Name} Fan Speeds", "T (rpm)");
             await reportManager.CloseAsync();
-            dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tec.Name, "IO", "Complete", Color.MediumSeaGreen);
+        }
+
+        private async Task GenerateKilledRunReport(TEC tec)
+        {
+            ReportManager reportManager = new ReportManager(configuration.ReportsDataPath
+                + $"{tec.Name.Replace(" ", "")}_TC_Report.pdf");
+            await reportManager.AddHeaderLogoAsync(configuration.ReportLogoDataPath, 50, 50);
+            await reportManager.AddMainTitleAsync($"Thermocycling Run on {tec.Name} (KILLED)");
+            await reportManager.AddParagraphTextAsync($"This is a report automatically generated after killing the run on {tec.Name}." +
+                $" The contents of this report include when the run started and ended, which protocol was used, plots for the expected temperature, actual temperature (where actual here" +
+                $" means the temperature measured by the internal temperature sensor for {tec.Name}), the sink temperature, and when the fans were on for {tec.Name}. Extra information" +
+                $" regarding the cartridge used, the pressure applied to said cartridge, the elastomer/bergquist used if at all, images before/during/after, and positions for the clamp" +
+                $" and tray are not included within this report.");
+            // Create the data plot for the TEC Actual and Target Object Temperatures
+            await reportManager.AddPlotAsync(tec.ObjectTemperatures, tec.TargetTemperatures, $"{tec.Name} Object and Target Temperatures", "T (\u00B0C)", "Object Temp", "Target Temp");
+            // Create the data plot for the TEC Sink Temperature
+            await reportManager.AddPlotAsync(tec.SinkTemperatures, $"{tec.Name} Sink Temperatures", "T (\u00B0C)");
+            // Create the data plot for the TEC Fan Speeds
+            await reportManager.AddPlotAsync(tec.FanSpeeds, $"{tec.Name} Fan Speeds", "T (rpm)");
+            await reportManager.CloseAsync();
         }
 
         /// <summary>
@@ -680,7 +708,7 @@ namespace Independent_Reader_GUI.Services
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="dataGridView"></param>
-        public void HandleKillClickEvent(object sender, EventArgs e, DataGridView dataGridView)
+        public async void HandleKillClickEvent(object sender, EventArgs e, DataGridView dataGridView)
         {
             DataGridViewManager dataGridViewManager = new DataGridViewManager();
             // Get the Name of the clicked Run button to get the TEC to use
@@ -701,8 +729,9 @@ namespace Independent_Reader_GUI.Services
                     TEC tec = GetTECFromName(tecName);
                     tec.RunningProtocol = false;
                     // TODO: Set the Protocol Running cell background color to Yellow for a certain amount of time or indefinitely
-                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "No", Color.White);
+                    dataGridViewManager.SetTextBoxCellStringValueByColumnandRowNames(dataGridView, tecName, "Protocol Running", "Cancelled", Color.Yellow);
                     // TODO: Generate a report based on what occured
+                    await GenerateKilledRunReport(tec);
                 }
             }
         }

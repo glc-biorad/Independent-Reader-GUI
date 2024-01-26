@@ -1,41 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Protocol>
   <Versions>1.0</Versions>
-  <Name>MW Evaporation Test Protocol</Name>
+  <Name>Cool Temp Test Protocol</Name>
   <Author>glc-biorad</Author>
-  <Date>12/15/2023</Date>
+  <Date>01/26/2024</Date>
   <Step>
     <Index>0</Index>
     <TypeName>Set</TypeName>
-    <Temperature>101</Temperature>
-    <Time>8</Time>
+    <Temperature>35</Temperature>
+    <Time>10</Time>
     <TemperatureUnits>Celsius</TemperatureUnits>
-    <TimeUnits>minutes</TimeUnits>
+    <TimeUnits>seconds</TimeUnits>
   </Step>
   <Step>
     <Index>1</Index>
     <TypeName>Set</TypeName>
-    <Temperature>57</Temperature>
-    <Time>120</Time>
+    <Temperature>32</Temperature>
+    <Time>10</Time>
     <TemperatureUnits>Celsius</TemperatureUnits>
     <TimeUnits>seconds</TimeUnits>
   </Step>
   <Step>
     <Index>2</Index>
-    <TypeName>Set</TypeName>
-    <Temperature>104</Temperature>
-    <Time>60</Time>
-    <TemperatureUnits>Celsius</TemperatureUnits>
-    <TimeUnits>seconds</TimeUnits>
+    <TypeName>GoTo</TypeName>
+    <StepNumber>0</StepNumber>
+    <CycleCount>2</CycleCount>
   </Step>
   <Step>
     <Index>3</Index>
-    <TypeName>GoTo</TypeName>
-    <StepNumber>1</StepNumber>
-    <CycleCount>3</CycleCount>
-  </Step>
-  <Step>
-    <Index>4</Index>
     <TypeName>Hold</TypeName>
     <Temperature>30</Temperature>
     <TemperatureUnits>Celsius</TemperatureUnits>

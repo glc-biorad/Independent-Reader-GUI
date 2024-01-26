@@ -103,7 +103,7 @@ namespace Independent_Reader_GUI
             tecC = new TEC(id: configuration.TECCAddress, name: "TEC C", apiManager: apiManager, configuration: configuration);
             tecD = new TEC(id: configuration.TECDAddress, name: "TEC D", apiManager: apiManager, configuration: configuration);
             // Setup the TEC Manager
-            tecManager = new TECManager(tecA, tecB, tecC, tecD);
+            tecManager = new TECManager(tecA, tecB, tecC, tecD, configuration);
             // Intialize the TEC Parameters
             Task.Run(async () => await tecManager.InitializeTECParameters()).Wait();
             // Start the TEC Manager Command Queue Processing
@@ -1249,7 +1249,7 @@ namespace Independent_Reader_GUI
             {
                 if (addGoToForm.ShowDialog() == DialogResult.OK)
                 {
-                    int stepNumber = addGoToForm.StepNumber;
+                    int stepNumber = addGoToForm.StepNumber - 1;
                     int cycleCount = addGoToForm.CycleCount;
                     ThermocyclingProtocolGoToStep step = new ThermocyclingProtocolGoToStep(stepNumber, cycleCount);
                     step.Index = protocol.Count;
@@ -1427,7 +1427,7 @@ namespace Independent_Reader_GUI
             var tecCTimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecC.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
             var tecDTimeLeftCellValue = dataGridViewManager.GetColumnCellValueByColumnAndRowName(tecD.Name, "Estimated Time Left", thermocyclingProtocolStatusesDataGridView);
             // TEC A
-            if (TimeSpan.TryParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out TimeSpan timeSpan))
+            if (TimeSpan.TryParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out TimeSpan timeSpan) && tecA.RunningProtocol)
             {
                 if (TimeSpan.ParseExact(tecATimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
@@ -1436,7 +1436,7 @@ namespace Independent_Reader_GUI
                 }
             }
             // TEC B
-            if (TimeSpan.TryParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            if (TimeSpan.TryParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan) && tecB.RunningProtocol)
             {
                 if (TimeSpan.ParseExact(tecBTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
@@ -1445,7 +1445,7 @@ namespace Independent_Reader_GUI
                 }
             }
             // TEC C
-            if (TimeSpan.TryParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            if (TimeSpan.TryParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan) && tecC.RunningProtocol)
             {
                 if (TimeSpan.ParseExact(tecCTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
@@ -1454,7 +1454,7 @@ namespace Independent_Reader_GUI
                 }
             }
             // TEC D
-            if (TimeSpan.TryParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan))
+            if (TimeSpan.TryParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan) && tecD.RunningProtocol)
             {
                 if (TimeSpan.ParseExact(tecDTimeLeftCellValue, @"hh\:mm\:ss", CultureInfo.InvariantCulture) > TimeSpan.Zero)
                 {
@@ -2442,7 +2442,6 @@ namespace Independent_Reader_GUI
         {
             // Get the protocol name and protocol
             string? protocolName = thermocyclingProtocolNameTextBox.Text;
-            MessageBox.Show(protocolName);
             ThermocyclingProtocol? protocol = protocolManager.GetProtocolFromName(protocolName);
             bool protocolNameExists = protocolManager.ProtocolNameExists(protocolName);
             // Get the selected Cartridge, Elastomer, and Bergquist used for the run
