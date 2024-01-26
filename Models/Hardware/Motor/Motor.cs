@@ -216,10 +216,7 @@ namespace Independent_Reader_GUI.Models.Hardware.Motor
             get { return connected; }
         }
 
-        public bool Homed
-        {
-            get { return homed; }
-        }
+        public bool Homed { get { return homed; }  set { } }
 
         public string Version
         {
